@@ -96,6 +96,21 @@ export default function AdminUsersWholesalePage() {
     }
   };
 
+  const handleDirectWholesaleStatusChange = async (appId, newStatus, notes) => {
+    try {
+      const res = await api.updateWholesaleStatus(appId, {
+        status: newStatus,
+        notes: notes || ''
+      });
+      if (res.success) {
+        addToast(`Wholesale status changed to: ${newStatus}`, 'success');
+        setWholesaleApps(prev => prev.map(a => a.id === appId ? { ...a, status: newStatus } : a));
+      }
+    } catch (err) {
+      addToast(err.message || 'Status update failed', 'error');
+    }
+  };
+
   const handleUpdateInquiry = async (e) => {
     e.preventDefault();
     if (!selectedInquiry) return;
@@ -114,6 +129,21 @@ export default function AdminUsersWholesalePage() {
       addToast(err.message || 'Update failed', 'error');
     } finally {
       setUpdating(false);
+    }
+  };
+
+  const handleDirectInquiryStatusChange = async (inqId, newStatus, note) => {
+    try {
+      const res = await api.updateInquiry(inqId, {
+        status: newStatus,
+        note: note || ''
+      });
+      if (res.success) {
+        addToast(`Inquiry status changed to: ${newStatus}`, 'success');
+        setInquiries(prev => prev.map(i => i.id === inqId ? { ...i, status: newStatus } : i));
+      }
+    } catch (err) {
+      addToast(err.message || 'Status update failed', 'error');
     }
   };
 
@@ -174,12 +204,12 @@ export default function AdminUsersWholesalePage() {
             <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.88rem' }}>
               <thead>
                 <tr style={{ background: 'var(--bg-secondary)', borderBottom: '1px solid var(--border-subtle)', color: 'var(--text-muted)' }}>
-                  <th style={{ padding: '1rem' }}>Business Name</th>
-                  <th style={{ padding: '1rem' }}>Contact / Email</th>
-                  <th style={{ padding: '1rem' }}>Phone</th>
-                  <th style={{ padding: '1rem' }}>Membership</th>
-                  <th style={{ padding: '1rem' }}>Status</th>
-                  <th style={{ padding: '1rem', textAlign: 'right' }}>Action</th>
+                  <th style={{ padding: '1rem', whiteSpace: 'nowrap' }}>Business Name</th>
+                  <th style={{ padding: '1rem', whiteSpace: 'nowrap' }}>Contact / Email</th>
+                  <th style={{ padding: '1rem', whiteSpace: 'nowrap' }}>Phone</th>
+                  <th style={{ padding: '1rem', whiteSpace: 'nowrap' }}>Membership</th>
+                  <th style={{ padding: '1rem', whiteSpace: 'nowrap' }}>Status</th>
+                  <th style={{ padding: '1rem', whiteSpace: 'nowrap', textAlign: 'right' }}>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -192,32 +222,51 @@ export default function AdminUsersWholesalePage() {
                 ) : (
                   wholesaleApps.map(app => (
                     <tr key={app.id} style={{ borderBottom: '1px solid var(--border-subtle)' }}>
-                      <td style={{ padding: '1rem' }}>
-                        <div style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{app.business_name}</div>
-                        <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{app.business_address}</div>
+                      <td style={{ padding: '1rem', whiteSpace: 'nowrap' }}>
+                        <div style={{ fontWeight: 600, color: 'var(--text-primary)', whiteSpace: 'nowrap' }}>{app.business_name}</div>
+                        {app.business_address && (
+                          <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', whiteSpace: 'nowrap' }}>{app.business_address}</div>
+                        )}
                       </td>
-                      <td style={{ padding: '1rem' }}>
-                        <div style={{ color: 'var(--accent-gold-dark)', fontWeight: 600 }}>{app.username}</div>
-                        <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)' }}>{app.email}</div>
+                      <td style={{ padding: '1rem', whiteSpace: 'nowrap' }}>
+                        <div style={{ color: 'var(--accent-gold-dark)', fontWeight: 600, whiteSpace: 'nowrap' }}>{app.username}</div>
+                        <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', whiteSpace: 'nowrap' }}>{app.email}</div>
                       </td>
-                      <td style={{ padding: '1rem' }}>{app.phone}</td>
+                      <td style={{ padding: '1rem', whiteSpace: 'nowrap' }}>{app.phone || '—'}</td>
                       <td style={{ padding: '1rem', whiteSpace: 'nowrap' }}>
                         <span className="badge badge-gold" style={{ whiteSpace: 'nowrap', fontSize: '0.7rem', padding: '0.3rem 0.7rem' }}>{app.membership || 'Wholesale customer'}</span>
                       </td>
-                      <td style={{ padding: '1rem' }}>
-                        <span className={`badge ${
-                          app.status === 'approved' ? 'badge-success' :
-                          app.status === 'rejected' ? 'badge-sale' : 'badge-neutral'
-                        }`}>
-                          {app.status}
-                        </span>
+                      <td style={{ padding: '1rem', whiteSpace: 'nowrap' }}>
+                        <select
+                          value={app.status}
+                          onChange={(e) => handleDirectWholesaleStatusChange(app.id, e.target.value, app.notes)}
+                          style={{
+                            padding: '0.35rem 0.65rem',
+                            borderRadius: '4px',
+                            fontSize: '0.78rem',
+                            fontWeight: 700,
+                            textTransform: 'uppercase',
+                            letterSpacing: '0.04em',
+                            cursor: 'pointer',
+                            border: '1px solid var(--border-subtle)',
+                            background: app.status === 'approved' ? 'rgba(5, 150, 105, 0.18)' : app.status === 'rejected' ? 'rgba(239, 68, 68, 0.18)' : 'rgba(245, 158, 11, 0.18)',
+                            color: app.status === 'approved' ? '#34d399' : app.status === 'rejected' ? '#f87171' : '#fbbf24',
+                            outline: 'none'
+                          }}
+                        >
+                          <option value="pending" style={{ background: '#1c1f26', color: '#fbbf24' }}>PENDING</option>
+                          <option value="approved" style={{ background: '#1c1f26', color: '#34d399' }}>APPROVED</option>
+                          <option value="rejected" style={{ background: '#1c1f26', color: '#f87171' }}>REJECTED</option>
+                        </select>
                       </td>
-                      <td style={{ padding: '1rem', textAlign: 'right' }}>
+                      <td style={{ padding: '1rem', textAlign: 'right', whiteSpace: 'nowrap' }}>
                         <button
                           onClick={() => openWholesaleDrawer(app)}
                           className="btn btn-secondary btn-sm"
+                          title="View details & internal notes"
+                          style={{ padding: '0.45rem 0.75rem', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}
                         >
-                          <Eye size={14} /> Review Application
+                          <Eye size={15} />
                         </button>
                       </td>
                     </tr>
@@ -236,11 +285,11 @@ export default function AdminUsersWholesalePage() {
             <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.88rem' }}>
               <thead>
                 <tr style={{ background: 'var(--bg-secondary)', borderBottom: '1px solid var(--border-subtle)', color: 'var(--text-muted)' }}>
-                  <th style={{ padding: '1rem' }}>Sender Name</th>
-                  <th style={{ padding: '1rem' }}>Email / Order #</th>
-                  <th style={{ padding: '1rem' }}>Message Excerpt</th>
-                  <th style={{ padding: '1rem' }}>Status</th>
-                  <th style={{ padding: '1rem', textAlign: 'right' }}>Action</th>
+                  <th style={{ padding: '1rem', whiteSpace: 'nowrap' }}>Sender Name</th>
+                  <th style={{ padding: '1rem', whiteSpace: 'nowrap' }}>Email / Order #</th>
+                  <th style={{ padding: '1rem', whiteSpace: 'nowrap' }}>Message Excerpt</th>
+                  <th style={{ padding: '1rem', whiteSpace: 'nowrap' }}>Status</th>
+                  <th style={{ padding: '1rem', whiteSpace: 'nowrap', textAlign: 'right' }}>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -253,21 +302,21 @@ export default function AdminUsersWholesalePage() {
                 ) : (
                   inquiries.map(inq => (
                     <tr key={inq.id} style={{ borderBottom: '1px solid var(--border-subtle)' }}>
-                      <td style={{ padding: '1rem', fontWeight: 600, color: 'var(--text-primary)' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', flexWrap: 'wrap' }}>
+                      <td style={{ padding: '1rem', fontWeight: 600, color: 'var(--text-primary)', whiteSpace: 'nowrap' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', flexWrap: 'nowrap' }}>
                           <span>{inq.name}</span>
                           {inq.type === 'newsletter' && (
-                            <span className="badge badge-gold" style={{ fontSize: '0.68rem', padding: '0.15rem 0.45rem' }}>VIP Newsletter</span>
+                            <span className="badge badge-gold" style={{ fontSize: '0.68rem', padding: '0.15rem 0.45rem', whiteSpace: 'nowrap' }}>VIP Newsletter</span>
                           )}
                         </div>
                       </td>
-                      <td style={{ padding: '1rem' }}>
-                        <div style={{ color: 'var(--accent-gold-dark)', fontWeight: 600 }}>{inq.email}</div>
+                      <td style={{ padding: '1rem', whiteSpace: 'nowrap' }}>
+                        <div style={{ color: 'var(--accent-gold-dark)', fontWeight: 600, whiteSpace: 'nowrap' }}>{inq.email}</div>
                         {inq.phone && (
-                          <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Tel: {inq.phone}</div>
+                          <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', whiteSpace: 'nowrap' }}>Tel: {inq.phone}</div>
                         )}
                         {inq.order_number && (
-                          <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Order: {inq.order_number}</div>
+                          <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', whiteSpace: 'nowrap' }}>Order: {inq.order_number}</div>
                         )}
                       </td>
                       <td style={{ padding: '1rem', maxWidth: '300px' }}>
@@ -280,20 +329,37 @@ export default function AdminUsersWholesalePage() {
                           {inq.message}
                         </div>
                       </td>
-                      <td style={{ padding: '1rem' }}>
-                        <span className={`badge ${
-                          inq.status === 'resolved' ? 'badge-success' :
-                          inq.status === 'in_review' ? 'badge-gold' : 'badge-neutral'
-                        }`}>
-                          {inq.status}
-                        </span>
+                      <td style={{ padding: '1rem', whiteSpace: 'nowrap' }}>
+                        <select
+                          value={inq.status}
+                          onChange={(e) => handleDirectInquiryStatusChange(inq.id, e.target.value, inq.note)}
+                          style={{
+                            padding: '0.35rem 0.65rem',
+                            borderRadius: '4px',
+                            fontSize: '0.78rem',
+                            fontWeight: 700,
+                            textTransform: 'uppercase',
+                            letterSpacing: '0.04em',
+                            cursor: 'pointer',
+                            border: '1px solid var(--border-subtle)',
+                            background: inq.status === 'resolved' ? 'rgba(5, 150, 105, 0.18)' : inq.status === 'in_review' ? 'rgba(245, 158, 11, 0.18)' : 'rgba(148, 163, 184, 0.18)',
+                            color: inq.status === 'resolved' ? '#34d399' : inq.status === 'in_review' ? '#fbbf24' : '#cbd5e1',
+                            outline: 'none'
+                          }}
+                        >
+                          <option value="new" style={{ background: '#1c1f26', color: '#cbd5e1' }}>NEW</option>
+                          <option value="in_review" style={{ background: '#1c1f26', color: '#fbbf24' }}>IN REVIEW</option>
+                          <option value="resolved" style={{ background: '#1c1f26', color: '#34d399' }}>RESOLVED</option>
+                        </select>
                       </td>
-                      <td style={{ padding: '1rem', textAlign: 'right' }}>
+                      <td style={{ padding: '1rem', textAlign: 'right', whiteSpace: 'nowrap' }}>
                         <button
                           onClick={() => openInquiryDrawer(inq)}
                           className="btn btn-secondary btn-sm"
+                          title="View inquiry details"
+                          style={{ padding: '0.45rem 0.75rem', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}
                         >
-                          <Eye size={14} /> View Inquiry
+                          <Eye size={15} />
                         </button>
                       </td>
                     </tr>
@@ -312,24 +378,24 @@ export default function AdminUsersWholesalePage() {
             <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.88rem' }}>
               <thead>
                 <tr style={{ background: 'var(--bg-secondary)', borderBottom: '1px solid var(--border-subtle)', color: 'var(--text-muted)' }}>
-                  <th style={{ padding: '1rem' }}>Username</th>
-                  <th style={{ padding: '1rem' }}>Email</th>
-                  <th style={{ padding: '1rem' }}>Account Role</th>
-                  <th style={{ padding: '1rem' }}>Account Status</th>
+                  <th style={{ padding: '1rem', whiteSpace: 'nowrap' }}>Username</th>
+                  <th style={{ padding: '1rem', whiteSpace: 'nowrap' }}>Email</th>
+                  <th style={{ padding: '1rem', whiteSpace: 'nowrap' }}>Account Role</th>
+                  <th style={{ padding: '1rem', whiteSpace: 'nowrap' }}>Account Status</th>
                 </tr>
               </thead>
               <tbody>
                 {customers.map(user => (
                   <tr key={user.id} style={{ borderBottom: '1px solid var(--border-subtle)' }}>
-                    <td style={{ padding: '1rem', fontWeight: 600, color: 'var(--text-primary)' }}>{user.username}</td>
-                    <td style={{ padding: '1rem', color: 'var(--text-secondary)' }}>{user.email}</td>
-                    <td style={{ padding: '1rem' }}>
-                      <span className="badge badge-gold" style={{ textTransform: 'capitalize' }}>
+                    <td style={{ padding: '1rem', fontWeight: 600, color: 'var(--text-primary)', whiteSpace: 'nowrap' }}>{user.username}</td>
+                    <td style={{ padding: '1rem', color: 'var(--text-secondary)', whiteSpace: 'nowrap' }}>{user.email}</td>
+                    <td style={{ padding: '1rem', whiteSpace: 'nowrap' }}>
+                      <span className="badge badge-gold" style={{ textTransform: 'capitalize', whiteSpace: 'nowrap' }}>
                         {user.role.replace('_', ' ')}
                       </span>
                     </td>
-                    <td style={{ padding: '1rem' }}>
-                      <span className="badge badge-success">{user.status}</span>
+                    <td style={{ padding: '1rem', whiteSpace: 'nowrap' }}>
+                      <span className="badge badge-success" style={{ whiteSpace: 'nowrap' }}>{user.status}</span>
                     </td>
                   </tr>
                 ))}
