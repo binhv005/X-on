@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Search, Eye, Filter, CheckCircle, Package, Truck, CreditCard } from 'lucide-react';
 import { api } from '../../../services/api';
-import Drawer from '../../../components/common/Drawer';
+import Modal from '../../../components/common/Modal';
 import LoadingSpinner from '../../../components/common/LoadingSpinner';
 import { useToast } from '../../../context/ToastContext';
 
@@ -74,9 +74,9 @@ export default function AdminOrdersPage() {
       {/* Header */}
       <div style={{ marginBottom: '2rem' }}>
         <span className="brand-line">Fulfillment & Sales</span>
-        <h1 className="font-heading" style={{ fontSize: '1.8rem', color: '#fff', margin: '0.25rem 0' }}>
-          Orders Management
-        </h1>
+          <h1 className="font-heading" style={{ fontSize: '1.8rem', color: 'var(--text-primary)', margin: '0.25rem 0' }}>
+            Orders Management
+          </h1>
       </div>
 
       {/* Toolbar */}
@@ -154,10 +154,10 @@ export default function AdminOrdersPage() {
                     <tr key={order.id} style={{ borderBottom: '1px solid var(--border-subtle)' }}>
                       <td style={{ padding: '1rem', fontWeight: 700, color: 'var(--accent-gold-light)' }}>{order.id}</td>
                       <td style={{ padding: '1rem' }}>
-                        <div style={{ fontWeight: 600, color: '#fff' }}>{order.customer?.name}</div>
+                        <div style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{order.customer?.name}</div>
                         <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{order.customer?.email}</div>
                       </td>
-                      <td style={{ padding: '1rem', fontWeight: 700, color: '#fff' }}>
+                      <td style={{ padding: '1rem', fontWeight: 700, color: 'var(--text-primary)' }}>
                         ${order.total?.toFixed(2)}
                       </td>
                       <td style={{ padding: '1rem' }}>
@@ -194,12 +194,12 @@ export default function AdminOrdersPage() {
         </div>
       )}
 
-      {/* Order Detail Drawer */}
-      <Drawer
+      {/* Order Detail Centered Popup */}
+      <Modal
         isOpen={isDrawerOpen}
         onClose={() => setIsDrawerOpen(false)}
         title={`Order Details: ${selectedOrder?.id}`}
-        width="620px"
+        maxWidth="680px"
       >
         {selectedOrder && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
@@ -217,7 +217,7 @@ export default function AdminOrdersPage() {
 
             {/* Line Items */}
             <div>
-              <h4 className="font-heading" style={{ color: '#fff', marginBottom: '1rem' }}>
+              <h4 className="font-heading" style={{ color: 'var(--text-primary)', marginBottom: '1rem' }}>
                 Purchased Items ({selectedOrder.line_items?.length || 0})
               </h4>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
@@ -232,7 +232,7 @@ export default function AdminOrdersPage() {
                     border: '1px solid var(--border-subtle)'
                   }}>
                     <div>
-                      <div style={{ fontWeight: 600, color: '#fff', fontSize: '0.9rem' }}>{item.name}</div>
+                      <div style={{ fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.9rem' }}>{item.name}</div>
                       <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
                         Size: <strong>{item.size || 'M'}</strong> | Qty: <strong>{item.quantity}</strong>
                       </div>
@@ -264,7 +264,7 @@ export default function AdminOrdersPage() {
                 <span style={{ color: 'var(--text-muted)' }}>Shipping:</span>
                 <span>${selectedOrder.shipping?.toFixed(2)}</span>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', borderTop: '1px solid var(--border-subtle)', paddingTop: '0.5rem', fontWeight: 800, fontSize: '1.1rem', color: '#fff' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', borderTop: '1px solid var(--border-subtle)', paddingTop: '0.5rem', fontWeight: 800, fontSize: '1.1rem', color: 'var(--text-primary)' }}>
                 <span>Total:</span>
                 <span style={{ color: 'var(--accent-gold)' }}>${selectedOrder.total?.toFixed(2)}</span>
               </div>
@@ -292,7 +292,7 @@ export default function AdminOrdersPage() {
 
             {/* Status Update Form */}
             <form onSubmit={handleUpdateStatus} style={{ borderTop: '1px solid var(--border-subtle)', paddingTop: '1.5rem' }}>
-              <h4 className="font-heading" style={{ color: '#fff', fontSize: '1rem', marginBottom: '1rem' }}>
+              <h4 className="font-heading" style={{ color: 'var(--text-primary)', fontSize: '1rem', marginBottom: '1rem' }}>
                 Update Fulfillment Status
               </h4>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
@@ -321,7 +321,7 @@ export default function AdminOrdersPage() {
               </div>
               <button
                 type="submit"
-                className="btn btn-primary"
+                className="btn btn-primary btn-sm"
                 disabled={updatingStatus}
                 style={{ width: '100%' }}
               >
@@ -330,7 +330,7 @@ export default function AdminOrdersPage() {
             </form>
           </div>
         )}
-      </Drawer>
+      </Modal>
     </div>
   );
 }

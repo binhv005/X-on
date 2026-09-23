@@ -8,6 +8,7 @@ import {
 const router = express.Router();
 
 router.post('/signup', submitWholesaleApplication);
+router.post('/', submitWholesaleApplication);
 router.get('/', getWholesaleApplications);
 router.put('/:id', updateWholesaleApplicationStatus);
 

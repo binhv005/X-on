@@ -1,21 +1,51 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { Sparkles, Calendar, User, ArrowRight } from 'lucide-react';
+import { Sparkles, Search, ArrowRight, ChevronRight, Mail, Leaf } from 'lucide-react';
 import { api } from '../../services/api';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
+import './BlogPage.css';
+
+const PAGE_SIZE = 6;
+
+function estimateReadTime(post) {
+  let words = 0;
+  const count = (t) => (t ? t.trim().split(/\s+/).length : 0);
+  words += count(post?.excerpt);
+  words += count(post?.title);
+  if (Array.isArray(post?.content_blocks)) {
+    post.content_blocks.forEach((b) => {
+      words += count(b?.text);
+      words += count(b?.caption);
+      if (Array.isArray(b?.items)) words += b.items.reduce((s, it) => s + count(it), 0);
+    });
+  }
+  return Math.max(2, Math.round(words / 180) || 4);
+}
+
+function formatDate(dateStr) {
+  if (!dateStr) return '';
+  const d = new Date(dateStr);
+  if (Number.isNaN(d.getTime())) return String(dateStr).toUpperCase();
+  return d
+    .toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' })
+    .toUpperCase()
+    .replace(',', '');
+}
 
 export default function BlogPage() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState('');
+  const [page, setPage] = useState(1);
+  const [email, setEmail] = useState('');
+  const [subscribed, setSubscribed] = useState(false);
 
   useEffect(() => {
     async function loadBlog() {
       try {
         setLoading(true);
         const res = await api.getBlogPosts();
-        if (res.success && res.data) {
-          setPosts(res.data);
-        }
+        if (res.success && res.data) setPosts(res.data);
       } catch (err) {
         console.error('Error fetching blog posts:', err);
       } finally {
@@ -25,97 +55,209 @@ export default function BlogPage() {
     loadBlog();
   }, []);
 
+  const enriched = useMemo(
+    () => posts.map((p) => ({ ...p, _read: estimateReadTime(p) })),
+    [posts]
+  );
+
+  const filtered = useMemo(() => {
+    const q = search.trim().toLowerCase();
+    if (!q) return enriched;
+    return enriched.filter((p) =>
+      p.title?.toLowerCase().includes(q) ||
+      p.excerpt?.toLowerCase().includes(q) ||
+      p.author?.toLowerCase().includes(q)
+    );
+  }, [enriched, search]);
+
+  // reset page khi đổi search
+  useEffect(() => {
+    setPage(1);
+  }, [search]);
+
+  const isDefaultView = !search.trim() && page === 1;
+  const featured = isDefaultView ? filtered[0] : null;
+  const gridSource = featured ? filtered.slice(1) : filtered;
+
+  const totalPages = Math.max(1, Math.ceil(gridSource.length / PAGE_SIZE));
+  const safePage = Math.min(page, totalPages);
+  const paged = gridSource.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE);
+
+  const handleSubscribe = (e) => {
+    e.preventDefault();
+    if (!email.includes('@')) return;
+    setSubscribed(true);
+  };
+
   if (loading) {
     return <LoadingSpinner text="Loading X-ON beauty & nail articles..." />;
   }
 
   return (
-    <div className="section-py" style={{ paddingTop: '3.5rem' }}>
-      <div className="container">
-        {/* Header Hero */}
-        <div style={{ textAlign: 'center', maxWidth: '800px', margin: '0 auto 3.5rem auto' }}>
-          <span className="brand-line" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.5rem' }}>
-            <Sparkles size={16} /> News & Editorial
+    <div className="blog-page">
+      {/* ===== HERO — nền blog_hero.png ===== */}
+      <section className="blog-hero">
+        <div className="blog-hero-inner">
+          <span className="blog-eyebrow">
+            <Sparkles size={14} /> News & Editorial
           </span>
-          <h1 className="section-title">The X-ON Nail & Artistry Journal</h1>
-          <p className="section-subtitle">
-            Masterclasses, styling forecasts, nail care guides, and insider artisan craftsmanship updates from our Kissimmee studio.
+          <h1 className="blog-hero-title">
+            The X-ON Nail &<br /> Artistry Journal
+          </h1>
+          <p className="blog-hero-sub">
+            Masterclasses, styling forecasts, nail care guides, and insider
+            artisan craftsmanship updates from our Kissimmee studio.
           </p>
+          <div className="blog-hero-tag">
+            <span>Press on. More possibilities.</span>
+          </div>
+        </div>
+      </section>
+
+      <div className="blog-body">
+        {/* ===== SEARCH ===== */}
+        <div className="blog-toolbar">
+          <div className="blog-search">
+            <Search size={16} />
+            <input
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search articles..."
+            />
+          </div>
         </div>
 
-        {/* Blog Post Grid */}
-        <div className="grid-3">
-          {posts.map(post => (
-            <article key={post.id} className="glass-card" style={{ display: 'flex', flexDirection: 'column' }}>
-              {/* Cover Image */}
-              <Link to={`/blog/${post.slug}`} style={{ display: 'block', position: 'relative', paddingTop: '60%', overflow: 'hidden' }}>
-                <img
-                  src={post.cover}
-                  alt={post.title}
-                  style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',
-                    transition: 'transform 0.4s ease'
-                  }}
-                  onMouseOver={e => e.currentTarget.style.transform = 'scale(1.06)'}
-                  onMouseOut={e => e.currentTarget.style.transform = 'scale(1)'}
-                />
+        {/* ===== FEATURED ===== */}
+        {featured && (
+          <article className="blog-featured">
+            <Link to={`/blog/${featured.slug}`} className="blog-featured-media">
+              <span className="blog-badge-featured">FEATURED</span>
+              <img src={featured.cover} alt={featured.title} />
+            </Link>
+            <div className="blog-featured-content">
+              <Link to={`/blog/${featured.slug}`}>
+                <h2 className="blog-featured-title">{featured.title}</h2>
               </Link>
-
-              {/* Meta & Excerpt */}
-              <div style={{ padding: '1.75rem', display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'space-between' }}>
-                <div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '0.75rem' }}>
-                    <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                      <Calendar size={13} /> {post.publish_date}
-                    </span>
-                    <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                      <User size={13} /> {post.author || 'X-ON Team'}
-                    </span>
-                  </div>
-
-                  <Link to={`/blog/${post.slug}`}>
-                    <h3 style={{
-                      fontFamily: 'var(--font-heading)',
-                      fontSize: '1.2rem',
-                      fontWeight: 600,
-                      color: '#fff',
-                      lineHeight: 1.4,
-                      marginBottom: '0.75rem'
-                    }}>
-                      {post.title}
-                    </h3>
-                  </Link>
-
-                  <p style={{
-                    color: 'var(--text-secondary)',
-                    fontSize: '0.92rem',
-                    lineHeight: 1.6,
-                    marginBottom: '1.5rem',
-                    display: '-webkit-box',
-                    WebkitLineClamp: 3,
-                    WebkitBoxOrient: 'vertical',
-                    overflow: 'hidden'
-                  }}>
-                    {post.excerpt || (post.content_blocks && post.content_blocks[1]?.text) || 'Read the full story...'}
-                  </p>
-                </div>
-
-                <Link
-                  to={`/blog/${post.slug}`}
-                  className="btn btn-outline btn-sm"
-                  style={{ alignSelf: 'flex-start' }}
-                >
-                  Read More <ArrowRight size={14} />
+              <p className="blog-featured-excerpt">
+                {featured.excerpt || 'Explore the latest press-on nail artistry, styling forecasts and studio stories.'}
+              </p>
+              <div className="blog-featured-foot">
+                <Link to={`/blog/${featured.slug}`} className="blog-btn-outline">
+                  Read Full Story <ArrowRight size={14} />
                 </Link>
+                <span className="blog-meta">
+                  {formatDate(featured.publish_date)} &nbsp;|&nbsp; {featured._read} min read
+                </span>
               </div>
-            </article>
-          ))}
-        </div>
+            </div>
+          </article>
+        )}
+
+        {/* ===== GRID ===== */}
+        {paged.length > 0 ? (
+          <div className="blog-grid">
+            {paged.map((post) => (
+              <article key={post.id} className="blog-card">
+                <Link to={`/blog/${post.slug}`} className="blog-card-media">
+                  <img src={post.cover} alt={post.title} loading="lazy" />
+                </Link>
+                <div className="blog-card-body">
+                  <Link to={`/blog/${post.slug}`}>
+                    <h3 className="blog-card-title">{post.title}</h3>
+                  </Link>
+                  <p className="blog-card-excerpt">
+                    {post.excerpt || 'Read the full story from our Kissimmee studio...'}
+                  </p>
+                  <div className="blog-card-foot">
+                    <span className="blog-meta">
+                      {formatDate(post.publish_date)} &nbsp;|&nbsp; {post._read} min read
+                    </span>
+                    <Link to={`/blog/${post.slug}`} className="blog-circle-btn" aria-label="Read article">
+                      <ArrowRight size={15} />
+                    </Link>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <div className="blog-empty">
+            <p style={{ fontWeight: 600, marginBottom: '0.4rem' }}>No articles found</p>
+            <p style={{ fontSize: '0.88rem' }}>Try a different keyword.</p>
+          </div>
+        )}
+
+        {/* ===== PAGINATION ===== */}
+        {totalPages > 1 && (
+          <div className="blog-pagination">
+            {Array.from({ length: totalPages }).map((_, i) => (
+              <button
+                key={i}
+                className={`blog-page-btn ${safePage === i + 1 ? 'active' : ''}`}
+                onClick={() => { setPage(i + 1); window.scrollTo({ top: 380, behavior: 'smooth' }); }}
+              >
+                {i + 1}
+              </button>
+            ))}
+            {safePage < totalPages && (
+              <button
+                className="blog-page-btn"
+                onClick={() => { setPage(safePage + 1); window.scrollTo({ top: 380, behavior: 'smooth' }); }}
+                aria-label="Next page"
+              >
+                <ChevronRight size={16} />
+              </button>
+            )}
+          </div>
+        )}
+        {/* luôn hiển thị cụm pagination kiểu mẫu khi chỉ có 1 trang (cho đẹp như design) */}
+        {totalPages === 1 && filtered.length > 0 && (
+          <div className="blog-pagination">
+            <button className="blog-page-btn active">1</button>
+            <button className="blog-page-btn" onClick={() => {}} aria-hidden>2</button>
+            <button className="blog-page-btn" onClick={() => {}} aria-hidden>3</button>
+            <button className="blog-page-btn" aria-label="Next">
+              <ChevronRight size={16} />
+            </button>
+          </div>
+        )}
+
+        {/* ===== NEWSLETTER BANNER — nền blog_hero.png ===== */}
+        <section className="blog-newsletter">
+          <div className="blog-newsletter-inner">
+            <div className="blog-newsletter-title">
+              <Leaf size={22} />
+              <div>
+                <h3>Join the X-ON Community</h3>
+                <p>Get the latest nail trends, new collections, and exclusive tips straight to your inbox.</p>
+              </div>
+            </div>
+            <div>
+              {subscribed ? (
+                <div className="blog-newsletter-success">
+                  Welcome to the community! Please check your inbox to confirm.
+                </div>
+              ) : (
+                <form className="blog-newsletter-form" onSubmit={handleSubscribe}>
+                  <Mail size={16} />
+                  <input
+                    type="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Your email address"
+                  />
+                  <button type="submit" className="blog-subscribe-btn">
+                    Subscribe <ArrowRight size={14} />
+                  </button>
+                </form>
+              )}
+            </div>
+            <div className="blog-newsletter-side">
+              <span>Beauty<br />Crafted<br />To Inspire</span>
+            </div>
+          </div>
+        </section>
       </div>
     </div>
   );

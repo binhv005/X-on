@@ -34,6 +34,8 @@ class Database {
   init() {
     if (fs.existsSync(DB_FILE)) {
       try {
+        const stats = fs.statSync(DB_FILE);
+        this.lastModified = stats.mtimeMs;
         const fileContent = fs.readFileSync(DB_FILE, 'utf8');
         const parsed = JSON.parse(fileContent);
         this.data = { ...this.data, ...parsed };
@@ -47,16 +49,28 @@ class Database {
     }
   }
 
-  seed() {
-    console.log('🌱 Seeding initial X-ON database...');
-    this.data = seedInitialData();
-    this.save();
-    console.log('✅ Initial X-ON database seeded successfully.');
+  reloadIfModified() {
+    try {
+      if (fs.existsSync(DB_FILE)) {
+        const stats = fs.statSync(DB_FILE);
+        if (this.lastModified && stats.mtimeMs > this.lastModified) {
+          const fileContent = fs.readFileSync(DB_FILE, 'utf8');
+          const parsed = JSON.parse(fileContent);
+          this.data = { ...this.data, ...parsed };
+          this.lastModified = stats.mtimeMs;
+          console.log('🔄 db.json changed on disk, reloaded in-memory.');
+        }
+      }
+    } catch (e) {
+      // ignore concurrent write reads
+    }
   }
 
   save() {
     try {
       fs.writeFileSync(DB_FILE, JSON.stringify(this.data, null, 2), 'utf8');
+      const stats = fs.statSync(DB_FILE);
+      this.lastModified = stats.mtimeMs;
     } catch (err) {
       console.error('Failed to persist database to disk:', err);
     }
@@ -64,6 +78,7 @@ class Database {
 
   // Collection Accessors
   getCollection(name) {
+    this.reloadIfModified();
     if (!this.data[name]) {
       this.data[name] = [];
     }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard,
@@ -11,15 +11,23 @@ import {
   LogOut,
   Menu,
   X,
-  ExternalLink
+  ExternalLink,
+  ShieldAlert
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+import LoadingSpinner from '../common/LoadingSpinner';
 
 export default function AdminLayout() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { user, logout } = useAuth();
+  const { user, loading, isAdmin, logout } = useAuth();
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+
+  useEffect(() => {
+    if (!loading && (!user || !isAdmin)) {
+      navigate('/my-account');
+    }
+  }, [user, isAdmin, loading, navigate]);
 
   const navItems = [
     { name: 'Dashboard', path: '/admin', icon: LayoutDashboard },
@@ -27,13 +35,25 @@ export default function AdminLayout() {
     { name: 'Orders', path: '/admin/orders', icon: ShoppingCart },
     { name: 'Website Content', path: '/admin/content', icon: FileEdit },
     { name: 'Blog & Gallery', path: '/admin/blog-gallery', icon: Sparkles },
-    { name: 'Users / Wholesale / Inquiries', path: '/admin/users', icon: Users }
+    { name: 'Users & Wholesale', path: '/admin/users', icon: Users }
   ];
 
   const handleLogout = () => {
     logout();
     navigate('/my-account');
   };
+
+  if (loading) {
+    return (
+      <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--bg-primary)' }}>
+        <LoadingSpinner text="Verifying administrative access..." />
+      </div>
+    );
+  }
+
+  if (!user || !isAdmin) {
+    return null;
+  }
 
   return (
     <div style={{ display: 'flex', minHeight: '100vh', background: 'var(--bg-primary)' }}>
@@ -91,8 +111,8 @@ export default function AdminLayout() {
                   transition: 'all 0.2s ease'
                 }}
               >
-                <Icon size={18} color={isActive ? 'var(--accent-gold)' : 'var(--text-muted)'} />
-                <span>{item.name}</span>
+                <Icon size={18} color={isActive ? 'var(--accent-gold)' : 'var(--text-muted)'} style={{ flexShrink: 0 }} />
+                <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', lineHeight: 1.35 }}>{item.name}</span>
               </Link>
             );
           })}

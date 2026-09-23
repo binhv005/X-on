@@ -82,9 +82,9 @@ export default function AdminContentPage() {
       {/* Header */}
       <div style={{ marginBottom: '2rem' }}>
         <span className="brand-line">Dynamic CMS Management</span>
-        <h1 className="font-heading" style={{ fontSize: '1.8rem', color: '#fff', margin: '0.25rem 0' }}>
-          Website Content Editor
-        </h1>
+          <h1 className="font-heading" style={{ fontSize: '1.8rem', color: 'var(--text-primary)', margin: '0.25rem 0' }}>
+            Website Content Editor
+          </h1>
         <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
           Modify headings, descriptions, banner CTAs, and contact information dynamically without touching source code.
         </p>
@@ -113,7 +113,7 @@ export default function AdminContentPage() {
                 background: activeTab === tab.key ? 'var(--bg-surface)' : 'transparent',
                 border: 'none',
                 borderBottom: activeTab === tab.key ? '2px solid var(--accent-gold)' : '2px solid transparent',
-                color: activeTab === tab.key ? '#fff' : 'var(--text-secondary)',
+                color: activeTab === tab.key ? 'var(--text-primary)' : 'var(--text-secondary)',
                 fontWeight: 600,
                 cursor: 'pointer',
                 fontFamily: 'var(--font-heading)',
@@ -376,15 +376,15 @@ export default function AdminContentPage() {
           )}
 
           {/* Action Bar */}
-          <div style={{ display: 'flex', justifyContent: 'flex-end', borderTop: '1px solid var(--border-subtle)', paddingTop: '1.5rem', marginTop: '2rem' }}>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', borderTop: '1px solid var(--border-subtle)', paddingTop: '1.25rem', marginTop: '2rem' }}>
             <button
               type="submit"
-              className="btn btn-primary btn-lg"
+              className="btn btn-primary btn-sm"
               disabled={saving}
             >
               {saving ? 'Publishing Content...' : (
                 <>
-                  <Save size={18} /> Save & Publish Live
+                  <Save size={14} /> Save & Publish Live
                 </>
               )}
             </button>

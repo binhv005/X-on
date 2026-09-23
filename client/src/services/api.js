@@ -123,5 +123,35 @@ export const api = {
   login: (data) => request('/auth/login', { method: 'POST', body: JSON.stringify(data) }),
   register: (data) => request('/auth/register', { method: 'POST', body: JSON.stringify(data) }),
   getCurrentUser: () => request('/auth/me'),
-  getDashboardStats: () => request('/auth/dashboard-stats')
+  getDashboardStats: () => request('/auth/dashboard-stats'),
+
+  // Upload image to Cloudinary via backend (FormData, no JSON header)
+  uploadImage: async (file, folder = 'x-on') => {
+    const formData = new FormData();
+    formData.append('image', file);
+    formData.append('folder', folder);
+    const token = localStorage.getItem('xon_token');
+    const headers = token ? { Authorization: `Bearer ${token}` } : {};
+    let res;
+    try {
+      res = await fetch(`${API_BASE}/upload`, { method: 'POST', headers, body: formData });
+    } catch (err) {
+      throw new Error('Không kết nối được backend (localhost:5000). Hãy chạy "npm run server" rồi thử lại.');
+    }
+    const contentType = res.headers.get('content-type') || '';
+    let data = null;
+    if (contentType.includes('application/json')) {
+      data = await res.json();
+    } else {
+      const text = await res.text();
+      if (!res.ok && res.status === 404) {
+        throw new Error('Backend chưa có route POST /api/upload. Hãy restart backend (Ctrl+C rồi npm run server) để nạp code mới nhất.');
+      }
+      throw new Error(`Upload thất bại (${res.status}): server trả về non-JSON. Chi tiết: ${text.slice(0, 120)}`);
+    }
+    if (!res.ok) {
+      throw new Error(data.message || `Upload failed with status ${res.status}`);
+    }
+    return data;
+  }
 };

@@ -16,6 +16,7 @@ import inquiryRoutes from './routes/inquiryRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
 import reviewRoutes from './routes/reviewRoutes.js';
 import authRoutes from './routes/authRoutes.js';
+import uploadRoutes from './routes/uploadRoutes.js';
 import { errorHandler } from './middleware/errorHandler.js';
 
 dotenv.config();
@@ -48,6 +49,7 @@ app.use('/api/inquiries', inquiryRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/reviews', reviewRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/upload', uploadRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {
@@ -56,6 +58,14 @@ app.get('/api/health', (req, res) => {
     brand: 'X-ON',
     tagline: 'Press On. Slay On. Repeat.',
     timestamp: new Date().toISOString()
+  });
+});
+
+// JSON 404 cho mọi route /api không tồn tại (tránh trả HTML gây lỗi "<!DOCTYPE is not valid JSON" ở frontend)
+app.use('/api', (req, res) => {
+  res.status(404).json({
+    success: false,
+    message: `API route not found: ${req.method} ${req.originalUrl}. Hãy restart backend để nạp route mới nhất.`
   });
 });
 

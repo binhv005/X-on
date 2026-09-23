@@ -42,7 +42,7 @@ export default function Newsletter() {
         <span className="brand-line" style={{ display: 'block', marginBottom: '0.5rem' }}>
           Join The Inner Circle
         </span>
-        <h2 className="font-heading" style={{ fontSize: '2.2rem', color: '#fff', marginBottom: '1rem' }}>
+        <h2 className="font-heading" style={{ fontSize: '2.2rem', color: 'var(--text-primary)', marginBottom: '1rem' }}>
           X-ON Newsletter / Updates
         </h2>
         <p style={{ color: 'var(--text-secondary)', marginBottom: '2rem', fontSize: '1rem', lineHeight: '1.6' }}>

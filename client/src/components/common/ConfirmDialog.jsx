@@ -36,10 +36,10 @@ export default function ConfirmDialog({
             "{itemName}"
           </p>
         )}
-        <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginTop: '1.5rem' }}>
+        <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center', marginTop: '1.5rem' }}>
           <button
             type="button"
-            className="btn btn-secondary"
+            className="btn btn-secondary btn-sm"
             onClick={onClose}
             disabled={loading}
           >
@@ -47,7 +47,7 @@ export default function ConfirmDialog({
           </button>
           <button
             type="button"
-            className="btn btn-danger"
+            className="btn btn-danger btn-sm"
             onClick={onConfirm}
             disabled={loading}
           >

@@ -42,12 +42,17 @@ class GalleryService {
   }
 
   createGalleryItem(data) {
-    const { title, collection, media, linked_product, size_labels, status, sort_order } = data;
+    const { title, collection, media, linked_product, size_labels, status, sort_order, code, price, badge, shape, theme } = data;
     if (!title || !media) {
       throw new Error('Title and media URL are required');
     }
     return galleryRepository.createItem({
       title,
+      code: code || '',
+      price: price ? parseFloat(price) : 45.0,
+      badge: badge || 'NEW',
+      shape: shape || 'Almond',
+      theme: theme || 'Handmade Press-On Nails',
       collection: collection || 'Now Selling',
       media,
       linked_product: linked_product || null,

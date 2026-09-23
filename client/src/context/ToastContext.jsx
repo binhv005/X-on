@@ -21,9 +21,11 @@ export function ToastProvider({ children }) {
   return (
     <ToastContext.Provider value={{ addToast }}>
       {children}
-      <div style={{
+      <div
+        className="xon-toast-container"
+        style={{
         position: 'fixed',
-        bottom: '1.5rem',
+        top: '1.5rem',
         right: '1.5rem',
         zIndex: 9999,
         display: 'flex',
@@ -35,6 +37,7 @@ export function ToastProvider({ children }) {
         {toasts.map(toast => (
           <div
             key={toast.id}
+            className="xon-toast"
             style={{
               display: 'flex',
               alignItems: 'center',
@@ -47,16 +50,16 @@ export function ToastProvider({ children }) {
                 toast.type === 'error' ? '#ef4444' : '#d4af37'
               }`,
               borderRadius: '8px',
-              color: '#fff',
+              color: '#ffffff',
               boxShadow: '0 8px 24px rgba(0,0,0,0.5)',
-              animation: 'slideUp 0.25s ease-out'
+              animation: 'xonToastIn 0.25s ease-out'
             }}
           >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', fontSize: '0.9rem' }}>
+            <div className="xon-toast-message" style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', fontSize: '0.9rem', color: '#ffffff' }}>
               {toast.type === 'success' && <CheckCircle2 size={18} color="#10b981" />}
               {toast.type === 'error' && <AlertCircle size={18} color="#ef4444" />}
               {toast.type === 'info' && <Info size={18} color="#d4af37" />}
-              <span>{toast.message}</span>
+              <span className="xon-toast-text" style={{ color: '#ffffff' }}>{toast.message}</span>
             </div>
             <button
               onClick={() => removeToast(toast.id)}

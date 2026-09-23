@@ -29,10 +29,26 @@ export default function Modal({ isOpen, onClose, title, children, maxWidth = '65
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          padding: '1.25rem 1.75rem',
-          borderBottom: '1px solid var(--border-subtle)'
+          gap: '1rem',
+          padding: '1rem 1.5rem',
+          borderBottom: '1px solid var(--border-subtle)',
+          background: 'var(--bg-secondary)',
+          borderTopLeftRadius: 'var(--radius-md)',
+          borderTopRightRadius: 'var(--radius-md)'
         }}>
-          <h3 className="font-heading" style={{ fontSize: '1.2rem', color: '#fff' }}>{title}</h3>
+          <h3
+            className="font-heading"
+            style={{
+              fontSize: '1.05rem',
+              fontWeight: 700,
+              letterSpacing: '0.02em',
+              color: 'var(--text-primary)',
+              margin: 0,
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap'
+            }}
+          >{title}</h3>
           <button
             onClick={onClose}
             style={{

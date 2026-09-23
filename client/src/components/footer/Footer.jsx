@@ -68,7 +68,7 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h4 className="font-heading" style={{ fontSize: '1rem', color: '#fff', letterSpacing: '0.08em', marginBottom: '1.25rem', textTransform: 'uppercase' }}>
+            <h4 className="font-heading" style={{ fontSize: '1rem', color: 'var(--text-primary)', letterSpacing: '0.08em', marginBottom: '1.25rem', textTransform: 'uppercase' }}>
               Explore X-ON
             </h4>
             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.75rem', fontSize: '0.9rem' }}>
@@ -83,7 +83,7 @@ export default function Footer() {
 
           {/* Business & Pro */}
           <div>
-            <h4 className="font-heading" style={{ fontSize: '1rem', color: '#fff', letterSpacing: '0.08em', marginBottom: '1.25rem', textTransform: 'uppercase' }}>
+            <h4 className="font-heading" style={{ fontSize: '1rem', color: 'var(--text-primary)', letterSpacing: '0.08em', marginBottom: '1.25rem', textTransform: 'uppercase' }}>
               Partnerships & Info
             </h4>
             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.75rem', fontSize: '0.9rem' }}>
@@ -98,7 +98,7 @@ export default function Footer() {
 
           {/* Contact & Location Block */}
           <div>
-            <h4 className="font-heading" style={{ fontSize: '1rem', color: '#fff', letterSpacing: '0.08em', marginBottom: '1.25rem', textTransform: 'uppercase' }}>
+            <h4 className="font-heading" style={{ fontSize: '1rem', color: 'var(--text-primary)', letterSpacing: '0.08em', marginBottom: '1.25rem', textTransform: 'uppercase' }}>
               Kissimmee Studio
             </h4>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', fontSize: '0.9rem' }}>

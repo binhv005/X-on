@@ -74,8 +74,29 @@ export default function MyAccountPage() {
     addToast('Password reset link sent to your email!', 'info');
   };
 
+  const handleQuickLogin = async (email, password, roleName) => {
+    try {
+      setLoading(true);
+      setErrorMessage('');
+      await login(email, password);
+      addToast(`Logged in as ${roleName}!`, 'success');
+    } catch (err) {
+      setErrorMessage(err.message || 'Login failed.');
+      addToast(err.message || 'Login failed', 'error');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // If user is already logged in, show user dashboard overview
   if (user) {
+    const roleBadges = {
+      admin: { label: '👑 System Administrator', class: 'badge-gold' },
+      wholesale_customer: { label: '💼 Wholesale Partner (B2B)', class: 'badge-sale' },
+      customer: { label: '🛍️ Verified Customer', class: 'badge-success' }
+    };
+    const currentBadge = roleBadges[user.role] || { label: user.role, class: 'badge-neutral' };
+
     return (
       <div className="section-py" style={{ paddingTop: '3.5rem' }}>
         <div className="container" style={{ maxWidth: '800px' }}>
@@ -89,41 +110,82 @@ export default function MyAccountPage() {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1.5rem', marginBottom: '2rem', borderBottom: '1px solid var(--border-subtle)', paddingBottom: '1.5rem' }}>
               <div>
                 <span className="brand-line">Account Profile</span>
-                <h1 className="font-heading" style={{ fontSize: '2rem', color: '#fff' }}>
+                <h1 className="font-heading" style={{ fontSize: '2rem', color: 'var(--text-primary)', margin: '0.4rem 0' }}>
                   Hello, {user.name || user.username}!
                 </h1>
-                <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
-                  Member Role: <strong style={{ color: 'var(--accent-gold-light)', textTransform: 'capitalize' }}>{user.role.replace('_', ' ')}</strong>
-                </p>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginTop: '0.75rem', flexWrap: 'wrap' }}>
+                  <span className={`badge ${currentBadge.class}`} style={{ fontSize: '0.82rem', padding: '0.35rem 0.85rem' }}>
+                    {currentBadge.label}
+                  </span>
+                </div>
               </div>
 
-              <button
-                onClick={logout}
-                className="btn btn-outline btn-sm"
-                style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}
-              >
-                <LogOut size={15} /> Sign Out
-              </button>
+              <div style={{ display: 'flex', gap: '0.75rem' }}>
+                <button
+                  onClick={logout}
+                  className="btn btn-outline btn-sm"
+                  style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}
+                >
+                  <LogOut size={15} /> Sign Out
+                </button>
+              </div>
             </div>
+
+            {/* Admin Direct Access Banner if role === 'admin' */}
+            {user.role === 'admin' && (
+              <div style={{
+                background: 'linear-gradient(135deg, rgba(179,135,40,0.12) 0%, rgba(207,168,59,0.06) 100%)',
+                border: '1px solid var(--border-gold)',
+                borderRadius: '8px',
+                padding: '1.5rem',
+                marginBottom: '2rem',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                flexWrap: 'wrap',
+                gap: '1rem'
+              }}>
+                <div>
+                  <h3 className="font-heading" style={{ fontSize: '1.15rem', color: 'var(--accent-gold-dark)', marginBottom: '0.25rem' }}>
+                    👑 Administrator Portal Access Granted
+                  </h3>
+                  <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem' }}>
+                    You have full management access to Products, Orders, CMS Content, Blog/Gallery & Wholesale Inquiries.
+                  </p>
+                </div>
+                <Link to="/admin" className="btn btn-primary">
+                  🚀 Launch Admin Portal <ArrowRight size={16} />
+                </Link>
+              </div>
+            )}
 
             <div className="grid-2" style={{ marginBottom: '2rem' }}>
               <div style={{ padding: '1.5rem', background: 'var(--bg-secondary)', borderRadius: '8px', border: '1px solid var(--border-subtle)' }}>
-                <h4 className="font-heading" style={{ color: '#fff', marginBottom: '0.5rem', fontSize: '1rem' }}>Account Details</h4>
-                <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+                <h4 className="font-heading" style={{ color: 'var(--text-primary)', marginBottom: '0.75rem', fontSize: '1rem' }}>Account Details</h4>
+                <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                   <div><strong>Email:</strong> {user.email}</div>
                   <div><strong>Username:</strong> {user.username}</div>
-                  <div><strong>Status:</strong> <span className="badge badge-success">{user.status}</span></div>
+                  <div><strong>Full Name:</strong> {user.name || 'Not provided'}</div>
+                  <div><strong>Member Role:</strong> <span style={{ textTransform: 'capitalize' }}>{user.role.replace('_', ' ')}</span></div>
                 </div>
               </div>
 
               <div style={{ padding: '1.5rem', background: 'var(--bg-secondary)', borderRadius: '8px', border: '1px solid var(--border-subtle)' }}>
-                <h4 className="font-heading" style={{ color: '#fff', marginBottom: '0.5rem', fontSize: '1rem' }}>Quick Shortcuts</h4>
+                <h4 className="font-heading" style={{ color: 'var(--text-primary)', marginBottom: '0.75rem', fontSize: '1rem' }}>Demo Quick Switch</h4>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', fontSize: '0.9rem' }}>
-                  <Link to="/shop" style={{ color: 'var(--accent-gold-light)' }}>→ Browse Handmade Nails</Link>
-                  <Link to="/bundle-and-save" style={{ color: 'var(--accent-gold-light)' }}>→ View Bundle & Save</Link>
-                  {user.role === 'admin' && (
-                    <Link to="/admin" style={{ color: '#ff9b85', fontWeight: 700 }}>→ Open Admin Dashboard</Link>
-                  )}
+                  <button
+                    onClick={logout}
+                    className="btn btn-secondary btn-sm"
+                    style={{ justifyContent: 'flex-start', textAlign: 'left', width: '100%' }}
+                  >
+                    🔄 Switch to another demo role
+                  </button>
+                  <Link to="/shop" style={{ color: 'var(--accent-gold-dark)', display: 'block', marginTop: '0.25rem' }}>
+                    → Explore Handmade Nails Collection
+                  </Link>
+                  <Link to="/bundle-and-save" style={{ color: 'var(--accent-gold-dark)', display: 'block' }}>
+                    → View Bundle & Save Sets
+                  </Link>
                 </div>
               </div>
             </div>
@@ -135,11 +197,11 @@ export default function MyAccountPage() {
 
   return (
     <div className="section-py" style={{ paddingTop: '3.5rem' }}>
-      <div className="container" style={{ maxWidth: '600px' }}>
+      <div className="container" style={{ maxWidth: '640px' }}>
         {/* Header Title */}
-        <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
+        <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
           <span className="brand-line" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.5rem' }}>
-            <User size={16} /> Customer & Wholesale Portal
+            <User size={16} /> X-ON
           </span>
           <h1 className="section-title">My Account</h1>
           <p className="section-subtitle">
@@ -147,13 +209,105 @@ export default function MyAccountPage() {
           </p>
         </div>
 
-        {/* Auth Container Card */}
+        {/* ⚡ Quick 1-Click Demo Login Panel */}
         <div style={{
           background: 'var(--bg-surface)',
           border: '1px solid var(--border-gold)',
+          borderRadius: 'var(--radius-md)',
+          padding: '1.5rem',
+          marginBottom: '1.5rem',
+          boxShadow: 'var(--shadow-sm)'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <span style={{ fontSize: '1.2rem' }}>⚡</span>
+              <strong style={{ fontSize: '0.95rem', color: 'var(--accent-gold-dark)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                Quick Demo 1-Click Login
+              </strong>
+            </div>
+            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Demo Evaluation Mode</span>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))', gap: '0.75rem' }}>
+            {/* 1. Admin Quick Login */}
+            <button
+              type="button"
+              onClick={() => handleQuickLogin('admin@x-on.com', 'admin123', 'Administrator')}
+              disabled={loading}
+              className="btn btn-secondary"
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'flex-start',
+                padding: '0.85rem',
+                border: '1px solid rgba(179,135,40,0.35)',
+                background: 'linear-gradient(135deg, rgba(179,135,40,0.08) 0%, rgba(207,168,59,0.02) 100%)',
+                cursor: 'pointer'
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontWeight: 700, fontSize: '0.88rem', color: 'var(--accent-gold-dark)' }}>
+                <span>👑</span> Administrator
+              </div>
+              <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginTop: '2px' }}>
+                Full Management Access
+              </span>
+            </button>
+
+            {/* 2. Wholesale Partner Quick Login */}
+            <button
+              type="button"
+              onClick={() => handleQuickLogin('sarah.salon@example.com', 'user123', 'Wholesale Partner')}
+              disabled={loading}
+              className="btn btn-secondary"
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'flex-start',
+                padding: '0.85rem',
+                border: '1px solid var(--border-medium)',
+                cursor: 'pointer'
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontWeight: 700, fontSize: '0.88rem', color: 'var(--text-primary)' }}>
+                <span>💼</span> Wholesale Partner
+              </div>
+              <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginTop: '2px' }}>
+                B2B Studio Belle
+              </span>
+            </button>
+
+            {/* 3. Retail Customer Quick Login */}
+            <button
+              type="button"
+              onClick={() => handleQuickLogin('chloe.k@example.com', 'user123', 'Customer')}
+              disabled={loading}
+              className="btn btn-secondary"
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'flex-start',
+                padding: '0.85rem',
+                border: '1px solid var(--border-medium)',
+                cursor: 'pointer'
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontWeight: 700, fontSize: '0.88rem', color: 'var(--text-primary)' }}>
+                <span>🛍️</span> Retail Customer
+              </div>
+              <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginTop: '2px' }}>
+                Chloe Kim (Shopper)
+              </span>
+            </button>
+          </div>
+        </div>
+
+        {/* Auth Container Card */}
+        <div style={{
+          background: 'var(--bg-surface)',
+          border: '1px solid var(--border-subtle)',
           borderRadius: 'var(--radius-lg)',
           overflow: 'hidden',
-          boxShadow: 'var(--shadow-gold)'
+          boxShadow: 'var(--shadow-sm)'
         }}>
           {/* Tabs */}
           <div style={{ display: 'flex', borderBottom: '1px solid var(--border-subtle)', background: 'var(--bg-secondary)' }}>
@@ -161,11 +315,11 @@ export default function MyAccountPage() {
               onClick={() => { setActiveTab('login'); setErrorMessage(''); }}
               style={{
                 flex: 1,
-                padding: '1.25rem',
+                padding: '1.1rem',
                 background: activeTab === 'login' ? 'var(--bg-surface)' : 'transparent',
                 border: 'none',
                 borderBottom: activeTab === 'login' ? '2px solid var(--accent-gold)' : '2px solid transparent',
-                color: activeTab === 'login' ? '#fff' : 'var(--text-secondary)',
+                color: activeTab === 'login' ? 'var(--text-primary)' : 'var(--text-secondary)',
                 fontWeight: 600,
                 cursor: 'pointer',
                 fontFamily: 'var(--font-heading)'
@@ -177,11 +331,11 @@ export default function MyAccountPage() {
               onClick={() => { setActiveTab('register'); setErrorMessage(''); }}
               style={{
                 flex: 1,
-                padding: '1.25rem',
+                padding: '1.1rem',
                 background: activeTab === 'register' ? 'var(--bg-surface)' : 'transparent',
                 border: 'none',
                 borderBottom: activeTab === 'register' ? '2px solid var(--accent-gold)' : '2px solid transparent',
-                color: activeTab === 'register' ? '#fff' : 'var(--text-secondary)',
+                color: activeTab === 'register' ? 'var(--text-primary)' : 'var(--text-secondary)',
                 fontWeight: 600,
                 cursor: 'pointer',
                 fontFamily: 'var(--font-heading)'
@@ -223,9 +377,6 @@ export default function MyAccountPage() {
                     placeholder="admin@x-on.com or your username"
                     required
                   />
-                  <small style={{ color: 'var(--text-muted)', fontSize: '0.78rem', marginTop: '4px', display: 'block' }}>
-                    Demo Admin: <code>admin@x-on.com</code> / <code>admin123</code>
-                  </small>
                 </div>
 
                 <div className="form-group">
@@ -254,7 +405,7 @@ export default function MyAccountPage() {
                   <button
                     type="button"
                     onClick={() => setForgotModal(true)}
-                    style={{ background: 'transparent', border: 'none', color: 'var(--accent-gold-light)', cursor: 'pointer', textDecoration: 'underline' }}
+                    style={{ background: 'transparent', border: 'none', color: 'var(--accent-gold-dark)', cursor: 'pointer', textDecoration: 'underline' }}
                   >
                     Lost your password?
                   </button>

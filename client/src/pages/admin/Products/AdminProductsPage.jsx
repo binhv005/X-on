@@ -12,7 +12,7 @@ import {
   Sparkles
 } from 'lucide-react';
 import { api } from '../../../services/api';
-import Drawer from '../../../components/common/Drawer';
+import Modal from '../../../components/common/Modal';
 import ConfirmDialog from '../../../components/common/ConfirmDialog';
 import LoadingSpinner from '../../../components/common/LoadingSpinner';
 import { useToast } from '../../../context/ToastContext';
@@ -212,13 +212,13 @@ export default function AdminProductsPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', marginBottom: '2rem' }}>
         <div>
           <span className="brand-line">Inventory & Catalog</span>
-          <h1 className="font-heading" style={{ fontSize: '1.8rem', color: '#fff', margin: '0.25rem 0' }}>
+          <h1 className="font-heading" style={{ fontSize: '1.8rem', color: 'var(--text-primary)', margin: '0.25rem 0' }}>
             Product Management
           </h1>
         </div>
 
-        <button onClick={openAddDrawer} className="btn btn-primary">
-          <Plus size={16} /> Add Product
+        <button onClick={openAddDrawer} className="btn btn-primary btn-sm">
+          <Plus size={14} /> Add Product
         </button>
       </div>
 
@@ -316,7 +316,7 @@ export default function AdminProductsPage() {
                           </div>
                         </td>
                         <td style={{ padding: '0.75rem 1rem' }}>
-                          <div style={{ fontWeight: 600, color: '#fff', marginBottom: '2px' }}>{product.name}</div>
+                          <div style={{ fontWeight: 600, color: 'var(--text-primary)', marginBottom: '2px' }}>{product.name}</div>
                           <div style={{ fontSize: '0.75rem', color: 'var(--accent-gold-light)', fontFamily: 'monospace' }}>{product.SKU}</div>
                         </td>
                         <td style={{ padding: '0.75rem 1rem' }}>
@@ -328,7 +328,7 @@ export default function AdminProductsPage() {
                               </span>
                             </div>
                           ) : (
-                            <span style={{ fontWeight: 600, color: '#fff' }}>${(product.price || 0).toFixed(2)}</span>
+                            <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>${(product.price || 0).toFixed(2)}</span>
                           )}
                         </td>
                         <td style={{ padding: '0.75rem 1rem' }}>
@@ -377,12 +377,12 @@ export default function AdminProductsPage() {
         </div>
       )}
 
-      {/* Add / Edit Sliding Drawer */}
-      <Drawer
+      {/* Add / Edit Centered Popup */}
+      <Modal
         isOpen={isDrawerOpen}
         onClose={() => setIsDrawerOpen(false)}
         title={editingProduct ? `Edit Product: ${editingProduct.name}` : 'Add New Product'}
-        width="650px"
+        maxWidth="700px"
       >
         <form onSubmit={handleFormSubmit}>
           {formError && (
@@ -557,24 +557,24 @@ export default function AdminProductsPage() {
             </label>
           </div>
 
-          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'flex-end', borderTop: '1px solid var(--border-subtle)', paddingTop: '1.5rem' }}>
+          <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'flex-end', borderTop: '1px solid var(--border-subtle)', paddingTop: '1.25rem' }}>
             <button
               type="button"
-              className="btn btn-secondary"
+              className="btn btn-secondary btn-sm"
               onClick={() => setIsDrawerOpen(false)}
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="btn btn-primary"
+              className="btn btn-primary btn-sm"
               disabled={formLoading}
             >
               {formLoading ? 'Saving...' : editingProduct ? 'Save Changes' : 'Create Product'}
             </button>
           </div>
         </form>
-      </Drawer>
+      </Modal>
 
       {/* Delete Confirmation Popup */}
       <ConfirmDialog
