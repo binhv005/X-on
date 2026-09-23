@@ -40,20 +40,21 @@ export default function Newsletter() {
       }}>
         {/* Explanatory Text on the Same Row */}
         <div style={{ flex: '1 1 280px', maxWidth: '380px' }}>
-          <h3 style={{
-            fontSize: '1.2rem',
+          <h3 className="font-heading" style={{
+            fontSize: '1.25rem',
             fontWeight: 800,
-            color: '#ffffff',
-            marginBottom: '0.25rem',
-            letterSpacing: '-0.01em',
-            textTransform: 'uppercase'
+            color: '#f5d376',
+            marginBottom: '0.35rem',
+            letterSpacing: '0.04em',
+            textTransform: 'uppercase',
+            textShadow: '0 1px 3px rgba(0, 0, 0, 0.5)'
           }}>
             X-ON Newsletter / Updates
           </h3>
           <p style={{
-            fontSize: '0.88rem',
-            color: '#9ca3af',
-            lineHeight: 1.45,
+            fontSize: '0.9rem',
+            color: '#cbd5e1',
+            lineHeight: 1.5,
             margin: 0
           }}>
             Sign up for emails and texts to be the first to know about exclusive deals, launches & updates!

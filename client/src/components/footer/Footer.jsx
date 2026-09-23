@@ -23,30 +23,39 @@ export default function Footer() {
         }}>
           {/* Brand Col */}
           <div style={{ maxWidth: '340px' }}>
-            <Link to="/" style={{ display: 'inline-block', marginBottom: '1rem', textDecoration: 'none' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+            <Link to="/" style={{ display: 'inline-block', marginBottom: '1.25rem', textDecoration: 'none' }}>
+              <div style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                padding: '8px 16px',
+                background: '#ffffff',
+                borderRadius: '10px',
+                boxShadow: '0 4px 18px rgba(0, 0, 0, 0.35)',
+                border: '1px solid rgba(245, 211, 118, 0.5)'
+              }}>
                 <img
                   src={logoImg}
                   alt="X-ON Logo"
                   style={{
-                    height: '56px',
+                    height: '46px',
                     width: 'auto',
-                    objectFit: 'contain'
+                    objectFit: 'contain',
+                    display: 'block'
                   }}
                 />
               </div>
             </Link>
-            <p className="brand-line" style={{ marginBottom: '0.85rem', fontSize: '0.85rem', color: '#f5d376' }}>
+            <p className="brand-line" style={{ marginBottom: '0.85rem', fontSize: '0.88rem', color: '#f5d376', fontWeight: 700, letterSpacing: '0.12em' }}>
               Press On. Slay On. Repeat.
             </p>
-            <p style={{ fontSize: '0.9rem', lineHeight: '1.65', color: '#9ca3af', margin: 0 }}>
+            <p style={{ fontSize: '0.9rem', lineHeight: '1.65', color: '#cbd5e1', margin: 0 }}>
               X-ON is where modern nail artistry meets effortless luxury. Handcrafted bespoke press-on nails and premium essentials designed for long-lasting salon elegance.
             </p>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h4 className="font-heading" style={{ fontSize: '1rem', color: '#ffffff', letterSpacing: '0.08em', marginBottom: '1.25rem', textTransform: 'uppercase' }}>
+            <h4 className="font-heading footer-heading" style={{ fontSize: '1.05rem', color: '#f5d376', letterSpacing: '0.1em', marginBottom: '1.25rem', textTransform: 'uppercase', fontWeight: 700 }}>
               Explore X-ON
             </h4>
             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.75rem', fontSize: '0.9rem' }}>
@@ -61,7 +70,7 @@ export default function Footer() {
 
           {/* Business & Pro */}
           <div>
-            <h4 className="font-heading" style={{ fontSize: '1rem', color: '#ffffff', letterSpacing: '0.08em', marginBottom: '1.25rem', textTransform: 'uppercase' }}>
+            <h4 className="font-heading footer-heading" style={{ fontSize: '1.05rem', color: '#f5d376', letterSpacing: '0.1em', marginBottom: '1.25rem', textTransform: 'uppercase', fontWeight: 700 }}>
               Partnerships & Info
             </h4>
             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.75rem', fontSize: '0.9rem' }}>
@@ -76,7 +85,7 @@ export default function Footer() {
 
           {/* Contact & Location Block */}
           <div>
-            <h4 className="font-heading" style={{ fontSize: '1rem', color: '#ffffff', letterSpacing: '0.08em', marginBottom: '1.25rem', textTransform: 'uppercase' }}>
+            <h4 className="font-heading footer-heading" style={{ fontSize: '1.05rem', color: '#f5d376', letterSpacing: '0.1em', marginBottom: '1.25rem', textTransform: 'uppercase', fontWeight: 700 }}>
               Kissimmee Studio
             </h4>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', fontSize: '0.9rem' }}>
