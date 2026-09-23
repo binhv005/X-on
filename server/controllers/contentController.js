@@ -1,9 +1,9 @@
-import { db } from '../config/db.js';
+import { contentService } from '../services/contentService.js';
 
 export const getPageContent = (req, res, next) => {
   try {
     const { pageKey } = req.params;
-    const content = db.getPageContent(pageKey);
+    const content = contentService.getPageContent(pageKey);
     if (!content) {
       return res.status(404).json({ success: false, message: `Content for page '${pageKey}' not found` });
     }
@@ -15,7 +15,8 @@ export const getPageContent = (req, res, next) => {
 
 export const getAllPageContents = (req, res, next) => {
   try {
-    res.json({ success: true, data: db.data.pageContents });
+    const contents = contentService.getAllContents();
+    res.json({ success: true, data: contents });
   } catch (err) {
     next(err);
   }
@@ -24,7 +25,7 @@ export const getAllPageContents = (req, res, next) => {
 export const updatePageContent = (req, res, next) => {
   try {
     const { pageKey } = req.params;
-    const updated = db.updatePageContent(pageKey, req.body);
+    const updated = contentService.updatePageContent(pageKey, req.body);
     res.json({ success: true, message: `Content for '${pageKey}' updated successfully`, data: updated });
   } catch (err) {
     next(err);

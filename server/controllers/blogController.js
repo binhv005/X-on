@@ -1,15 +1,8 @@
-import { db } from '../config/db.js';
+import { blogService } from '../services/blogService.js';
 
 export const getBlogPosts = (req, res, next) => {
   try {
-    const { status, all } = req.query;
-    let posts = db.getCollection('blogPosts');
-    if (status) {
-      posts = posts.filter(p => p.status === status);
-    } else if (all !== 'true') {
-      posts = posts.filter(p => p.status === 'published');
-    }
-    posts.sort((a, b) => new Date(b.publish_date || b.createdAt) - new Date(a.publish_date || a.createdAt));
+    const posts = blogService.getBlogPosts(req.query);
     res.json({ success: true, data: posts });
   } catch (err) {
     next(err);
@@ -19,7 +12,7 @@ export const getBlogPosts = (req, res, next) => {
 export const getBlogPostBySlug = (req, res, next) => {
   try {
     const { slug } = req.params;
-    const post = db.findOne('blogPosts', p => p.slug === slug || p.id === slug);
+    const post = blogService.getBlogPostBySlug(slug);
     if (!post) {
       return res.status(404).json({ success: false, message: 'Blog post not found' });
     }
@@ -31,25 +24,7 @@ export const getBlogPostBySlug = (req, res, next) => {
 
 export const createBlogPost = (req, res, next) => {
   try {
-    const { title, slug, cover, publish_date, author, excerpt, content_blocks, status } = req.body;
-    if (!title) {
-      return res.status(400).json({ success: false, message: 'Title is required' });
-    }
-
-    const calculatedSlug = slug || title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w\-]+/g, '');
-
-    const newPost = db.insert('blogPosts', {
-      title,
-      slug: calculatedSlug,
-      cover: cover || 'https://images.unsplash.com/photo-1632345031435-8727f6897d53?auto=format&fit=crop&w=1200&q=80',
-      publish_date: publish_date || new Date().toISOString().split('T')[0],
-      author: author || 'X-ON Team',
-      excerpt: excerpt || '',
-      content_blocks: Array.isArray(content_blocks) ? content_blocks : [],
-      status: status || 'published',
-      comments: []
-    });
-
+    const newPost = blogService.createBlogPost(req.body);
     res.status(201).json({ success: true, message: 'Blog post created successfully', data: newPost });
   } catch (err) {
     next(err);
@@ -59,7 +34,7 @@ export const createBlogPost = (req, res, next) => {
 export const updateBlogPost = (req, res, next) => {
   try {
     const { id } = req.params;
-    const updated = db.update('blogPosts', id, req.body);
+    const updated = blogService.updateBlogPost(id, req.body);
     if (!updated) {
       return res.status(404).json({ success: false, message: 'Blog post not found' });
     }
@@ -72,7 +47,7 @@ export const updateBlogPost = (req, res, next) => {
 export const deleteBlogPost = (req, res, next) => {
   try {
     const { id } = req.params;
-    const deleted = db.delete('blogPosts', id);
+    const deleted = blogService.deleteBlogPost(id);
     if (!deleted) {
       return res.status(404).json({ success: false, message: 'Blog post not found' });
     }
@@ -85,24 +60,10 @@ export const deleteBlogPost = (req, res, next) => {
 export const addComment = (req, res, next) => {
   try {
     const { slug } = req.params;
-    const { name, email, comment } = req.body;
-    if (!name || !comment) {
-      return res.status(400).json({ success: false, message: 'Name and comment are required' });
-    }
-    const post = db.findOne('blogPosts', p => p.slug === slug || p.id === slug);
-    if (!post) {
+    const newComment = blogService.addComment(slug, req.body);
+    if (!newComment) {
       return res.status(404).json({ success: false, message: 'Blog post not found' });
     }
-    if (!Array.isArray(post.comments)) post.comments = [];
-    const newComment = {
-      id: `comm_${Date.now()}`,
-      name: name.trim(),
-      email: email ? email.trim() : '',
-      comment: comment.trim(),
-      date: new Date().toISOString().split('T')[0]
-    };
-    post.comments.push(newComment);
-    db.save();
     res.status(201).json({ success: true, message: 'Comment submitted successfully', data: newComment });
   } catch (err) {
     next(err);
