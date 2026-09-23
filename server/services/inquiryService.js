@@ -4,15 +4,49 @@ class InquiryService {
   submitInquiry(data) {
     const { name, email, order_number, message } = data;
 
-    if (!name || !email || !message) {
-      throw new Error('Name, Email, and Message are required.');
+    if (!name || !name.trim()) {
+      const err = new Error('First & Last Name is required.');
+      err.status = 400;
+      throw err;
+    }
+
+    if (!email || !email.trim()) {
+      const err = new Error('Email Address is required.');
+      err.status = 400;
+      throw err;
+    }
+
+    const emailNorm = email.trim().toLowerCase();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+    if (!emailRegex.test(emailNorm)) {
+      const err = new Error('Please enter a valid Email Address.');
+      err.status = 400;
+      throw err;
+    }
+
+    if (!message || !message.trim()) {
+      const err = new Error('Message is required.');
+      err.status = 400;
+      throw err;
+    }
+
+    if (message.trim().length < 10) {
+      const err = new Error('Message should be at least 10 characters so our artists can help you better.');
+      err.status = 400;
+      throw err;
+    }
+
+    if (name.trim().length > 120) {
+      const err = new Error('Name is too long (max 120 characters).');
+      err.status = 400;
+      throw err;
     }
 
     return inquiryRepository.create({
       name: name.trim(),
-      email: email.trim().toLowerCase(),
-      order_number: order_number ? order_number.trim() : '',
-      message: message.trim(),
+      email: emailNorm,
+      order_number: order_number ? order_number.trim().slice(0, 80) : '',
+      message: message.trim().slice(0, 5000),
       status: 'new',
       note: ''
     });
@@ -28,10 +62,10 @@ class InquiryService {
     if (search) {
       const q = search.toLowerCase();
       inqs = inqs.filter(i =>
-        i.name.toLowerCase().includes(q) ||
-        i.email.toLowerCase().includes(q) ||
-        i.order_number.toLowerCase().includes(q) ||
-        i.message.toLowerCase().includes(q)
+        (i.name || '').toLowerCase().includes(q) ||
+        (i.email || '').toLowerCase().includes(q) ||
+        (i.order_number || '').toLowerCase().includes(q) ||
+        (i.message || '').toLowerCase().includes(q)
       );
     }
 

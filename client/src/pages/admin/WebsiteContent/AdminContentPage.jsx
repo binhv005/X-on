@@ -595,15 +595,15 @@ export default function AdminContentPage() {
           )}
 
           {/* Action Bar */}
-          <div style={{ display: 'flex', justifyContent: 'flex-end', borderTop: '1px solid var(--border-subtle)', paddingTop: '1.5rem', marginTop: '2rem' }}>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', borderTop: '1px solid var(--border-subtle)', paddingTop: '1.25rem', marginTop: '2rem' }}>
             <button
               type="submit"
-              className="btn btn-primary btn-lg"
+              className="btn btn-primary btn-sm"
               disabled={saving}
             >
               {saving ? 'Publishing Content...' : (
                 <>
-                  <Save size={18} /> Save & Publish Live
+                  <Save size={14} /> Save & Publish Live
                 </>
               )}
             </button>

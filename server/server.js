@@ -64,6 +64,14 @@ app.get('/api/health', (req, res) => {
   });
 });
 
+// JSON 404 cho mọi route /api không tồn tại (tránh trả HTML gây lỗi "<!DOCTYPE is not valid JSON" ở frontend)
+app.use('/api', (req, res) => {
+  res.status(404).json({
+    success: false,
+    message: `API route not found: ${req.method} ${req.originalUrl}. Hãy restart backend để nạp route mới nhất.`
+  });
+});
+
 // Serve frontend build if in production
 const clientBuildPath = path.join(__dirname, '../client/dist');
 app.use(express.static(clientBuildPath));

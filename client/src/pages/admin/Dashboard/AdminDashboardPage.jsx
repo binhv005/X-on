@@ -231,6 +231,39 @@ export default function AdminDashboardPage() {
             <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>No wholesale applications yet.</p>
           )}
         </div>
+
+        {/* Recent Contact Inquiries */}
+        <div style={{
+          background: 'var(--bg-surface)',
+          border: '1px solid var(--border-subtle)',
+          borderRadius: 'var(--radius-md)',
+          padding: '1.5rem'
+        }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+            <h3 className="font-heading" style={{ fontSize: '1.15rem', color: 'var(--text-primary)' }}>Recent Contact Inquiries</h3>
+            <Link to="/admin/users" style={{ fontSize: '0.82rem', color: 'var(--accent-gold-light)', display: 'flex', alignItems: 'center', gap: '3px' }}>
+              View All <ArrowRight size={13} />
+            </Link>
+          </div>
+
+          {stats?.recentInquiries && stats.recentInquiries.length > 0 ? (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+              {stats.recentInquiries.map(inq => (
+                <div key={inq.id} style={{ padding: '0.75rem 1rem', borderRadius: '6px', background: 'var(--bg-secondary)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '0.75rem', border: '1px solid var(--border-subtle)' }}>
+                  <div style={{ minWidth: 0 }}>
+                    <div style={{ fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.9rem', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{inq.name} — {inq.email}</div>
+                    <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{inq.message}</div>
+                  </div>
+                  <span className={`badge ${inq.status === 'resolved' ? 'badge-success' : inq.status === 'in_review' ? 'badge-gold' : 'badge-neutral'}`} style={{ fontSize: '0.7rem', flexShrink: 0 }}>
+                    {inq.status}
+                  </span>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>No contact inquiries yet.</p>
+          )}
+        </div>
       </div>
     </div>
   );

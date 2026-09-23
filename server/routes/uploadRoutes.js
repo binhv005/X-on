@@ -3,6 +3,7 @@ import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
+import cloudinary from '../config/cloudinary.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -12,49 +13,96 @@ if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, uploadDir);
-  },
-  filename: function (req, file, cb) {
-    const ext = path.extname(file.originalname);
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    cb(null, 'product-' + uniqueSuffix + ext);
-  }
-});
-
+// Memory storage for Cloudinary stream with fallback
 const upload = multer({
-  storage: storage,
+  storage: multer.memoryStorage(),
   limits: { fileSize: 15 * 1024 * 1024 }, // 15MB limit
   fileFilter: (req, file, cb) => {
-    const allowed = /jpeg|jpg|png|webp|gif|svg/;
-    const extname = allowed.test(path.extname(file.originalname).toLowerCase());
-    const mimetype = allowed.test(file.mimetype);
-    if (extname && mimetype) {
-      return cb(null, true);
+    if (!file.mimetype.startsWith('image/')) {
+      return cb(new Error('Only image files are allowed (jpg, png, webp, gif, svg).'), false);
     }
-    cb(new Error('Only image files (JPEG, PNG, WebP, GIF, SVG) are allowed!'));
+    cb(null, true);
   }
 });
 
 const router = express.Router();
 
-router.post('/', upload.single('image'), (req, res) => {
+// POST /api/upload - upload image (Cloudinary with local file fallback)
+router.post('/', upload.single('image'), async (req, res, next) => {
   try {
     if (!req.file) {
-      return res.status(400).json({ success: false, message: 'No file uploaded' });
+      return res.status(400).json({ success: false, message: 'No image file provided.' });
     }
-    // Return relative URL for static serving
-    const fileUrl = `/uploads/${req.file.filename}`;
-    res.json({
-      success: true,
-      url: fileUrl,
-      filename: req.file.filename,
-      size: req.file.size
-    });
+
+    // Check if Cloudinary is configured
+    const isCloudinaryConfigured = Boolean(
+      process.env.CLOUDINARY_CLOUD_NAME &&
+      process.env.CLOUDINARY_API_KEY &&
+      process.env.CLOUDINARY_API_SECRET
+    );
+
+    if (isCloudinaryConfigured) {
+      const folder = (req.body.folder || req.query.folder || 'products').toString().slice(0, 60);
+
+      const stream = cloudinary.uploader.upload_stream(
+        {
+          folder: `x-on/${folder}`,
+          resource_type: 'image',
+          transformation: [{ quality: 'auto', fetch_format: 'auto' }]
+        },
+        (error, result) => {
+          if (error) {
+            // Fallback to local storage if Cloudinary upload fails
+            console.error('Cloudinary upload failed, falling back to disk:', error);
+            saveToDisk(req, res);
+            return;
+          }
+          return res.status(201).json({
+            success: true,
+            url: result.secure_url,
+            message: 'Image uploaded successfully',
+            data: {
+              url: result.secure_url,
+              public_id: result.public_id,
+              width: result.width,
+              height: result.height,
+              format: result.format
+            }
+          });
+        }
+      );
+      stream.end(req.file.buffer);
+    } else {
+      saveToDisk(req, res);
+    }
   } catch (err) {
-    res.status(500).json({ success: false, message: err.message });
+    next(err);
   }
 });
+
+function saveToDisk(req, res) {
+  try {
+    const ext = path.extname(req.file.originalname) || '.jpg';
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+    const filename = 'product-' + uniqueSuffix + ext;
+    const filePath = path.join(uploadDir, filename);
+
+    fs.writeFileSync(filePath, req.file.buffer);
+
+    const fileUrl = `/uploads/${filename}`;
+    return res.status(201).json({
+      success: true,
+      url: fileUrl,
+      filename: filename,
+      size: req.file.size,
+      data: {
+        url: fileUrl,
+        public_id: filename
+      }
+    });
+  } catch (err) {
+    return res.status(500).json({ success: false, message: err.message });
+  }
+}
 
 export default router;

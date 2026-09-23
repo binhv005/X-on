@@ -489,7 +489,7 @@ export default function AdminOrdersPage() {
               </div>
               <button
                 type="submit"
-                className="btn btn-primary"
+                className="btn btn-primary btn-sm"
                 disabled={updatingStatus}
                 style={{ width: '100%' }}
               >

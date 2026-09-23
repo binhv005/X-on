@@ -1222,7 +1222,7 @@ export default function AdminProductsPage() {
             </label>
           </div>
 
-          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'flex-end', borderTop: '1px solid var(--border-subtle)', paddingTop: '1.5rem' }}>
+          <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'flex-end', borderTop: '1px solid var(--border-subtle)', paddingTop: '1.25rem' }}>
             <button
               type="button"
               className="btn btn-secondary"
@@ -1232,7 +1232,7 @@ export default function AdminProductsPage() {
             </button>
             <button
               type="submit"
-              className="btn btn-primary"
+              className="btn btn-primary btn-sm"
               disabled={formLoading}
             >
               {formLoading ? 'Saving...' : editingProduct ? 'Save Changes' : 'Create Product'}
@@ -1240,7 +1240,6 @@ export default function AdminProductsPage() {
           </div>
         </form>
       </Modal>
-
       {/* Add Type / Shape Modal */}
       <Modal
         isOpen={isTypeShapeModalOpen}

@@ -197,12 +197,12 @@ export default function AdminUsersWholesalePage() {
                         <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{app.business_address}</div>
                       </td>
                       <td style={{ padding: '1rem' }}>
-                        <div style={{ color: 'var(--accent-gold-light)' }}>{app.username}</div>
+                        <div style={{ color: 'var(--accent-gold-dark)', fontWeight: 600 }}>{app.username}</div>
                         <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)' }}>{app.email}</div>
                       </td>
                       <td style={{ padding: '1rem' }}>{app.phone}</td>
-                      <td style={{ padding: '1rem' }}>
-                        <span className="badge badge-gold">{app.membership || 'Wholesale customer'}</span>
+                      <td style={{ padding: '1rem', whiteSpace: 'nowrap' }}>
+                        <span className="badge badge-gold" style={{ whiteSpace: 'nowrap', fontSize: '0.7rem', padding: '0.3rem 0.7rem' }}>{app.membership || 'Wholesale customer'}</span>
                       </td>
                       <td style={{ padding: '1rem' }}>
                         <span className={`badge ${
@@ -255,7 +255,7 @@ export default function AdminUsersWholesalePage() {
                     <tr key={inq.id} style={{ borderBottom: '1px solid var(--border-subtle)' }}>
                       <td style={{ padding: '1rem', fontWeight: 600, color: 'var(--text-primary)' }}>{inq.name}</td>
                       <td style={{ padding: '1rem' }}>
-                        <div style={{ color: 'var(--accent-gold-dark)' }}>{inq.email}</div>
+                        <div style={{ color: 'var(--accent-gold-dark)', fontWeight: 600 }}>{inq.email}</div>
                         {inq.order_number && (
                           <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Order: {inq.order_number}</div>
                         )}
@@ -334,7 +334,7 @@ export default function AdminUsersWholesalePage() {
         isOpen={isDrawerOpen && Boolean(selectedWholesale)}
         onClose={() => setIsDrawerOpen(false)}
         title="Wholesale Application Review"
-        maxWidth="650px"
+        maxWidth="600px"
       >
         {selectedWholesale && (
           <form onSubmit={handleUpdateWholesale} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
@@ -371,11 +371,11 @@ export default function AdminUsersWholesalePage() {
               ></textarea>
             </div>
 
-            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '1rem', borderTop: '1px solid var(--border-subtle)', paddingTop: '1.5rem' }}>
-              <button type="button" className="btn btn-secondary" onClick={() => setIsDrawerOpen(false)}>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem', borderTop: '1px solid var(--border-subtle)', paddingTop: '1.25rem' }}>
+              <button type="button" className="btn btn-secondary btn-sm" onClick={() => setIsDrawerOpen(false)}>
                 Cancel
               </button>
-              <button type="submit" className="btn btn-primary" disabled={updating}>
+              <button type="submit" className="btn btn-primary btn-sm" disabled={updating}>
                 {updating ? 'Saving...' : 'Update Application'}
               </button>
             </div>
@@ -388,7 +388,7 @@ export default function AdminUsersWholesalePage() {
         isOpen={isDrawerOpen && Boolean(selectedInquiry)}
         onClose={() => setIsDrawerOpen(false)}
         title="Contact Inquiry Details"
-        maxWidth="650px"
+        maxWidth="600px"
       >
         {selectedInquiry && (
           <form onSubmit={handleUpdateInquiry} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
@@ -430,11 +430,11 @@ export default function AdminUsersWholesalePage() {
               ></textarea>
             </div>
 
-            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '1rem', borderTop: '1px solid var(--border-subtle)', paddingTop: '1.5rem' }}>
-              <button type="button" className="btn btn-secondary" onClick={() => setIsDrawerOpen(false)}>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem', borderTop: '1px solid var(--border-subtle)', paddingTop: '1.25rem' }}>
+              <button type="button" className="btn btn-secondary btn-sm" onClick={() => setIsDrawerOpen(false)}>
                 Cancel
               </button>
-              <button type="submit" className="btn btn-primary" disabled={updating}>
+              <button type="submit" className="btn btn-primary btn-sm" disabled={updating}>
                 {updating ? 'Saving...' : 'Update Inquiry Status'}
               </button>
             </div>

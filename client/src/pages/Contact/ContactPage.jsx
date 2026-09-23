@@ -1,284 +1,426 @@
-import React, { useState, useEffect } from 'react';
-import { MapPin, Phone, Mail, Sparkles, CheckCircle2, AlertCircle, Send, ShieldCheck } from 'lucide-react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import {
+  MapPin,
+  Phone,
+  CheckCircle2,
+  AlertCircle,
+  ArrowRight,
+  Sparkles,
+  Star,
+  Award,
+  Clock,
+  Check,
+  Package,
+  Users,
+  HeartHandshake,
+  ShieldCheck,
+  Store
+} from 'lucide-react';
 import { api } from '../../services/api';
 import { useToast } from '../../context/ToastContext';
+import './ContactPage.css';
+
+const PHONE = '689-212-8888';
+const ADDRESS_L1 = '3168 Bill Beck Blvd,';
+const ADDRESS_L2 = 'Kissimmee, FL 34744';
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+const HANDMADE_POINTS = [
+  { icon: <Sparkles size={13} />, text: 'Unique & trendy designs' },
+  { icon: <Award size={13} />, text: 'High-quality materials' },
+  { icon: <Star size={13} />, text: 'Multiple styles for every look' },
+  { icon: <Clock size={13} />, text: 'Easy, fast & more accessible beauty' },
+  { icon: <Check size={13} />, text: 'A polished, luxury finish' }
+];
+
+const ESSENTIALS_POINTS = [
+  { icon: <Package size={13} />, text: 'Carefully selected products' },
+  { icon: <Users size={13} />, text: 'For nail lovers & professionals' },
+  { icon: <Award size={13} />, text: 'Quality, style & performance' },
+  { icon: <Store size={13} />, text: 'Everything you need in one place' },
+  { icon: <HeartHandshake size={13} />, text: 'Elevate your nail experience' }
+];
 
 export default function ContactPage() {
   const { addToast } = useToast();
 
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    order_number: '',
-    message: ''
-  });
-
+  const [formData, setFormData] = useState({ name: '', email: '', order_number: '', message: '' });
+  const [fieldErrors, setFieldErrors] = useState({});
+  const [formError, setFormError] = useState('');
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
 
   const handleChange = (e) => {
-    setFormData(prev => ({
-      ...prev,
-      [e.target.name]: e.target.value
-    }));
-    setErrorMessage('');
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFieldErrors((prev) => ({ ...prev, [name]: '' }));
+    setFormError('');
+  };
+
+  const validate = () => {
+    const errs = {};
+    if (!formData.name.trim()) errs.name = 'Please enter your first & last name.';
+    else if (formData.name.trim().length > 120) errs.name = 'Name is too long (max 120 characters).';
+    if (!formData.email.trim()) errs.email = 'Please enter your email address.';
+    else if (!EMAIL_RE.test(formData.email.trim().toLowerCase())) errs.email = 'Please enter a valid email address.';
+    if (!formData.message.trim()) errs.message = 'Please tell us how we can help.';
+    else if (formData.message.trim().length < 10) errs.message = 'Message should be at least 10 characters.';
+    return errs;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.name || !formData.email || !formData.message) {
-      setErrorMessage('Please fill in Name, Email, and Message.');
+    const errs = validate();
+    setFieldErrors(errs);
+    if (Object.keys(errs).length > 0) {
+      setFormError('Please review the highlighted fields below.');
       return;
     }
-
     try {
       setLoading(true);
-      setErrorMessage('');
-      const res = await api.submitInquiry(formData);
+      setFormError('');
+      const res = await api.submitInquiry({
+        name: formData.name.trim(),
+        email: formData.email.trim(),
+        order_number: formData.order_number.trim(),
+        message: formData.message.trim()
+      });
       if (res.success) {
         setSuccess(true);
         addToast('Message sent to X-ON studio team successfully!', 'success');
         setFormData({ name: '', email: '', order_number: '', message: '' });
       }
     } catch (err) {
-      setErrorMessage(err.message || 'Failed to send message. Please try again.');
-      addToast(err.message || 'Submission error.', 'error');
+      const msg = err.message || 'Failed to send message. Please try again or call our hotline.';
+      setFormError(msg);
+      addToast(msg, 'error');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="section-py" style={{ paddingTop: '3.5rem' }}>
-      <div className="container">
-        {/* Header Introduction */}
-        <div style={{ textAlign: 'center', maxWidth: '800px', margin: '0 auto 3.5rem auto' }}>
-          <span className="brand-line" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.5rem' }}>
-            <Sparkles size={16} /> Connect with X-ON
-          </span>
-          <h1 className="section-title">Contact Us</h1>
-          <p className="gradient-text-gold" style={{ fontSize: '1.2rem', fontWeight: 600, marginBottom: '0.75rem' }}>
-            X-ON — handmade press-on nails & carefully selected nail essentials.
-          </p>
-          <p className="section-subtitle">
-            X-ON is where modern nail artistry meets effortless beauty.
-          </p>
+    <div className="xcontact">
+      {/* ================= HERO — LET'S TALK NAILS ================= */}
+      <section className="xc-hero">
+        <div className="xc-container">
+          <div className="xc-hero-grid">
+            <div>
+              <div className="xc-eyebrow">Contact Us</div>
+              <h1 className="xc-hero-title">
+                LET&rsquo;S TALK
+                <br />
+                <span className="xc-wine-text">NAILS.</span>
+                <span className="xc-spark">✦</span>
+              </h1>
+              <p className="xc-hero-sub">
+                Questions, orders, wholesale or just want to say hello?
+                <br />
+                We&rsquo;re here for you.
+              </p>
+              <p className="xc-hero-desc">
+                X-ON is where modern nail artistry meets effortless beauty. We offer handmade press-on
+                nails and carefully selected nail essentials designed with quality, style, and
+                performance in mind.
+              </p>
+              <div className="xc-hero-script">Press On. Slay On. Repeat.</div>
+              <a href="#xc-form" className="xc-btn-wine">
+                Get in touch <ArrowRight size={15} />
+              </a>
+            </div>
+
+            <div className="xc-hero-visual" aria-hidden="true">
+              <div className="xc-arch">
+                <img
+                  src="/assets/images/IMG_7098.JPG"
+                  alt="X-ON handmade emerald and gold press-on nails"
+                  loading="eager"
+                />
+              </div>
+              <div className="xc-polaroid">
+                <img
+                  src="/assets/images/IMG_7106.JPG"
+                  alt="X-ON pink 3D floral press-on nails"
+                  loading="lazy"
+                />
+              </div>
+              <div className="xc-sticker">
+                Small details
+                <br />
+                Make a <b>big statement</b> <b>♡</b>
+              </div>
+              <div className="xc-badge">
+                <svg viewBox="0 0 100 100" width="104" height="104" aria-hidden="true">
+                  <defs>
+                    <path id="xc-circle" d="M50,50 m-35,0 a35,35 0 1,1 70,0 a35,35 0 1,1 -70,0" />
+                  </defs>
+                  <text fontSize="10" letterSpacing="2.2" fill="#b38728" fontWeight="700">
+                    <textPath href="#xc-circle">HANDMADE NAILS • X-ON •</textPath>
+                  </text>
+                  <text x="50" y="48" textAnchor="middle" fontSize="15" fill="#b38728">✦</text>
+                  <text x="50" y="68" textAnchor="middle" fontSize="14" fontFamily="Cinzel, serif" fontWeight="700" fill="#1c1c21">X-ON</text>
+                </svg>
+              </div>
+              <div className="xc-side-note">
+                <span className="xc-side-star">✦</span>
+                BEAUTY
+                <br />
+                QUALITY
+                <br />
+                CONFIDENCE
+                <br />
+                ALWAYS WITH YOU
+              </div>
+            </div>
+          </div>
         </div>
+      </section>
 
-        {/* Benefit Blocks */}
-        <div className="grid-4" style={{ marginBottom: '4rem' }}>
-          <div className="glass-card" style={{ padding: '1.5rem', textAlign: 'center' }}>
-            <h4 className="font-heading" style={{ color: 'var(--accent-gold-light)', fontSize: '1rem', marginBottom: '0.4rem' }}>
-              Handmade Press-On Nails
-            </h4>
-            <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem' }}>
-              Artisan sculpted with multi-layered salon builder gel.
+      {/* ================= WHY CHOOSE X-ON? ================= */}
+      <section className="xc-why">
+        <div className="xc-container">
+          <div className="xc-why-head">
+            <div>
+              <div className="xc-eyebrow">Why Choose</div>
+              <h2 className="xc-why-title">X-ON?</h2>
+            </div>
+            <p className="xc-why-desc">
+              More than just nails — X-ON brings you closer to the beauty you love, with quality you
+              can trust.
             </p>
+            <div className="xc-why-script">
+              Nail Art
+              <br />A Better You ♡
+            </div>
           </div>
 
-          <div className="glass-card" style={{ padding: '1.5rem', textAlign: 'center' }}>
-            <h4 className="font-heading" style={{ color: 'var(--accent-gold-light)', fontSize: '1rem', marginBottom: '0.4rem' }}>
-              Nail Essentials
-            </h4>
-            <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem' }}>
-              Pro adhesives, adhesive tabs & cuticle restoration elixirs.
-            </p>
-          </div>
+          <div className="xc-why-grid">
+            <article className="xc-why-card">
+              <img
+                src="/assets/images/IMG_7101.JPG"
+                alt="Handmade citrus and floral press-on nails"
+                loading="lazy"
+              />
+              <div className="xc-why-body">
+                <div className="xc-why-num">01</div>
+                <h3 className="xc-why-name">
+                  Handmade
+                  <br />
+                  Press-On Nails
+                </h3>
+                <ul className="xc-why-list">
+                  {HANDMADE_POINTS.map((p) => (
+                    <li key={p.text}>
+                      <span className="xc-why-ico">{p.icon}</span>
+                      <span>{p.text}</span>
+                    </li>
+                  ))}
+                </ul>
+                <Link to="/shop" className="xc-text-link">
+                  Shop now <ArrowRight size={14} />
+                </Link>
+              </div>
+            </article>
 
-          <div className="glass-card" style={{ padding: '1.5rem', textAlign: 'center' }}>
-            <h4 className="font-heading" style={{ color: 'var(--accent-gold-light)', fontSize: '1rem', marginBottom: '0.4rem' }}>
-              Quality, Style & Performance
-            </h4>
-            <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem' }}>
-              Designed for nail lovers and salon professionals alike.
-            </p>
-          </div>
-
-          <div className="glass-card" style={{ padding: '1.5rem', textAlign: 'center' }}>
-            <h4 className="font-heading" style={{ color: 'var(--accent-gold-light)', fontSize: '1rem', marginBottom: '0.4rem' }}>
-              Accessible Luxury
-            </h4>
-            <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem' }}>
-              Easier, faster, and more accessible beauty with a luxury finish.
-            </p>
+            <article className="xc-why-card">
+              <img
+                src="/assets/images/IMG_7104.JPG"
+                alt="Blue chrome and mosaic nail essentials collection"
+                loading="lazy"
+              />
+              <div className="xc-why-body">
+                <div className="xc-why-num">02</div>
+                <h3 className="xc-why-name">Nail Essentials</h3>
+                <ul className="xc-why-list">
+                  {ESSENTIALS_POINTS.map((p) => (
+                    <li key={p.text}>
+                      <span className="xc-why-ico">{p.icon}</span>
+                      <span>{p.text}</span>
+                    </li>
+                  ))}
+                </ul>
+                <Link to="/shop" className="xc-text-link">
+                  Discover now <ArrowRight size={14} />
+                </Link>
+              </div>
+            </article>
           </div>
         </div>
+      </section>
 
-        {/* Contact Information & Form Layout */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '3.5rem', alignItems: 'start' }}>
-          {/* Left Column: Direct Info */}
-          <div>
-            <div className="glass-card" style={{ padding: '2.5rem', marginBottom: '2rem' }}>
-              <h3 className="font-heading" style={{ color: 'var(--text-primary)', fontSize: '1.4rem', marginBottom: '1.5rem' }}>
-                Studio Contact Information
-              </h3>
+      {/* ================= CONTACT X-ON + FORM ================= */}
+      <section className="xc-contact" id="xc-form" style={{ scrollMarginTop: '90px' }}>
+        <div className="xc-container">
+          <div className="xc-contact-grid">
+            <div>
+              <h2 className="xc-contact-title">
+                CONTACT
+                <br />
+                <span>X-ON</span>
+              </h2>
+              <div className="xc-contact-rule" aria-hidden="true" />
+              <p className="xc-contact-sub">We&rsquo;d love to hear from you!</p>
+              <p className="xc-contact-desc">
+                Have a question about our products, an order, wholesale, or anything else? Send us a
+                message and we&rsquo;ll get back to you as soon as possible.
+              </p>
 
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', fontSize: '1rem' }}>
-                <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
-                  <div style={{ width: '42px', height: '42px', borderRadius: '50%', background: 'rgba(179, 135, 40, 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                    <Phone size={20} color="var(--accent-gold)" />
-                  </div>
-                  <div>
-                    <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Phone Hotline</div>
-                    <a href="tel:689-212-8888" style={{ color: 'var(--accent-gold-dark)', fontWeight: 700, fontSize: '1.15rem' }}>
-                      689-212-8888
+              <div className="xc-info-row">
+                <span className="xc-info-ico">
+                  <Phone size={19} />
+                </span>
+                <div>
+                  <strong>
+                    <a href={`tel:${PHONE}`} style={{ color: 'inherit', textDecoration: 'none' }}>
+                      {PHONE}
                     </a>
-                  </div>
-                </div>
-
-                <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
-                  <div style={{ width: '42px', height: '42px', borderRadius: '50%', background: 'rgba(212,175,55,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                    <MapPin size={20} color="var(--accent-gold)" />
-                  </div>
-                  <div>
-                    <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Studio & Flagship Showcase</div>
-                    <div style={{ color: 'var(--text-primary)', fontWeight: 600, fontSize: '1.05rem', lineHeight: 1.5 }}>
-                      3168 Bill Beck Blvd, Kissimmee, FL 34744
-                    </div>
-                  </div>
+                  </strong>
+                  <small>Mon - Sun, 9:00 AM - 6:00 PM (EST)</small>
                 </div>
               </div>
+
+              <div className="xc-info-row">
+                <span className="xc-info-ico">
+                  <MapPin size={19} />
+                </span>
+                <div className="xc-info-addr">
+                  {ADDRESS_L1}
+                  <br />
+                  {ADDRESS_L2}
+                </div>
+              </div>
+
+              <div className="xc-connect-script">Let&rsquo;s Connect</div>
             </div>
 
-            <div style={{
-              borderRadius: 'var(--radius-md)',
-              background: 'var(--bg-secondary)',
-              border: '1px solid var(--border-subtle)',
-              padding: '1.5rem',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '1rem'
-            }}>
-              <ShieldCheck size={28} color="var(--accent-gold)" style={{ flexShrink: 0 }} />
-              <div style={{ fontSize: '0.88rem', color: 'var(--text-secondary)' }}>
-                <strong>Client Promise:</strong> All inquiries receive a dedicated response from our Kissimmee artisan team within 1 business day.
-              </div>
+            <div className="xc-form-card">
+              {success ? (
+                <div className="xc-success">
+                  <span className="xc-success-ico">
+                    <CheckCircle2 size={30} />
+                  </span>
+                  <h3 className="xc-form-title">Message sent!</h3>
+                  <p className="xc-form-sub" style={{ marginTop: '8px' }}>
+                    Thank you for reaching out to X-ON. Your inquiry has been saved and our studio
+                    team will reply shortly.
+                  </p>
+                  <button type="button" className="xc-btn-wine" onClick={() => setSuccess(false)}>
+                    Send another message
+                  </button>
+                </div>
+              ) : (
+                <>
+                  <h3 className="xc-form-title">Send us a message</h3>
+                  <p className="xc-form-sub">Fill out the form below and we&rsquo;ll get back to you soon.</p>
+                  <form onSubmit={handleSubmit} noValidate>
+                    {formError && (
+                      <div className="xc-form-alert" role="alert">
+                        <AlertCircle size={15} />
+                        <span>{formError}</span>
+                      </div>
+                    )}
+
+                    <label className="xc-label" htmlFor="xc-name">
+                      First &amp; Last Name <i>*</i>
+                    </label>
+                    <input
+                      id="xc-name"
+                      name="name"
+                      className={`xc-input${fieldErrors.name ? ' xc-input-error' : ''}`}
+                      value={formData.name}
+                      onChange={handleChange}
+                      placeholder="Your name"
+                      autoComplete="name"
+                    />
+                    {fieldErrors.name && <div className="xc-field-err">{fieldErrors.name}</div>}
+
+                    <label className="xc-label" htmlFor="xc-email">
+                      Email Address <i>*</i>
+                    </label>
+                    <input
+                      id="xc-email"
+                      name="email"
+                      type="email"
+                      className={`xc-input${fieldErrors.email ? ' xc-input-error' : ''}`}
+                      value={formData.email}
+                      onChange={handleChange}
+                      placeholder="you@example.com"
+                      autoComplete="email"
+                    />
+                    {fieldErrors.email && <div className="xc-field-err">{fieldErrors.email}</div>}
+
+                    <label className="xc-label" htmlFor="xc-order">
+                      Phone / Order Number
+                    </label>
+                    <input
+                      id="xc-order"
+                      name="order_number"
+                      className="xc-input"
+                      value={formData.order_number}
+                      onChange={handleChange}
+                      placeholder="Phone number or order # (optional)"
+                    />
+
+                    <label className="xc-label" htmlFor="xc-message">
+                      Message <i>*</i>
+                    </label>
+                    <textarea
+                      id="xc-message"
+                      name="message"
+                      className={`xc-textarea${fieldErrors.message ? ' xc-input-error' : ''}`}
+                      value={formData.message}
+                      onChange={handleChange}
+                      placeholder="Tell us how we can help you..."
+                    />
+                    {fieldErrors.message && <div className="xc-field-err">{fieldErrors.message}</div>}
+
+                    <button type="submit" className="xc-btn-wine xc-submit" disabled={loading}>
+                      {loading ? 'Sending...' : (
+                        <>
+                          Send message <ArrowRight size={15} />
+                        </>
+                      )}
+                    </button>
+
+                    <p className="xc-terms">
+                      By submitting this form, you agree to our{' '}
+                      <Link to="/legal/terms">Terms</Link> &amp; <Link to="/legal/privacy-policy">Privacy Policy</Link>.
+                      <br />
+                      We&rsquo;ll only use your information to respond to your inquiry.
+                    </p>
+                  </form>
+                </>
+              )}
             </div>
-          </div>
-
-          {/* Right Column: Contact X-ON Form */}
-          <div style={{
-            background: 'var(--bg-surface)',
-            border: '1px solid var(--border-gold)',
-            borderRadius: 'var(--radius-lg)',
-            padding: '2.5rem',
-            boxShadow: 'var(--shadow-gold)'
-          }}>
-            <h3 className="font-heading" style={{ color: 'var(--text-primary)', fontSize: '1.4rem', marginBottom: '0.5rem' }}>
-              Contact X-ON Form
-            </h3>
-            <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginBottom: '2rem' }}>
-              Send us a message regarding custom sizing, wedding party sets, wholesale inquiries, or general support.
-            </p>
-
-            {success ? (
-              <div style={{ textAlign: 'center', padding: '2rem 1rem' }}>
-                <div style={{ width: '56px', height: '56px', borderRadius: '50%', background: 'rgba(16,185,129,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1rem auto' }}>
-                  <CheckCircle2 size={32} color="#10b981" />
-                </div>
-                <h4 className="font-heading" style={{ color: 'var(--text-primary)', fontSize: '1.3rem', marginBottom: '0.5rem' }}>
-                  Message Sent!
-                </h4>
-                <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', marginBottom: '1.5rem' }}>
-                  Thank you for reaching out. We will review your inquiry and get back to you shortly.
-                </p>
-                <button
-                  type="button"
-                  className="btn btn-outline btn-sm"
-                  onClick={() => setSuccess(false)}
-                >
-                  Send Another Message
-                </button>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit}>
-                {errorMessage && (
-                  <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.5rem',
-                    padding: '0.8rem 1rem',
-                    background: 'rgba(239, 68, 68, 0.12)',
-                    border: '1px solid rgba(239, 68, 68, 0.3)',
-                    borderRadius: '6px',
-                    color: '#ef4444',
-                    fontSize: '0.88rem',
-                    marginBottom: '1.5rem'
-                  }}>
-                    <AlertCircle size={16} />
-                    <span>{errorMessage}</span>
-                  </div>
-                )}
-
-                <div className="form-group">
-                  <label className="form-label">First & Last Name *</label>
-                  <input
-                    type="text"
-                    name="name"
-                    className="form-input"
-                    value={formData.name}
-                    onChange={handleChange}
-                    placeholder="e.g. Sophia Montgomery"
-                    required
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label className="form-label">Email Address *</label>
-                  <input
-                    type="email"
-                    name="email"
-                    className="form-input"
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder="e.g. sophia@example.com"
-                    required
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label className="form-label">Phone / Order Number (optional)</label>
-                  <input
-                    type="text"
-                    name="order_number"
-                    className="form-input"
-                    value={formData.order_number}
-                    onChange={handleChange}
-                    placeholder="e.g. 689-212-8888 or XON-ORD-8821"
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label className="form-label">Message *</label>
-                  <textarea
-                    rows="4"
-                    name="message"
-                    className="form-textarea"
-                    value={formData.message}
-                    onChange={handleChange}
-                    placeholder="How can our master nail artists help you today?"
-                    required
-                  ></textarea>
-                </div>
-
-                <button
-                  type="submit"
-                  className="btn btn-primary"
-                  disabled={loading}
-                  style={{ width: '100%', padding: '0.9rem' }}
-                >
-                  {loading ? 'Sending Message...' : (
-                    <>
-                      Send Message <Send size={16} />
-                    </>
-                  )}
-                </button>
-              </form>
-            )}
           </div>
         </div>
-      </div>
+      </section>
+
+      {/* ================= WHOLESALE BANNER ================= */}
+      <section className="xc-wholesale">
+        <div className="xc-container">
+          <div className="xc-ws-banner">
+            <img
+              src="/assets/images/IMG_7105.JPG"
+              alt="Yellow 3D floral wholesale press-on nails"
+              loading="lazy"
+            />
+            <div>
+              <h3 className="xc-ws-title">Looking to stock X-ON?</h3>
+              <p className="xc-ws-sub">Wholesale inquiries welcome!</p>
+              <p className="xc-ws-desc">
+                Join our wholesale program and bring X-ON to your store. Get exclusive pricing and
+                access to our latest collections.
+              </p>
+            </div>
+            <Link to="/wholesale-signup" className="xc-btn-wine">
+              Wholesale signup <ArrowRight size={15} />
+            </Link>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

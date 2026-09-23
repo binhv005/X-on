@@ -145,6 +145,7 @@
       "images": [
         "/assets/images/IMG_7098.JPG",
         "/assets/images/IMG_7102.JPG"
+
       ],
       "price": 48,
       "sale_price": 39,
@@ -201,6 +202,7 @@
       "images": [
         "/assets/images/IMG_7099.JPG",
         "/assets/images/IMG_7103.JPG"
+
       ],
       "price": 42,
       "sale_price": 36,
@@ -247,6 +249,7 @@
       "images": [
         "/assets/images/IMG_7100.JPG",
         "/assets/images/IMG_7102.JPG"
+
       ],
       "price": 52,
       "sale_price": 45,
@@ -290,6 +293,7 @@
       "images": [
         "/assets/images/IMG_7101.JPG",
         "/assets/images/IMG_7098.JPG"
+
       ],
       "price": 38,
       "sale_price": null,
@@ -338,6 +342,7 @@
       "images": [
         "/assets/images/IMG_7103.JPG",
         "/assets/images/IMG_7104.JPG"
+
       ],
       "price": 44,
       "sale_price": 38,
@@ -381,6 +386,7 @@
       "images": [
         "/assets/images/IMG_7104.JPG",
         "/assets/images/IMG_7099.JPG"
+
       ],
       "price": 46,
       "sale_price": null,
@@ -423,6 +429,7 @@
       "images": [
         "/assets/images/IMG_7106.JPG",
         "/assets/images/IMG_7110.JPG"
+
       ],
       "price": 14,
       "sale_price": 11.5,
@@ -465,6 +472,7 @@
       "images": [
         "/assets/images/IMG_7110.JPG",
         "/assets/images/IMG_7106.JPG"
+
       ],
       "price": 9,
       "sale_price": null,
@@ -503,6 +511,7 @@
       "images": [
         "/assets/images/IMG_7105.JPG",
         "/assets/images/IMG_7110.JPG"
+
       ],
       "price": 18,
       "sale_price": 15,
@@ -540,6 +549,7 @@
       "SKU": "XON-BND-001",
       "images": [
         "/assets/images/IMG_7098.JPG"
+
       ],
       "price": 98,
       "sale_price": 74,
@@ -582,6 +592,7 @@
       "SKU": "XON-BND-002",
       "images": [
         "/assets/images/IMG_7098.JPG"
+
       ],
       "price": 88,
       "sale_price": 68,
@@ -880,6 +891,7 @@
       "title": "Extra Long Handmade Nail Luxury: Modern Artistry Meets Effortless Wear",
       "slug": "extra-long-handmade-nail-luxury",
       "cover": "/assets/images/IMG_7098.JPG",
+
       "publish_date": "2026-09-20",
       "author": "X-ON Master Artist",
       "status": "published",
@@ -896,6 +908,7 @@
         {
           "type": "image",
           "url": "/assets/images/IMG_7102.JPG",
+
           "caption": "Hand-painted cat eye chrome finish with multi-layered builder gel."
         },
         {
@@ -922,14 +935,37 @@
           "name": "Elena Rostova",
           "date": "2026-09-21",
           "comment": "The quality of X-ON nails is unmatched! The chrome shine looks exactly like a $120 salon manicure."
+        },
+        {
+          "id": "comm_1790137230311",
+          "name": "Sarah Jenkins",
+          "email": "sarah.j@example.com",
+          "comment": "These nails are so durable! I wore them for my bridal photoshoot and got endless compliments.",
+          "date": "2026-09-23"
+        },
+        {
+          "id": "comm_1790149788830",
+          "name": "Nhan",
+          "email": "buiphucnhanbt@gmail.com",
+          "comment": "Good!",
+          "date": "2026-09-23"
+        },
+        {
+          "id": "comm_1790149809724",
+          "name": "Nhan2",
+          "email": "buiphucnhanm2005@gmail.com",
+          "comment": "realy?",
+          "date": "2026-09-23"
         }
-      ]
+      ],
+      "updatedAt": "2026-09-23T04:19:30.443Z"
     },
     {
       "id": "blog-2",
       "title": "The Ultimate Guide to Measuring Your Nail Beds at Home",
       "slug": "ultimate-guide-measuring-nail-beds",
       "cover": "/assets/images/IMG_7103.JPG",
+
       "publish_date": "2026-09-15",
       "author": "X-ON Studio Team",
       "status": "published",
@@ -944,13 +980,15 @@
           "text": "A flawless press-on application begins with finding your true nail width in millimeters across thumb, index, middle, ring, and pinky. When your press-ons fit comfortably from sidewall to sidewall without overflowing onto cuticle skin, wear time increases by up to 300%."
         }
       ],
-      "comments": []
+      "comments": [],
+      "updatedAt": "2026-09-23T04:19:30.449Z"
     },
     {
       "id": "blog-3",
       "title": "Press On. Slay On. Repeat: Caring for Reusable Nails",
       "slug": "press-on-slay-on-repeat-caring-guide",
       "cover": "/assets/images/IMG_7104.JPG",
+
       "publish_date": "2026-09-10",
       "author": "X-ON Care Specialist",
       "status": "published",
@@ -965,80 +1003,116 @@
           "text": "Our handmade sets are built to withstand multiple applications. Using warm water, oil, and soap soak-off methods allows you to dissolve the adhesive bonds without stripping the handcrafted gel structure."
         }
       ],
-      "comments": []
+      "comments": [],
+      "updatedAt": "2026-09-23T04:19:30.464Z"
     }
   ],
   "galleryItems": [
     {
       "id": "gal-1",
-      "title": "Ethereal Velvet Chrome Cat-Eye",
+      "title": "Emerald Luxe Set",
       "collection": "Now Selling",
       "media": "/assets/images/IMG_7098.JPG",
       "linked_product": "prod-1",
+
       "size_labels": [
         "S",
         "M",
         "L"
       ],
       "status": "published",
-      "sort_order": 1
+      "sort_order": 1,
+      "updatedAt": "2026-09-23T09:07:53.839Z",
+      "code": "ST-19-0994",
+      "price": 45,
+      "badge": "BEST SELLER",
+      "theme": "Glitz & Glamour",
+      "shape": "Stiletto"
     },
     {
       "id": "gal-2",
-      "title": "French Blossom Rosebud Almond",
+      "title": "Blooming Grace",
       "collection": "Now Selling",
       "media": "/assets/images/IMG_7099.JPG",
+
       "linked_product": "prod-2",
       "size_labels": [
         "S",
         "M"
       ],
       "status": "published",
-      "sort_order": 2
+      "sort_order": 2,
+      "updatedAt": "2026-09-23T04:35:53.156Z",
+      "code": "ST-24-1187",
+      "price": 42,
+      "badge": "NEW",
+      "theme": "French Modern",
+      "shape": "Almond"
     },
     {
       "id": "gal-3",
-      "title": "Obsidian 24K Leaf Stiletto",
+      "title": "Ocean Whisper",
       "collection": "Now Selling",
       "media": "/assets/images/IMG_7100.JPG",
       "linked_product": "prod-3",
+
       "size_labels": [
         "M",
         "L"
       ],
       "status": "published",
-      "sort_order": 3
+      "sort_order": 3,
+      "updatedAt": "2026-09-23T04:35:53.171Z",
+      "code": "ST-24-1102",
+      "price": 48,
+      "badge": "LIMITED",
+      "theme": "Cat Eye & Chrome",
+      "shape": "Coffin"
     },
     {
       "id": "gal-4",
-      "title": "Pearl Aurora Glaze Square",
+      "title": "Midnight Rouge",
       "collection": "Now Selling",
       "media": "/assets/images/IMG_7101.JPG",
       "linked_product": "prod-5",
+
       "size_labels": [
         "S",
         "M",
         "L"
       ],
       "status": "published",
-      "sort_order": 4
+      "sort_order": 4,
+      "updatedAt": "2026-09-23T04:35:53.193Z",
+      "code": "ST-24-1045",
+      "price": 46,
+      "badge": "TRENDING",
+      "theme": "Glitz & Glamour",
+      "shape": "Stiletto"
     },
     {
       "id": "gal-5",
-      "title": "Ruby Crystal Petite Round",
+      "title": "Petal Dreams",
       "collection": "Now Selling",
       "media": "/assets/images/IMG_7104.JPG",
+
       "linked_product": "prod-6",
       "size_labels": [
         "S",
         "M"
       ],
       "status": "published",
-      "sort_order": 5
+      "sort_order": 5,
+      "updatedAt": "2026-09-23T04:35:53.212Z",
+      "code": "ST-24-1175",
+      "price": 44,
+      "badge": "NEW",
+      "theme": "French Modern",
+      "shape": "Round"
     },
     {
       "id": "gal-6",
-      "title": "Modern Minimalist Milk Glaze",
+      "title": "Spring Whisper",
       "collection": "Now Selling",
       "media": "/assets/images/IMG_7105.JPG",
       "linked_product": "prod-4",
@@ -1049,7 +1123,54 @@
         "L"
       ],
       "status": "published",
-      "sort_order": 6
+      "sort_order": 6,
+      "updatedAt": "2026-09-23T04:35:53.214Z",
+      "code": "ST-24-1203",
+      "price": 43,
+      "badge": "BEST SELLER",
+      "theme": "Minimalist Chic",
+      "shape": "Almond"
+    },
+    {
+      "id": "xon_1790138176775_botram",
+      "createdAt": "2026-09-23T04:36:16.775Z",
+      "updatedAt": "2026-09-23T04:36:52.556Z",
+      "title": "Golden Charm",
+      "collection": "Now Selling",
+      "media": "/assets/images/IMG_7106.JPG",
+      "linked_product": "prod-5",
+      "size_labels": [
+        "S",
+        "M",
+        "L"
+      ],
+      "status": "published",
+      "sort_order": 7,
+      "code": "ST-24-1129",
+      "price": 47,
+      "badge": "LIMITED",
+      "shape": "Square",
+      "theme": "Cat Eye & Chrome"
+    },
+    {
+      "id": "xon_1790138176782_zmts6t",
+      "createdAt": "2026-09-23T04:36:16.782Z",
+      "updatedAt": "2026-09-23T04:36:52.559Z",
+      "title": "Lavender Ribbon",
+      "collection": "Now Selling",
+      "media": "/assets/images/IMG_7102.JPG",
+      "linked_product": "prod-1",
+      "size_labels": [
+        "S",
+        "M"
+      ],
+      "status": "published",
+      "sort_order": 8,
+      "code": "ST-24-1190",
+      "price": 45,
+      "badge": "TRENDING",
+      "shape": "Coffin",
+      "theme": "Glitz & Glamour"
     }
   ],
   "comingSoonCollections": [
@@ -1059,9 +1180,12 @@
       "collection_name": "Upcoming / Seasonal Collection 01",
       "subtitle": "Deep galaxy blues, holographic constellation charting, and luminous quartz accents.",
       "media": "/assets/images/IMG_7098.JPG",
+
       "status": "active",
       "display_order": 1,
-      "expected_launch": "Winter 2026"
+      "expected_launch": "Winter 2026",
+      "video": "/assets/videos/1K34PRO84_DMCL0D.mp4",
+      "updatedAt": "2026-09-23T04:19:25.313Z"
     },
     {
       "id": "csc-2",
@@ -1069,9 +1193,12 @@
       "collection_name": "Upcoming / Seasonal Collection 02",
       "subtitle": "3D ornate gold filigree, antique pearls, and textured rococo gilding.",
       "media": "/assets/images/IMG_7102.JPG",
+
       "status": "active",
       "display_order": 2,
-      "expected_launch": "Holiday 2026"
+      "expected_launch": "Holiday 2026",
+      "video": "/assets/videos/1K34PRO8E_DMCL0D.mp4",
+      "updatedAt": "2026-09-23T04:19:25.318Z"
     },
     {
       "id": "csc-3",
@@ -1079,9 +1206,12 @@
       "collection_name": "Upcoming / Seasonal Collection 03",
       "subtitle": "Molten liquid silver chrome 3D sculpting over smoked translucent glass.",
       "media": "/assets/images/IMG_7107.JPG",
+
       "status": "active",
       "display_order": 3,
-      "expected_launch": "Spring 2027"
+      "expected_launch": "Spring 2027",
+      "video": "/assets/videos/1K34PRO8K_DMCL0D.mp4",
+      "updatedAt": "2026-09-23T04:19:25.332Z"
     },
     {
       "id": "csc-4",
@@ -1089,12 +1219,26 @@
       "collection_name": "Featured / New Collection",
       "subtitle": "Limited-edition bespoke wearable art handcrafted by master technicians.",
       "media": "/assets/images/IMG_7106.JPG",
+
       "status": "active",
       "display_order": 4,
-      "expected_launch": "Exclusively for Members"
+      "expected_launch": "Exclusively for Members",
+      "video": "/assets/videos/1K34PRO84_DMCL0D.mp4",
+      "updatedAt": "2026-09-23T04:19:25.352Z"
     }
   ],
   "users": [
+    {
+      "id": "xon_1790136929026_vpgbyx",
+      "createdAt": "2026-09-23T04:15:29.026Z",
+      "updatedAt": "2026-09-23T08:42:14.958Z",
+      "username": "orlando_chic_salon",
+      "email": "contact@orlandochic.com",
+      "password_hash": "$2a$10$sll6d.mOGZ43a6aGSepxDOKjFa8iWsI6RkgGi6wkIMo8Crid2lxB2",
+      "role": "wholesale_customer",
+      "status": "active",
+      "name": "Orlando Chic Studio LLC"
+    },
     {
       "id": "user-admin-1",
       "username": "admin",
@@ -1125,6 +1269,20 @@
   ],
   "wholesaleApplications": [
     {
+      "id": "xon_1790136929027_lvlsbq",
+      "createdAt": "2026-09-23T04:15:29.027Z",
+      "updatedAt": "2026-09-23T08:42:14.956Z",
+      "user_id": "xon_1790136929026_vpgbyx",
+      "username": "orlando_chic_salon",
+      "email": "contact@orlandochic.com",
+      "business_name": "Orlando Chic Studio LLC",
+      "business_address": "500 International Dr, Orlando, FL",
+      "phone": "407-333-8899",
+      "membership": "Wholesale customer",
+      "status": "approved",
+      "notes": ""
+    },
+    {
       "id": "ws-1",
       "username": "belle_studios_fl",
       "email": "contact@bellestudiosfl.com",
@@ -1150,6 +1308,17 @@
     }
   ],
   "inquiries": [
+    {
+      "id": "xon_1790136658171_7fhgiv",
+      "createdAt": "2026-09-23T04:10:58.171Z",
+      "updatedAt": "2026-09-23T08:42:20.539Z",
+      "name": "Test Customer",
+      "email": "test@example.com",
+      "order_number": "XON-ORD-9999",
+      "message": "Hello, this is a test inquiry message with more than 10 characters.",
+      "status": "in_review",
+      "note": ""
+    },
     {
       "id": "inq-1",
       "name": "Sophia Montgomery",

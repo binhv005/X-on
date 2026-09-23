@@ -1,48 +1,75 @@
 import React, { useState } from 'react';
-import { Sparkles, Building2, CheckCircle2, AlertCircle, ArrowRight, ShieldCheck } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import {
+  Building2,
+  CheckCircle2,
+  AlertCircle,
+  ArrowRight,
+  Tag,
+  Diamond,
+  Gift,
+  Crown,
+  User,
+  Store,
+  MapPin,
+  Phone,
+  Mail,
+  Lock,
+  ChevronDown
+} from 'lucide-react';
 import { api } from '../../services/api';
 import { useToast } from '../../context/ToastContext';
+import './WholesaleSignupPage.css';
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+const EMPTY = {
+  username: '',
+  email: '',
+  business_name: '',
+  business_address: '',
+  phone: '',
+  password: '',
+  confirm_password: '',
+  membership: 'Wholesale customer'
+};
 
 export default function WholesaleSignupPage() {
   const { addToast } = useToast();
 
-  const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    business_name: '',
-    business_address: '',
-    phone: '',
-    password: '',
-    confirm_password: '',
-    membership: 'Wholesale customer'
-  });
-
+  const [formData, setFormData] = useState(EMPTY);
+  const [fieldErrors, setFieldErrors] = useState({});
+  const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
 
   const handleChange = (e) => {
-    setFormData(prev => ({
-      ...prev,
-      [e.target.name]: e.target.value
-    }));
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFieldErrors((prev) => ({ ...prev, [name]: '' }));
     setErrorMessage('');
+  };
+
+  const validate = () => {
+    const errs = {};
+    if (!formData.username.trim()) errs.username = 'Please enter a username.';
+    if (!formData.email.trim()) errs.email = 'Please enter your business email.';
+    else if (!EMAIL_RE.test(formData.email.trim().toLowerCase())) errs.email = 'Please enter a valid email address.';
+    if (!formData.business_name.trim()) errs.business_name = 'Please enter your business name.';
+    if (!formData.business_address.trim()) errs.business_address = 'Please enter your business address.';
+    if (!formData.phone.trim()) errs.phone = 'Please enter your phone number.';
+    if (!formData.password) errs.password = 'Please create a password.';
+    else if (formData.password.length < 6) errs.password = 'Password must be at least 6 characters long.';
+    if (formData.password !== formData.confirm_password) errs.confirm_password = 'Passwords do not match.';
+    return errs;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.username || !formData.email || !formData.business_name || !formData.business_address || !formData.phone || !formData.password) {
-      setErrorMessage('Please fill in all required fields.');
-      return;
-    }
-
-    if (formData.password !== formData.confirm_password) {
-      setErrorMessage('Passwords do not match. Please verify your password entry.');
-      return;
-    }
-
-    if (formData.password.length < 6) {
-      setErrorMessage('Password must be at least 6 characters long.');
+    const errs = validate();
+    setFieldErrors(errs);
+    if (Object.keys(errs).length > 0) {
+      setErrorMessage('Please review the highlighted fields below.');
       return;
     }
 
@@ -55,266 +82,198 @@ export default function WholesaleSignupPage() {
         addToast('Wholesale application submitted successfully!', 'success');
       }
     } catch (err) {
-      setErrorMessage(err.message || 'Failed to submit application. Please try again.');
-      addToast(err.message || 'Submission failed.', 'error');
+      const msg = err.message || 'Failed to submit application. Please try again.';
+      setErrorMessage(msg);
+      addToast(msg, 'error');
     } finally {
       setLoading(false);
     }
   };
 
+  const inputCls = (f) => (fieldErrors[f] ? 'xws-input xws-input-error' : 'xws-input');
+
+  const field = (id, name, Icon, label, props = {}) => (
+    <>
+      <label className="xws-label" htmlFor={id}>{label}</label>
+      <div className="xws-field">
+        <Icon size={17} />
+        <input id={id} name={name} className={inputCls(name)} value={formData[name]} onChange={handleChange} {...props} />
+      </div>
+      {fieldErrors[name] && <div className="xws-field-err">{fieldErrors[name]}</div>}
+    </>
+  );
+
   return (
-    <div className="section-py" style={{ paddingTop: '3rem' }}>
-      <div className="container">
-        {/* Header Intro */}
-        <div style={{ textAlign: 'center', maxWidth: '760px', margin: '0 auto 3.5rem auto' }}>
-          <span className="brand-line" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.5rem' }}>
-            <Building2 size={16} /> Professional Partner Program
-          </span>
-          <h1 className="section-title">Wholesale Partner Registration</h1>
-          <p className="section-subtitle">
-            Partner with X-ON to offer salon-grade handmade press-on nails and curated essentials in your beauty studio, boutique, or salon chain with tiered volume pricing.
-          </p>
-        </div>
-
-        {/* Content & Form Grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '3.5rem', alignItems: 'start' }}>
-          {/* Left Column: Benefits & Hero Image */}
+    <div className="xws">
+      <section className="xws-hero">
+      <div className="xws-container">
+        <div className="xws-grid">
+          {/* ================= LEFT ================= */}
           <div>
-            <div style={{
-              borderRadius: 'var(--radius-lg)',
-              overflow: 'hidden',
-              border: '1px solid var(--border-medium)',
-              marginBottom: '2rem',
-              boxShadow: 'var(--shadow-md)'
-            }}>
-              <img
-                src="/assets/images/IMG_7101.JPG"
-                alt="X-ON Wholesale Partner Showcase"
-                onError={(e) => {
-                  e.currentTarget.onerror = null;
-                  e.currentTarget.src = '/assets/images/IMG_7098.JPG';
-                }}
-                style={{ width: '100%', height: '320px', objectFit: 'cover' }}
-              />
+            <span className="xws-eyebrow">
+              <Building2 size={15} /> Professional Partner Program
+            </span>
+            <h1 className="xws-title">
+              Wholesale Partner
+              <br />
+              Registration
+            </h1>
+            <p className="xws-desc">
+              Partner with X-ON to offer salon-grade handmade press-on nails and curated essentials
+              in your beauty studio, boutique, or salon chain with tiered volume pricing.
+            </p>
+
+            <div className="xws-perks">
+              <div className="xws-perk">
+                <span className="xws-perk-ico"><Tag size={22} /></span>
+                <b>Tiered Margins</b>
+                <p>Exclusive 35% – 50% wholesale discounts on handcrafted nail sets.</p>
+              </div>
+              <div className="xws-perk">
+                <span className="xws-perk-ico"><Diamond size={22} /></span>
+                <b>Priority Batching</b>
+                <p>Dedicated artisan team handling your salon&rsquo;s scheduled reorders.</p>
+              </div>
+              <div className="xws-perk">
+                <span className="xws-perk-ico"><Gift size={22} /></span>
+                <b>Marketing Support</b>
+                <p>Counter display packaging and bespoke fitting sets included.</p>
+              </div>
             </div>
 
-            <div className="glass-card" style={{ padding: '2rem' }}>
-              <h3 className="font-heading" style={{ color: 'var(--accent-gold-light)', fontSize: '1.2rem', marginBottom: '1rem' }}>
-                Wholesale Member Benefits
-              </h3>
-              <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.9rem', fontSize: '0.92rem', color: 'var(--text-secondary)' }}>
-                <li style={{ display: 'flex', alignItems: 'flex-start', gap: '0.6rem' }}>
-                  <Sparkles size={16} color="var(--accent-gold)" style={{ marginTop: '3px', flexShrink: 0 }} />
-                  <span><strong>Tiered Margins:</strong> Exclusive 35% - 50% wholesale discounts on handcrafted nail sets and bulk essentials.</span>
-                </li>
-                <li style={{ display: 'flex', alignItems: 'flex-start', gap: '0.6rem' }}>
-                  <Sparkles size={16} color="var(--accent-gold)" style={{ marginTop: '3px', flexShrink: 0 }} />
-                  <span><strong>Priority Studio Batching:</strong> Dedicated artisan team handling your salon’s scheduled reorders.</span>
-                </li>
-                <li style={{ display: 'flex', alignItems: 'flex-start', gap: '0.6rem' }}>
-                  <Sparkles size={16} color="var(--accent-gold)" style={{ marginTop: '3px', flexShrink: 0 }} />
-                  <span><strong>Marketing Collateral & Sizing Kits:</strong> Counter display packaging and bespoke fitting sets included.</span>
-                </li>
-              </ul>
-            </div>
+            <div className="xws-script-gold">Beauty Grows Stronger Together ♡</div>
+            <div className="xws-script-sub">X-ON WHOLESALE PROGRAM</div>
+
+            <div className="xws-handmade-note">Handmade<br />With Love ♡</div>
           </div>
 
-          {/* Right Column: Registration Form */}
-          <div style={{
-            background: 'var(--bg-surface)',
-            border: '1px solid var(--border-gold)',
-            borderRadius: 'var(--radius-lg)',
-            padding: '2.5rem',
-            boxShadow: 'var(--shadow-gold)'
-          }}>
+          {/* ================= FORM CARD ================= */}
+          <div className="xws-card">
+            <div className="xws-badge" aria-hidden="true">
+              <svg viewBox="0 0 100 100" width="88" height="88">
+                <defs>
+                  <path id="xws-circle" d="M50,50 m-34,0 a34,34 0 1,1 68,0 a34,34 0 1,1 -68,0" />
+                </defs>
+                <text fontSize="9.5" letterSpacing="2" fill="#5e4410" fontWeight="700">
+                  <textPath href="#xws-circle">PROFESSIONAL • PARTNER •</textPath>
+                </text>
+                <text x="50" y="58" textAnchor="middle" fontSize="20" fill="#5e4410">♛</text>
+              </svg>
+            </div>
+
             {success ? (
-              <div style={{ textAlign: 'center', padding: '2rem 1rem' }}>
-                <div style={{
-                  width: '64px',
-                  height: '64px',
-                  borderRadius: '50%',
-                  background: 'rgba(16, 185, 129, 0.15)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  margin: '0 auto 1.5rem auto'
-                }}>
-                  <CheckCircle2 size={36} color="#10b981" />
-                </div>
-                <h3 className="font-heading" style={{ color: 'var(--text-primary)', fontSize: '1.5rem', marginBottom: '0.75rem' }}>
-                  Application Received!
-                </h3>
-                <p style={{ color: 'var(--text-secondary)', lineHeight: 1.7, marginBottom: '2rem' }}>
-                  Thank you for applying to the X-ON Wholesale Partner Network. Our accounts review team will verify your business credentials and activate your wholesale catalog access within 24-48 hours.
+              <div className="xws-success">
+                <span className="xws-success-ico"><CheckCircle2 size={30} /></span>
+                <h3 className="xws-card-title">Application received!</h3>
+                <p className="xws-card-sub" style={{ marginTop: '8px' }}>
+                  Thank you for applying to the X-ON Wholesale Partner Network. Our team will
+                  review your application and get back to you within 2–3 business days.
                 </p>
                 <button
                   type="button"
-                  className="btn btn-primary"
+                  className="xws-submit"
+                  style={{ width: 'auto', padding: '15px 34px' }}
                   onClick={() => {
                     setSuccess(false);
-                    setFormData({
-                      username: '',
-                      email: '',
-                      business_name: '',
-                      business_address: '',
-                      phone: '',
-                      password: '',
-                      confirm_password: '',
-                      membership: 'Wholesale customer'
-                    });
+                    setFormData(EMPTY);
+                    setFieldErrors({});
                   }}
                 >
-                  Submit Another Application
+                  Submit another application
                 </button>
               </div>
             ) : (
-              <form onSubmit={handleSubmit}>
-                <h3 className="font-heading" style={{ color: 'var(--text-primary)', fontSize: '1.4rem', marginBottom: '0.5rem' }}>
-                  Register Wholesale Account
-                </h3>
-                <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginBottom: '2rem' }}>
+              <>
+                <div className="xws-card-eyebrow">Join Our Community</div>
+                <h2 className="xws-card-title">Register Wholesale Account</h2>
+                <p className="xws-card-sub">
                   Please complete the business registration form below.
+                  Our team will review your application and get back to you within 2–3 business days.
                 </p>
 
-                {errorMessage && (
-                  <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.5rem',
-                    padding: '0.8rem 1rem',
-                    background: 'rgba(239, 68, 68, 0.12)',
-                    border: '1px solid rgba(239, 68, 68, 0.3)',
-                    borderRadius: '6px',
-                    color: '#ef4444',
-                    fontSize: '0.88rem',
-                    marginBottom: '1.5rem'
-                  }}>
-                    <AlertCircle size={16} />
-                    <span>{errorMessage}</span>
-                  </div>
-                )}
-
-                <div className="form-group">
-                  <label className="form-label">Username *</label>
-                  <input
-                    type="text"
-                    name="username"
-                    className="form-input"
-                    value={formData.username}
-                    onChange={handleChange}
-                    placeholder="e.g. miami_glam_nails"
-                    required
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label className="form-label">Email Address *</label>
-                  <input
-                    type="email"
-                    name="email"
-                    className="form-input"
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder="contact@yourbusiness.com"
-                    required
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label className="form-label">Business Name *</label>
-                  <input
-                    type="text"
-                    name="business_name"
-                    className="form-input"
-                    value={formData.business_name}
-                    onChange={handleChange}
-                    placeholder="Your salon, spa or boutique name"
-                    required
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label className="form-label">Business Address *</label>
-                  <textarea
-                    rows="2"
-                    name="business_address"
-                    className="form-textarea"
-                    value={formData.business_address}
-                    onChange={handleChange}
-                    placeholder="Street address, City, State, ZIP Code"
-                    required
-                  ></textarea>
-                </div>
-
-                <div className="form-group">
-                  <label className="form-label">Phone Number *</label>
-                  <input
-                    type="tel"
-                    name="phone"
-                    className="form-input"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    placeholder="e.g. 407-555-0199"
-                    required
-                  />
-                </div>
-
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '1rem' }}>
-                  <div className="form-group">
-                    <label className="form-label">Password *</label>
-                    <input
-                      type="password"
-                      name="password"
-                      className="form-input"
-                      value={formData.password}
-                      onChange={handleChange}
-                      placeholder="Min 6 characters"
-                      required
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label className="form-label">Confirm Password *</label>
-                    <input
-                      type="password"
-                      name="confirm_password"
-                      className="form-input"
-                      value={formData.confirm_password}
-                      onChange={handleChange}
-                      placeholder="Repeat password"
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className="form-group">
-                  <label className="form-label">Membership Type</label>
-                  <input
-                    type="text"
-                    name="membership"
-                    className="form-input"
-                    value={formData.membership}
-                    readOnly
-                    style={{ background: 'var(--bg-primary)', opacity: 0.8 }}
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  className="btn btn-primary"
-                  disabled={loading}
-                  style={{ width: '100%', marginTop: '1rem', padding: '0.9rem' }}
-                >
-                  {loading ? 'Submitting Application...' : (
-                    <>
-                      Submit Application <ArrowRight size={16} />
-                    </>
+                <form onSubmit={handleSubmit} noValidate>
+                  {errorMessage && (
+                    <div className="xws-alert" role="alert">
+                      <AlertCircle size={15} />
+                      <span>{errorMessage}</span>
+                    </div>
                   )}
-                </button>
-              </form>
+
+                  <div className="xws-2col">
+                    <div>
+                      {field('xws-username', 'username', User, 'Username *', {
+                        placeholder: 'e.g. miami_glam_nails', autoComplete: 'username'
+                      })}
+                    </div>
+                    <div>
+                      {field('xws-biz', 'business_name', Store, 'Business Name *', {
+                        placeholder: 'Salon, spa or boutique', autoComplete: 'organization'
+                      })}
+                    </div>
+                  </div>
+
+                  {field('xws-addr', 'business_address', MapPin, 'Business Address *', {
+                    placeholder: 'Street address, City, State, ZIP Code', autoComplete: 'street-address'
+                  })}
+
+                  <div className="xws-2col">
+                    <div>
+                      {field('xws-phone', 'phone', Phone, 'Phone Number *', {
+                        type: 'tel', placeholder: 'e.g. 407-555-0199', autoComplete: 'tel'
+                      })}
+                    </div>
+                    <div>
+                      {field('xws-email', 'email', Mail, 'Email Address *', {
+                        type: 'email', placeholder: 'contact@yourbusiness.com', autoComplete: 'email'
+                      })}
+                    </div>
+                  </div>
+
+                  <div className="xws-2col">
+                    <div>
+                      {field('xws-pass', 'password', Lock, 'Password *', {
+                        type: 'password', placeholder: 'Min 6 characters', autoComplete: 'new-password'
+                      })}
+                    </div>
+                    <div>
+                      {field('xws-pass2', 'confirm_password', Lock, 'Confirm Password *', {
+                        type: 'password', placeholder: 'Repeat password', autoComplete: 'new-password'
+                      })}
+                    </div>
+                  </div>
+
+                  <label className="xws-label" htmlFor="xws-mem">Membership Type</label>
+                  <div className="xws-field">
+                    <Crown size={17} />
+                    <select
+                      id="xws-mem" name="membership" className="xws-select"
+                      value={formData.membership} onChange={handleChange}
+                    >
+                      <option value="Wholesale customer">Wholesale customer</option>
+                    </select>
+                    <span className="xws-select-chev"><ChevronDown size={17} /></span>
+                  </div>
+
+                  <button type="submit" className="xws-submit" disabled={loading}>
+                    {loading ? 'Submitting application...' : (
+                      <>Submit application <ArrowRight size={16} /></>
+                    )}
+                  </button>
+
+                  <div className="xws-secure">
+                    <Lock size={13} /> Your information is secure and will only be used for wholesale purposes.
+                  </div>
+                  <p className="xws-terms">
+                    By submitting, you agree to our <Link to="/legal/terms">Terms</Link> &amp;{' '}
+                    <Link to="/legal/privacy-policy">Privacy Policy</Link>.
+                  </p>
+                </form>
+              </>
             )}
           </div>
         </div>
       </div>
+      </section>
     </div>
   );
 }

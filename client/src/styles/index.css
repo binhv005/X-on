@@ -440,28 +440,59 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* High specificity overrides for inline white text styles */
+/* NOTE: browser serializes #fff -> rgb(255, 255, 255) nên phải match cả 2 dạng */
 h1[style*="color: #fff"],
 h1[style*="color: #ffffff"],
+h1[style*="255, 255, 255"],
 h2[style*="color: #fff"],
 h2[style*="color: #ffffff"],
+h2[style*="255, 255, 255"],
 h3[style*="color: #fff"],
 h3[style*="color: #ffffff"],
+h3[style*="255, 255, 255"],
 h4[style*="color: #fff"],
 h4[style*="color: #ffffff"],
+h4[style*="255, 255, 255"],
 h5[style*="color: #fff"],
 h5[style*="color: #ffffff"],
+h5[style*="255, 255, 255"],
 h6[style*="color: #fff"],
 h6[style*="color: #ffffff"],
+h6[style*="255, 255, 255"],
 strong[style*="color: #fff"],
 strong[style*="color: #ffffff"],
+strong[style*="255, 255, 255"],
 td[style*="color: #fff"],
-td[style*="color: #ffffff"] {
+td[style*="color: #ffffff"],
+td[style*="255, 255, 255"] {
   color: var(--text-primary) !important;
 }
 
-span[style*="color: #fff"]:not(.badge):not(.badge *):not(.btn):not(.btn *):not(.gradient-text-gold),
-div[style*="color: #fff"]:not(.badge):not(.badge *):not(.btn):not(.btn *) {
+span[style*="color: #fff"]:not(.badge):not(.badge *):not(.btn):not(.btn *):not(.gradient-text-gold):not(.xon-toast):not(.xon-toast *),
+span[style*="255, 255, 255"]:not(.badge):not(.badge *):not(.btn):not(.btn *):not(.gradient-text-gold):not(.xon-toast):not(.xon-toast *),
+div[style*="color: #fff"]:not(.badge):not(.badge *):not(.btn):not(.btn *):not(.xon-toast):not(.xon-toast *),
+div[style*="255, 255, 255"]:not(.badge):not(.badge *):not(.btn):not(.btn *):not(.xon-toast):not(.xon-toast *) {
   color: var(--text-primary) !important;
+}
+
+/* Toast: luôn giữ chữ trắng trên nền tối, đứng sau override để thắng specificity */
+.xon-toast-container {
+  top: 1.5rem !important;
+  bottom: auto !important;
+}
+
+.xon-toast,
+.xon-toast-message,
+.xon-toast-text,
+div.xon-toast[style],
+div.xon-toast-message[style],
+span.xon-toast-text[style] {
+  color: #ffffff !important;
+}
+
+@keyframes xonToastIn {
+  from { opacity: 0; transform: translateY(-12px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* Animations */

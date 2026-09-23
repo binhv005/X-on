@@ -7,12 +7,38 @@ class WholesaleService {
     const { username, email, business_name, business_address, phone, password, membership } = data;
 
     if (!username || !email || !business_name || !business_address || !phone || !password) {
-      throw new Error('All required fields must be completed.');
+      const err = new Error('All required fields must be completed.');
+      err.status = 400;
+      throw err;
     }
 
-    const existingUser = userRepository.findByEmail(email);
+    const emailNorm = email.trim().toLowerCase();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+    if (!emailRegex.test(emailNorm)) {
+      const err = new Error('Please enter a valid email address.');
+      err.status = 400;
+      throw err;
+    }
+
+    if (password.length < 6) {
+      const err = new Error('Password must be at least 6 characters long.');
+      err.status = 400;
+      throw err;
+    }
+
+    const existingUser = userRepository.findByEmail(emailNorm);
     if (existingUser) {
-      throw new Error('An account with this email already exists.');
+      const err = new Error('An account with this email already exists.');
+      err.status = 400;
+      throw err;
+    }
+
+    const usernameNorm = username.trim().toLowerCase();
+    const existingUsername = userRepository.getAll().find(u => (u.username || '').toLowerCase() === usernameNorm);
+    if (existingUsername) {
+      const err = new Error('This username is already taken.');
+      err.status = 400;
+      throw err;
     }
 
     const salt = bcrypt.genSaltSync(10);
