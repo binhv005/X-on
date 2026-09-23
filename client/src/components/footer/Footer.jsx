@@ -206,7 +206,6 @@ export default function Footer() {
           <div style={{ display: 'flex', gap: '1.5rem' }}>
             <Link to="/legal/terms" style={{ color: '#9ca3af' }}>Terms</Link>
             <Link to="/legal/privacy-policy" style={{ color: '#9ca3af' }}>Privacy</Link>
-            <Link to="/admin" style={{ color: '#f5d376', fontWeight: 600 }}>Admin Portal</Link>
           </div>
         </div>
       </div>
