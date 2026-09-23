@@ -458,13 +458,19 @@ export default function SizingChartPage() {
                 </p>
 
                 <form onSubmit={handleQuickMatch} style={{
+                  width: '100%',
                   display: 'flex',
-                  alignItems: 'center',
+                  flexDirection: 'column',
                   gap: '1rem',
-                  flexWrap: 'wrap',
                   marginBottom: '1rem'
                 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flex: '1 1 200px', maxWidth: '280px' }}>
+                  {/* Full width input and submit button row */}
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'stretch',
+                    gap: '0.75rem',
+                    width: '100%'
+                  }}>
                     <input
                       type="number"
                       step="0.5"
@@ -475,21 +481,35 @@ export default function SizingChartPage() {
                       onChange={(e) => setCalcThumb(e.target.value)}
                       className="form-input"
                       style={{
+                        flex: 1,
+                        width: '100%',
                         background: '#ffffff',
                         fontSize: '1.05rem',
-                        padding: '0.75rem 1.15rem',
+                        padding: '0.8rem 1.25rem',
                         borderRadius: '10px',
-                        border: '1px solid var(--border-gold)'
+                        border: '1px solid var(--border-gold)',
+                        boxShadow: '0 2px 6px rgba(0,0,0,0.02)'
                       }}
                     />
+                    <button
+                      type="submit"
+                      className="btn btn-primary"
+                      style={{
+                        padding: '0.8rem 2rem',
+                        fontWeight: 700,
+                        whiteSpace: 'nowrap',
+                        flexShrink: 0,
+                        letterSpacing: '0.04em',
+                        textTransform: 'uppercase'
+                      }}
+                    >
+                      Check Match
+                    </button>
                   </div>
-                  <button type="submit" className="btn btn-primary" style={{ padding: '0.75rem 1.75rem', fontWeight: 700 }}>
-                    Check Match
-                  </button>
                   
                   {/* Quick Select Preset Pills */}
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', flexWrap: 'wrap' }}>
-                    <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginRight: '0.2rem' }}>Quick test:</span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
+                    <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 500, marginRight: '0.2rem' }}>Quick test:</span>
                     {['13', '14', '15', '16', '17', '18'].map((val) => (
                       <button
                         key={val}
@@ -507,11 +527,12 @@ export default function SizingChartPage() {
                           color: calcThumb === val ? '#ffffff' : 'var(--text-primary)',
                           border: '1px solid var(--border-subtle)',
                           borderRadius: '8px',
-                          padding: '0.35rem 0.65rem',
-                          fontSize: '0.82rem',
+                          padding: '0.35rem 0.75rem',
+                          fontSize: '0.85rem',
                           cursor: 'pointer',
                           fontWeight: 600,
-                          transition: 'all 0.2s ease'
+                          transition: 'all 0.2s ease',
+                          boxShadow: '0 1px 3px rgba(0,0,0,0.03)'
                         }}
                       >
                         {val}mm
