@@ -9,7 +9,11 @@ import {
   CheckCircle2,
   AlertCircle,
   Minus,
-  Plus
+  Plus,
+  ChevronLeft,
+  ChevronRight,
+  Eye,
+  Maximize2
 } from 'lucide-react';
 import { api } from '../../services/api';
 import PriceDisplay from '../../components/product/PriceDisplay';
@@ -21,7 +25,7 @@ import { useToast } from '../../context/ToastContext';
 
 export default function ProductDetailPage() {
   const { slug } = useParams();
-  const { addToCart } = useCart();
+  const { addToCart, items } = useCart();
   const { addToast } = useToast();
 
   const [product, setProduct] = useState(null);
@@ -66,8 +70,35 @@ export default function ProductDetailPage() {
     loadProduct();
   }, [slug]);
 
+  const hasSizeStock = product?.size_stock && typeof product.size_stock === 'object' && Object.keys(product.size_stock).length > 0;
+  const currentSizeQty = hasSizeStock && selectedSize && product.size_stock[selectedSize] !== undefined
+    ? Number(product.size_stock[selectedSize])
+    : (product?.stock !== undefined ? Number(product.stock) : 99);
+
+  const maxAvailable = Math.max(0, currentSizeQty);
+  const isTotalOutOfStock = product?.status === 'out_of_stock' || (product?.stock !== undefined && Number(product?.stock) <= 0);
+  const isOutOfStock = isTotalOutOfStock || maxAvailable <= 0;
+
+  useEffect(() => {
+    if (maxAvailable > 0) {
+      setQuantity(prev => Math.max(1, Math.min(prev, maxAvailable)));
+    }
+  }, [selectedSize, maxAvailable]);
+
   const handleAddToCart = () => {
-    if (!product) return;
+    if (!product || isOutOfStock) {
+      addToast(currentSizeQty <= 0 ? `Size ${selectedSize} is currently out of stock.` : 'This product is currently out of stock.', 'error');
+      return;
+    }
+    const currentInCart = items?.find(
+      i => i.id === product.id && i.selectedSize === selectedSize && (i.selectedVariant || '') === (selectedVariant || '')
+    )?.quantity || 0;
+
+    if (currentInCart >= maxAvailable) {
+      addToast(`You already have all available units (${maxAvailable}) in your bag for Size ${selectedSize}.`, 'warning');
+      return;
+    }
+
     addToCart(product, selectedSize, quantity, selectedVariant);
   };
 
@@ -146,7 +177,8 @@ export default function ProductDetailPage() {
               background: 'var(--bg-surface)',
               position: 'relative',
               paddingTop: '100%',
-              marginBottom: '1rem'
+              marginBottom: '1rem',
+              boxShadow: 'var(--shadow-sm)'
             }}>
               <img
                 src={selectedImage || product.images?.[0] || '/assets/images/IMG_7098.JPG'}
@@ -161,51 +193,192 @@ export default function ProductDetailPage() {
                   left: 0,
                   width: '100%',
                   height: '100%',
-                  objectFit: 'cover'
+                  objectFit: 'cover',
+                  transition: 'transform 0.3s ease'
                 }}
               />
+
+              {/* Prev / Next Navigation Arrows (Only if multiple images) */}
+              {product.images && product.images.length > 1 && (
+                <>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const currentIdx = product.images.indexOf(selectedImage || product.images[0]);
+                      const prevIdx = (currentIdx - 1 + product.images.length) % product.images.length;
+                      setSelectedImage(product.images[prevIdx]);
+                    }}
+                    aria-label="Previous Image"
+                    style={{
+                      position: 'absolute',
+                      left: '0.75rem',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      width: '38px',
+                      height: '38px',
+                      borderRadius: '50%',
+                      background: 'rgba(255, 255, 255, 0.85)',
+                      backdropFilter: 'blur(4px)',
+                      border: '1px solid rgba(0,0,0,0.12)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      cursor: 'pointer',
+                      zIndex: 3,
+                      boxShadow: '0 3px 10px rgba(0,0,0,0.15)',
+                      transition: 'all 0.2s ease',
+                      color: '#111827'
+                    }}
+                    onMouseOver={(e) => e.currentTarget.style.background = '#ffffff'}
+                    onMouseOut={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.85)'}
+                  >
+                    <ChevronLeft size={20} />
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const currentIdx = product.images.indexOf(selectedImage || product.images[0]);
+                      const nextIdx = (currentIdx + 1) % product.images.length;
+                      setSelectedImage(product.images[nextIdx]);
+                    }}
+                    aria-label="Next Image"
+                    style={{
+                      position: 'absolute',
+                      right: '0.75rem',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      width: '38px',
+                      height: '38px',
+                      borderRadius: '50%',
+                      background: 'rgba(255, 255, 255, 0.85)',
+                      backdropFilter: 'blur(4px)',
+                      border: '1px solid rgba(0,0,0,0.12)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      cursor: 'pointer',
+                      zIndex: 3,
+                      boxShadow: '0 3px 10px rgba(0,0,0,0.15)',
+                      transition: 'all 0.2s ease',
+                      color: '#111827'
+                    }}
+                    onMouseOver={(e) => e.currentTarget.style.background = '#ffffff'}
+                    onMouseOut={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.85)'}
+                  >
+                    <ChevronRight size={20} />
+                  </button>
+
+                  {/* Image Counter Badge */}
+                  <div style={{
+                    position: 'absolute',
+                    bottom: '0.85rem',
+                    right: '0.85rem',
+                    background: 'rgba(15, 17, 21, 0.75)',
+                    color: '#ffffff',
+                    padding: '3px 8px',
+                    borderRadius: '999px',
+                    fontSize: '0.75rem',
+                    fontWeight: 600,
+                    backdropFilter: 'blur(4px)',
+                    letterSpacing: '0.04em',
+                    zIndex: 2
+                  }}>
+                    {Math.max(1, product.images.indexOf(selectedImage || product.images[0]) + 1)} / {product.images.length}
+                  </div>
+                </>
+              )}
             </div>
 
             {/* Thumbnail Strip */}
             {product.images && product.images.length > 1 && (
-              <div style={{ display: 'flex', gap: '0.75rem', overflowX: 'auto', paddingBottom: '0.5rem' }}>
-                {product.images.map((img, idx) => (
-                  <button
-                    key={idx}
-                    type="button"
-                    onClick={() => setSelectedImage(img)}
-                    style={{
-                      width: '74px',
-                      height: '74px',
-                      borderRadius: '8px',
-                      overflow: 'hidden',
-                      border: selectedImage === img ? '2px solid var(--accent-gold)' : '1px solid var(--border-subtle)',
-                      background: 'transparent',
-                      padding: 0,
-                      cursor: 'pointer',
-                      flexShrink: 0
-                    }}
-                  >
-                    <img
-                      src={img}
-                      alt=""
-                      onError={(e) => {
-                        e.currentTarget.onerror = null;
-                        e.currentTarget.src = '/assets/images/IMG_7098.JPG';
+              <div style={{
+                display: 'flex',
+                gap: '0.75rem',
+                overflowX: 'auto',
+                paddingBottom: '0.5rem',
+                scrollbarWidth: 'thin'
+              }}>
+                {product.images.map((img, idx) => {
+                  const isActive = (selectedImage || product.images[0]) === img;
+                  return (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => setSelectedImage(img)}
+                      style={{
+                        width: '78px',
+                        height: '78px',
+                        borderRadius: '8px',
+                        overflow: 'hidden',
+                        border: isActive ? '2px solid var(--accent-gold)' : '1px solid var(--border-subtle)',
+                        background: '#ffffff',
+                        padding: 0,
+                        cursor: 'pointer',
+                        flexShrink: 0,
+                        position: 'relative',
+                        boxShadow: isActive ? '0 0 0 2px rgba(212, 175, 55, 0.25)' : 'none',
+                        opacity: isActive ? 1 : 0.75,
+                        transition: 'all 0.2s ease'
                       }}
-                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                    />
-                  </button>
-                ))}
+                      onMouseOver={(e) => e.currentTarget.style.opacity = '1'}
+                      onMouseOut={(e) => {
+                        if (!isActive) e.currentTarget.style.opacity = '0.75';
+                      }}
+                    >
+                      <img
+                        src={img}
+                        alt={`Thumbnail ${idx + 1}`}
+                        onError={(e) => {
+                          e.currentTarget.onerror = null;
+                          e.currentTarget.src = '/assets/images/IMG_7098.JPG';
+                        }}
+                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                      />
+                    </button>
+                  );
+                })}
               </div>
             )}
           </div>
 
           {/* Product Meta & Actions */}
           <div>
-            <span className="brand-line" style={{ display: 'inline-block', marginBottom: '0.5rem' }}>
-              {product.shape ? `${product.shape} Shape | ${product.product_type}` : product.product_type}
-            </span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', flexWrap: 'wrap', marginBottom: '0.65rem' }}>
+              <span className="brand-line" style={{ display: 'inline-block' }}>
+                {product.shape ? `${product.shape} Shape | ${product.product_type}` : product.product_type}
+              </span>
+              {Boolean(product.is_best_seller) && (
+                <span style={{
+                  padding: '2px 9px',
+                  borderRadius: '12px',
+                  background: 'linear-gradient(135deg, #d4af37, #b8860b)',
+                  color: '#ffffff',
+                  fontSize: '0.72rem',
+                  fontWeight: 700,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.04em',
+                  boxShadow: '0 2px 5px rgba(212,175,55,0.3)'
+                }}>
+                  ★ Best Seller
+                </span>
+              )}
+              {Boolean(product.is_bundle) && (
+                <span style={{
+                  padding: '2px 9px',
+                  borderRadius: '12px',
+                  background: '#0f172a',
+                  color: '#f8fafc',
+                  fontSize: '0.72rem',
+                  fontWeight: 700,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.04em',
+                  border: '1px solid var(--border-gold)'
+                }}>
+                  Bundle & Save
+                </span>
+              )}
+            </div>
 
             <h1 className="font-heading" style={{ fontSize: '2.2rem', color: 'var(--text-primary)', lineHeight: 1.25, marginBottom: '0.75rem' }}>
               {product.name}
@@ -219,9 +392,51 @@ export default function ProductDetailPage() {
               </span>
             </div>
 
-            {/* Price Display */}
-            <div style={{ marginBottom: '1.5rem', paddingBottom: '1.5rem', borderBottom: '1px solid var(--border-subtle)' }}>
+            {/* Price Display & Stock Status */}
+            <div style={{ marginBottom: '1.5rem', paddingBottom: '1.5rem', borderBottom: '1px solid var(--border-subtle)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
               <PriceDisplay price={product.price} salePrice={product.sale_price} size="xl" />
+              {isTotalOutOfStock ? (
+                <span style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  padding: '0.35rem 0.85rem',
+                  borderRadius: '20px',
+                  background: '#fee2e2',
+                  color: '#dc2626',
+                  fontSize: '0.82rem',
+                  fontWeight: 700,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.04em'
+                }}>
+                  ● Out of Stock
+                </span>
+              ) : currentSizeQty <= 0 ? (
+                <span style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  padding: '0.35rem 0.85rem',
+                  borderRadius: '20px',
+                  background: '#fee2e2',
+                  color: '#dc2626',
+                  fontSize: '0.82rem',
+                  fontWeight: 700
+                }}>
+                  ● Size {selectedSize} Out of Stock
+                </span>
+              ) : (
+                <span style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  padding: '0.35rem 0.85rem',
+                  borderRadius: '20px',
+                  background: '#dcfce7',
+                  color: '#15803d',
+                  fontSize: '0.82rem',
+                  fontWeight: 600
+                }}>
+                  ● In Stock {hasSizeStock && selectedSize && product.size_stock?.[selectedSize] !== undefined ? `(${currentSizeQty} available for Size ${selectedSize})` : `(${product.stock} available)`}
+                </span>
+              )}
             </div>
 
             {/* Short Description */}
@@ -270,25 +485,32 @@ export default function ProductDetailPage() {
                   </Link>
                 </div>
                 <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-                  {product.sizes.map((s) => (
-                    <button
-                      key={s}
-                      type="button"
-                      onClick={() => setSelectedSize(s)}
-                      style={{
-                        padding: '0.5rem 1rem',
-                        borderRadius: '6px',
-                        fontSize: '0.85rem',
-                        fontWeight: 600,
-                        cursor: 'pointer',
-                        background: selectedSize === s ? 'var(--accent-gold)' : 'var(--bg-secondary)',
-                        color: selectedSize === s ? '#fff' : 'var(--text-secondary)',
-                        border: selectedSize === s ? '1px solid var(--accent-gold)' : '1px solid var(--border-subtle)'
-                      }}
-                    >
-                      {s}
-                    </button>
-                  ))}
+                  {product.sizes.map((s) => {
+                    const szStock = hasSizeStock && product.size_stock?.[s] !== undefined ? Number(product.size_stock[s]) : (product.stock || 1);
+                    const isSzOut = szStock <= 0;
+                    return (
+                      <button
+                        key={s}
+                        type="button"
+                        onClick={() => setSelectedSize(s)}
+                        style={{
+                          padding: '0.5rem 1rem',
+                          borderRadius: '6px',
+                          fontSize: '0.85rem',
+                          fontWeight: 600,
+                          cursor: 'pointer',
+                          background: selectedSize === s ? 'var(--accent-gold)' : isSzOut ? 'rgba(0,0,0,0.03)' : 'var(--bg-secondary)',
+                          color: selectedSize === s ? '#fff' : isSzOut ? 'var(--text-muted)' : 'var(--text-secondary)',
+                          border: selectedSize === s ? '1px solid var(--accent-gold)' : '1px solid var(--border-subtle)',
+                          textDecoration: isSzOut ? 'line-through' : 'none',
+                          opacity: isSzOut ? 0.6 : 1
+                        }}
+                        title={isSzOut ? `Size ${s} is out of stock` : `Size ${s} (${szStock} in stock)`}
+                      >
+                        {s} {isSzOut ? '(Out)' : ''}
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
             )}
@@ -301,12 +523,14 @@ export default function ProductDetailPage() {
                 border: '1px solid var(--border-medium)',
                 borderRadius: '6px',
                 background: 'var(--bg-secondary)',
-                overflow: 'hidden'
+                overflow: 'hidden',
+                opacity: isOutOfStock ? 0.5 : 1
               }}>
                 <button
                   type="button"
+                  disabled={isOutOfStock}
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  style={{ padding: '0.75rem 1rem', background: 'transparent', border: 'none', color: 'var(--text-primary)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                  style={{ padding: '0.75rem 1rem', background: 'transparent', border: 'none', color: 'var(--text-primary)', cursor: isOutOfStock ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                   aria-label="Decrease quantity"
                 >
                   <Minus size={15} />
@@ -316,8 +540,20 @@ export default function ProductDetailPage() {
                 </span>
                 <button
                   type="button"
-                  onClick={() => setQuantity(quantity + 1)}
-                  style={{ padding: '0.75rem 1rem', background: 'transparent', border: 'none', color: 'var(--text-primary)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                  disabled={isOutOfStock || quantity >= maxAvailable}
+                  onClick={() => setQuantity(prev => Math.min(maxAvailable, prev + 1))}
+                  style={{
+                    padding: '0.75rem 1rem',
+                    background: 'transparent',
+                    border: 'none',
+                    color: 'var(--text-primary)',
+                    cursor: (isOutOfStock || quantity >= maxAvailable) ? 'not-allowed' : 'pointer',
+                    opacity: (isOutOfStock || quantity >= maxAvailable) ? 0.35 : 1,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}
+                  title={quantity >= maxAvailable ? `Maximum stock of ${maxAvailable} reached` : 'Increase quantity'}
                   aria-label="Increase quantity"
                 >
                   <Plus size={15} />
@@ -327,10 +563,18 @@ export default function ProductDetailPage() {
               <button
                 type="button"
                 className="btn btn-primary btn-lg"
+                disabled={isOutOfStock}
                 onClick={handleAddToCart}
-                style={{ flex: 1, minWidth: '200px' }}
+                style={{
+                  flex: 1,
+                  minWidth: '200px',
+                  background: isOutOfStock ? '#9ca3af' : undefined,
+                  borderColor: isOutOfStock ? '#9ca3af' : undefined,
+                  cursor: isOutOfStock ? 'not-allowed' : 'pointer',
+                  opacity: isOutOfStock ? 0.7 : 1
+                }}
               >
-                <ShoppingBag size={18} /> Add to Cart
+                <ShoppingBag size={18} /> {isOutOfStock ? 'Out of Stock' : 'Add to Cart'}
               </button>
             </div>
 

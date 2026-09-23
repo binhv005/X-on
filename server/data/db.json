@@ -1,6 +1,94 @@
 {
   "products": [
     {
+      "id": "xon_1790153046729_t56828",
+      "createdAt": "2026-09-23T08:44:06.729Z",
+      "updatedAt": "2026-09-23T09:05:28.461Z",
+      "name": "test",
+      "slug": "test-1",
+      "SKU": "XON-664",
+      "images": [
+        "https://images.unsplash.com/photo-1632345031435-8727f6897d53?auto=format&fit=crop&w=800&q=80",
+        "/uploads/product-1790153022787-378699367.JPG",
+        "/uploads/product-1790153022819-652600574.JPG",
+        "/uploads/product-1790153022833-445699180.JPG",
+        "/uploads/product-1790153022847-568941864.JPG"
+      ],
+      "price": 4000,
+      "sale_price": 2000000,
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "Custom"
+      ],
+      "variants": [],
+      "stock": 0,
+      "status": "out_of_stock",
+      "product_type": "Handmade Press-On Nails",
+      "categories": [
+        "Handmade Press-On Nails"
+      ],
+      "shape": "Coffin",
+      "themes": [
+        "Cat Eye & Chrome"
+      ],
+      "is_best_seller": true,
+      "is_bundle": true,
+      "discount_percentage": null,
+      "description": "Handcrafted with salon-grade builder gel and high-clarity topcoat.",
+      "additional_info": {
+        "included": "10 Nails + Complete Application Kit",
+        "finish": "Glossy Gel",
+        "wear_time": "Up to 3 weeks"
+      },
+      "rating": 5,
+      "reviews_count": 0
+    },
+    {
+      "id": "xon_1790149055708_jqfap5",
+      "createdAt": "2026-09-23T07:37:35.708Z",
+      "updatedAt": "2026-09-23T08:00:44.993Z",
+      "name": "test",
+      "slug": "test",
+      "SKU": "XON-151",
+      "images": [
+        "https://images.unsplash.com/photo-1632345031435-8727f6897d53?auto=format&fit=crop&w=800&q=80"
+      ],
+      "price": 40000,
+      "sale_price": 25000.01,
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "Custom"
+      ],
+      "variants": [],
+      "stock": 25,
+      "status": "draft",
+      "product_type": "Handmade Press-On Nails",
+      "categories": [
+        "Handmade Press-On Nails"
+      ],
+      "shape": "Coffin",
+      "themes": [
+        "Cat Eye & Chrome"
+      ],
+      "is_best_seller": false,
+      "is_bundle": false,
+      "discount_percentage": null,
+      "description": "Handcrafted with salon-grade builder gel and high-clarity topcoat.",
+      "additional_info": {
+        "included": "10 Nails + Complete Application Kit",
+        "finish": "Glossy Gel",
+        "wear_time": "Up to 3 weeks"
+      },
+      "rating": 5,
+      "reviews_count": 0
+    },
+    {
       "id": "prod-1",
       "name": "CF-35-0961 Luxury Chrome Velvet",
       "slug": "cf-35-0961-luxury-chrome-velvet",
@@ -608,7 +696,8 @@
       "brand_description": "Created for nail lovers and professionals alike, X-ON offers handmade press-on nails and carefully selected nail essentials designed with quality, style, and performance in mind.\n\nFrom statement-making nail sets to everyday professional supplies, every X-ON product is chosen to make beautiful nails easier, faster, and more accessible—without compromising on a polished, luxury finish.\n\nX-ON — Press On. Slay On. Repeat.",
       "address": "3168 Bill Beck Blvd, Kissimmee, FL 34744",
       "phone": "689-212-8888",
-      "image": "https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=1200&q=80"
+      "image": "/uploads/product-1790150268757-727058313.JPG",
+      "updatedAt": "2026-09-23T07:57:51.570Z"
     },
     "sizing": {
       "page_title": "Sizing Chart & Fit Guide",
@@ -727,12 +816,12 @@
       "terms": {
         "title": "Terms & Conditions",
         "last_updated": "September 2026",
-        "body": "Welcome to X-ON. By accessing or using our website and purchasing our handmade press-on nails and nail essentials, you agree to comply with and be bound by the following terms and conditions.\n\n### 1. Brand Identity & Product Quality\nX-ON is where modern nail artistry meets effortless beauty. All our press-on nail sets are handmade and crafted with salon-grade materials. Due to the handmade nature of our products, subtle variations may occur, enhancing the unique artisan character of each set.\n\n### 2. Sizing and Custom Orders\nCustomers are responsible for providing accurate sizing measurements according to our Sizing Chart before finalizing custom orders. X-ON provides detailed measurement guidelines to ensure a bespoke fit.\n\n### 3. Shipping & Delivery\nOrders are processed from our Kissimmee, FL studio (3168 Bill Beck Blvd, Kissimmee, FL 34744). Handmade sets require a 3-5 business day production window prior to dispatch.\n\n### 4. Contact\nFor questions regarding terms, contact us at 689-212-8888."
+        "body": "Welcome to X-ON. By accessing our website and purchasing our handmade bespoke press-on nails and premium nail essentials, you agree to be bound by the following terms and conditions.\n\n### 1. Handcrafted Artisan Nature & Unique Quality\nX-ON is where modern nail artistry meets effortless luxury. All our press-on nail sets are 100% handcrafted by certified nail technicians using multi-layer gel polish, salon-grade top coats, and authentic embellishments. Due to the artisanal handmade process, subtle artistic variations in design, color, or gemstone placement may occur, enhancing the bespoke character of each unique set.\n\n### 2. Sizing Accuracy & Fit Responsibility\nAchieving the perfect fit is essential for comfort and multi-week durability. Customers are required to measure their natural nail beds accurately using our Sizing Chart & Fit Guide before placing an order. X-ON creates sets according to selected standard presets (XS, S, M, L) or custom millimeter measurements provided at checkout. X-ON cannot be held responsible for fit issues resulting from incorrect customer measurements.\n\n### 3. Production Turnaround & Shipping Policies\nEvery set of X-ON nails is handmade to order with meticulous precision. Standard production time is 3 to 5 business days prior to dispatch. All orders are safely packaged and shipped from our studio located at 3168 Bill Beck Blvd, Kissimmee, FL 34744. Tracking numbers are provided automatically via email and SMS upon carrier pickup.\n\n### 4. Health, Hygiene & Non-Returnable Policy\nDue to strict health, hygiene, and cosmetic safety regulations, all press-on nail sets, cuticle oils, and adhesive products are non-returnable and non-refundable once shipped. If you receive an item with a verified manufacturing defect or shipping damage, you must contact our studio within 48 hours of delivery with photographic evidence for an expedited replacement.\n\n### 5. Safe Application, Removal & Wear Disclaimer\nX-ON provides salon-grade adhesives (Ultra-Bond Adhesive Tabs and Pro Hold Liquid Glue) and clear application instructions. Customers are advised to perform a skin sensitivity patch test prior to full application. X-ON is not liable for natural nail bed damage resulting from improper or forceful mechanical removal. Please follow our warm water and oil soak-off instructions.\n\n### 6. Wholesale & Studio Partnerships\nApproved B2B wholesale partners must adhere to minimum order quantities (MOQ) and official MSRP guidelines. Resale of X-ON products on unauthorized third-party discount platforms or counterfeiting of our bespoke nail designs is strictly prohibited.\n\n### 7. Intellectual Property\nAll designs, photography, logos, trade dress, and written content on this website are the intellectual property of X-ON. Unauthorized reproduction or commercial redistribution is prohibited.\n\n### 8. Governing Law\nThese Terms & Conditions are governed by and construed in accordance with the laws of the State of Florida, United States."
       },
       "privacy": {
         "title": "Privacy Policy",
         "last_updated": "September 2026",
-        "body": "At X-ON (3168 Bill Beck Blvd, Kissimmee, FL 34744; Phone: 689-212-8888), we are committed to safeguarding your privacy.\n\n### Information We Collect\nWe collect personal information necessary to fulfill your orders, process wholesale applications, and send newsletter updates when you explicitly opt-in. This includes your name, email, phone number, and shipping details.\n\n### Data Protection\nYour information is protected with industry-standard encryption. We never sell or distribute your private contact details to third-party marketing brokers.\n\n### Your Rights\nYou may request access, correction, or deletion of your personal account data by contacting our team."
+        "body": "At X-ON (Press On. Slay On. Repeat.), we are deeply committed to protecting the privacy, confidentiality, and security of your personal data.\n\n### 1. Information We Collect\nWe collect personal information necessary to deliver exceptional nail artistry and seamless customer service. This includes:\n- Identity & Contact Details: Name, delivery address, billing address, email address, and phone number.\n- Sizing Profile: Custom nail bed millimeter measurements stored to expedite future bespoke orders.\n- Transaction Information: Order history, items purchased, and payment confirmation tokens (processed securely through PCI-DSS Level 1 payment gateways—we never store raw credit card numbers).\n- Technical Data: IP address, browser type, device information, and interaction cookies to optimize page loading.\n\n### 2. How We Use Your Information\nWe use your personal data strictly for legitimate business purposes:\n- To craft, package, and ship your handmade nail orders.\n- To send order status confirmations, delivery tracking, and customer support communications.\n- To manage your X-ON VIP membership and wholesale studio accounts.\n- To deliver optional VIP promotional discounts and new collection announcements (you may opt out at any time).\n\n### 3. Data Protection & Zero-Sale Guarantee\nYour personal details are safeguarded with 256-bit SSL encryption and strict server-side access controls. We NEVER sell, rent, trade, or distribute your private contact information to third-party marketing brokers or data harvesters.\n\n### 4. Trusted Third-Party Service Providers\nWe partner only with reputable service providers to fulfill our operations:\n- Postal & Logistics Carriers: USPS, FedEx, and UPS solely for order transport.\n- Secure Payment Gateways: Stripe, PayPal, and Apple Pay for end-to-end encrypted financial transactions.\n\n### 5. Your Privacy Rights & Choices\nYou have full control over your personal data. You may request access to, correction of, or permanent deletion of your account and sizing records at any time by contacting our studio team.\n\n### 6. Children's Privacy\nOur website and products are intended for individuals aged 16 and older. We do not knowingly collect personal information from children under 13.\n\n### 7. Policy Updates & Contact Information\nWe may update this Privacy Policy periodically to reflect new salon services or legal regulations. For questions or privacy requests, contact X-ON Studio at 3168 Bill Beck Blvd, Kissimmee, FL 34744 or call 689-212-8888."
       }
     }
   },
@@ -1034,6 +1123,133 @@
     }
   ],
   "orders": [
+    {
+      "id": "XON-ORD-4613",
+      "createdAt": "2026-09-23T09:05:28.462Z",
+      "updatedAt": "2026-09-23T09:05:28.462Z",
+      "customer": {
+        "name": "Bình Võ",
+        "email": "vtb22522005@gmail.com",
+        "phone": "2143253134",
+        "address": "123",
+        "city": "Ho Chi Minh",
+        "note": ""
+      },
+      "line_items": [
+        {
+          "id": "xon_1790153046729_t56828",
+          "name": "test",
+          "price": 2000000,
+          "quantity": 34,
+          "selectedSize": "XS",
+          "selectedVariant": "",
+          "image": "https://images.unsplash.com/photo-1632345031435-8727f6897d53?auto=format&fit=crop&w=800&q=80",
+          "sku": "XON-xon_1790153046729_t56828"
+        }
+      ],
+      "subtotal": 68000000,
+      "shipping": 0,
+      "total": 68000000,
+      "status": "Processing",
+      "payment_status": "Paid",
+      "payment_metadata": {
+        "method": "cod",
+        "channel": "Cash On Delivery"
+      },
+      "shipping_metadata": {
+        "address": "123",
+        "city": "Ho Chi Minh",
+        "method": "Standard Express Shipping"
+      }
+    },
+    {
+      "id": "XON-ORD-5782",
+      "createdAt": "2026-09-23T08:45:36.818Z",
+      "updatedAt": "2026-09-23T08:45:36.818Z",
+      "customer": {
+        "name": "jes",
+        "email": "a@gmail.com",
+        "phone": "09128472897",
+        "address": "123",
+        "city": "Ho Chi Minh",
+        "note": ""
+      },
+      "line_items": [
+        {
+          "id": "xon_1790153046729_t56828",
+          "name": "test",
+          "price": 2000000,
+          "quantity": 3,
+          "selectedSize": "XS",
+          "selectedVariant": "",
+          "image": "https://images.unsplash.com/photo-1632345031435-8727f6897d53?auto=format&fit=crop&w=800&q=80",
+          "sku": "XON-xon_1790153046729_t56828"
+        }
+      ],
+      "subtotal": 6000000,
+      "shipping": 0,
+      "total": 6000000,
+      "status": "Processing",
+      "payment_status": "Paid",
+      "payment_metadata": {
+        "method": "cod",
+        "channel": "Cash On Delivery"
+      },
+      "shipping_metadata": {
+        "address": "123",
+        "city": "Ho Chi Minh",
+        "method": "Standard Express Shipping"
+      }
+    },
+    {
+      "id": "XON-ORD-7856",
+      "createdAt": "2026-09-23T08:41:16.001Z",
+      "updatedAt": "2026-09-23T08:41:16.001Z",
+      "customer": {
+        "name": "test",
+        "email": "bin@gmail.com",
+        "phone": "1234567890",
+        "address": "123",
+        "city": "Ho Chi Minh",
+        "note": "1"
+      },
+      "line_items": [
+        {
+          "id": "xon_1790149055708_jqfap5",
+          "name": "test",
+          "price": 25000.01,
+          "quantity": 1,
+          "selectedSize": "XS",
+          "selectedVariant": "",
+          "image": "https://images.unsplash.com/photo-1632345031435-8727f6897d53?auto=format&fit=crop&w=800&q=80",
+          "sku": "XON-xon_1790149055708_jqfap5"
+        },
+        {
+          "id": "prod-1",
+          "name": "CF-35-0961 Luxury Chrome Velvet",
+          "price": 39,
+          "quantity": 1,
+          "selectedSize": "XS",
+          "selectedVariant": "Short Coffin",
+          "image": "/assets/images/IMG_7098.JPG",
+          "sku": "XON-prod-1"
+        }
+      ],
+      "subtotal": 25039.01,
+      "shipping": 0,
+      "total": 25039.01,
+      "status": "Processing",
+      "payment_status": "Paid",
+      "payment_metadata": {
+        "method": "cod",
+        "channel": "Cash On Delivery"
+      },
+      "shipping_metadata": {
+        "address": "123",
+        "city": "Ho Chi Minh",
+        "method": "Standard Express Shipping"
+      }
+    },
     {
       "id": "XON-ORD-7513",
       "createdAt": "2026-09-23T06:58:55.025Z",

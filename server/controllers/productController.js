@@ -17,7 +17,7 @@ export const getProducts = (req, res, next) => {
 export const getProductBySlug = (req, res, next) => {
   try {
     const { slug } = req.params;
-    const product = productService.getProductBySlug(slug);
+    const product = productService.getProductBySlug(slug, req.query);
 
     if (!product) {
       return res.status(404).json({ success: false, message: 'Product not found' });

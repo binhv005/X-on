@@ -14,7 +14,8 @@ class ProductRepository {
   }
 
   findBySKU(sku) {
-    return db.findOne('products', p => p.SKU.toLowerCase() === sku.trim().toLowerCase());
+    if (!sku) return null;
+    return db.findOne('products', p => p.SKU && p.SKU.toLowerCase() === sku.toString().trim().toLowerCase());
   }
 
   create(data) {

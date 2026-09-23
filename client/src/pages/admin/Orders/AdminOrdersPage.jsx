@@ -84,6 +84,118 @@ export default function AdminOrdersPage() {
     }
   };
 
+  const getPaymentMethodBadge = (order) => {
+    const rawMethod = order.payment_metadata?.channel || 
+                      order.payment_metadata?.method || 
+                      order.payment_method || 
+                      order.paymentMethod || 
+                      order.payment_status || 
+                      'Paid';
+
+    const m = String(rawMethod).toLowerCase();
+
+    if (m.includes('cod') || m.includes('cash')) {
+      return (
+        <span style={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: '4px',
+          padding: '0.25rem 0.65rem',
+          borderRadius: '999px',
+          fontSize: '0.72rem',
+          fontWeight: 700,
+          background: 'rgba(217, 119, 6, 0.12)',
+          color: '#b45309',
+          border: '1px solid rgba(217, 119, 6, 0.25)'
+        }}>
+          COD (Cash)
+        </span>
+      );
+    }
+
+    if (m.includes('paypal')) {
+      return (
+        <span style={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: '4px',
+          padding: '0.25rem 0.65rem',
+          borderRadius: '999px',
+          fontSize: '0.72rem',
+          fontWeight: 700,
+          background: 'rgba(2, 132, 199, 0.12)',
+          color: '#0284c7',
+          border: '1px solid rgba(2, 132, 199, 0.25)'
+        }}>
+          PayPal
+        </span>
+      );
+    }
+
+    if (m.includes('apple')) {
+      return (
+        <span style={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: '4px',
+          padding: '0.25rem 0.65rem',
+          borderRadius: '999px',
+          fontSize: '0.72rem',
+          fontWeight: 700,
+          background: 'rgba(17, 24, 39, 0.08)',
+          color: '#111827',
+          border: '1px solid rgba(17, 24, 39, 0.2)'
+        }}>
+          Apple Pay
+        </span>
+      );
+    }
+
+    if (m.includes('card') || m.includes('stripe') || m.includes('credit')) {
+      return (
+        <span style={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: '4px',
+          padding: '0.25rem 0.65rem',
+          borderRadius: '999px',
+          fontSize: '0.72rem',
+          fontWeight: 700,
+          background: 'rgba(37, 99, 235, 0.12)',
+          color: '#2563eb',
+          border: '1px solid rgba(37, 99, 235, 0.25)'
+        }}>
+          Credit Card
+        </span>
+      );
+    }
+
+    if (m.includes('bank') || m.includes('transfer')) {
+      return (
+        <span style={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: '4px',
+          padding: '0.25rem 0.65rem',
+          borderRadius: '999px',
+          fontSize: '0.72rem',
+          fontWeight: 700,
+          background: 'rgba(13, 148, 136, 0.12)',
+          color: '#0f766e',
+          border: '1px solid rgba(13, 148, 136, 0.25)'
+        }}>
+          Bank Transfer
+        </span>
+      );
+    }
+
+    return (
+      <span className="badge badge-gold" style={{ fontSize: '0.72rem' }}>
+        {rawMethod}
+      </span>
+    );
+  };
+
   return (
     <div>
       {/* Header */}
@@ -145,16 +257,16 @@ export default function AdminOrdersPage() {
           overflow: 'hidden'
         }}>
           <div style={{ overflowX: 'auto' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.88rem' }}>
+            <table style={{ width: '100%', minWidth: '850px', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.88rem', whiteSpace: 'nowrap' }}>
               <thead>
-                <tr style={{ background: 'var(--bg-secondary)', borderBottom: '1px solid var(--border-subtle)', color: 'var(--text-muted)' }}>
-                  <th style={{ padding: '1rem' }}>Order ID</th>
-                  <th style={{ padding: '1rem' }}>Customer</th>
-                  <th style={{ padding: '1rem' }}>Total</th>
-                  <th style={{ padding: '1rem' }}>Payment</th>
-                  <th style={{ padding: '1rem' }}>Order Status</th>
-                  <th style={{ padding: '1rem' }}>Date</th>
-                  <th style={{ padding: '1rem', textAlign: 'right' }}>Actions</th>
+                <tr style={{ background: 'var(--bg-secondary)', borderBottom: '1px solid var(--border-subtle)', color: 'var(--text-muted)', whiteSpace: 'nowrap' }}>
+                  <th style={{ padding: '1rem', whiteSpace: 'nowrap' }}>Order ID</th>
+                  <th style={{ padding: '1rem', whiteSpace: 'nowrap' }}>Customer</th>
+                  <th style={{ padding: '1rem', whiteSpace: 'nowrap' }}>Total</th>
+                  <th style={{ padding: '1rem', whiteSpace: 'nowrap' }}>Payment</th>
+                  <th style={{ padding: '1rem', whiteSpace: 'nowrap' }}>Order Status</th>
+                  <th style={{ padding: '1rem', whiteSpace: 'nowrap' }}>Date</th>
+                  <th style={{ padding: '1rem', textAlign: 'right', whiteSpace: 'nowrap' }}>Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -166,21 +278,19 @@ export default function AdminOrdersPage() {
                   </tr>
                 ) : (
                   orders.map(order => (
-                    <tr key={order.id} style={{ borderBottom: '1px solid var(--border-subtle)' }}>
-                      <td style={{ padding: '1rem', fontWeight: 700, color: 'var(--accent-gold-light)' }}>{order.id}</td>
-                      <td style={{ padding: '1rem' }}>
-                        <div style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{order.customer?.name}</div>
-                        <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{order.customer?.email}</div>
+                    <tr key={order.id} style={{ borderBottom: '1px solid var(--border-subtle)', whiteSpace: 'nowrap' }}>
+                      <td style={{ padding: '1rem', fontWeight: 700, color: 'var(--accent-gold-light)', whiteSpace: 'nowrap' }}>{order.id}</td>
+                      <td style={{ padding: '1rem', whiteSpace: 'nowrap' }}>
+                        <div style={{ fontWeight: 600, color: 'var(--text-primary)', whiteSpace: 'nowrap' }}>{order.customer?.name}</div>
+                        <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', whiteSpace: 'nowrap' }}>{order.customer?.email}</div>
                       </td>
-                      <td style={{ padding: '1rem', fontWeight: 700, color: 'var(--text-primary)' }}>
+                      <td style={{ padding: '1rem', fontWeight: 700, color: 'var(--text-primary)', whiteSpace: 'nowrap' }}>
                         ${order.total?.toFixed(2)}
                       </td>
-                      <td style={{ padding: '1rem' }}>
-                        <span className="badge badge-gold" style={{ fontSize: '0.7rem' }}>
-                          {order.payment_status || 'Paid'}
-                        </span>
+                      <td style={{ padding: '1rem', whiteSpace: 'nowrap' }}>
+                        {getPaymentMethodBadge(order)}
                       </td>
-                      <td style={{ padding: '1rem' }}>
+                      <td style={{ padding: '1rem', whiteSpace: 'nowrap' }}>
                         <select
                           value={order.status || 'Processing'}
                           onChange={(e) => handleQuickStatusChange(order.id, e.target.value)}
@@ -194,6 +304,7 @@ export default function AdminOrdersPage() {
                             border: '1px solid',
                             cursor: 'pointer',
                             outline: 'none',
+                            whiteSpace: 'nowrap',
                             transition: 'all 0.2s ease',
                             background:
                               order.status === 'Completed'
@@ -220,16 +331,26 @@ export default function AdminOrdersPage() {
                           <option value="Cancelled" style={{ background: '#fff', color: '#b91c1c' }}>Cancelled</option>
                         </select>
                       </td>
-                      <td style={{ padding: '1rem', color: 'var(--text-muted)', fontSize: '0.8rem' }}>
+                      <td style={{ padding: '1rem', color: 'var(--text-muted)', fontSize: '0.8rem', whiteSpace: 'nowrap' }}>
                         {order.createdAt ? new Date(order.createdAt).toLocaleDateString() : 'Recent'}
                       </td>
-                      <td style={{ padding: '1rem', textAlign: 'right' }}>
+                      <td style={{ padding: '1rem', textAlign: 'right', whiteSpace: 'nowrap' }}>
                         <button
                           onClick={() => openOrderDetail(order)}
                           className="btn btn-secondary btn-sm"
-                          style={{ padding: '0.4rem 0.75rem' }}
+                          title="View Order Details"
+                          aria-label="View Order Details"
+                          style={{
+                            width: '34px',
+                            height: '34px',
+                            padding: 0,
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            borderRadius: '8px'
+                          }}
                         >
-                          <Eye size={14} /> View Detail
+                          <Eye size={16} />
                         </button>
                       </td>
                     </tr>

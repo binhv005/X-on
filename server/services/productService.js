@@ -99,6 +99,13 @@ class ProductService {
       products = products.filter(p => Boolean(p.is_best_seller) === isBS);
     }
 
+    // Filter by Status (Draft products are hidden from public store by default)
+    if (filters.status && filters.status.trim()) {
+      products = products.filter(p => p.status === filters.status.trim());
+    } else if (filters.admin !== 'true' && filters.include_draft !== 'true') {
+      products = products.filter(p => p.status !== 'draft');
+    }
+
     // Sorting
     if (sort === 'price_asc') {
       products.sort((a, b) => (a.sale_price || a.price) - (b.sale_price || b.price));
@@ -132,14 +139,17 @@ class ProductService {
     };
   }
 
-  getProductBySlug(slug) {
+  getProductBySlug(slug, filters = {}) {
     const product = productRepository.findBySlug(slug);
     if (!product) return null;
+    if (product.status === 'draft' && filters.admin !== 'true' && filters.include_draft !== 'true') {
+      return null;
+    }
 
     const reviews = reviewRepository.findByProductId(product.id);
     const allProducts = productRepository.getAll();
     const related = allProducts
-      .filter(p => p.id !== product.id && (p.shape === product.shape || p.product_type === product.product_type))
+      .filter(p => p.id !== product.id && p.status !== 'draft' && (p.shape === product.shape || p.product_type === product.product_type))
       .slice(0, 4);
 
     return {
@@ -206,6 +216,7 @@ class ProductService {
       categories: Array.isArray(categories) ? categories : [product_type || 'Handmade Press-On Nails'],
       shape: shape || null,
       themes: Array.isArray(themes) ? themes : [],
+      size_stock: (typeof size_stock === 'object' && size_stock !== null) ? size_stock : {},
       is_best_seller: Boolean(is_best_seller),
       is_bundle: Boolean(is_bundle),
       discount_percentage: discount_percentage ? parseInt(discount_percentage, 10) : null,
@@ -233,6 +244,9 @@ class ProductService {
       updates.sale_price = updates.sale_price === '' || updates.sale_price === null ? null : parseFloat(updates.sale_price);
     }
     if (updates.stock !== undefined) updates.stock = parseInt(updates.stock, 10);
+    if (updates.size_stock !== undefined) updates.size_stock = updates.size_stock;
+    if (updates.is_best_seller !== undefined) updates.is_best_seller = Boolean(updates.is_best_seller);
+    if (updates.is_bundle !== undefined) updates.is_bundle = Boolean(updates.is_bundle);
 
     return productRepository.update(id, updates);
   }

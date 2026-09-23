@@ -58,7 +58,38 @@ export function CartProvider({ children }) {
 
   const addToCart = (product, size = 'M', quantity = 1, variant = '', openDrawer = false) => {
     if (!product) return;
-    const qty = Math.max(1, parseInt(quantity, 10) || 1);
+
+    const hasSizeStock = product.size_stock && typeof product.size_stock === 'object' && Object.keys(product.size_stock).length > 0;
+    const availableStock = hasSizeStock && size && product.size_stock[size] !== undefined
+      ? Number(product.size_stock[size])
+      : (product.stock !== undefined ? Number(product.stock) : 9999);
+
+    const isSizeOut = hasSizeStock && size && product.size_stock[size] !== undefined && Number(product.size_stock[size]) <= 0;
+
+    if (product.status === 'out_of_stock' || (product.stock !== undefined && Number(product.stock) <= 0) || isSizeOut || product.status === 'draft' || availableStock <= 0) {
+      addToast(isSizeOut ? `"${product.name}" (Size ${size}) is currently out of stock.` : `"${product.name}" is currently out of stock and cannot be added to bag.`, 'error');
+      return;
+    }
+
+    let qty = Math.max(1, parseInt(quantity, 10) || 1);
+
+    const existingItem = items.find(
+      item => item.id === product.id && 
+              item.selectedSize === size && 
+              (item.selectedVariant || '') === (variant || '')
+    );
+    const existingQty = existingItem ? existingItem.quantity : 0;
+
+    if (existingQty + qty > availableStock) {
+      const remainingAddable = availableStock - existingQty;
+      if (remainingAddable <= 0) {
+        addToast(`You already have the maximum available stock (${availableStock} units) of "${product.name}" (Size ${size}) in your bag.`, 'warning');
+        if (openDrawer) setIsCartOpen(true);
+        return;
+      }
+      addToast(`Only ${remainingAddable} more unit(s) available in stock for Size ${size}. Adding ${remainingAddable} to your bag.`, 'warning');
+      qty = remainingAddable;
+    }
 
     setItems(prev => {
       const existingIndex = prev.findIndex(
@@ -69,9 +100,13 @@ export function CartProvider({ children }) {
 
       if (existingIndex > -1) {
         const updated = [...prev];
+        const newQty = Math.min(availableStock, updated[existingIndex].quantity + qty);
         updated[existingIndex] = {
           ...updated[existingIndex],
-          quantity: updated[existingIndex].quantity + qty
+          quantity: newQty,
+          maxStock: availableStock,
+          size_stock: product.size_stock,
+          stock: product.stock
         };
         return updated;
       } else {
@@ -85,7 +120,10 @@ export function CartProvider({ children }) {
           sku: product.sku || `XON-${product.id}`,
           selectedSize: size,
           selectedVariant: variant,
-          quantity: qty
+          quantity: qty,
+          maxStock: availableStock,
+          size_stock: product.size_stock,
+          stock: product.stock
         }];
       }
     });
@@ -99,10 +137,25 @@ export function CartProvider({ children }) {
   };
 
   const updateQuantity = (productId, size, variant = '', newQuantity) => {
-    const qty = parseInt(newQuantity, 10);
+    const targetItem = items.find(item => item.id === productId && item.selectedSize === size && (item.selectedVariant || '') === (variant || ''));
+    let qty = parseInt(newQuantity, 10);
+    
     if (isNaN(qty) || qty <= 0) {
       removeFromCart(productId, size, variant);
       return;
+    }
+
+    if (targetItem) {
+      const maxLimit = targetItem.maxStock !== undefined ? targetItem.maxStock : (
+        targetItem.size_stock && size && targetItem.size_stock[size] !== undefined
+          ? Number(targetItem.size_stock[size])
+          : (targetItem.stock !== undefined ? Number(targetItem.stock) : 9999)
+      );
+
+      if (qty > maxLimit) {
+        addToast(`Cannot exceed available inventory of ${maxLimit} units for Size ${size}.`, 'warning');
+        qty = maxLimit;
+      }
     }
 
     setItems(prev => prev.map(item => {

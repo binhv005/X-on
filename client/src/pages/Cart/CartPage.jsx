@@ -398,6 +398,7 @@ export default function CartPage() {
                               {item.quantity}
                             </span>
                             <button
+                              disabled={item.maxStock !== undefined && item.quantity >= item.maxStock}
                               onClick={() => updateQuantity(item.id, item.selectedSize, item.selectedVariant, item.quantity + 1)}
                               style={{
                                 background: 'transparent',
@@ -408,8 +409,10 @@ export default function CartPage() {
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
-                                cursor: 'pointer'
+                                cursor: (item.maxStock !== undefined && item.quantity >= item.maxStock) ? 'not-allowed' : 'pointer',
+                                opacity: (item.maxStock !== undefined && item.quantity >= item.maxStock) ? 0.35 : 1
                               }}
+                              title={item.maxStock !== undefined && item.quantity >= item.maxStock ? `Max stock (${item.maxStock}) reached` : 'Increase'}
                               aria-label="Increase"
                             >
                               <Plus size={14} />

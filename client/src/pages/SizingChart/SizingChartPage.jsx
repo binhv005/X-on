@@ -1,5 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { Sparkles, Ruler, Check, HelpCircle, Eye, Layers, Sliders, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import {
+  Sparkles,
+  Ruler,
+  Check,
+  HelpCircle,
+  Eye,
+  Layers,
+  Sliders,
+  ArrowRight,
+  CheckCircle2,
+  Heart,
+  ShoppingBag,
+  Info,
+  Calculator,
+  Compass
+} from 'lucide-react';
 import { api } from '../../services/api';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
 
@@ -11,7 +27,15 @@ import customNailBarGuideImg from '../../assets/images/0a9ef85d-1399-40c6-927c-a
 export default function SizingChartPage() {
   const [content, setContent] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [activeSection, setActiveSection] = useState('sizing'); // 'sizing' | 'shapes' | 'length'
+  const [activeTab, setActiveTab] = useState('sizing'); // 'sizing' | 'shapes' | 'length'
+
+  // Interactive Size Matcher state
+  const [calcThumb, setCalcThumb] = useState('');
+  const [calcIndex, setCalcIndex] = useState('');
+  const [calcMiddle, setCalcMiddle] = useState('');
+  const [calcRing, setCalcRing] = useState('');
+  const [calcPinky, setCalcPinky] = useState('');
+  const [matchedSize, setMatchedSize] = useState(null);
 
   useEffect(() => {
     async function loadSizingData() {
@@ -35,44 +59,104 @@ export default function SizingChartPage() {
   }
 
   const sizes = content?.sizes || [
-    { size: 'XS', thumb: '14mm', index: '10mm', middle: '11mm', ring: '10mm', pinky: '7mm' },
-    { size: 'S', thumb: '15mm', index: '11mm', middle: '12mm', ring: '11mm', pinky: '8mm' },
-    { size: 'M', thumb: '16mm', index: '12mm', middle: '13mm', ring: '12mm', pinky: '9mm' },
-    { size: 'L', thumb: '18mm', index: '13mm', middle: '14mm', ring: '13mm', pinky: '10mm' },
-    { size: 'Custom', thumb: 'Your custom mm', index: 'Your custom mm', middle: 'Your custom mm', ring: 'Your custom mm', pinky: 'Your custom mm' }
+    { size: 'XS', thumb: '14mm', index: '10mm', middle: '11mm', ring: '10mm', pinky: '7mm', popular: false },
+    { size: 'S', thumb: '15mm', index: '11mm', middle: '12mm', ring: '11mm', pinky: '8mm', popular: true },
+    { size: 'M', thumb: '16mm', index: '12mm', middle: '13mm', ring: '12mm', pinky: '9mm', popular: true },
+    { size: 'L', thumb: '18mm', index: '13mm', middle: '14mm', ring: '13mm', pinky: '10mm', popular: false },
+    { size: 'Custom', thumb: 'Custom mm', index: 'Custom mm', middle: 'Custom mm', ring: 'Custom mm', pinky: 'Custom mm', popular: false }
   ];
 
   const lengthDetails = content?.length_details || [
-    { name: 'Short', length: '14mm - 16mm', recommendation: 'Everyday typing, active lifestyle & effortless natural look.' },
-    { name: 'Medium', length: '18mm - 22mm', recommendation: 'Our most popular balance of elegant length and practical day-to-day comfort.' },
-    { name: 'Long', length: '24mm - 28mm', recommendation: 'Dramatic, statement-making length for glamour events & photoshoots.' },
-    { name: 'Extra Long', length: '30mm+', recommendation: 'High-fashion editorial couture finish.' }
+    {
+      name: 'Short',
+      length: '14mm - 16mm',
+      tag: 'Everyday Active',
+      recommendation: 'Perfect for typing, daily tasks, healthcare professionals, and a natural polished look with zero snagging.'
+    },
+    {
+      name: 'Medium',
+      length: '18mm - 22mm',
+      tag: 'Most Popular',
+      recommendation: 'Our signature versatile length. Strikes the ideal balance of elongated finger elegance and practical comfort.'
+    },
+    {
+      name: 'Long',
+      length: '24mm - 28mm',
+      tag: 'Glamour & Events',
+      recommendation: 'Dramatic, statement-making silhouette designed for photoshoots, galas, weekend escapes, and luxury evening wear.'
+    },
+    {
+      name: 'Extra Long',
+      length: '30mm+',
+      tag: 'Runway Editorial',
+      recommendation: 'Ultra-luxurious high-fashion couture finish engineered with reinforced apex structure for head-turning presence.'
+    }
   ];
 
   const shapes = [
-    { name: 'Almond', desc: 'Tapered sides rounding softly to a peak. Universally flattering and elongating for all finger shapes.' },
-    { name: 'Coffin', desc: 'Tapered inwards with a sharp, straight horizontal square tip for dramatic modern luxury.' },
-    { name: 'Oval', desc: 'Curved gently along the natural cuticle arch. Classic, understated, and durable.' },
-    { name: 'Round', desc: 'Soft circular contours ideal for shorter active nail lengths with zero corner snagging.' },
-    { name: 'Square', desc: 'Crisp 90-degree parallel sidewalls with straight edges. Clean, modern, and striking.' },
-    { name: 'Stiletto', desc: 'Ultra-dramatic sculpted razor point. Statement-making runway couture.' }
+    {
+      name: 'Almond',
+      tag: 'Universal Flattery',
+      desc: 'Tapered sides curving softly to a delicate rounded peak. Universally slimming and naturally elongating for all hands.'
+    },
+    {
+      name: 'Coffin',
+      tag: 'Modern Trend',
+      desc: 'Tapered gracefully inward with a crisp, straight horizontal square tip for a bold, luxurious silhouette.'
+    },
+    {
+      name: 'Oval',
+      tag: 'Timeless Classic',
+      desc: 'Gently curved along the natural cuticle arch. Understated, highly durable, and effortless for everyday luxury.'
+    },
+    {
+      name: 'Square',
+      tag: 'Clean & Structured',
+      desc: 'Crisp 90-degree parallel sidewalls with straight edges. Clean, razor-modern, and architectural.'
+    },
+    {
+      name: 'Stiletto',
+      tag: 'Couture Statement',
+      desc: 'Sculpted to a dramatic razor point. The ultimate runway statement for bold, high-fashion styling.'
+    },
+    {
+      name: 'Round',
+      tag: 'Effortless Wear',
+      desc: 'Soft circular contours ideal for shorter natural nail beds with maximum durability and comfort.'
+    }
   ];
 
   const sectionTabs = [
-    { id: 'sizing', label: '1. Sizing & Measurement', icon: Ruler, subtitle: 'Width & mm table' },
-    { id: 'shapes', label: '2. Signature Shapes', icon: Sparkles, subtitle: '6 artisan silhouettes' },
-    { id: 'length', label: '3. Length & Lifestyle', icon: Sliders, subtitle: 'Fit recommendations' }
+    { id: 'sizing', label: '1. Sizing Table & Measurement', icon: Ruler },
+    { id: 'shapes', label: '2. Signature Shapes', icon: Sparkles },
+    { id: 'length', label: '3. Length & Lifestyle Guide', icon: Sliders }
   ];
+
+  const handleQuickMatch = (e) => {
+    e.preventDefault();
+    const t = parseFloat(calcThumb) || 0;
+    if (t >= 17) setMatchedSize('L (Large) — or Custom Sizing');
+    else if (t >= 15.5) setMatchedSize('M (Medium) — Most Popular');
+    else if (t >= 14.5) setMatchedSize('S (Small)');
+    else if (t > 0) setMatchedSize('XS (Extra Small)');
+    else setMatchedSize('Please enter at least your thumb width');
+  };
 
   return (
     <div style={{ background: 'var(--bg-primary, #fcfbf9)', minHeight: '85vh', color: 'var(--text-primary, #1c1c21)' }}>
-      {/* Top Banner Image Showcase (100% Full Width) */}
-      <div style={{
-        width: '100%',
-        background: '#faf7f2',
-        borderBottom: '1px solid var(--border-subtle)',
-        overflow: 'hidden'
+      {/* 1. Full-width Hero Header Banner with Image Background & Dark Overlay */}
+      <section style={{
+        position: 'relative',
+        minHeight: '460px',
+        padding: '6rem 1.5rem 5.5rem 1.5rem',
+        borderBottom: '1px solid rgba(255, 255, 255, 0.12)',
+        textAlign: 'center',
+        overflow: 'hidden',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
       }}>
+        {/* Background Showcase Image */}
         <img
           src={topShowcaseBanner}
           alt="X-ON Nail Sizing & Shape Showcase"
@@ -81,71 +165,135 @@ export default function SizingChartPage() {
             e.currentTarget.src = '/assets/images/ChatGPT-Image-18_51_04-20-thg-7-2026.png';
           }}
           style={{
+            position: 'absolute',
+            inset: 0,
             width: '100%',
-            maxHeight: '480px',
+            height: '100%',
             objectFit: 'cover',
-            objectPosition: 'center',
-            display: 'block'
+            objectPosition: 'center 38%',
+            zIndex: 1
           }}
         />
-      </div>
 
-      <div className="section-py" style={{ paddingTop: '3.5rem', paddingBottom: '5rem' }}>
-        <div className="container">
-          {/* Header Hero */}
-          <div style={{ textAlign: 'center', maxWidth: '800px', margin: '0 auto 2.5rem auto' }}>
-            <span className="brand-line" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.5rem' }}>
-              <Ruler size={16} /> Fit & Measurement Guide
-            </span>
-            <h1 className="section-title">Sizing Chart & Fit Guide</h1>
-            <p className="section-subtitle" style={{ margin: '0 auto' }}>
-              {content?.intro_body || 'Achieving a bespoke salon fit with X-ON press-on nails starts with precise measurement. Use our interactive guide below to find your perfect fit, shape, and length.'}
-            </p>
+        {/* Black / Dark Overlay */}
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          background: 'linear-gradient(180deg, rgba(14, 16, 20, 0.78) 0%, rgba(14, 16, 20, 0.88) 100%)',
+          zIndex: 2
+        }} />
+
+        {/* Hero Content Over Image */}
+        <div className="container" style={{ maxWidth: '850px', position: 'relative', zIndex: 3 }}>
+          <div style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '0.5rem',
+            padding: '0.45rem 1.35rem',
+            borderRadius: '999px',
+            background: 'rgba(212, 175, 55, 0.22)',
+            border: '1px solid rgba(245, 211, 118, 0.55)',
+            color: '#f5d376',
+            fontWeight: 800,
+            fontSize: '0.84rem',
+            marginBottom: '1.25rem',
+            textTransform: 'uppercase',
+            letterSpacing: '0.08em',
+            backdropFilter: 'blur(6px)'
+          }}>
+            <Ruler size={15} color="#f5d376" /> Salon-Grade Precision Fit
           </div>
 
-          {/* Interactive Unified Section Tabs / Switcher */}
+          <h1 className="font-heading" style={{
+            fontSize: 'clamp(2.4rem, 5vw, 3.8rem)',
+            color: '#ffffff',
+            marginBottom: '1.15rem',
+            letterSpacing: '-0.02em',
+            lineHeight: 1.2,
+            textShadow: '0 4px 20px rgba(0, 0, 0, 0.8)'
+          }}>
+            Sizing Chart & Fit Guide
+          </h1>
+
+          <p style={{
+            color: '#e5e7eb',
+            fontSize: '1.1rem',
+            maxWidth: '680px',
+            margin: '0 auto 2.25rem auto',
+            lineHeight: 1.65,
+            textShadow: '0 2px 8px rgba(0, 0, 0, 0.7)'
+          }}>
+            {content?.intro_body || 'Achieving a bespoke salon fit with X-ON press-on nails starts with precise measurement. Use our standard sizing mapping below or order a custom sizing set tailored to your exact natural nail beds.'}
+          </p>
+
+          {/* Quick Value Badges */}
           <div style={{
             display: 'flex',
             justifyContent: 'center',
-            marginBottom: '3rem',
+            gap: '1.5rem',
+            flexWrap: 'wrap',
+            fontSize: '0.92rem',
+            color: '#ffffff',
+            fontWeight: 500
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', textShadow: '0 2px 6px rgba(0,0,0,0.8)' }}>
+              <CheckCircle2 size={17} color="#f5d376" /> Standard XS – L Presets
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', textShadow: '0 2px 6px rgba(0,0,0,0.8)' }}>
+              <CheckCircle2 size={17} color="#f5d376" /> 100% Custom mm Supported
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', textShadow: '0 2px 6px rgba(0,0,0,0.8)' }}>
+              <CheckCircle2 size={17} color="#f5d376" /> 6 Artisan Silhouettes
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="section-py" style={{ paddingTop: '3.5rem', paddingBottom: '5rem' }}>
+        <div className="container">
+          {/* Navigation Tab Switcher */}
+          <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+            marginBottom: '3.5rem',
             padding: '0 1rem'
           }}>
             <div style={{
               display: 'inline-flex',
-              background: '#f4efe8',
+              background: '#f3ece3',
               padding: '0.4rem',
-              borderRadius: '12px',
-              border: '1px solid var(--border-subtle, rgba(0,0,0,0.08))',
-              gap: '0.4rem',
+              borderRadius: '999px',
+              border: '1px solid rgba(212, 175, 55, 0.25)',
+              gap: '0.35rem',
               maxWidth: '100%',
               overflowX: 'auto',
-              boxShadow: 'var(--shadow-sm)'
+              boxShadow: '0 4px 14px rgba(67, 76, 52, 0.06)'
             }}>
               {sectionTabs.map(tab => {
                 const IconComponent = tab.icon;
-                const isActive = activeSection === tab.id;
+                const isActive = activeTab === tab.id;
                 return (
                   <button
                     key={tab.id}
-                    onClick={() => setActiveSection(tab.id)}
+                    onClick={() => setActiveTab(tab.id)}
                     style={{
                       display: 'flex',
                       alignItems: 'center',
-                      gap: '0.6rem',
-                      padding: '0.75rem 1.4rem',
-                      borderRadius: '8px',
+                      gap: '0.55rem',
+                      padding: '0.75rem 1.6rem',
+                      borderRadius: '999px',
                       border: 'none',
                       background: isActive ? '#ffffff' : 'transparent',
                       color: isActive ? 'var(--text-primary, #1c1c21)' : 'var(--text-secondary, #525260)',
                       fontWeight: isActive ? 800 : 600,
                       fontSize: '0.92rem',
                       cursor: 'pointer',
-                      boxShadow: isActive ? '0 2px 8px rgba(0,0,0,0.08)' : 'none',
-                      transition: 'all 0.2s ease',
+                      boxShadow: isActive ? '0 2px 10px rgba(0,0,0,0.1)' : 'none',
+                      transition: 'all 0.25s ease',
                       whiteSpace: 'nowrap'
                     }}
                   >
-                    <IconComponent size={18} color={isActive ? 'var(--accent-gold-dark, #8c6716)' : 'var(--text-muted, #7e7e8c)'} />
+                    <IconComponent size={17} color={isActive ? 'var(--accent-gold-dark, #8c6716)' : 'var(--text-muted)'} />
                     <span>{tab.label}</span>
                   </button>
                 );
@@ -153,209 +301,475 @@ export default function SizingChartPage() {
             </div>
           </div>
 
-          {/* DYNAMIC SECTION CONTAINER */}
-          <div style={{ animation: 'fadeIn 0.3s ease-out' }}>
-            {/* SECTION 1: SIZING & MEASUREMENT */}
-            {activeSection === 'sizing' && (
-              <div>
-                <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
-                  <h2 className="font-heading" style={{ color: 'var(--text-primary)', fontSize: '1.85rem', marginBottom: '0.5rem' }}>
-                    Standard Sizing & Measurement Guide
-                  </h2>
-                  <p style={{ color: 'var(--text-secondary)', maxWidth: '650px', margin: '0 auto' }}>
-                    Follow our step-by-step sizing instructions or compare millimeter measurements against our standard nail sizes.
-                  </p>
+          {/* TAB 1: SIZING & MEASUREMENT */}
+          {activeTab === 'sizing' && (
+            <div>
+              {/* 1. Full-Width Sizing Table */}
+              <div style={{
+                background: 'var(--bg-surface)',
+                border: '1px solid var(--border-gold)',
+                borderRadius: 'var(--radius-lg)',
+                overflow: 'hidden',
+                boxShadow: 'var(--shadow-gold)',
+                maxWidth: '1000px',
+                margin: '0 auto 3.5rem auto'
+              }}>
+                <div style={{
+                  padding: '1.75rem 2.25rem',
+                  background: 'linear-gradient(135deg, #fdfaf6 0%, #f7f1e7 100%)',
+                  borderBottom: '1px solid var(--border-subtle)',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  flexWrap: 'wrap',
+                  gap: '1rem'
+                }}>
+                  <div>
+                    <h3 className="font-heading" style={{ color: 'var(--text-primary)', fontSize: '1.45rem', margin: '0 0 0.35rem 0' }}>
+                      Standard Width Measurements
+                    </h3>
+                    <span style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>
+                      Precise millimeter (mm) dimensions measured at the widest point of each natural nail bed
+                    </span>
+                  </div>
+                  <span className="badge badge-gold" style={{ fontSize: '0.85rem', padding: '0.45rem 1rem' }}>
+                    Thumb → Pinky
+                  </span>
                 </div>
 
-                {/* Custom Nail Bar Measurement & Size Infographic */}
+                <div style={{ overflowX: 'auto', width: '100%' }}>
+                  <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+                    <thead>
+                      <tr style={{ borderBottom: '1px solid var(--border-subtle)', background: 'rgba(0,0,0,0.02)' }}>
+                        <th style={{ padding: '1.15rem 1.5rem', color: 'var(--accent-gold-dark)', textTransform: 'uppercase', fontSize: '0.85rem', width: '18%' }}>Preset</th>
+                        <th style={{ padding: '1.15rem 1.5rem', color: 'var(--text-secondary)', textTransform: 'uppercase', fontSize: '0.85rem', width: '16.4%' }}>Thumb</th>
+                        <th style={{ padding: '1.15rem 1.5rem', color: 'var(--text-secondary)', textTransform: 'uppercase', fontSize: '0.85rem', width: '16.4%' }}>Index</th>
+                        <th style={{ padding: '1.15rem 1.5rem', color: 'var(--text-secondary)', textTransform: 'uppercase', fontSize: '0.85rem', width: '16.4%' }}>Middle</th>
+                        <th style={{ padding: '1.15rem 1.5rem', color: 'var(--text-secondary)', textTransform: 'uppercase', fontSize: '0.85rem', width: '16.4%' }}>Ring</th>
+                        <th style={{ padding: '1.15rem 1.5rem', color: 'var(--text-secondary)', textTransform: 'uppercase', fontSize: '0.85rem', width: '16.4%' }}>Pinky</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {sizes.map((row, idx) => (
+                        <tr key={idx} style={{
+                          borderBottom: idx === sizes.length - 1 ? 'none' : '1px solid var(--border-subtle)',
+                          background: row.popular ? 'rgba(212, 175, 55, 0.05)' : 'transparent',
+                          transition: 'background 0.2s ease'
+                        }}>
+                          <td style={{ padding: '1.15rem 1.5rem', fontWeight: 800 }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                              <span className="badge badge-gold" style={{ fontSize: '0.9rem', minWidth: '42px', textAlign: 'center' }}>
+                                {row.size}
+                              </span>
+                              {row.popular && (
+                                <span style={{ fontSize: '0.75rem', color: 'var(--accent-gold-dark)', fontWeight: 600 }}>
+                                  Popular
+                                </span>
+                              )}
+                            </div>
+                          </td>
+                          <td style={{ padding: '1.15rem 1.5rem', color: 'var(--text-primary)', fontWeight: 600, fontSize: '0.98rem' }}>{row.thumb}</td>
+                          <td style={{ padding: '1.15rem 1.5rem', color: 'var(--text-primary)', fontWeight: 600, fontSize: '0.98rem' }}>{row.index}</td>
+                          <td style={{ padding: '1.15rem 1.5rem', color: 'var(--text-primary)', fontWeight: 600, fontSize: '0.98rem' }}>{row.middle}</td>
+                          <td style={{ padding: '1.15rem 1.5rem', color: 'var(--text-primary)', fontWeight: 600, fontSize: '0.98rem' }}>{row.ring}</td>
+                          <td style={{ padding: '1.15rem 1.5rem', color: 'var(--text-primary)', fontWeight: 600, fontSize: '0.98rem' }}>{row.pinky}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              {/* 2. Official Visual Infographic Guide (Clean, Full Image Without Cropping or Container Background) */}
+              <div style={{
+                maxWidth: '860px',
+                margin: '0 auto 4rem auto',
+                textAlign: 'center'
+              }}>
+                <div style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  marginBottom: '1rem',
+                  color: 'var(--accent-gold-dark)',
+                  fontWeight: 700,
+                  fontSize: '1rem'
+                }}>
+                  <Eye size={20} /> Official X-ON Visual Sizing Chart
+                </div>
+                <img
+                  src={customNailBarGuideImg}
+                  alt="X-ON Custom Nail Bar Sizing & Measurement Guide"
+                  onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = '/assets/images/0a9ef85d-1399-40c6-927c-a9a7b5858f6d.png';
+                  }}
+                  style={{
+                    width: '100%',
+                    height: 'auto',
+                    borderRadius: '16px',
+                    display: 'block',
+                    margin: '0 auto',
+                    boxShadow: '0 8px 30px rgba(0,0,0,0.06)'
+                  }}
+                />
+                <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', marginTop: '1.25rem' }}>
+                  Visual reference for measuring widest point across natural nail curvature (#0 through #9).
+                </p>
+              </div>
+
+              {/* Dedicated Standalone Quick Sizing Matcher Section */}
+              <div style={{
+                background: 'linear-gradient(135deg, #faf6f0 0%, #f5efe6 100%)',
+                border: '1px solid var(--border-gold)',
+                borderRadius: '20px',
+                padding: '2.5rem 2.5rem',
+                marginBottom: '4rem',
+                boxShadow: 'var(--shadow-gold)',
+                maxWidth: '920px',
+                margin: '0 auto 4rem auto'
+              }}>
                 <div style={{
                   display: 'flex',
-                  justifyContent: 'center',
                   alignItems: 'center',
-                  marginBottom: '3rem',
-                  padding: 0,
-                  width: '100%'
+                  gap: '0.65rem',
+                  marginBottom: '0.5rem'
                 }}>
-                  <img
-                    src={customNailBarGuideImg}
-                    alt="X-ON Custom Nail Bar Sizing & Measurement Guide"
-                    onError={(e) => {
-                      e.currentTarget.onerror = null;
-                      e.currentTarget.src = '/assets/images/0a9ef85d-1399-40c6-927c-a9a7b5858f6d.png';
-                    }}
-                    style={{
-                      maxWidth: '510px',
-                      width: '100%',
-                      height: 'auto',
-                      objectFit: 'contain',
-                      borderRadius: '16px',
-                      boxShadow: '0 10px 30px rgba(0,0,0,0.08)',
-                      border: '1px solid var(--border-subtle)',
-                      display: 'block'
-                    }}
-                  />
-                </div>
-
-                {/* Sizing Table */}
-                <div style={{
-                  background: 'var(--bg-surface)',
-                  border: '1px solid var(--border-medium)',
-                  borderRadius: 'var(--radius-lg)',
-                  overflow: 'hidden',
-                  boxShadow: 'var(--shadow-md)',
-                  marginBottom: '3.5rem'
-                }}>
-                  <div style={{ padding: '1.5rem 2rem', background: '#faf7f2', borderBottom: '1px solid var(--border-subtle)' }}>
-                    <h3 className="font-heading" style={{ color: 'var(--text-primary)', fontSize: '1.25rem', margin: 0 }}>
-                      Standard Nail Width Measurements (Millimeters)
+                  <div style={{
+                    width: '38px',
+                    height: '38px',
+                    borderRadius: '10px',
+                    background: 'rgba(212, 175, 55, 0.15)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}>
+                    <Calculator size={22} color="var(--accent-gold-dark)" />
+                  </div>
+                  <div>
+                    <h3 className="font-heading" style={{ fontSize: '1.4rem', color: 'var(--text-primary)', margin: 0 }}>
+                      Quick Size Matcher
                     </h3>
                   </div>
-
-                  <div style={{ overflowX: 'auto' }}>
-                    <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', minWidth: '600px' }}>
-                      <thead>
-                        <tr style={{ borderBottom: '1px solid var(--border-subtle)', background: 'rgba(0,0,0,0.02)' }}>
-                          <th style={{ padding: '1.25rem 1.5rem', color: 'var(--accent-gold-dark)', textTransform: 'uppercase', fontSize: '0.85rem' }}>Size</th>
-                          <th style={{ padding: '1.25rem 1.5rem', color: 'var(--text-secondary)', textTransform: 'uppercase', fontSize: '0.85rem' }}>Thumb</th>
-                          <th style={{ padding: '1.25rem 1.5rem', color: 'var(--text-secondary)', textTransform: 'uppercase', fontSize: '0.85rem' }}>Index</th>
-                          <th style={{ padding: '1.25rem 1.5rem', color: 'var(--text-secondary)', textTransform: 'uppercase', fontSize: '0.85rem' }}>Middle</th>
-                          <th style={{ padding: '1.25rem 1.5rem', color: 'var(--text-secondary)', textTransform: 'uppercase', fontSize: '0.85rem' }}>Ring</th>
-                          <th style={{ padding: '1.25rem 1.5rem', color: 'var(--text-secondary)', textTransform: 'uppercase', fontSize: '0.85rem' }}>Pinky</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {sizes.map((row, idx) => (
-                          <tr key={idx} style={{ borderBottom: '1px solid var(--border-subtle)' }}>
-                            <td style={{ padding: '1.25rem 1.5rem', fontWeight: 700, color: 'var(--text-primary)', fontSize: '1.05rem' }}>
-                              <span className="badge badge-gold" style={{ fontSize: '0.85rem' }}>{row.size}</span>
-                            </td>
-                            <td style={{ padding: '1.25rem 1.5rem', color: 'var(--text-primary)' }}>{row.thumb}</td>
-                            <td style={{ padding: '1.25rem 1.5rem', color: 'var(--text-primary)' }}>{row.index}</td>
-                            <td style={{ padding: '1.25rem 1.5rem', color: 'var(--text-primary)' }}>{row.middle}</td>
-                            <td style={{ padding: '1.25rem 1.5rem', color: 'var(--text-primary)' }}>{row.ring}</td>
-                            <td style={{ padding: '1.25rem 1.5rem', color: 'var(--text-primary)' }}>{row.pinky}</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
                 </div>
 
-                {/* How to measure instruction cards */}
-                <div className="grid-3">
-                  <div className="glass-card" style={{ padding: '2rem' }}>
-                    <span className="badge badge-gold" style={{ marginBottom: '1rem' }}>Step 1</span>
-                    <h4 className="font-heading" style={{ color: 'var(--text-primary)', fontSize: '1.1rem', marginBottom: '0.5rem' }}>
-                      Apply Clear Tape
-                    </h4>
-                    <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', lineHeight: 1.6 }}>
-                      Place a piece of clear adhesive tape horizontally across the widest point of your natural bare nail bed.
-                    </p>
-                  </div>
+                <p style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', marginBottom: '1.5rem', lineHeight: 1.6 }}>
+                  Enter your thumb width in millimeters (mm) to instantly check your closest X-ON standard preset size or determine if custom sizing is recommended:
+                </p>
 
-                  <div className="glass-card" style={{ padding: '2rem' }}>
-                    <span className="badge badge-gold" style={{ marginBottom: '1rem' }}>Step 2</span>
-                    <h4 className="font-heading" style={{ color: 'var(--text-primary)', fontSize: '1.1rem', marginBottom: '0.5rem' }}>
-                      Mark the Sidewalls
-                    </h4>
-                    <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', lineHeight: 1.6 }}>
-                      Using a fine-tip pen, mark lines directly on the tape where your nail bed meets your skin sidewalls on both edges.
-                    </p>
-                  </div>
-
-                  <div className="glass-card" style={{ padding: '2rem' }}>
-                    <span className="badge badge-gold" style={{ marginBottom: '1rem' }}>Step 3</span>
-                    <h4 className="font-heading" style={{ color: 'var(--text-primary)', fontSize: '1.1rem', marginBottom: '0.5rem' }}>
-                      Measure in Millimeters
-                    </h4>
-                    <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', lineHeight: 1.6 }}>
-                      Remove tape and measure the distance between marks against a millimeter ruler. Match with XS, S, M, L or note your custom sizing.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* SECTION 2: SIGNATURE NAIL SHAPES */}
-            {activeSection === 'shapes' && (
-              <div>
-                <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-                  <h2 className="font-heading" style={{ color: 'var(--text-primary)', fontSize: '1.85rem', marginBottom: '0.5rem' }}>
-                    {content?.shapes_heading || 'Signature Nail Shapes & Silhouettes'}
-                  </h2>
-                  <p style={{ color: 'var(--text-secondary)', maxWidth: '650px', margin: '0 auto' }}>
-                    {content?.shapes_description || 'We craft our press-on nails across 6 signature silhouettes, each engineered with reinforced apex curves for natural durability.'}
-                  </p>
-                </div>
-
-                {/* Shapes Visual Banner */}
-                <div style={{
-                  borderRadius: '16px',
-                  overflow: 'hidden',
-                  background: '#faf7f2',
-                  border: '1px solid var(--border-subtle)',
-                  marginBottom: '3rem',
-                  boxShadow: 'var(--shadow-sm)'
+                <form onSubmit={handleQuickMatch} style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '1rem',
+                  flexWrap: 'wrap',
+                  marginBottom: '1rem'
                 }}>
-                  <img
-                    src={nailShapesBannerImg}
-                    alt="X-ON Sizing Chart Nail Shapes & Length"
-                    onError={(e) => {
-                      e.currentTarget.onerror = null;
-                      e.currentTarget.src = '/assets/images/8ba0b55c-fdc6-441d-9c9e-4af35d3fab65.png';
-                    }}
-                    style={{
-                      width: '100%',
-                      height: 'auto',
-                      display: 'block'
-                    }}
-                  />
-                </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flex: '1 1 200px', maxWidth: '280px' }}>
+                    <input
+                      type="number"
+                      step="0.5"
+                      min="6"
+                      max="25"
+                      placeholder="e.g. 15 mm"
+                      value={calcThumb}
+                      onChange={(e) => setCalcThumb(e.target.value)}
+                      className="form-input"
+                      style={{
+                        background: '#ffffff',
+                        fontSize: '1.05rem',
+                        padding: '0.75rem 1.15rem',
+                        borderRadius: '10px',
+                        border: '1px solid var(--border-gold)'
+                      }}
+                    />
+                  </div>
+                  <button type="submit" className="btn btn-primary" style={{ padding: '0.75rem 1.75rem', fontWeight: 700 }}>
+                    Check Match
+                  </button>
+                  
+                  {/* Quick Select Preset Pills */}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', flexWrap: 'wrap' }}>
+                    <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginRight: '0.2rem' }}>Quick test:</span>
+                    {['13', '14', '15', '16', '17', '18'].map((val) => (
+                      <button
+                        key={val}
+                        type="button"
+                        onClick={() => {
+                          setCalcThumb(val);
+                          const t = parseFloat(val);
+                          if (t >= 17) setMatchedSize('L (Large) — or Custom Sizing');
+                          else if (t >= 15.5) setMatchedSize('M (Medium) — Most Popular');
+                          else if (t >= 14.5) setMatchedSize('S (Small)');
+                          else if (t > 0) setMatchedSize('XS (Extra Small)');
+                        }}
+                        style={{
+                          background: calcThumb === val ? 'var(--accent-gold)' : '#ffffff',
+                          color: calcThumb === val ? '#ffffff' : 'var(--text-primary)',
+                          border: '1px solid var(--border-subtle)',
+                          borderRadius: '8px',
+                          padding: '0.35rem 0.65rem',
+                          fontSize: '0.82rem',
+                          cursor: 'pointer',
+                          fontWeight: 600,
+                          transition: 'all 0.2s ease'
+                        }}
+                      >
+                        {val}mm
+                      </button>
+                    ))}
+                  </div>
+                </form>
 
-                <div className="grid-3">
-                  {shapes.map(shape => (
-                    <div key={shape.name} className="glass-card" style={{ padding: '2rem' }}>
-                      <h4 className="font-heading" style={{ color: 'var(--accent-gold-dark)', fontSize: '1.25rem', marginBottom: '0.75rem' }}>
-                        {shape.name}
-                      </h4>
-                      <p style={{ color: 'var(--text-secondary)', fontSize: '0.92rem', lineHeight: 1.7 }}>
-                        {shape.desc}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* SECTION 3: LENGTH DETAILS */}
-            {activeSection === 'length' && (
-              <div>
-                <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-                  <h2 className="font-heading" style={{ color: 'var(--text-primary)', fontSize: '1.85rem', marginBottom: '0.5rem' }}>
-                    Length & Lifestyle Recommendations
-                  </h2>
-                  <p style={{ color: 'var(--text-secondary)', maxWidth: '650px', margin: '0 auto' }}>
-                    Select the length that best complements your daily routine, typing habits, and aesthetic preference.
-                  </p>
-                </div>
-
-                <div className="grid-2">
-                  {lengthDetails.map((len, idx) => (
-                    <div key={idx} className="glass-card" style={{ padding: '2rem', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                {matchedSize && (
+                  <div style={{
+                    marginTop: '1.25rem',
+                    padding: '1.15rem 1.5rem',
+                    borderRadius: '12px',
+                    background: '#ffffff',
+                    border: '1px solid var(--border-gold)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    flexWrap: 'wrap',
+                    gap: '1rem',
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.04)'
+                  }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                      <span style={{ fontSize: '1.3rem' }}>🎯</span>
                       <div>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
-                          <h4 className="font-heading" style={{ color: 'var(--text-primary)', fontSize: '1.3rem' }}>{len.name}</h4>
-                          <span className="badge badge-gold">{len.length}</span>
-                        </div>
-                        <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', lineHeight: 1.7 }}>
-                          {len.recommendation}
-                        </p>
+                        <span style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-muted)', display: 'block' }}>
+                          Recommended Size
+                        </span>
+                        <strong style={{ color: 'var(--accent-gold-dark)', fontSize: '1.15rem' }}>
+                          {matchedSize}
+                        </strong>
                       </div>
                     </div>
-                  ))}
+                    <Link to="/shop" className="btn btn-outline btn-sm" style={{ padding: '0.5rem 1.15rem' }}>
+                      Shop This Size <ArrowRight size={14} style={{ marginLeft: '4px' }} />
+                    </Link>
+                  </div>
+                )}
+              </div>
+
+              {/* 3-Step Tape Measurement Walkthrough */}
+              <div style={{ marginBottom: '4rem' }}>
+                <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
+                  <span className="brand-line" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
+                    <Sparkles size={14} /> Easy 3-Step Process
+                  </span>
+                  <h2 className="section-title">How To Measure Your Natural Nails</h2>
+                  <p className="section-subtitle">You only need a roll of clear tape, a fine pen, and a millimeter ruler.</p>
+                </div>
+
+                <div className="grid-3">
+                  <div className="glass-card" style={{ padding: '2.25rem 2rem', position: 'relative', borderRadius: '16px' }}>
+                    <div style={{
+                      width: '42px',
+                      height: '42px',
+                      borderRadius: '50%',
+                      background: 'var(--accent-gold)',
+                      color: '#ffffff',
+                      fontWeight: 800,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '1.1rem',
+                      marginBottom: '1.25rem',
+                      boxShadow: '0 4px 10px rgba(212, 175, 55, 0.4)'
+                    }}>
+                      1
+                    </div>
+                    <h4 className="font-heading" style={{ color: 'var(--text-primary)', fontSize: '1.2rem', marginBottom: '0.65rem' }}>
+                      Apply Clear Tape
+                    </h4>
+                    <p style={{ color: 'var(--text-secondary)', fontSize: '0.92rem', lineHeight: 1.65, margin: 0 }}>
+                      Press a piece of clear adhesive tape horizontally across the widest point of your natural bare nail bed, pressing firmly into the sidewalls.
+                    </p>
+                  </div>
+
+                  <div className="glass-card" style={{ padding: '2.25rem 2rem', position: 'relative', borderRadius: '16px' }}>
+                    <div style={{
+                      width: '42px',
+                      height: '42px',
+                      borderRadius: '50%',
+                      background: 'var(--accent-gold)',
+                      color: '#ffffff',
+                      fontWeight: 800,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '1.1rem',
+                      marginBottom: '1.25rem',
+                      boxShadow: '0 4px 10px rgba(212, 175, 55, 0.4)'
+                    }}>
+                      2
+                    </div>
+                    <h4 className="font-heading" style={{ color: 'var(--text-primary)', fontSize: '1.2rem', marginBottom: '0.65rem' }}>
+                      Mark The Sidewalls
+                    </h4>
+                    <p style={{ color: 'var(--text-secondary)', fontSize: '0.92rem', lineHeight: 1.65, margin: 0 }}>
+                      Using a fine-tip pen, draw a vertical line on both outer edges where your nail plate meets your natural skin groove.
+                    </p>
+                  </div>
+
+                  <div className="glass-card" style={{ padding: '2.25rem 2rem', position: 'relative', borderRadius: '16px' }}>
+                    <div style={{
+                      width: '42px',
+                      height: '42px',
+                      borderRadius: '50%',
+                      background: 'var(--accent-gold)',
+                      color: '#ffffff',
+                      fontWeight: 800,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '1.1rem',
+                      marginBottom: '1.25rem',
+                      boxShadow: '0 4px 10px rgba(212, 175, 55, 0.4)'
+                    }}>
+                      3
+                    </div>
+                    <h4 className="font-heading" style={{ color: 'var(--text-primary)', fontSize: '1.2rem', marginBottom: '0.65rem' }}>
+                      Measure In Millimeters
+                    </h4>
+                    <p style={{ color: 'var(--text-secondary)', fontSize: '0.92rem', lineHeight: 1.65, margin: 0 }}>
+                      Peel off the tape and measure the distance between the two pen lines against a millimeter ruler. Repeat for all 5 fingers.
+                    </p>
+                  </div>
                 </div>
               </div>
-            )}
+            </div>
+          )}
+
+          {/* TAB 2: SIGNATURE NAIL SHAPES */}
+          {activeTab === 'shapes' && (
+            <div>
+              <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+                <span className="brand-line" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
+                  <Sparkles size={14} /> Artisan Silhouettes
+                </span>
+                <h2 className="section-title">{content?.shapes_heading || 'Signature Nail Shapes & Apex Anatomy'}</h2>
+                <p className="section-subtitle">
+                  {content?.shapes_description || 'We hand-sculpt our bespoke press-on nails across 6 signature silhouettes, each structured with reinforced apex curves for long-lasting durability.'}
+                </p>
+              </div>
+
+              {/* Shapes Visual Infographic Banner */}
+              <div style={{
+                borderRadius: '20px',
+                overflow: 'hidden',
+                background: '#faf7f2',
+                border: '1px solid var(--border-gold)',
+                marginBottom: '3.5rem',
+                boxShadow: 'var(--shadow-gold)'
+              }}>
+                <img
+                  src={nailShapesBannerImg}
+                  alt="X-ON Sizing Chart Nail Shapes & Length"
+                  onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = '/assets/images/8ba0b55c-fdc6-441d-9c9e-4af35d3fab65.png';
+                  }}
+                  style={{
+                    width: '100%',
+                    height: 'auto',
+                    display: 'block'
+                  }}
+                />
+              </div>
+
+              {/* Shape Feature Cards Grid */}
+              <div className="grid-3">
+                {shapes.map(shape => (
+                  <div key={shape.name} className="glass-card" style={{ padding: '2.25rem 2rem', borderRadius: '16px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
+                      <h4 className="font-heading" style={{ color: 'var(--accent-gold-dark)', fontSize: '1.35rem', margin: 0 }}>
+                        {shape.name}
+                      </h4>
+                      <span className="badge badge-gold" style={{ fontSize: '0.75rem' }}>{shape.tag}</span>
+                    </div>
+                    <p style={{ color: 'var(--text-secondary)', fontSize: '0.92rem', lineHeight: 1.7, margin: 0 }}>
+                      {shape.desc}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* TAB 3: LENGTH DETAILS */}
+          {activeTab === 'length' && (
+            <div>
+              <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+                <span className="brand-line" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
+                  <Sliders size={14} /> Lifestyle & Practicality
+                </span>
+                <h2 className="section-title">Length Recommendations</h2>
+                <p className="section-subtitle">
+                  Select the length that best complements your daily routine, keyboard typing habits, and personal aesthetic.
+                </p>
+              </div>
+
+              <div className="grid-2">
+                {lengthDetails.map((len, idx) => (
+                  <div key={idx} className="glass-card" style={{
+                    padding: '2.5rem 2rem',
+                    borderRadius: '16px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                    gap: '1.25rem'
+                  }}>
+                    <div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
+                        <h4 className="font-heading" style={{ color: 'var(--text-primary)', fontSize: '1.4rem', margin: 0 }}>
+                          {len.name}
+                        </h4>
+                        <span className="badge badge-gold" style={{ fontSize: '0.85rem' }}>{len.length}</span>
+                      </div>
+                      <span style={{ display: 'inline-block', fontSize: '0.8rem', fontWeight: 700, color: 'var(--accent-gold-dark)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '0.75rem' }}>
+                        {len.tag}
+                      </span>
+                      <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', lineHeight: 1.7, margin: 0 }}>
+                        {len.recommendation}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Studio Support Bottom Card */}
+          <div style={{
+            marginTop: '5rem',
+            background: 'linear-gradient(135deg, #14161a 0%, #1e222b 100%)',
+            borderRadius: '24px',
+            padding: '3.5rem 2.5rem',
+            textAlign: 'center',
+            color: '#ffffff',
+            boxShadow: '0 16px 40px rgba(0, 0, 0, 0.25)',
+            position: 'relative',
+            overflow: 'hidden'
+          }}>
+            <span className="brand-line" style={{ color: '#f5d376', marginBottom: '0.5rem', display: 'block' }}>
+              Still Unsure About Your Fit?
+            </span>
+            <h3 className="font-heading" style={{ fontSize: '2.2rem', color: '#ffffff', marginBottom: '1rem' }}>
+              We Handcraft 100% Custom Sizing
+            </h3>
+            <p style={{ color: '#d1d5db', maxWidth: '620px', margin: '0 auto 2rem auto', fontSize: '1rem', lineHeight: 1.7 }}>
+              If your measurements fall between standard presets, simply select <strong>"Custom"</strong> at checkout and note your thumb-to-pinky millimeter dimensions. Our Kissimmee artisan team will craft your bespoke set to perfection.
+            </p>
+            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+              <Link to="/shop" className="btn btn-primary" style={{ background: '#f5d376', color: '#111827', border: 'none' }}>
+                Shop All Nails
+              </Link>
+              <Link to="/contact-us" className="btn btn-outline" style={{ borderColor: 'rgba(255,255,255,0.4)', color: '#ffffff' }}>
+                Contact Sizing Support
+              </Link>
+            </div>
           </div>
         </div>
       </div>

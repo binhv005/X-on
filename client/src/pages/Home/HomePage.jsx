@@ -27,6 +27,9 @@ import ProductCard from '../../components/product/ProductCard';
 import PriceDisplay from '../../components/product/PriceDisplay';
 import RatingStars from '../../components/common/RatingStars';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
+import findUsBg from '../../assets/images/findus-bg.jpg';
+import motifTop from '../../assets/images/findus-motif-top.png';
+import motifBottom from '../../assets/images/findus-motif-bottom.png';
 
 // Scroll-triggered Video Component: only plays when scrolled into viewport
 function ScrollPlayVideo({ src, fallback, onEnded, style, className, loop = true, muted = true, playsInline = true, ...rest }) {
@@ -152,11 +155,11 @@ export default function HomePage() {
         if (contentRes?.data) setContent(contentRes.data);
 
         const prods = productsRes?.data || [];
-        const handmade = prods.filter(p => p.product_type === 'Handmade Press-On Nails' && !p.is_bundle);
+        const handmade = prods.filter(p => p.product_type === 'Handmade Press-On Nails');
         setAllHandmade(handmade);
         setHandmadeNails(handmade.slice(0, 8));
         setNailEssentials(prods.filter(p => p.product_type === 'Nail Essentials').slice(0, 3));
-        setBestSellers(prods.filter(p => p.is_best_seller || (p.categories && p.categories.includes('Best Sellers'))).slice(0, 6));
+        setBestSellers(prods.filter(p => Boolean(p.is_best_seller) || (p.categories && (p.categories.includes('Best Sellers') || p.categories.includes('best-sellers')))).slice(0, 8));
         setReviews(reviewsRes?.data || []);
       } catch (err) {
         console.error('Error loading homepage data:', err);
@@ -1022,104 +1025,255 @@ export default function HomePage() {
       </section>
 
       {/* 10. CUSTOMER REVIEWS & SOCIAL PROOF */}
-      <section className="section-py" style={{ background: 'var(--bg-primary)' }}>
+      <section className="section-py" style={{ background: '#f5f2ea', borderTop: '1px solid var(--border-subtle)' }}>
         <div className="container">
           <div className="section-header">
-            <span className="brand-line">Customer Love</span>
-            <h2 className="section-title">Our Reviews</h2>
+            <span className="brand-line">Customer Love & Social Proof</span>
+            <h2 className="section-title">What They Say About X-ON</h2>
             <p className="section-subtitle">
-              Loved by nail enthusiasts and salon technicians across the nation.
+              Loved by nail enthusiasts, content creators, and salon technicians across the nation.
             </p>
           </div>
 
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-            gap: '1.75rem',
-            maxWidth: '1240px',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gap: '1.5rem',
+            maxWidth: '1100px',
             margin: '0 auto'
           }}>
-            {reviews.slice(0, 3).map(rev => (
-              <div
-                key={rev.id}
-                className="glass-card"
-                style={{
-                  padding: '2rem',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between',
-                  height: '100%',
-                  borderRadius: '14px',
-                  background: 'var(--bg-surface)',
-                  border: '1px solid var(--border-subtle)'
-                }}
-              >
-                <div>
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem' }}>
-                    <RatingStars rating={rev.rating} size={15} />
-                    <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>{rev.date}</span>
-                  </div>
-                  <p style={{ color: 'var(--text-primary)', fontSize: '0.96rem', lineHeight: 1.7, marginBottom: '1.5rem', fontStyle: 'italic' }}>
-                    "{rev.comment}"
-                  </p>
-                </div>
+            {reviews.slice(0, 3).map((rev, index) => {
+              const username = rev.name.toLowerCase().replace(/[^a-z0-9]/g, '_');
+              const likes = index === 0 ? 8 : index === 1 ? 5 : 3;
+              const timeAgo = index === 0 ? '1w' : index === 1 ? '4d' : '2w';
 
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', borderTop: '1px solid var(--border-subtle)', paddingTop: '1.25rem' }}>
-                  <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: 'linear-gradient(135deg, #b38728 0%, #8c6716 100%)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: '0.9rem', flexShrink: 0 }}>
-                    {rev.name.charAt(0)}
+              const sampleAvatars = [
+                'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&h=150&q=80',
+                'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=150&h=150&q=80',
+                'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=150&h=150&q=80',
+                'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=150&h=150&q=80'
+              ];
+              const avatarUrl = rev.avatar || sampleAvatars[index % sampleAvatars.length];
+
+              return (
+                <div
+                  key={rev.id}
+                  style={{
+                    position: 'relative',
+                    background: '#ffffff',
+                    borderRadius: '20px 20px 20px 4px',
+                    padding: '1.35rem 1.35rem 1.15rem 1.35rem',
+                    boxShadow: '0 8px 24px rgba(67, 76, 52, 0.07)',
+                    border: '1px solid rgba(67, 76, 52, 0.08)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                    transition: 'transform 0.25s ease, box-shadow 0.25s ease'
+                  }}
+                  onMouseOver={e => {
+                    e.currentTarget.style.transform = 'translateY(-3px)';
+                    e.currentTarget.style.boxShadow = '0 14px 30px rgba(67, 76, 52, 0.12)';
+                  }}
+                  onMouseOut={e => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = '0 8px 24px rgba(67, 76, 52, 0.07)';
+                  }}
+                >
+                  {/* Top Quote */}
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.65rem' }}>
+                    <svg width="26" height="20" viewBox="0 0 34 26" fill="#434c34" style={{ opacity: 0.85 }}>
+                      <path d="M0 16.25C0 7.25 5.5 1.5 13.5 0L15 3.5C9.5 5.25 7.5 8.75 7.25 11.75C8.5 11.25 10 11 11.5 11C15.5 11 18.5 14 18.5 18.5C18.5 22.5 15.5 25.5 11.5 25.5C5 25.5 0 21 0 16.25ZM15.5 16.25C15.5 7.25 21 1.5 29 0L30.5 3.5C25 5.25 23 8.75 22.75 11.75C24 11.25 25.5 11 27 11C31 11 34 14 34 18.5C34 22.5 31 25.5 27 25.5C20.5 25.5 15.5 21 15.5 16.25Z" />
+                    </svg>
                   </div>
-                  <div>
-                    <div style={{ fontSize: '0.92rem', fontWeight: 700, color: 'var(--text-primary)' }}>{rev.name}</div>
-                    <div style={{ fontSize: '0.75rem', color: 'var(--accent-gold-dark)', display: 'flex', alignItems: 'center', gap: '3px', fontWeight: 600 }}>
-                      <CheckCircle size={12} /> Verified X-ON Customer
+
+                  {/* Instagram Comment Author Header */}
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.65rem' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                      {/* Instagram Rainbow Story Ring with Realistic Avatar Photo */}
+                      <div style={{
+                        width: '36px',
+                        height: '36px',
+                        borderRadius: '50%',
+                        background: 'linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)',
+                        padding: '2px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        flexShrink: 0
+                      }}>
+                        <img
+                          src={avatarUrl}
+                          alt={rev.name}
+                          style={{
+                            width: '100%',
+                            height: '100%',
+                            borderRadius: '50%',
+                            objectFit: 'cover',
+                            border: '1.5px solid #ffffff'
+                          }}
+                          onError={(e) => {
+                            e.currentTarget.style.display = 'none';
+                            if (e.currentTarget.nextSibling) {
+                              e.currentTarget.nextSibling.style.display = 'flex';
+                            }
+                          }}
+                        />
+                        <div style={{
+                          width: '100%',
+                          height: '100%',
+                          borderRadius: '50%',
+                          background: '#434c34',
+                          border: '1.5px solid #ffffff',
+                          display: 'none',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          color: '#ffffff',
+                          fontWeight: 700,
+                          fontSize: '0.8rem'
+                        }}>
+                          {rev.name.charAt(0)}
+                        </div>
+                      </div>
+
+                      {/* Handle & Timestamp */}
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', flexWrap: 'wrap' }}>
+                        <span style={{ fontWeight: 700, fontSize: '0.88rem', color: '#111827' }}>
+                          {username}
+                        </span>
+                        <span style={{ fontSize: '0.75rem', color: '#9ca3af' }}>{timeAgo}</span>
+                        <span style={{ fontSize: '0.78rem' }}>❤️</span>
+                      </div>
+                    </div>
+
+                    {/* Red Heart & Like Counter */}
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1px' }}>
+                      <span style={{ color: '#ef4444', fontSize: '0.9rem', lineHeight: 1 }}>❤️</span>
+                      <span style={{ fontSize: '0.7rem', color: '#6b7280', fontWeight: 600 }}>{likes}</span>
                     </div>
                   </div>
+
+                  {/* Comment Body */}
+                  <div style={{ flex: 1, marginBottom: '0.85rem' }}>
+                    <p style={{ fontSize: '0.88rem', color: '#374151', lineHeight: 1.55, margin: 0 }}>
+                      <span style={{ color: '#2563eb', fontWeight: 600, marginRight: '5px' }}>@xon.pressons</span>
+                      {rev.comment} 😍✨
+                    </p>
+                  </div>
+
+                  {/* Card Bottom: Customer Name & 5 Gold Stars */}
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    borderTop: '1px solid #f3f4f6',
+                    paddingTop: '0.75rem'
+                  }}>
+                    <span style={{ fontWeight: 700, fontSize: '0.92rem', color: '#111827' }}>
+                      {rev.name}
+                    </span>
+                    <RatingStars rating={rev.rating || 5} size={15} />
+                  </div>
+
+                  {/* Speech Bubble Tail at bottom-left */}
+                  <div style={{
+                    position: 'absolute',
+                    bottom: '-10px',
+                    left: '22px',
+                    width: '0',
+                    height: '0',
+                    borderTop: '10px solid #ffffff',
+                    borderLeft: '10px solid transparent',
+                    filter: 'drop-shadow(0 2px 2px rgba(67, 76, 52, 0.08))'
+                  }} />
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
 
       {/* 11. FIND US & STUDIO SHOWCASE */}
       <section className="section-py" style={{ borderTop: '1px solid var(--border-subtle)', background: 'var(--bg-secondary)' }}>
-        <div className="container">
+        <div className="container" style={{ maxWidth: '1080px' }}>
           <div style={{
-            background: 'var(--bg-surface)',
+            position: 'relative',
+            background: '#fcf6f3',
+            backgroundImage: `url(${findUsBg})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
             border: '1px solid var(--border-gold)',
             borderRadius: 'var(--radius-lg)',
-            padding: '3.5rem 2rem',
+            padding: '3.25rem 2rem 3rem 2rem',
             textAlign: 'center',
-            maxWidth: '900px',
+            maxWidth: '1000px',
+            width: '100%',
             margin: '0 auto',
-            boxShadow: 'var(--shadow-gold)'
+            boxShadow: 'var(--shadow-gold)',
+            overflow: 'hidden'
           }}>
-            <span className="brand-line" style={{ display: 'block', marginBottom: '0.5rem' }}>Visit Our Studio & Showcase</span>
-            <h2 className="font-heading" style={{ fontSize: '2.4rem', color: 'var(--text-primary)', marginBottom: '1.5rem' }}>
-              Find Us
-            </h2>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center', fontSize: '1.15rem', color: 'var(--text-primary)', marginBottom: '2rem' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                <MapPin size={22} color="var(--accent-gold)" />
-                <strong>3168 Bill Beck Blvd, Kissimmee, FL 34744</strong>
+            {/* Top-Right Nail Polish & Brush Motif */}
+            <img
+              src={motifTop}
+              alt=""
+              style={{
+                position: 'absolute',
+                top: 0,
+                right: 0,
+                width: '180px',
+                maxWidth: '22%',
+                pointerEvents: 'none',
+                zIndex: 1,
+                userSelect: 'none'
+              }}
+            />
+
+            {/* Bottom-Left Nail Polish Bottle Motif */}
+            <img
+              src={motifBottom}
+              alt=""
+              style={{
+                position: 'absolute',
+                bottom: 0,
+                left: 0,
+                width: '160px',
+                maxWidth: '20%',
+                pointerEvents: 'none',
+                zIndex: 1,
+                userSelect: 'none'
+              }}
+            />
+
+            {/* Content above motifs */}
+            <div style={{ position: 'relative', zIndex: 2, maxWidth: '720px', margin: '0 auto' }}>
+              <span className="brand-line" style={{ display: 'block', marginBottom: '0.45rem', fontSize: '0.85rem' }}>Visit Our Studio & Showcase</span>
+              <h2 className="font-heading" style={{ fontSize: '2.5rem', color: 'var(--text-primary)', marginBottom: '1.25rem' }}>
+                Find Us
+              </h2>
+              
+              {/* Location Block */}
+              <div style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '0.6rem',
+                fontSize: '1.08rem',
+                color: 'var(--text-primary)',
+                marginBottom: '1.85rem',
+                flexWrap: 'wrap'
+              }}>
+                <MapPin size={22} color="var(--accent-gold)" style={{ flexShrink: 0 }} />
+                <strong>X-ON — 3168 Bill Beck Blvd, Kissimmee, FL 34744.</strong>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                <Phone size={20} color="var(--accent-gold)" />
-                <a href="tel:689-212-8888" style={{ color: 'var(--accent-gold-dark)', fontWeight: 600 }}>
-                  689-212-8888
-                </a>
+
+              <div style={{ display: 'flex', gap: '0.85rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+                <Link to="/contact-us" className="btn btn-primary" style={{ padding: '0.7rem 1.6rem' }}>
+                  Contact Our Studio
+                </Link>
+                <Link to="/wholesale-signup" className="btn btn-outline" style={{ background: 'rgba(255, 255, 255, 0.9)', padding: '0.7rem 1.6rem' }}>
+                  Wholesale Registration
+                </Link>
               </div>
-            </div>
-            <p style={{ color: 'var(--text-secondary)', maxWidth: '600px', margin: '0 auto 2rem auto', fontSize: '0.95rem', lineHeight: 1.7 }}>
-              From bespoke bridal styling to salon wholesale pickups, our Kissimmee artisan team is ready to assist you with every luxury nail detail.
-            </p>
-            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-              <Link to="/contact-us" className="btn btn-primary">
-                Contact Our Studio
-              </Link>
-              <Link to="/wholesale-signup" className="btn btn-outline">
-                Wholesale Registration
-              </Link>
             </div>
           </div>
         </div>

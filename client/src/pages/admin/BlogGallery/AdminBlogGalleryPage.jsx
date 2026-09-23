@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import {
   Plus,
@@ -9,13 +9,186 @@ import {
   Calendar,
   Image as ImageIcon,
   CheckCircle,
-  AlertCircle
+  AlertCircle,
+  UploadCloud,
+  X,
+  Link2
 } from 'lucide-react';
 import { api } from '../../../services/api';
 import Modal from '../../../components/common/Modal';
 import ConfirmDialog from '../../../components/common/ConfirmDialog';
 import LoadingSpinner from '../../../components/common/LoadingSpinner';
 import { useToast } from '../../../context/ToastContext';
+
+function ImageUploadField({ label, value, onChange, placeholder = 'https://...', helpText }) {
+  const fileInputRef = useRef(null);
+  const [uploading, setUploading] = useState(false);
+  const { addToast } = useToast();
+
+  const handleFileChange = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+      addToast('Please select a valid image file (PNG, JPG, JPEG, WEBP).', 'error');
+      return;
+    }
+
+    try {
+      setUploading(true);
+      try {
+        const res = await api.uploadImage(file);
+        if (res.success && res.url) {
+          onChange(res.url);
+          addToast('Image uploaded successfully from device!', 'success');
+          return;
+        }
+      } catch (uploadErr) {
+        console.warn('Server upload fallback to base64 DataURL:', uploadErr);
+      }
+
+      // Fallback to base64 DataURL
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        onChange(event.target.result);
+        addToast('Image loaded from device successfully!', 'success');
+      };
+      reader.readAsDataURL(file);
+    } catch (err) {
+      addToast('Failed to read image file.', 'error');
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  return (
+    <div className="form-group" style={{ marginBottom: '1.25rem' }}>
+      <label className="form-label" style={{ fontWeight: 600, color: 'var(--text-primary)', marginBottom: '0.45rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <span>{label}</span>
+        {value && (
+          <button
+            type="button"
+            onClick={() => onChange('')}
+            style={{
+              background: 'none',
+              border: 'none',
+              color: '#ef4444',
+              fontSize: '0.78rem',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '3px',
+              padding: 0
+            }}
+          >
+            <X size={13} /> Remove
+          </button>
+        )}
+      </label>
+
+      <input
+        type="file"
+        ref={fileInputRef}
+        onChange={handleFileChange}
+        accept="image/*"
+        style={{ display: 'none' }}
+      />
+
+      <div style={{ display: 'grid', gridTemplateColumns: value ? '120px 1fr' : '1fr', gap: '1rem', alignItems: 'flex-start' }}>
+        {value && (
+          <div style={{
+            position: 'relative',
+            width: '120px',
+            height: '95px',
+            borderRadius: '8px',
+            overflow: 'hidden',
+            border: '1.5px solid var(--border-medium)',
+            background: 'var(--bg-secondary)',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.06)'
+          }}>
+            <img
+              src={value}
+              alt="Preview"
+              onError={(e) => {
+                e.currentTarget.onerror = null;
+                e.currentTarget.src = '/assets/images/IMG_7098.JPG';
+              }}
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            />
+            <button
+              type="button"
+              onClick={() => fileInputRef.current?.click()}
+              style={{
+                position: 'absolute',
+                bottom: 0,
+                left: 0,
+                right: 0,
+                background: 'rgba(0, 0, 0, 0.65)',
+                color: '#fff',
+                border: 'none',
+                padding: '4px 0',
+                fontSize: '0.7rem',
+                fontWeight: 600,
+                cursor: 'pointer',
+                textAlign: 'center',
+                backdropFilter: 'blur(2px)'
+              }}
+            >
+              Change
+            </button>
+          </div>
+        )}
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', width: '100%' }}>
+          <div style={{ display: 'flex', gap: '0.6rem' }}>
+            <div style={{ position: 'relative', flex: 1 }}>
+              <input
+                type="text"
+                className="form-input"
+                value={value || ''}
+                onChange={e => onChange(e.target.value)}
+                placeholder={placeholder}
+                style={{
+                  width: '100%',
+                  padding: '0.6rem 0.85rem',
+                  paddingLeft: '2.2rem',
+                  borderRadius: '6px',
+                  border: '1px solid var(--border-medium)',
+                  background: 'var(--bg-surface)',
+                  fontSize: '0.85rem'
+                }}
+              />
+              <Link2 size={15} style={{ position: 'absolute', left: '0.75rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
+            </div>
+
+            <button
+              type="button"
+              onClick={() => fileInputRef.current?.click()}
+              disabled={uploading}
+              className="btn btn-secondary"
+              style={{
+                padding: '0.6rem 1rem',
+                fontSize: '0.85rem',
+                whiteSpace: 'nowrap',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.45rem',
+                cursor: uploading ? 'not-allowed' : 'pointer'
+              }}
+            >
+              <UploadCloud size={16} />
+              {uploading ? 'Uploading...' : 'Choose from Device'}
+            </button>
+          </div>
+
+          {helpText && (
+            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{helpText}</span>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function AdminBlogGalleryPage() {
   const [searchParams] = useSearchParams();
@@ -471,16 +644,13 @@ export default function AdminBlogGalleryPage() {
                 />
               </div>
 
-              <div className="form-group">
-                <label className="form-label">Cover Image URL</label>
-                <input
-                  type="url"
-                  className="form-input"
-                  value={blogForm.cover}
-                  onChange={e => setBlogForm({ ...blogForm, cover: e.target.value })}
-                  required
-                />
-              </div>
+              <ImageUploadField
+                label="Article Cover Image"
+                value={blogForm.cover}
+                onChange={val => setBlogForm({ ...blogForm, cover: val })}
+                placeholder="https://... or upload from device"
+                helpText="High-resolution landscape or square cover image."
+              />
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                 <div className="form-group">
@@ -540,16 +710,13 @@ export default function AdminBlogGalleryPage() {
                 />
               </div>
 
-              <div className="form-group">
-                <label className="form-label">Media Image URL *</label>
-                <input
-                  type="url"
-                  className="form-input"
-                  value={galleryForm.media}
-                  onChange={e => setGalleryForm({ ...galleryForm, media: e.target.value })}
-                  required
-                />
-              </div>
+              <ImageUploadField
+                label="Gallery Showcase Image *"
+                value={galleryForm.media}
+                onChange={val => setGalleryForm({ ...galleryForm, media: val })}
+                placeholder="https://... or upload from device"
+                helpText="Square 1:1 or 4:5 vertical photo of nail design."
+              />
 
               <div className="form-group">
                 <label className="form-label">Available Size Labels (Comma separated)</label>
@@ -589,15 +756,13 @@ export default function AdminBlogGalleryPage() {
                 />
               </div>
 
-              <div className="form-group">
-                <label className="form-label">Media URL</label>
-                <input
-                  type="url"
-                  className="form-input"
-                  value={comingSoonForm.media}
-                  onChange={e => setComingSoonForm({ ...comingSoonForm, media: e.target.value })}
-                />
-              </div>
+              <ImageUploadField
+                label="Collection Preview Media Image"
+                value={comingSoonForm.media}
+                onChange={val => setComingSoonForm({ ...comingSoonForm, media: val })}
+                placeholder="https://... or upload from device"
+                helpText="Featured teaser photo for seasonal collection drop."
+              />
 
               <div className="form-group">
                 <label className="form-label">Expected Launch</label>

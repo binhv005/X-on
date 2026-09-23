@@ -39,19 +39,24 @@ export default function AboutPage() {
     <div>
       {/* Hero Header */}
       <section style={{
-        background: 'linear-gradient(180deg, var(--bg-surface) 0%, var(--bg-primary) 100%)',
-        padding: '5rem 0 4rem 0',
-        borderBottom: '1px solid var(--border-subtle)',
-        textAlign: 'center'
+        position: 'relative',
+        backgroundImage: `radial-gradient(circle at center, rgba(15, 15, 18, 0.32) 0%, rgba(15, 15, 18, 0.58) 100%), url('/assets/images/5722dbaed43e34aeec0d2ee69da7d7de.jpg')`,
+        backgroundPosition: 'center',
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        padding: '6.5rem 0 5.5rem 0',
+        borderBottom: '1px solid rgba(0, 0, 0, 0.1)',
+        textAlign: 'center',
+        overflow: 'hidden'
       }}>
-        <div className="container" style={{ maxWidth: '850px' }}>
-          <span className="brand-line" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.75rem' }}>
-            <Sparkles size={16} /> The Artistry of X-ON
+        <div className="container" style={{ maxWidth: '850px', position: 'relative', zIndex: 2 }}>
+          <span className="brand-line" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.85rem', color: '#f5d376', textShadow: '0 2px 8px rgba(0,0,0,0.6)' }}>
+            <Sparkles size={16} color="#f5d376" /> The Artistry of X-ON
           </span>
-          <h1 className="font-heading" style={{ fontSize: 'clamp(2.4rem, 5vw, 3.5rem)', color: 'var(--text-primary)', marginBottom: '1.25rem', lineHeight: 1.2 }}>
+          <h1 className="font-heading" style={{ fontSize: 'clamp(2.4rem, 5vw, 3.5rem)', color: '#ffffff', marginBottom: '1.25rem', lineHeight: 1.25, textShadow: '0 3px 18px rgba(0, 0, 0, 0.8), 0 1px 4px rgba(0, 0, 0, 0.9)' }}>
             {tagline}
           </h1>
-          <p className="gradient-text-gold" style={{ fontSize: '1.25rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+          <p style={{ fontSize: '1.25rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#f5d376', textShadow: '0 2px 10px rgba(0, 0, 0, 0.8)', margin: 0 }}>
             {brandLine}
           </p>
         </div>
@@ -108,8 +113,12 @@ export default function AboutPage() {
                 position: 'relative'
               }}>
                 <img
-                  src={heroImage}
+                  src={heroImage || '/assets/images/IMG_7101.JPG'}
                   alt="X-ON Artisanal Nails"
+                  onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = '/assets/images/IMG_7101.JPG';
+                  }}
                   style={{ width: '100%', height: '520px', objectFit: 'cover' }}
                 />
               </div>

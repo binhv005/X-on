@@ -48,7 +48,8 @@ export default function AdminLayout() {
         position: 'sticky',
         top: 0,
         height: '100vh',
-        zIndex: 90
+        zIndex: 90,
+        overflow: 'hidden'
       }} className="admin-desktop-sidebar">
         {/* Brand Header */}
         <div style={{
@@ -71,7 +72,16 @@ export default function AdminLayout() {
         </div>
 
         {/* Navigation Items */}
-        <nav style={{ padding: '1rem', flex: 1, display: 'flex', flexDirection: 'column', gap: '0.4rem', overflowY: 'auto' }}>
+        <nav style={{
+          padding: '1rem',
+          flex: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '0.4rem',
+          overflowY: 'auto',
+          scrollbarWidth: 'none',
+          msOverflowStyle: 'none'
+        }} className="admin-sidebar-nav">
           {navItems.map(item => {
             const Icon = item.icon;
             const isActive = location.pathname === item.path || (item.path !== '/admin' && location.pathname.startsWith(item.path));
@@ -233,6 +243,22 @@ export default function AdminLayout() {
 
       {/* CSS For Admin layout */}
       <style>{`
+        .admin-desktop-sidebar,
+        .admin-desktop-sidebar *,
+        .admin-sidebar-nav,
+        .admin-sidebar-nav * {
+          scrollbar-width: none !important;
+          -ms-overflow-style: none !important;
+        }
+        .admin-desktop-sidebar::-webkit-scrollbar,
+        .admin-desktop-sidebar *::-webkit-scrollbar,
+        .admin-sidebar-nav::-webkit-scrollbar,
+        .admin-sidebar-nav *::-webkit-scrollbar {
+          display: none !important;
+          width: 0 !important;
+          height: 0 !important;
+          background: transparent !important;
+        }
         @media (max-width: 900px) {
           .admin-desktop-sidebar {
             display: none !important;

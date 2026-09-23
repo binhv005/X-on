@@ -43,7 +43,7 @@ export default function Newsletter() {
           <h3 style={{
             fontSize: '1.2rem',
             fontWeight: 800,
-            color: 'var(--text-primary)',
+            color: '#ffffff',
             marginBottom: '0.25rem',
             letterSpacing: '-0.01em',
             textTransform: 'uppercase'
@@ -52,7 +52,7 @@ export default function Newsletter() {
           </h3>
           <p style={{
             fontSize: '0.88rem',
-            color: 'var(--text-secondary)',
+            color: '#9ca3af',
             lineHeight: 1.45,
             margin: 0
           }}>
@@ -68,10 +68,10 @@ export default function Newsletter() {
               alignItems: 'center',
               gap: '0.6rem',
               padding: '0.85rem 1.5rem',
-              background: 'rgba(5, 150, 105, 0.1)',
-              border: '1px solid rgba(5, 150, 105, 0.3)',
+              background: 'rgba(5, 150, 105, 0.2)',
+              border: '1px solid rgba(5, 150, 105, 0.5)',
               borderRadius: '4px',
-              color: 'var(--status-success)',
+              color: '#34d399',
               fontWeight: 600,
               fontSize: '0.92rem'
             }}>
@@ -100,8 +100,8 @@ export default function Newsletter() {
                     padding: '0.65rem 0',
                     background: 'transparent',
                     border: 'none',
-                    borderBottom: '1.5px solid var(--text-primary)',
-                    color: 'var(--text-primary)',
+                    borderBottom: '1.5px solid rgba(255, 255, 255, 0.5)',
+                    color: '#ffffff',
                     fontSize: '0.95rem',
                     outline: 'none',
                     borderRadius: 0,
@@ -123,8 +123,8 @@ export default function Newsletter() {
                     padding: '0.65rem 0',
                     background: 'transparent',
                     border: 'none',
-                    borderBottom: '1.5px solid var(--text-primary)',
-                    color: 'var(--text-primary)',
+                    borderBottom: '1.5px solid rgba(255, 255, 255, 0.5)',
+                    color: '#ffffff',
                     fontSize: '0.95rem',
                     outline: 'none',
                     borderRadius: 0,
@@ -139,8 +139,8 @@ export default function Newsletter() {
                   type="submit"
                   disabled={status === 'loading'}
                   style={{
-                    background: '#000000',
-                    color: '#ffffff',
+                    background: '#ffffff',
+                    color: '#0f1115',
                     border: 'none',
                     padding: '0.75rem 2rem',
                     fontSize: '0.9rem',
@@ -149,10 +149,12 @@ export default function Newsletter() {
                     textTransform: 'uppercase',
                     borderRadius: '0px',
                     cursor: 'pointer',
-                    transition: 'opacity 0.2s ease',
+                    transition: 'opacity 0.2s ease, background 0.2s ease',
                     whiteSpace: 'nowrap',
                     opacity: status === 'loading' ? 0.7 : 1
                   }}
+                  onMouseOver={e => e.currentTarget.style.background = '#f5d376'}
+                  onMouseOut={e => e.currentTarget.style.background = '#ffffff'}
                 >
                   {status === 'loading' ? 'JOINING...' : 'JOIN US'}
                 </button>

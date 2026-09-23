@@ -9,7 +9,8 @@ import {
   ShoppingBag,
   ArrowRight,
   Sparkles,
-  Loader2
+  Loader2,
+  Banknote
 } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
 import { useAuth } from '../../context/AuthContext';
@@ -426,17 +427,17 @@ export default function CheckoutModal() {
                   <CreditCard size={16} /> 2. Payment Method
                 </h4>
 
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '0.75rem' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                   {/* Cash on Delivery (Active) */}
                   <label style={{
-                    padding: '0.85rem',
+                    padding: '0.9rem 1.1rem',
                     borderRadius: '8px',
                     border: `1.5px solid ${formData.paymentMethod === 'cod' ? 'var(--accent-gold, #b38728)' : 'var(--border-subtle, rgba(0, 0, 0, 0.1))'}`,
                     background: formData.paymentMethod === 'cod' ? '#fdf8ee' : '#faf7f2',
                     cursor: 'pointer',
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '0.6rem',
+                    gap: '0.85rem',
                     boxShadow: formData.paymentMethod === 'cod' ? '0 2px 8px rgba(179, 135, 40, 0.12)' : 'none',
                     transition: 'all 0.2s ease'
                   }}>
@@ -446,27 +447,30 @@ export default function CheckoutModal() {
                       value="cod"
                       checked={formData.paymentMethod === 'cod'}
                       onChange={handleChange}
-                      style={{ accentColor: 'var(--accent-gold, #b38728)' }}
+                      style={{ accentColor: 'var(--accent-gold, #b38728)', width: '16px', height: '16px', cursor: 'pointer' }}
                     />
+                    <div style={{ width: '36px', height: '36px', borderRadius: '6px', background: 'rgba(179, 135, 40, 0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--accent-gold-dark, #8c6716)', flexShrink: 0 }}>
+                      <Banknote size={20} />
+                    </div>
                     <div style={{ flex: 1 }}>
                       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                        <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-primary, #1c1c21)' }}>Cash on Delivery</span>
-                        <span style={{ fontSize: '0.68rem', background: '#dcfce7', color: '#15803d', padding: '2px 6px', borderRadius: '4px', fontWeight: 700 }}>Khả dụng</span>
+                        <span style={{ fontSize: '0.88rem', fontWeight: 700, color: 'var(--text-primary, #1c1c21)' }}>Cash on Delivery</span>
+                        <span style={{ fontSize: '0.7rem', background: '#dcfce7', color: '#15803d', padding: '2px 8px', borderRadius: '4px', fontWeight: 700 }}>Available</span>
                       </div>
-                      <div style={{ fontSize: '0.72rem', color: 'var(--text-secondary, #525260)' }}>Thanh toán tiền mặt khi nhận hàng</div>
+                      <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary, #525260)', marginTop: '2px' }}>Pay with cash upon package delivery</div>
                     </div>
                   </label>
 
                   {/* Card Payment (Disabled) */}
                   <div style={{
-                    padding: '0.85rem',
+                    padding: '0.9rem 1.1rem',
                     borderRadius: '8px',
                     border: '1.5px dashed rgba(0, 0, 0, 0.15)',
                     background: '#f6f5f2',
                     cursor: 'not-allowed',
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '0.6rem',
+                    gap: '0.85rem',
                     opacity: 0.65,
                     userSelect: 'none'
                   }}>
@@ -474,27 +478,30 @@ export default function CheckoutModal() {
                       type="radio"
                       disabled
                       checked={false}
-                      style={{ cursor: 'not-allowed' }}
+                      style={{ width: '16px', height: '16px', cursor: 'not-allowed' }}
                     />
+                    <div style={{ width: '36px', height: '36px', borderRadius: '6px', background: 'rgba(0, 0, 0, 0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted, #7e7e8c)', flexShrink: 0 }}>
+                      <CreditCard size={20} />
+                    </div>
                     <div style={{ flex: 1 }}>
                       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.4rem' }}>
-                        <span style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-muted, #7e7e8c)' }}>Card Payment</span>
-                        <span style={{ fontSize: '0.65rem', background: '#fef3c7', color: '#92400e', border: '1px solid #fde68a', padding: '2px 6px', borderRadius: '4px', fontWeight: 600 }}>Đang phát triển</span>
+                        <span style={{ fontSize: '0.88rem', fontWeight: 600, color: 'var(--text-muted, #7e7e8c)' }}>Card Payment</span>
+                        <span style={{ fontSize: '0.68rem', background: '#fef3c7', color: '#92400e', border: '1px solid #fde68a', padding: '2px 8px', borderRadius: '4px', fontWeight: 600 }}>Coming Soon</span>
                       </div>
-                      <div style={{ fontSize: '0.72rem', color: 'var(--text-muted, #7e7e8c)' }}>Visa, MasterCard, JCB (Sắp ra mắt)</div>
+                      <div style={{ fontSize: '0.78rem', color: 'var(--text-muted, #7e7e8c)', marginTop: '2px' }}>Visa, MasterCard, JCB (Coming soon)</div>
                     </div>
                   </div>
 
                   {/* Bank Transfer (Disabled) */}
                   <div style={{
-                    padding: '0.85rem',
+                    padding: '0.9rem 1.1rem',
                     borderRadius: '8px',
                     border: '1.5px dashed rgba(0, 0, 0, 0.15)',
                     background: '#f6f5f2',
                     cursor: 'not-allowed',
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '0.6rem',
+                    gap: '0.85rem',
                     opacity: 0.65,
                     userSelect: 'none'
                   }}>
@@ -502,14 +509,17 @@ export default function CheckoutModal() {
                       type="radio"
                       disabled
                       checked={false}
-                      style={{ cursor: 'not-allowed' }}
+                      style={{ width: '16px', height: '16px', cursor: 'not-allowed' }}
                     />
+                    <div style={{ width: '36px', height: '36px', borderRadius: '6px', background: 'rgba(0, 0, 0, 0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted, #7e7e8c)', flexShrink: 0 }}>
+                      <Building2 size={20} />
+                    </div>
                     <div style={{ flex: 1 }}>
                       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.4rem' }}>
-                        <span style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-muted, #7e7e8c)' }}>Bank Transfer</span>
-                        <span style={{ fontSize: '0.65rem', background: '#fef3c7', color: '#92400e', border: '1px solid #fde68a', padding: '2px 6px', borderRadius: '4px', fontWeight: 600 }}>Đang phát triển</span>
+                        <span style={{ fontSize: '0.88rem', fontWeight: 600, color: 'var(--text-muted, #7e7e8c)' }}>Bank Transfer</span>
+                        <span style={{ fontSize: '0.68rem', background: '#fef3c7', color: '#92400e', border: '1px solid #fde68a', padding: '2px 8px', borderRadius: '4px', fontWeight: 600 }}>Coming Soon</span>
                       </div>
-                      <div style={{ fontSize: '0.72rem', color: 'var(--text-muted, #7e7e8c)' }}>Instant QR transfer (Sắp ra mắt)</div>
+                      <div style={{ fontSize: '0.78rem', color: 'var(--text-muted, #7e7e8c)', marginTop: '2px' }}>Instant QR transfer & Online Banking (Coming soon)</div>
                     </div>
                   </div>
                 </div>

@@ -4,6 +4,7 @@ import { api } from '../../services/api';
 import ProductCard from '../../components/product/ProductCard';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
 import { useToast } from '../../context/ToastContext';
+import bundleBannerBg from '../../assets/images/bundle-banner-bg.png';
 
 export default function BundleAndSavePage() {
   const [content, setContent] = useState(null);
@@ -85,230 +86,87 @@ export default function BundleAndSavePage() {
   ];
 
   return (
-    <div className="section-py" style={{ paddingTop: '3.5rem' }}>
-      <div className="container">
-        {/* Banner Hero: Bundle Title with Bright Luxury Boho Motifs */}
-        <div style={{
-          position: 'relative',
-          background: 'linear-gradient(135deg, #fdf8f2 0%, #faefe2 50%, #fdf9f4 100%)',
-          border: '1px solid rgba(212, 175, 55, 0.25)',
-          borderRadius: '24px',
-          padding: '3.5rem 2rem',
-          textAlign: 'center',
-          marginBottom: '3.5rem',
-          boxShadow: '0 12px 36px rgba(180, 140, 75, 0.08)',
-          overflow: 'hidden'
-        }}>
-          {/* Decorative Boho Organic SVG Motifs Background */}
-          <svg
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              pointerEvents: 'none',
-              zIndex: 0
-            }}
-            viewBox="0 0 1000 360"
-            preserveAspectRatio="xMidYMid slice"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            {/* Top Left Mustard Blob */}
-            <path
-              d="M-40 -40 C60 -40 150 10 130 95 C110 170 15 160 -40 130 Z"
-              fill="#f5b041"
-              opacity="0.75"
-            />
-            {/* Top Left White Dots Pattern on Yellow Blob */}
-            <g opacity="0.8" fill="#ffffff">
-              <circle cx="15" cy="40" r="3.5" />
-              <circle cx="35" cy="30" r="3.5" />
-              <circle cx="55" cy="20" r="3.5" />
-              <circle cx="30" cy="55" r="3.5" />
-              <circle cx="50" cy="45" r="3.5" />
-              <circle cx="70" cy="35" r="3.5" />
-              <circle cx="45" cy="70" r="3.5" />
-              <circle cx="65" cy="60" r="3.5" />
-            </g>
+    <div>
+      {/* Full-width Hero Banner with Dark Overlay and No Edge Gaps */}
+      <section style={{
+        position: 'relative',
+        backgroundImage: `radial-gradient(circle at center, rgba(15, 15, 18, 0.42) 0%, rgba(15, 15, 18, 0.72) 100%), url(${bundleBannerBg})`,
+        backgroundPosition: 'center',
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        padding: '6.5rem 1.5rem 5.5rem 1.5rem',
+        borderBottom: '1px solid rgba(0, 0, 0, 0.15)',
+        textAlign: 'center',
+        overflow: 'hidden'
+      }}>
+        <div className="container" style={{ maxWidth: '850px', position: 'relative', zIndex: 2 }}>
+          <div style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '0.5rem',
+            padding: '0.45rem 1.3rem',
+            borderRadius: '999px',
+            background: 'rgba(212, 175, 55, 0.22)',
+            border: '1px solid rgba(245, 211, 118, 0.55)',
+            color: '#f5d376',
+            fontWeight: 800,
+            fontSize: '0.85rem',
+            marginBottom: '1.25rem',
+            textTransform: 'uppercase',
+            letterSpacing: '0.08em',
+            boxShadow: '0 2px 10px rgba(0,0,0,0.3)',
+            backdropFilter: 'blur(6px)'
+          }}>
+            <Tag size={15} color="#f5d376" /> Exclusive Savings: {bannerDiscount}
+          </div>
 
-            {/* Top Left Botanical Olive Branch */}
-            <path
-              d="M-10 140 Q60 110 135 60"
-              stroke="#6b7c53"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              opacity="0.85"
-            />
-            <path d="M30 115 C25 100 40 95 45 110 C40 120 32 120 30 115 Z" fill="#6b7c53" opacity="0.85" />
-            <path d="M60 98 C65 85 80 85 80 100 C75 108 65 105 60 98 Z" fill="#6b7c53" opacity="0.85" />
-            <path d="M85 80 C80 65 95 62 100 75 C95 85 88 85 85 80 Z" fill="#6b7c53" opacity="0.85" />
-            <path d="M115 65 C120 52 135 55 132 68 C128 75 118 72 115 65 Z" fill="#6b7c53" opacity="0.85" />
+          <h1 className="font-heading" style={{
+            fontSize: 'clamp(2.4rem, 5vw, 3.8rem)',
+            color: '#ffffff',
+            marginBottom: '1.25rem',
+            letterSpacing: '-0.02em',
+            lineHeight: 1.2,
+            textShadow: '0 3px 20px rgba(0, 0, 0, 0.8), 0 1px 4px rgba(0, 0, 0, 0.9)'
+          }}>
+            {heading}
+          </h1>
+          <p style={{
+            color: '#f3f4f6',
+            fontSize: '1.15rem',
+            maxWidth: '680px',
+            margin: '0 auto 2.25rem auto',
+            lineHeight: 1.7,
+            fontWeight: 500,
+            textShadow: '0 2px 10px rgba(0, 0, 0, 0.8)'
+          }}>
+            {subheading}
+          </p>
 
-            {/* Top Center Floating Elements */}
-            <circle cx="460" cy="15" r="45" fill="#f8d6ab" opacity="0.65" />
-            {/* Cute Peach Dots Matrix */}
-            <g opacity="0.6" fill="#e79c78">
-              <circle cx="230" cy="25" r="3" />
-              <circle cx="245" cy="25" r="3" />
-              <circle cx="260" cy="25" r="3" />
-              <circle cx="230" cy="40" r="3" />
-              <circle cx="245" cy="40" r="3" />
-              <circle cx="260" cy="40" r="3" />
-            </g>
-            {/* Little Heart */}
-            <path
-              d="M580 40 C580 32 590 28 596 35 C602 28 612 32 612 40 C612 50 596 60 596 60 C596 60 580 50 580 40 Z"
-              fill="#e76f51"
-              opacity="0.75"
-              transform="scale(0.8) translate(140, -10)"
-            />
-
-            {/* Top Right Dusty Blue Blob */}
-            <path
-              d="M620 -40 C660 30 720 50 780 10 C820 -20 830 -40 830 -40 Z"
-              fill="#749cb8"
-              opacity="0.75"
-            />
-            {/* Top Right Sage Green Organic Blob */}
-            <path
-              d="M820 -40 C850 40 930 70 1030 50 L1030 -40 Z"
-              fill="#98a87b"
-              opacity="0.8"
-            />
-            {/* White Dots on Green Blob */}
-            <g opacity="0.85" fill="#ffffff">
-              <circle cx="910" cy="20" r="3.5" />
-              <circle cx="930" cy="15" r="3.5" />
-              <circle cx="950" cy="25" r="3.5" />
-              <circle cx="920" cy="38" r="3.5" />
-              <circle cx="940" cy="32" r="3.5" />
-              <circle cx="960" cy="42" r="3.5" />
-            </g>
-            {/* Dashed Curved Line */}
-            <path
-              d="M750 30 Q760 100 860 120"
-              stroke="#6b5b45"
-              strokeWidth="2.5"
-              strokeDasharray="6,6"
-              strokeLinecap="round"
-              fill="none"
-              opacity="0.7"
-            />
-
-            {/* Bottom Left Peach Blob */}
-            <path
-              d="M-40 250 C40 230 110 270 90 350 C80 390 -40 390 -40 390 Z"
-              fill="#f5ba9e"
-              opacity="0.75"
-            />
-            {/* Bottom Left Organic Orange Swirl */}
-            <path
-              d="M-30 310 Q60 300 130 380"
-              stroke="#e89838"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              fill="none"
-              opacity="0.8"
-            />
-            {/* Bottom Left Dashed Angled Lines */}
-            <g opacity="0.65" stroke="#718fa6" strokeWidth="2.5" strokeLinecap="round">
-              <line x1="10" y1="230" x2="25" y2="215" />
-              <line x1="25" y1="240" x2="40" y2="225" />
-              <line x1="40" y1="250" x2="55" y2="235" />
-              <line x1="20" y1="260" x2="35" y2="245" />
-              <line x1="35" y1="270" x2="50" y2="255" />
-            </g>
-
-            {/* Bottom Right Dusty Navy Blob */}
-            <path
-              d="M870 390 C850 300 930 250 1030 290 L1030 390 Z"
-              fill="#6a879d"
-              opacity="0.85"
-            />
-            {/* Bottom Right Floating Little Triangles */}
-            <polygon points="840,230 855,240 840,250" fill="#f4ad3b" opacity="0.85" />
-            <polygon points="865,245 880,255 860,262" fill="#8ca59c" opacity="0.8" />
-            <polygon points="850,270 860,285 845,282" fill="#6f899e" opacity="0.8" />
-
-            {/* Bottom Right Berry Branch */}
-            <path
-              d="M740 380 Q710 320 670 290"
-              stroke="#54483a"
-              strokeWidth="2"
-              strokeLinecap="round"
-              opacity="0.85"
-            />
-            <line x1="710" y1="340" x2="735" y2="330" stroke="#54483a" strokeWidth="1.8" opacity="0.85" />
-            <circle cx="742" cy="328" r="6" fill="#e79c50" opacity="0.9" />
-            <line x1="695" y1="315" x2="708" y2="295" stroke="#54483a" strokeWidth="1.8" opacity="0.85" />
-            <circle cx="712" cy="290" r="6.5" fill="#759ab7" opacity="0.9" />
-            <line x1="680" y1="300" x2="660" y2="310" stroke="#54483a" strokeWidth="1.8" opacity="0.85" />
-            <circle cx="653" cy="314" r="6" fill="#e79c50" opacity="0.9" />
-            <circle cx="663" cy="285" r="6.5" fill="#d88448" opacity="0.9" />
-          </svg>
-
-          {/* Banner Content (Foreground) */}
-          <div style={{ position: 'relative', zIndex: 1 }}>
-            <div style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '0.5rem',
-              padding: '0.45rem 1.3rem',
-              borderRadius: '999px',
-              background: 'rgba(212, 175, 55, 0.18)',
-              border: '1px solid rgba(180, 130, 30, 0.4)',
-              color: 'var(--accent-gold-dark, #8c6716)',
-              fontWeight: 800,
-              fontSize: '0.85rem',
-              marginBottom: '1.25rem',
-              textTransform: 'uppercase',
-              letterSpacing: '0.06em',
-              boxShadow: '0 2px 8px rgba(0,0,0,0.04)'
-            }}>
-              <Tag size={15} /> Exclusive Savings: {bannerDiscount}
+          <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+            gap: '2rem',
+            flexWrap: 'wrap',
+            fontSize: '0.95rem',
+            fontWeight: 600,
+            color: '#ffffff',
+            textShadow: '0 2px 8px rgba(0, 0, 0, 0.8)'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
+              <CheckCircle size={18} color="#f5d376" /> 2+ Designer Nail Sets Included
             </div>
-
-            <h1 className="font-heading" style={{
-              fontSize: 'clamp(2.4rem, 5vw, 3.6rem)',
-              color: 'var(--text-primary, #1c1c21)',
-              marginBottom: '1rem',
-              letterSpacing: '-0.02em'
-            }}>
-              {heading}
-            </h1>
-            <p style={{
-              color: 'var(--text-secondary, #525260)',
-              fontSize: '1.1rem',
-              maxWidth: '680px',
-              margin: '0 auto 2rem auto',
-              lineHeight: 1.7
-            }}>
-              {subheading}
-            </p>
-
-            <div style={{
-              display: 'flex',
-              justifyContent: 'center',
-              gap: '2rem',
-              flexWrap: 'wrap',
-              fontSize: '0.92rem',
-              fontWeight: 600,
-              color: 'var(--text-primary, #1c1c21)'
-            }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
-                <CheckCircle size={17} color="var(--accent-gold-dark, #8c6716)" /> 2+ Designer Nail Sets Included
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
-                <CheckCircle size={17} color="var(--accent-gold-dark, #8c6716)" /> Full Salon Pro Hold Glue (15ml)
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
-                <CheckCircle size={17} color="var(--accent-gold-dark, #8c6716)" /> 120-Pack Ultra-Bond Adhesive Tabs
-              </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
+              <CheckCircle size={18} color="#f5d376" /> Full Salon Pro Hold Glue (15ml)
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
+              <CheckCircle size={18} color="#f5d376" /> 120-Pack Ultra-Bond Adhesive Tabs
             </div>
           </div>
         </div>
+      </section>
+
+      <div className="section-py" style={{ paddingTop: '4rem' }}>
+        <div className="container">
 
         {/* Section: Discount Cards (Bundle & Save Tiers) */}
         <div style={{ marginBottom: '4.5rem' }}>
@@ -327,110 +185,201 @@ export default function BundleAndSavePage() {
             gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
             gap: '1.75rem'
           }}>
-            {discountTiers.map(tier => (
-              <div
-                key={tier.id}
-                className="glass-card"
-                style={{
-                  padding: '2rem 1.75rem',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between',
-                  borderRadius: 'var(--radius-md)',
-                  position: 'relative',
-                  border: tier.popular ? '2px solid var(--accent-gold)' : '1px solid var(--border-subtle)',
-                  background: tier.popular ? 'linear-gradient(180deg, rgba(212,175,55,0.08) 0%, var(--bg-surface) 100%)' : 'var(--bg-surface)'
-                }}
-              >
-                {tier.popular && (
-                  <div style={{
-                    position: 'absolute',
-                    top: '-12px',
-                    left: '50%',
-                    transform: 'translateX(-50%)',
-                    background: 'linear-gradient(135deg, #d4af37 0%, #aa8c2c 100%)',
-                    color: '#000',
-                    fontSize: '0.75rem',
-                    fontWeight: 800,
-                    padding: '3px 14px',
-                    borderRadius: '999px',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.08em',
-                    boxShadow: '0 2px 8px rgba(212,175,55,0.4)',
-                    whiteSpace: 'nowrap'
-                  }}>
-                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                      <Star size={12} fill="currentColor" /> Most Popular
-                    </span>
-                  </div>
-                )}
+            {discountTiers.map(tier => {
+              const discountPercent = tier.discount.replace(/[^0-9%]/g, '');
 
-                <div>
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
-                    <span style={{ fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--text-muted)', fontWeight: 600 }}>
-                      {tier.name}
-                    </span>
-                    <Gift size={20} color={tier.color} />
-                  </div>
+              return (
+                <div
+                  key={tier.id}
+                  style={{
+                    position: 'relative',
+                    borderRadius: '24px',
+                    padding: '2.5rem 1.75rem 1.75rem 1.75rem',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                    textAlign: 'center',
+                    background: `
+                      linear-gradient(120deg, rgba(255,255,255,0.42) 0%, rgba(0,0,0,0.03) 30%, rgba(255,255,255,0.48) 50%, rgba(0,0,0,0.05) 75%, rgba(255,255,255,0.32) 100%),
+                      linear-gradient(135deg, #e4d5c8 0%, #ecdccf 35%, #dbc5b4 70%, #eadbd0 100%)
+                    `,
+                    border: 'none',
+                    boxShadow: '0 10px 30px rgba(110, 70, 45, 0.08)',
+                    transition: 'transform 0.25s ease, box-shadow 0.25s ease'
+                  }}
+                  onMouseOver={e => {
+                    e.currentTarget.style.transform = 'translateY(-4px)';
+                    e.currentTarget.style.boxShadow = '0 16px 36px rgba(110, 70, 45, 0.14)';
+                  }}
+                  onMouseOut={e => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = '0 10px 30px rgba(110, 70, 45, 0.08)';
+                  }}
+                >
 
-                  <div style={{
-                    fontSize: '2.5rem',
-                    fontFamily: 'var(--font-heading)',
-                    fontWeight: 700,
-                    color: 'var(--accent-gold-light)',
-                    lineHeight: 1,
-                    marginBottom: '0.75rem'
-                  }}>
-                    {tier.discount}
-                  </div>
-
-                  <p style={{ color: 'var(--text-primary)', fontWeight: 600, fontSize: '0.95rem', marginBottom: '0.5rem' }}>
-                    {tier.requirement}
-                  </p>
-                  <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', lineHeight: 1.5, marginBottom: '1.5rem' }}>
-                    {tier.perk}
-                  </p>
-                </div>
-
-                {/* Promo Code Box */}
-                <div style={{
-                  background: 'var(--bg-secondary)',
-                  border: '1px dashed var(--border-medium)',
-                  borderRadius: '8px',
-                  padding: '0.75rem 1rem',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  marginTop: '1rem'
-                }}>
                   <div>
-                    <span style={{ display: 'block', fontSize: '0.7rem', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
-                      Promo Code
-                    </span>
-                    <span style={{ fontSize: '1.05rem', fontWeight: 700, letterSpacing: '0.08em', color: 'var(--text-primary)' }}>
-                      {tier.code}
-                    </span>
+                    {/* Top Tier Title & "Sale" Script */}
+                    <div style={{ position: 'relative', marginBottom: '1.25rem', marginTop: '0.25rem' }}>
+                      <div style={{
+                        fontSize: '1.25rem',
+                        fontWeight: 700,
+                        letterSpacing: '0.14em',
+                        color: '#ab4e2e',
+                        textTransform: 'uppercase',
+                        fontFamily: 'var(--font-heading)'
+                      }}>
+                        {tier.name}
+                      </div>
+                      <div style={{
+                        fontFamily: '"Alex Brush", "Playfair Display", cursive',
+                        fontSize: '3.2rem',
+                        color: '#7a7646',
+                        marginTop: '-1.1rem',
+                        marginBottom: '-0.4rem',
+                        lineHeight: 1,
+                        userSelect: 'none',
+                        transform: 'rotate(-4deg)'
+                      }}>
+                        Sale
+                      </div>
+                    </div>
+
+                    {/* Giant Discount Number with UPTO & OFF */}
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'baseline',
+                      justifyContent: 'center',
+                      gap: '0.65rem',
+                      marginBottom: '1.25rem',
+                      lineHeight: 1
+                    }}>
+                      <span style={{
+                        fontSize: '0.92rem',
+                        fontWeight: 700,
+                        color: '#ab4e2e',
+                        letterSpacing: '0.08em',
+                        textTransform: 'uppercase'
+                      }}>
+                        UPTO
+                      </span>
+                      <span style={{
+                        fontSize: '4.2rem',
+                        fontWeight: 800,
+                        color: '#ab4e2e',
+                        fontFamily: 'var(--font-heading)',
+                        lineHeight: 0.9,
+                        letterSpacing: '-0.02em'
+                      }}>
+                        {discountPercent}
+                      </span>
+                      <span style={{
+                        fontSize: '0.92rem',
+                        fontWeight: 700,
+                        color: '#ab4e2e',
+                        letterSpacing: '0.08em',
+                        textTransform: 'uppercase'
+                      }}>
+                        OFF
+                      </span>
+                    </div>
+
+                    {/* Requirements & Perks */}
+                    <div style={{ marginBottom: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
+                      <div style={{
+                        fontSize: '0.86rem',
+                        fontWeight: 700,
+                        letterSpacing: '0.08em',
+                        color: '#5e321e',
+                        textTransform: 'uppercase'
+                      }}>
+                        {tier.requirement}
+                      </div>
+                      <div style={{
+                        fontSize: '0.8rem',
+                        fontWeight: 500,
+                        letterSpacing: '0.05em',
+                        color: '#7d4e38',
+                        textTransform: 'uppercase',
+                        lineHeight: 1.45
+                      }}>
+                        {tier.perk}
+                      </div>
+                    </div>
                   </div>
 
-                  <button
-                    onClick={() => handleCopyCode(tier.code)}
-                    className="btn btn-outline btn-sm"
-                    style={{ fontSize: '0.75rem', padding: '0.35rem 0.65rem' }}
-                    title="Copy code"
-                  >
-                    {copiedCode === tier.code ? (
-                      <>
-                        <Check size={14} color="#10b981" /> Copied
-                      </>
-                    ) : (
-                      <>
-                        <Copy size={14} /> Copy
-                      </>
-                    )}
-                  </button>
+                  {/* Promo Code Box */}
+                  <div style={{
+                    background: 'rgba(255, 255, 255, 0.65)',
+                    backdropFilter: 'blur(8px)',
+                    border: '1px dashed rgba(171, 78, 46, 0.45)',
+                    borderRadius: '12px',
+                    padding: '0.75rem 1rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    marginTop: '0.5rem'
+                  }}>
+                    <div style={{ textAlign: 'left' }}>
+                      <span style={{
+                        display: 'block',
+                        fontSize: '0.68rem',
+                        textTransform: 'uppercase',
+                        color: '#8c5943',
+                        fontWeight: 700,
+                        letterSpacing: '0.08em'
+                      }}>
+                        Promo Code
+                      </span>
+                      <span style={{
+                        fontSize: '1.15rem',
+                        fontWeight: 800,
+                        letterSpacing: '0.08em',
+                        color: '#ab4e2e'
+                      }}>
+                        {tier.code}
+                      </span>
+                    </div>
+
+                    <button
+                      onClick={() => handleCopyCode(tier.code)}
+                      style={{
+                        background: 'transparent',
+                        border: '1px solid #ab4e2e',
+                        color: '#ab4e2e',
+                        borderRadius: '8px',
+                        padding: '0.38rem 0.75rem',
+                        fontSize: '0.75rem',
+                        fontWeight: 700,
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '5px',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s ease'
+                      }}
+                      onMouseOver={e => {
+                        e.currentTarget.style.background = '#ab4e2e';
+                        e.currentTarget.style.color = '#ffffff';
+                      }}
+                      onMouseOut={e => {
+                        e.currentTarget.style.background = 'transparent';
+                        e.currentTarget.style.color = '#ab4e2e';
+                      }}
+                      title="Copy code"
+                    >
+                      {copiedCode === tier.code ? (
+                        <>
+                          <Check size={14} color="#10b981" /> Copied
+                        </>
+                      ) : (
+                        <>
+                          <Copy size={14} /> Copy
+                        </>
+                      )}
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 
@@ -452,6 +401,7 @@ export default function BundleAndSavePage() {
         </div>
       </div>
     </div>
+  </div>
   );
 }
 

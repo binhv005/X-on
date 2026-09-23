@@ -1,8 +1,196 @@
-import React, { useState, useEffect } from 'react';
-import { Save, CheckCircle2, AlertCircle, Sparkles, RefreshCw } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import {
+  Save,
+  CheckCircle2,
+  AlertCircle,
+  Sparkles,
+  RefreshCw,
+  Upload,
+  UploadCloud,
+  X,
+  Link2,
+  Image as ImageIcon
+} from 'lucide-react';
 import { api } from '../../../services/api';
 import LoadingSpinner from '../../../components/common/LoadingSpinner';
 import { useToast } from '../../../context/ToastContext';
+
+function ImageUploadField({ label, value, onChange, placeholder = 'https://...', helpText }) {
+  const fileInputRef = useRef(null);
+  const [uploading, setUploading] = useState(false);
+  const { addToast } = useToast();
+
+  const handleFileChange = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+      addToast('Please select a valid image file (PNG, JPG, JPEG, WEBP).', 'error');
+      return;
+    }
+
+    try {
+      setUploading(true);
+      try {
+        const res = await api.uploadImage(file);
+        if (res.success && res.url) {
+          onChange(res.url);
+          addToast('Image uploaded successfully from device!', 'success');
+          return;
+        }
+      } catch (uploadErr) {
+        console.warn('Server upload fallback to base64 DataURL:', uploadErr);
+      }
+
+      // Fallback to base64 DataURL
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        onChange(event.target.result);
+        addToast('Image loaded from device successfully!', 'success');
+      };
+      reader.readAsDataURL(file);
+    } catch (err) {
+      addToast('Failed to read image file.', 'error');
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  return (
+    <div className="form-group" style={{ marginBottom: '1.5rem' }}>
+      <label className="form-label" style={{ fontWeight: 600, color: 'var(--text-primary)', marginBottom: '0.45rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <span>{label}</span>
+        {value && (
+          <button
+            type="button"
+            onClick={() => onChange('')}
+            style={{
+              background: 'none',
+              border: 'none',
+              color: '#ef4444',
+              fontSize: '0.78rem',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '3px',
+              padding: 0
+            }}
+          >
+            <X size={13} /> Remove Image
+          </button>
+        )}
+      </label>
+
+      {/* Hidden file input */}
+      <input
+        type="file"
+        ref={fileInputRef}
+        onChange={handleFileChange}
+        accept="image/*"
+        style={{ display: 'none' }}
+      />
+
+      <div style={{ display: 'grid', gridTemplateColumns: value ? '140px 1fr' : '1fr', gap: '1rem', alignItems: 'flex-start' }}>
+        {/* Image Preview Box */}
+        {value && (
+          <div style={{
+            position: 'relative',
+            width: '140px',
+            height: '110px',
+            borderRadius: '8px',
+            overflow: 'hidden',
+            border: '1.5px solid var(--border-medium)',
+            background: 'var(--bg-secondary)',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.06)'
+          }}>
+            <img
+              src={value}
+              alt="Preview"
+              onError={(e) => {
+                e.currentTarget.onerror = null;
+                e.currentTarget.src = '/assets/images/IMG_7098.JPG';
+              }}
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover'
+              }}
+            />
+            <button
+              type="button"
+              onClick={() => fileInputRef.current?.click()}
+              style={{
+                position: 'absolute',
+                bottom: 0,
+                left: 0,
+                right: 0,
+                background: 'rgba(0, 0, 0, 0.65)',
+                color: '#fff',
+                border: 'none',
+                padding: '4px 0',
+                fontSize: '0.7rem',
+                fontWeight: 600,
+                cursor: 'pointer',
+                textAlign: 'center',
+                backdropFilter: 'blur(2px)'
+              }}
+            >
+              Change
+            </button>
+          </div>
+        )}
+
+        {/* Input & Upload Button Controls */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', width: '100%' }}>
+          <div style={{ display: 'flex', gap: '0.6rem' }}>
+            <div style={{ position: 'relative', flex: 1 }}>
+              <input
+                type="text"
+                className="form-input"
+                value={value || ''}
+                onChange={e => onChange(e.target.value)}
+                placeholder={placeholder}
+                style={{
+                  width: '100%',
+                  padding: '0.6rem 0.85rem',
+                  paddingLeft: '2.2rem',
+                  borderRadius: '6px',
+                  border: '1px solid var(--border-medium)',
+                  background: 'var(--bg-surface)',
+                  fontSize: '0.85rem'
+                }}
+              />
+              <Link2 size={15} style={{ position: 'absolute', left: '0.75rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
+            </div>
+
+            <button
+              type="button"
+              onClick={() => fileInputRef.current?.click()}
+              disabled={uploading}
+              className="btn btn-secondary"
+              style={{
+                padding: '0.6rem 1rem',
+                fontSize: '0.85rem',
+                whiteSpace: 'nowrap',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.45rem',
+                cursor: uploading ? 'not-allowed' : 'pointer'
+              }}
+            >
+              <UploadCloud size={16} />
+              {uploading ? 'Uploading...' : 'Choose from Device'}
+            </button>
+          </div>
+
+          {helpText && (
+            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{helpText}</span>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function AdminContentPage() {
   const { addToast } = useToast();
@@ -86,7 +274,7 @@ export default function AdminContentPage() {
           Website Content Editor
         </h1>
         <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
-          Modify headings, descriptions, banner CTAs, and contact information dynamically without touching source code.
+          Modify headings, descriptions, banner CTAs, images, and contact information dynamically without touching source code.
         </p>
       </div>
 
@@ -160,15 +348,14 @@ export default function AdminContentPage() {
                 ></textarea>
               </div>
 
-              <div className="form-group">
-                <label className="form-label">Hero Background Image URL</label>
-                <input
-                  type="url"
-                  className="form-input"
-                  value={activeForm.hero_image || ''}
-                  onChange={e => handleFieldChange('hero_image', e.target.value)}
-                />
-              </div>
+              {/* Hero Image Uploader */}
+              <ImageUploadField
+                label="Hero Background Image"
+                value={activeForm.hero_image || ''}
+                onChange={val => handleFieldChange('hero_image', val)}
+                placeholder="https://images.unsplash.com/... or upload from device"
+                helpText="Recommended: 1920x1080px JPG or WEBP high-resolution banner."
+              />
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                 <div className="form-group">
@@ -235,15 +422,14 @@ export default function AdminContentPage() {
                 ></textarea>
               </div>
 
-              <div className="form-group">
-                <label className="form-label">Studio Showcase Image URL</label>
-                <input
-                  type="url"
-                  className="form-input"
-                  value={activeForm.image || ''}
-                  onChange={e => handleFieldChange('image', e.target.value)}
-                />
-              </div>
+              {/* Studio Showcase Image Uploader */}
+              <ImageUploadField
+                label="Studio Showcase & Atelier Image"
+                value={activeForm.image || ''}
+                onChange={val => handleFieldChange('image', val)}
+                placeholder="https://images.unsplash.com/... or upload from device"
+                helpText="Featured atelier or founder portrait photo."
+              />
             </div>
           )}
 
@@ -278,6 +464,18 @@ export default function AdminContentPage() {
                   onChange={e => handleFieldChange('banner_discount', e.target.value)}
                 />
               </div>
+
+              {/* Bundle Hero Image Uploader */}
+              <ImageUploadField
+                label="Bundle & Save Banner Feature Image"
+                value={activeForm.banner_image || activeForm.image || ''}
+                onChange={val => {
+                  handleFieldChange('banner_image', val);
+                  handleFieldChange('image', val);
+                }}
+                placeholder="https://images.unsplash.com/... or upload from device"
+                helpText="Image showcased on the Bundle & Save collection banner."
+              />
             </div>
           )}
 
@@ -312,6 +510,18 @@ export default function AdminContentPage() {
                   onChange={e => handleFieldChange('shapes_heading', e.target.value)}
                 />
               </div>
+
+              {/* Sizing Guide Image Uploader */}
+              <ImageUploadField
+                label="Sizing Chart & Measuring Diagram Image"
+                value={activeForm.sizing_image || activeForm.image || ''}
+                onChange={val => {
+                  handleFieldChange('sizing_image', val);
+                  handleFieldChange('image', val);
+                }}
+                placeholder="https://images.unsplash.com/... or upload from device"
+                helpText="Visual sizing chart and diagram for nail measurements."
+              />
             </div>
           )}
 
@@ -348,6 +558,15 @@ export default function AdminContentPage() {
                   />
                 </div>
               </div>
+
+              {/* Contact Page Image Uploader */}
+              <ImageUploadField
+                label="Contact & Salon Location Image"
+                value={activeForm.image || ''}
+                onChange={val => handleFieldChange('image', val)}
+                placeholder="https://images.unsplash.com/... or upload from device"
+                helpText="Studio storefront or customer support atelier picture."
+              />
             </div>
           )}
 
