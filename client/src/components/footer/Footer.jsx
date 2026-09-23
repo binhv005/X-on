@@ -5,7 +5,7 @@ import { MapPin, Phone, Sparkles, ShieldCheck } from 'lucide-react';
 export default function Footer() {
   return (
     <footer style={{
-      background: 'var(--bg-primary)',
+      background: 'var(--bg-secondary)',
       borderTop: '1px solid var(--border-subtle)',
       paddingTop: '4.5rem',
       paddingBottom: '2.5rem',
@@ -22,7 +22,7 @@ export default function Footer() {
           <div style={{ maxWidth: '340px' }}>
             <Link to="/" style={{ display: 'inline-block', marginBottom: '1rem' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <span className="font-heading" style={{ fontSize: '1.75rem', fontWeight: 800, color: '#fff', letterSpacing: '0.1em' }}>
+                <span className="font-heading" style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--text-primary)', letterSpacing: '0.1em' }}>
                   X-ON
                 </span>
                 <Sparkles size={16} color="var(--accent-gold)" />

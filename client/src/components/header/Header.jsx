@@ -60,19 +60,20 @@ export default function Header() {
         position: 'sticky',
         top: 0,
         zIndex: 900,
-        background: isScrolled ? 'rgba(10, 10, 12, 0.95)' : 'rgba(10, 10, 12, 0.85)',
+        background: isScrolled ? 'rgba(252, 251, 249, 0.96)' : 'rgba(252, 251, 249, 0.9)',
         backdropFilter: 'blur(12px)',
         borderBottom: '1px solid var(--border-subtle)',
         transition: 'all 0.3s ease'
       }}>
         {/* Top Announcement Bar */}
         <div style={{
-          background: 'linear-gradient(90deg, #18181f 0%, #2a2215 50%, #18181f 100%)',
-          borderBottom: '1px solid rgba(212, 175, 55, 0.2)',
+          background: 'linear-gradient(90deg, #f5efe6 0%, #faecd8 50%, #f5efe6 100%)',
+          borderBottom: '1px solid rgba(179, 135, 40, 0.2)',
           padding: '0.4rem 1rem',
           fontSize: '0.78rem',
           textAlign: 'center',
-          color: 'var(--accent-gold-light)',
+          color: 'var(--accent-gold-dark)',
+          fontWeight: 600,
           letterSpacing: '0.06em'
         }}>
           <span>✨ FREE APPLICATION KIT WITH EVERY HANDMADE SET | PRESS ON. SLAY ON. REPEAT. ✨</span>
@@ -86,7 +87,7 @@ export default function Header() {
               fontSize: '1.85rem',
               fontWeight: 800,
               letterSpacing: '0.12em',
-              background: 'linear-gradient(135deg, #fff 0%, #f3e5ab 60%, #d4af37 100%)',
+              background: 'linear-gradient(135deg, #1c1c21 0%, #b38728 60%, #8c6716 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent'
             }}>
@@ -344,7 +345,7 @@ export default function Header() {
               style={{
                 background: 'transparent',
                 border: 'none',
-                color: '#fff',
+                color: 'var(--text-primary)',
                 cursor: 'pointer',
                 display: 'none',
                 padding: '0.25rem'
@@ -365,7 +366,7 @@ export default function Header() {
           left: 0,
           right: 0,
           bottom: 0,
-          background: 'rgba(10, 10, 12, 0.98)',
+          background: 'rgba(252, 251, 249, 0.98)',
           zIndex: 899,
           overflowY: 'auto',
           padding: '2rem 1.5rem',

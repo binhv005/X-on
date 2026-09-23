@@ -57,7 +57,7 @@ export default function HomePage() {
         minHeight: '82vh',
         display: 'flex',
         alignItems: 'center',
-        backgroundImage: `linear-gradient(to right, rgba(10, 10, 12, 0.95) 0%, rgba(10, 10, 12, 0.75) 50%, rgba(10, 10, 12, 0.4) 100%), url(${heroImg})`,
+        backgroundImage: `linear-gradient(to right, rgba(252, 251, 249, 0.95) 0%, rgba(252, 251, 249, 0.82) 50%, rgba(252, 251, 249, 0.35) 100%), url(${heroImg})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         padding: '5rem 0'
@@ -71,7 +71,7 @@ export default function HomePage() {
               fontSize: 'clamp(2.5rem, 6vw, 4.2rem)',
               fontWeight: 800,
               lineHeight: 1.15,
-              color: '#ffffff',
+              color: 'var(--text-primary)',
               marginBottom: '1rem'
             }}>
               {heroHeading} <br />
@@ -195,7 +195,7 @@ export default function HomePage() {
 
       {/* Section 4: Brand Story Showcase */}
       <section style={{
-        background: 'linear-gradient(135deg, #18181f 0%, #0a0a0c 100%)',
+        background: 'var(--bg-secondary)',
         borderTop: '1px solid var(--border-subtle)',
         borderBottom: '1px solid var(--border-subtle)',
         padding: '5rem 0'
@@ -204,7 +204,7 @@ export default function HomePage() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '3.5rem', alignItems: 'center' }}>
             <div>
               <span className="brand-line">The X-ON Philosophy</span>
-              <h2 className="font-heading" style={{ fontSize: '2.4rem', color: '#fff', margin: '0.75rem 0 1.5rem 0', lineHeight: 1.25 }}>
+              <h2 className="font-heading" style={{ fontSize: '2.4rem', color: 'var(--text-primary)', margin: '0.75rem 0 1.5rem 0', lineHeight: 1.25 }}>
                 Modern Nail Artistry Meets Effortless Beauty.
               </h2>
               <p style={{ color: 'var(--text-secondary)', fontSize: '1.05rem', lineHeight: 1.8, marginBottom: '1.25rem' }}>
@@ -293,7 +293,7 @@ export default function HomePage() {
             boxShadow: 'var(--shadow-gold)'
           }}>
             <span className="brand-line" style={{ display: 'block', marginBottom: '0.5rem' }}>Visit Our Studio & Showcase</span>
-            <h2 className="font-heading" style={{ fontSize: '2.4rem', color: '#fff', marginBottom: '1.5rem' }}>
+            <h2 className="font-heading" style={{ fontSize: '2.4rem', color: 'var(--text-primary)', marginBottom: '1.5rem' }}>
               Find Us
             </h2>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center', fontSize: '1.15rem', color: 'var(--text-primary)', marginBottom: '2rem' }}>

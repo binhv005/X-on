@@ -85,8 +85,8 @@ export default function AdminLayout() {
                   textDecoration: 'none',
                   fontSize: '0.88rem',
                   fontWeight: isActive ? 600 : 500,
-                  color: isActive ? '#fff' : 'var(--text-secondary)',
-                  background: isActive ? 'linear-gradient(90deg, rgba(212,175,55,0.2) 0%, rgba(212,175,55,0.05) 100%)' : 'transparent',
+                  color: isActive ? 'var(--text-primary)' : 'var(--text-secondary)',
+                  background: isActive ? 'linear-gradient(90deg, rgba(179,135,40,0.18) 0%, rgba(179,135,40,0.05) 100%)' : 'transparent',
                   borderLeft: isActive ? '3px solid var(--accent-gold)' : '3px solid transparent',
                   transition: 'all 0.2s ease'
                 }}
@@ -160,21 +160,21 @@ export default function AdminLayout() {
               style={{
                 background: 'transparent',
                 border: 'none',
-                color: '#fff',
+                color: 'var(--text-primary)',
                 cursor: 'pointer',
                 display: 'none'
               }}
             >
               <Menu size={22} />
             </button>
-            <h2 className="font-heading" style={{ fontSize: '1.15rem', color: '#fff' }}>
+            <h2 className="font-heading" style={{ fontSize: '1.15rem', color: 'var(--text-primary)' }}>
               X-ON Management Portal
             </h2>
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
             <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
-              Logged in as: <strong style={{ color: 'var(--accent-gold-light)' }}>{user ? user.username : 'Administrator'}</strong>
+              Logged in as: <strong style={{ color: 'var(--accent-gold-dark)' }}>{user ? user.username : 'Administrator'}</strong>
             </span>
           </div>
         </header>
