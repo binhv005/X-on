@@ -1,6 +1,55 @@
 {
   "products": [
     {
+      "id": "xon_1790154630492_gma5eh",
+      "createdAt": "2026-09-23T09:10:30.492Z",
+      "updatedAt": "2026-09-23T09:10:30.492Z",
+      "name": "test2",
+      "slug": "test2",
+      "SKU": "XON-347",
+      "images": [
+        "/assets/images/IMG_7098.JPG"
+      ],
+      "price": 10000,
+      "sale_price": 20000,
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "Custom"
+      ],
+      "variants": [],
+      "stock": 25,
+      "status": "active",
+      "product_type": "Handmade Press-On Nails",
+      "categories": [
+        "Handmade Press-On Nails"
+      ],
+      "shape": "Coffin",
+      "themes": [
+        "Cat Eye & Chrome"
+      ],
+      "size_stock": {
+        "XS": 5,
+        "S": 5,
+        "M": 5,
+        "L": 5,
+        "Custom": 5
+      },
+      "is_best_seller": false,
+      "is_bundle": false,
+      "discount_percentage": null,
+      "description": "Handcrafted with salon-grade builder gel and high-clarity topcoat.",
+      "additional_info": {
+        "included": "10 Nails + Complete Application Kit",
+        "finish": "Glossy Gel",
+        "wear_time": "Up to 3 weeks"
+      },
+      "rating": 5,
+      "reviews_count": 0
+    },
+    {
       "id": "xon_1790153046729_t56828",
       "createdAt": "2026-09-23T08:44:06.729Z",
       "updatedAt": "2026-09-23T09:05:28.461Z",

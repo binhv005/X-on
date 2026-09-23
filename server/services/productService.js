@@ -152,15 +152,34 @@ class ProductService {
       .filter(p => p.id !== product.id && p.status !== 'draft' && (p.shape === product.shape || p.product_type === product.product_type))
       .slice(0, 4);
 
+    let normalizedProduct = { ...product };
+    if ((!normalizedProduct.size_stock || typeof normalizedProduct.size_stock !== 'object' || Object.keys(normalizedProduct.size_stock).length === 0) && Array.isArray(normalizedProduct.sizes) && normalizedProduct.sizes.length > 0) {
+      const totalStock = typeof normalizedProduct.stock === 'number' ? normalizedProduct.stock : (parseInt(normalizedProduct.stock, 10) || 0);
+      const perSize = Math.max(0, Math.floor(totalStock / normalizedProduct.sizes.length));
+      const gen = {};
+      normalizedProduct.sizes.forEach(s => { gen[s] = perSize; });
+      normalizedProduct.size_stock = gen;
+    }
+
     return {
-      ...product,
+      ...normalizedProduct,
       reviews,
       related
     };
   }
 
   getProductById(id) {
-    return productRepository.findById(id);
+    const product = productRepository.findById(id);
+    if (!product) return null;
+    let normalizedProduct = { ...product };
+    if ((!normalizedProduct.size_stock || typeof normalizedProduct.size_stock !== 'object' || Object.keys(normalizedProduct.size_stock).length === 0) && Array.isArray(normalizedProduct.sizes) && normalizedProduct.sizes.length > 0) {
+      const totalStock = typeof normalizedProduct.stock === 'number' ? normalizedProduct.stock : (parseInt(normalizedProduct.stock, 10) || 0);
+      const perSize = Math.max(0, Math.floor(totalStock / normalizedProduct.sizes.length));
+      const gen = {};
+      normalizedProduct.sizes.forEach(s => { gen[s] = perSize; });
+      normalizedProduct.size_stock = gen;
+    }
+    return normalizedProduct;
   }
 
   createProduct(data) {
@@ -171,6 +190,7 @@ class ProductService {
       sale_price,
       images,
       sizes,
+      size_stock,
       variants,
       stock,
       status,
@@ -201,6 +221,16 @@ class ProductService {
       uniqueSlug = `${baseSlug}-${count++}`;
     }
 
+    const parsedSizes = Array.isArray(sizes) ? sizes : ['XS', 'S', 'M', 'L', 'Custom'];
+    const totalStock = parseInt(stock, 10) || 0;
+    let finalSizeStock = (typeof size_stock === 'object' && size_stock !== null) ? { ...size_stock } : {};
+    if (Object.keys(finalSizeStock).length === 0 && parsedSizes.length > 0 && totalStock > 0) {
+      const perSize = Math.max(0, Math.floor(totalStock / parsedSizes.length));
+      parsedSizes.forEach(s => {
+        finalSizeStock[s] = perSize;
+      });
+    }
+
     return productRepository.create({
       name: name.trim(),
       slug: uniqueSlug,
@@ -208,15 +238,15 @@ class ProductService {
       images: Array.isArray(images) && images.length > 0 ? images : ['/assets/images/IMG_7098.JPG'],
       price: parseFloat(price),
       sale_price: sale_price !== undefined && sale_price !== '' && sale_price !== null ? parseFloat(sale_price) : null,
-      sizes: Array.isArray(sizes) ? sizes : ['XS', 'S', 'M', 'L', 'Custom'],
+      sizes: parsedSizes,
       variants: Array.isArray(variants) ? variants : [],
-      stock: parseInt(stock, 10) || 0,
+      stock: totalStock,
       status: status || 'active',
       product_type: product_type || 'Handmade Press-On Nails',
       categories: Array.isArray(categories) ? categories : [product_type || 'Handmade Press-On Nails'],
       shape: shape || null,
       themes: Array.isArray(themes) ? themes : [],
-      size_stock: (typeof size_stock === 'object' && size_stock !== null) ? size_stock : {},
+      size_stock: finalSizeStock,
       is_best_seller: Boolean(is_best_seller),
       is_bundle: Boolean(is_bundle),
       discount_percentage: discount_percentage ? parseInt(discount_percentage, 10) : null,

@@ -73,7 +73,9 @@ export default function ProductDetailPage() {
   const hasSizeStock = product?.size_stock && typeof product.size_stock === 'object' && Object.keys(product.size_stock).length > 0;
   const currentSizeQty = hasSizeStock && selectedSize && product.size_stock[selectedSize] !== undefined
     ? Number(product.size_stock[selectedSize])
-    : (product?.stock !== undefined ? Number(product.stock) : 99);
+    : (Array.isArray(product?.sizes) && product.sizes.length > 0
+        ? Math.max(0, Math.floor((Number(product?.stock) || 0) / product.sizes.length))
+        : (product?.stock !== undefined ? Number(product.stock) : 99));
 
   const maxAvailable = Math.max(0, currentSizeQty);
   const isTotalOutOfStock = product?.status === 'out_of_stock' || (product?.stock !== undefined && Number(product?.stock) <= 0);
@@ -95,11 +97,12 @@ export default function ProductDetailPage() {
     )?.quantity || 0;
 
     if (currentInCart >= maxAvailable) {
-      addToast(`You already have all available units (${maxAvailable}) in your bag for Size ${selectedSize}.`, 'warning');
+      addToast(`You already have the maximum available quantity (${maxAvailable}) for Size ${selectedSize} in your bag.`, 'warning');
       return;
     }
 
-    addToCart(product, selectedSize, quantity, selectedVariant);
+    const qtyToAdd = Math.min(quantity, maxAvailable - currentInCart);
+    addToCart(product, selectedSize, qtyToAdd, selectedVariant);
   };
 
   const handleReviewSubmit = async (e) => {
