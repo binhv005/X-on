@@ -29,7 +29,7 @@ class BlogService {
     return blogRepository.create({
       title,
       slug: calculatedSlug,
-      cover: cover || 'https://images.unsplash.com/photo-1632345031435-8727f6897d53?auto=format&fit=crop&w=1200&q=80',
+      cover: cover || '/assets/images/IMG_7098.JPG',
       publish_date: publish_date || new Date().toISOString().split('T')[0],
       author: author || 'X-ON Team',
       excerpt: excerpt || '',

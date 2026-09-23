@@ -28,7 +28,10 @@ export default function FilterSidebar({
       padding: '1.5rem',
       display: 'flex',
       flexDirection: 'column',
-      gap: '1.75rem'
+      gap: '1.75rem',
+      maxHeight: 'calc(100vh - 120px)',
+      overflowY: 'auto',
+      boxShadow: 'var(--shadow-sm)'
     }}>
       {/* Header */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid var(--border-subtle)', paddingBottom: '0.75rem' }}>

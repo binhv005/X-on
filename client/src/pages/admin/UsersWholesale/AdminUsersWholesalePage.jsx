@@ -12,7 +12,7 @@ import {
   Edit2
 } from 'lucide-react';
 import { api } from '../../../services/api';
-import Drawer from '../../../components/common/Drawer';
+import Modal from '../../../components/common/Modal';
 import LoadingSpinner from '../../../components/common/LoadingSpinner';
 import { useToast } from '../../../context/ToastContext';
 
@@ -126,7 +126,7 @@ export default function AdminUsersWholesalePage() {
       {/* Header */}
       <div style={{ marginBottom: '2rem' }}>
         <span className="brand-line">Account & Relationship Management</span>
-        <h1 className="font-heading" style={{ fontSize: '1.8rem', color: '#fff', margin: '0.25rem 0' }}>
+        <h1 className="font-heading" style={{ fontSize: '1.8rem', color: 'var(--text-primary)', margin: '0.25rem 0' }}>
           Users, Wholesale & Inquiries
         </h1>
       </div>
@@ -193,7 +193,7 @@ export default function AdminUsersWholesalePage() {
                   wholesaleApps.map(app => (
                     <tr key={app.id} style={{ borderBottom: '1px solid var(--border-subtle)' }}>
                       <td style={{ padding: '1rem' }}>
-                        <div style={{ fontWeight: 600, color: '#fff' }}>{app.business_name}</div>
+                        <div style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{app.business_name}</div>
                         <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{app.business_address}</div>
                       </td>
                       <td style={{ padding: '1rem' }}>
@@ -253,9 +253,9 @@ export default function AdminUsersWholesalePage() {
                 ) : (
                   inquiries.map(inq => (
                     <tr key={inq.id} style={{ borderBottom: '1px solid var(--border-subtle)' }}>
-                      <td style={{ padding: '1rem', fontWeight: 600, color: '#fff' }}>{inq.name}</td>
+                      <td style={{ padding: '1rem', fontWeight: 600, color: 'var(--text-primary)' }}>{inq.name}</td>
                       <td style={{ padding: '1rem' }}>
-                        <div style={{ color: 'var(--accent-gold-light)' }}>{inq.email}</div>
+                        <div style={{ color: 'var(--accent-gold-dark)' }}>{inq.email}</div>
                         {inq.order_number && (
                           <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Order: {inq.order_number}</div>
                         )}
@@ -311,7 +311,7 @@ export default function AdminUsersWholesalePage() {
               <tbody>
                 {customers.map(user => (
                   <tr key={user.id} style={{ borderBottom: '1px solid var(--border-subtle)' }}>
-                    <td style={{ padding: '1rem', fontWeight: 600, color: '#fff' }}>{user.username}</td>
+                    <td style={{ padding: '1rem', fontWeight: 600, color: 'var(--text-primary)' }}>{user.username}</td>
                     <td style={{ padding: '1rem', color: 'var(--text-secondary)' }}>{user.email}</td>
                     <td style={{ padding: '1rem' }}>
                       <span className="badge badge-gold" style={{ textTransform: 'capitalize' }}>
@@ -329,12 +329,12 @@ export default function AdminUsersWholesalePage() {
         </div>
       )}
 
-      {/* Wholesale Review Drawer */}
-      <Drawer
+      {/* Wholesale Review Centered Modal */}
+      <Modal
         isOpen={isDrawerOpen && Boolean(selectedWholesale)}
         onClose={() => setIsDrawerOpen(false)}
         title="Wholesale Application Review"
-        width="600px"
+        maxWidth="650px"
       >
         {selectedWholesale && (
           <form onSubmit={handleUpdateWholesale} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
@@ -381,14 +381,14 @@ export default function AdminUsersWholesalePage() {
             </div>
           </form>
         )}
-      </Drawer>
+      </Modal>
 
-      {/* Inquiry Detail Drawer */}
-      <Drawer
+      {/* Inquiry Detail Centered Modal */}
+      <Modal
         isOpen={isDrawerOpen && Boolean(selectedInquiry)}
         onClose={() => setIsDrawerOpen(false)}
         title="Contact Inquiry Details"
-        width="600px"
+        maxWidth="650px"
       >
         {selectedInquiry && (
           <form onSubmit={handleUpdateInquiry} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
@@ -400,7 +400,7 @@ export default function AdminUsersWholesalePage() {
             </div>
 
             <div style={{ padding: '1.25rem', background: 'var(--bg-secondary)', borderRadius: '8px', border: '1px solid var(--border-subtle)' }}>
-              <strong style={{ display: 'block', marginBottom: '0.5rem', color: 'var(--accent-gold-light)' }}>Message:</strong>
+              <strong style={{ display: 'block', marginBottom: '0.5rem', color: 'var(--accent-gold-dark)' }}>Message:</strong>
               <p style={{ color: 'var(--text-primary)', fontSize: '0.95rem', lineHeight: 1.6, whiteSpace: 'pre-wrap' }}>
                 {selectedInquiry.message}
               </p>
@@ -440,7 +440,7 @@ export default function AdminUsersWholesalePage() {
             </div>
           </form>
         )}
-      </Drawer>
+      </Modal>
     </div>
   );
 }

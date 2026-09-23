@@ -20,6 +20,7 @@ import BlogDetailPage from '../pages/BlogDetail/BlogDetailPage';
 import ContactPage from '../pages/Contact/ContactPage';
 import MyAccountPage from '../pages/MyAccount/MyAccountPage';
 import LegalPage from '../pages/Legal/LegalPage';
+import CartPage from '../pages/Cart/CartPage';
 
 // Admin Pages (6 Page Templates)
 import AdminDashboardPage from '../pages/admin/Dashboard/AdminDashboardPage';
@@ -45,6 +46,7 @@ export default function AppRoutes() {
         <Route path="/gallery-coming-soon" element={<GalleryComingSoonPage />} />
         <Route path="/blog" element={<BlogPage />} />
         <Route path="/blog/:slug" element={<BlogDetailPage />} />
+        <Route path="/cart" element={<CartPage />} />
         <Route path="/contact-us" element={<ContactPage />} />
         <Route path="/my-account" element={<MyAccountPage />} />
         <Route path="/legal" element={<Navigate to="/legal/terms" replace />} />

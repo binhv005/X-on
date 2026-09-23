@@ -12,7 +12,7 @@ import {
   Sparkles
 } from 'lucide-react';
 import { api } from '../../../services/api';
-import Drawer from '../../../components/common/Drawer';
+import Modal from '../../../components/common/Modal';
 import ConfirmDialog from '../../../components/common/ConfirmDialog';
 import LoadingSpinner from '../../../components/common/LoadingSpinner';
 import { useToast } from '../../../context/ToastContext';
@@ -27,8 +27,8 @@ export default function AdminProductsPage() {
   const [filterType, setFilterType] = useState('');
   const [filterStatus, setFilterStatus] = useState('');
 
-  // Drawer / Modal Form State
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  // Centered Modal Form State
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
   const [formLoading, setFormLoading] = useState(false);
   const [formError, setFormError] = useState('');
@@ -79,11 +79,11 @@ export default function AdminProductsPage() {
   useEffect(() => {
     loadProducts();
     if (searchParams.get('action') === 'add') {
-      openAddDrawer();
+      openAddModal();
     }
   }, [searchParams]);
 
-  const openAddDrawer = () => {
+  const openAddModal = () => {
     setEditingProduct(null);
     setFormData({
       name: '',
@@ -108,10 +108,10 @@ export default function AdminProductsPage() {
       is_bundle: false
     });
     setFormError('');
-    setIsDrawerOpen(true);
+    setIsModalOpen(true);
   };
 
-  const openEditDrawer = (product) => {
+  const openEditModal = (product) => {
     setEditingProduct(product);
     setFormData({
       name: product.name || '',
@@ -132,7 +132,7 @@ export default function AdminProductsPage() {
       is_bundle: Boolean(product.is_bundle)
     });
     setFormError('');
-    setIsDrawerOpen(true);
+    setIsModalOpen(true);
   };
 
   const handleFormSubmit = async (e) => {
@@ -151,7 +151,7 @@ export default function AdminProductsPage() {
         const res = await api.updateProduct(editingProduct.id, formData);
         if (res.success) {
           addToast(`Product "${formData.name}" updated successfully!`, 'success');
-          setIsDrawerOpen(false);
+          setIsModalOpen(false);
           loadProducts();
         }
       } else {
@@ -159,7 +159,7 @@ export default function AdminProductsPage() {
         const res = await api.createProduct(formData);
         if (res.success) {
           addToast(`Product "${formData.name}" created successfully!`, 'success');
-          setIsDrawerOpen(false);
+          setIsModalOpen(false);
           loadProducts();
         }
       }
@@ -212,12 +212,12 @@ export default function AdminProductsPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', marginBottom: '2rem' }}>
         <div>
           <span className="brand-line">Inventory & Catalog</span>
-          <h1 className="font-heading" style={{ fontSize: '1.8rem', color: '#fff', margin: '0.25rem 0' }}>
+          <h1 className="font-heading" style={{ fontSize: '1.8rem', color: 'var(--text-primary)', margin: '0.25rem 0' }}>
             Product Management
           </h1>
         </div>
 
-        <button onClick={openAddDrawer} className="btn btn-primary">
+        <button onClick={openAddModal} className="btn btn-primary">
           <Plus size={16} /> Add Product
         </button>
       </div>
@@ -236,7 +236,7 @@ export default function AdminProductsPage() {
         marginBottom: '1.5rem'
       }}>
         {/* Search */}
-        <div style={{ position: 'relative', flex: 1, minWidth: '220px', maxWidth: '360px' }}>
+        <div style={{ position: 'relative', flex: '1 1 300px', maxWidth: '550px' }}>
           <input
             type="text"
             placeholder="Search by name, SKU, shape..."
@@ -316,7 +316,7 @@ export default function AdminProductsPage() {
                           </div>
                         </td>
                         <td style={{ padding: '0.75rem 1rem' }}>
-                          <div style={{ fontWeight: 600, color: '#fff', marginBottom: '2px' }}>{product.name}</div>
+                          <div style={{ fontWeight: 600, color: 'var(--text-primary)', marginBottom: '2px' }}>{product.name}</div>
                           <div style={{ fontSize: '0.75rem', color: 'var(--accent-gold-light)', fontFamily: 'monospace' }}>{product.SKU}</div>
                         </td>
                         <td style={{ padding: '0.75rem 1rem' }}>
@@ -328,7 +328,7 @@ export default function AdminProductsPage() {
                               </span>
                             </div>
                           ) : (
-                            <span style={{ fontWeight: 600, color: '#fff' }}>${(product.price || 0).toFixed(2)}</span>
+                            <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>${(product.price || 0).toFixed(2)}</span>
                           )}
                         </td>
                         <td style={{ padding: '0.75rem 1rem' }}>
@@ -350,7 +350,7 @@ export default function AdminProductsPage() {
                         <td style={{ padding: '0.75rem 1rem', textAlign: 'right' }}>
                           <div style={{ display: 'inline-flex', gap: '0.4rem' }}>
                             <button
-                              onClick={() => openEditDrawer(product)}
+                              onClick={() => openEditModal(product)}
                               className="btn btn-secondary btn-sm"
                               title="Edit Product"
                               style={{ padding: '0.4rem 0.6rem' }}
@@ -377,12 +377,12 @@ export default function AdminProductsPage() {
         </div>
       )}
 
-      {/* Add / Edit Sliding Drawer */}
-      <Drawer
-        isOpen={isDrawerOpen}
-        onClose={() => setIsDrawerOpen(false)}
+      {/* Add / Edit Centered Modal Form */}
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
         title={editingProduct ? `Edit Product: ${editingProduct.name}` : 'Add New Product'}
-        width="650px"
+        maxWidth="780px"
       >
         <form onSubmit={handleFormSubmit}>
           {formError && (
@@ -561,7 +561,7 @@ export default function AdminProductsPage() {
             <button
               type="button"
               className="btn btn-secondary"
-              onClick={() => setIsDrawerOpen(false)}
+              onClick={() => setIsModalOpen(false)}
             >
               Cancel
             </button>
@@ -574,7 +574,7 @@ export default function AdminProductsPage() {
             </button>
           </div>
         </form>
-      </Drawer>
+      </Modal>
 
       {/* Delete Confirmation Popup */}
       <ConfirmDialog

@@ -82,7 +82,7 @@ export default function AdminContentPage() {
       {/* Header */}
       <div style={{ marginBottom: '2rem' }}>
         <span className="brand-line">Dynamic CMS Management</span>
-        <h1 className="font-heading" style={{ fontSize: '1.8rem', color: '#fff', margin: '0.25rem 0' }}>
+        <h1 className="font-heading" style={{ fontSize: '1.8rem', color: 'var(--text-primary)', margin: '0.25rem 0' }}>
           Website Content Editor
         </h1>
         <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
@@ -113,7 +113,7 @@ export default function AdminContentPage() {
                 background: activeTab === tab.key ? 'var(--bg-surface)' : 'transparent',
                 border: 'none',
                 borderBottom: activeTab === tab.key ? '2px solid var(--accent-gold)' : '2px solid transparent',
-                color: activeTab === tab.key ? '#fff' : 'var(--text-secondary)',
+                color: activeTab === tab.key ? 'var(--text-primary)' : 'var(--text-secondary)',
                 fontWeight: 600,
                 cursor: 'pointer',
                 fontFamily: 'var(--font-heading)',

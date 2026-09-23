@@ -79,7 +79,7 @@ class GalleryService {
       title,
       collection_name: collection_name || title,
       subtitle: subtitle || '',
-      media: media || 'https://images.unsplash.com/photo-1519014816548-bf5fe059798b?auto=format&fit=crop&w=1000&q=80',
+      media: media || '/assets/images/IMG_7098.JPG',
       status: status || 'active',
       display_order: parseInt(display_order, 10) || 0,
       expected_launch: expected_launch || 'Coming Soon'

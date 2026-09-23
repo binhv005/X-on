@@ -101,7 +101,7 @@ export default function GalleryComingSoonPage() {
                 <span className="brand-line" style={{ display: 'block', marginBottom: '0.5rem' }}>
                   {col.collection_name || `Collection 0${idx + 1}`}
                 </span>
-                <h2 className="font-heading" style={{ fontSize: '1.8rem', color: '#fff', marginBottom: '1rem', lineHeight: 1.3 }}>
+                <h2 className="font-heading" style={{ fontSize: '1.8rem', color: 'var(--text-primary)', marginBottom: '1rem', lineHeight: 1.3 }}>
                   {col.title}
                 </h2>
                 <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', lineHeight: 1.7, marginBottom: '2rem' }}>

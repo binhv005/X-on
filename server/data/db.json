@@ -1,4 +1,485 @@
 {
+  "products": [
+    {
+      "id": "prod-1",
+      "name": "CF-35-0961 Luxury Chrome Velvet",
+      "slug": "cf-35-0961-luxury-chrome-velvet",
+      "SKU": "XON-CF-0961",
+      "images": [
+        "/assets/images/IMG_7098.JPG",
+        "/assets/images/IMG_7102.JPG"
+      ],
+      "price": 48,
+      "sale_price": 39,
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "Custom"
+      ],
+      "variants": [
+        {
+          "name": "Short Coffin",
+          "stock": 25
+        },
+        {
+          "name": "Medium Coffin",
+          "stock": 18
+        },
+        {
+          "name": "Long Coffin",
+          "stock": 12
+        }
+      ],
+      "stock": 55,
+      "status": "active",
+      "product_type": "Handmade Press-On Nails",
+      "categories": [
+        "Handmade Press-On Nails",
+        "Best Sellers"
+      ],
+      "shape": "Coffin",
+      "themes": [
+        "Cat Eye & Chrome",
+        "Glitz & Glamour"
+      ],
+      "is_best_seller": true,
+      "is_bundle": false,
+      "description": "Handcrafted with salon-grade multi-layer gel and infused with ethereal velvet magnetic shimmer. Designed to deliver an ultra-luxe, durable finish that lasts for up to 3 weeks with proper application.",
+      "additional_info": {
+        "included": "10 Handcrafted Nails, Application Kit (Salon Glue, 24 Adhesive Tabs, Cuticle Pusher, Mini File, Prep Alcohol Pads)",
+        "finish": "Glossy Cat-Eye Magnetic Velvet",
+        "wear_time": "Tabs: 3-7 days | Glue: Up to 3 weeks",
+        "reusable": "Yes, with gentle removal"
+      },
+      "rating": 4.9,
+      "reviews_count": 38
+    },
+    {
+      "id": "prod-2",
+      "name": "AL-12-0442 Ethereal French Rose Almond",
+      "slug": "al-12-0442-ethereal-french-rose-almond",
+      "SKU": "XON-AL-0442",
+      "images": [
+        "/assets/images/IMG_7099.JPG",
+        "/assets/images/IMG_7103.JPG"
+      ],
+      "price": 42,
+      "sale_price": 36,
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L"
+      ],
+      "variants": [
+        {
+          "name": "Medium Almond",
+          "stock": 30
+        }
+      ],
+      "stock": 45,
+      "status": "active",
+      "product_type": "Handmade Press-On Nails",
+      "categories": [
+        "Handmade Press-On Nails",
+        "Best Sellers"
+      ],
+      "shape": "Almond",
+      "themes": [
+        "French Modern",
+        "Minimalist Chic"
+      ],
+      "is_best_seller": true,
+      "is_bundle": false,
+      "description": "A timeless reimagination of the classic French manicure featuring a delicate soft-blush translucent base with crisp micro-sculpted white tips and pearl dust overspray.",
+      "additional_info": {
+        "included": "10 Handcrafted Nails, Full Professional Prep Kit",
+        "finish": "High-Gloss Glass Topcoat",
+        "wear_time": "Up to 3 weeks"
+      },
+      "rating": 5,
+      "reviews_count": 24
+    },
+    {
+      "id": "prod-3",
+      "name": "ST-99-0118 Obsidian Gold Foil Stiletto",
+      "slug": "st-99-0118-obsidian-gold-foil-stiletto",
+      "SKU": "XON-ST-0118",
+      "images": [
+        "/assets/images/IMG_7100.JPG",
+        "/assets/images/IMG_7102.JPG"
+      ],
+      "price": 52,
+      "sale_price": 45,
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L"
+      ],
+      "variants": [
+        {
+          "name": "Long Stiletto",
+          "stock": 15
+        }
+      ],
+      "stock": 22,
+      "status": "active",
+      "product_type": "Handmade Press-On Nails",
+      "categories": [
+        "Handmade Press-On Nails"
+      ],
+      "shape": "Stiletto",
+      "themes": [
+        "Glitz & Glamour"
+      ],
+      "is_best_seller": false,
+      "is_bundle": false,
+      "description": "Dramatic pitch-black stiletto silhouette embellished with 24k gold leaf foil accents and encapsulated in ultra-clarity builder gel for an impenetrable luxury shield.",
+      "additional_info": {
+        "included": "10 Nails + Application Toolkit",
+        "finish": "Encapsulated Foil High Gloss"
+      },
+      "rating": 4.8,
+      "reviews_count": 19
+    },
+    {
+      "id": "prod-4",
+      "name": "SQ-44-0312 Nude Glaze Classic Square",
+      "slug": "sq-44-0312-nude-glaze-classic-square",
+      "SKU": "XON-SQ-0312",
+      "images": [
+        "/assets/images/IMG_7101.JPG",
+        "/assets/images/IMG_7098.JPG"
+      ],
+      "price": 38,
+      "sale_price": null,
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "Custom"
+      ],
+      "variants": [
+        {
+          "name": "Short Square",
+          "stock": 40
+        },
+        {
+          "name": "Medium Square",
+          "stock": 25
+        }
+      ],
+      "stock": 65,
+      "status": "active",
+      "product_type": "Handmade Press-On Nails",
+      "categories": [
+        "Handmade Press-On Nails"
+      ],
+      "shape": "Square",
+      "themes": [
+        "Minimalist Chic"
+      ],
+      "is_best_seller": false,
+      "is_bundle": false,
+      "description": "The everyday luxury essential. Clean, square contours with a translucent glazed donut milky finish that complements every skin tone effortlessly.",
+      "additional_info": {
+        "included": "10 Nails, Prep Kit",
+        "finish": "Milky Glaze Gloss"
+      },
+      "rating": 4.7,
+      "reviews_count": 15
+    },
+    {
+      "id": "prod-5",
+      "name": "OV-08-0720 Pearl Aurora Oval",
+      "slug": "ov-08-0720-pearl-aurora-oval",
+      "SKU": "XON-OV-0720",
+      "images": [
+        "/assets/images/IMG_7103.JPG",
+        "/assets/images/IMG_7104.JPG"
+      ],
+      "price": 44,
+      "sale_price": 38,
+      "sizes": [
+        "S",
+        "M",
+        "L"
+      ],
+      "variants": [
+        {
+          "name": "Medium Oval",
+          "stock": 20
+        }
+      ],
+      "stock": 35,
+      "status": "active",
+      "product_type": "Handmade Press-On Nails",
+      "categories": [
+        "Handmade Press-On Nails",
+        "Best Sellers"
+      ],
+      "shape": "Oval",
+      "themes": [
+        "Cat Eye & Chrome"
+      ],
+      "is_best_seller": true,
+      "is_bundle": false,
+      "description": "Iridescent pearl powder buffed over a nude jelly base. Shifts between lavender, baby pink, and gold under natural light.",
+      "additional_info": {
+        "included": "10 Nails + Application Tools",
+        "finish": "Aurora Chrome Mirror Effect"
+      },
+      "rating": 4.9,
+      "reviews_count": 29
+    },
+    {
+      "id": "prod-6",
+      "name": "RD-19-0551 Ruby Jewel Round Short",
+      "slug": "rd-19-0551-ruby-jewel-round-short",
+      "SKU": "XON-RD-0551",
+      "images": [
+        "/assets/images/IMG_7104.JPG",
+        "/assets/images/IMG_7099.JPG"
+      ],
+      "price": 46,
+      "sale_price": null,
+      "sizes": [
+        "XS",
+        "S",
+        "M"
+      ],
+      "variants": [
+        {
+          "name": "Short Round",
+          "stock": 18
+        }
+      ],
+      "stock": 28,
+      "status": "active",
+      "product_type": "Handmade Press-On Nails",
+      "categories": [
+        "Handmade Press-On Nails"
+      ],
+      "shape": "Round",
+      "themes": [
+        "Glitz & Glamour"
+      ],
+      "is_best_seller": false,
+      "is_bundle": false,
+      "description": "Deep crimson glass gel infused with micro garnet crystals. Perfect for compact active nail lengths without losing bold aesthetic impact.",
+      "additional_info": {
+        "included": "10 Nails + Complete Kit",
+        "finish": "Glass Gel"
+      },
+      "rating": 4.8,
+      "reviews_count": 11
+    },
+    {
+      "id": "prod-7",
+      "name": "X-ON Salon Pro Hold Nail Adhesive (15ml)",
+      "slug": "x-on-salon-pro-hold-nail-adhesive",
+      "SKU": "XON-ESS-001",
+      "images": [
+        "/assets/images/IMG_7106.JPG",
+        "/assets/images/IMG_7110.JPG"
+      ],
+      "price": 14,
+      "sale_price": 11.5,
+      "sizes": [
+        "15ml"
+      ],
+      "variants": [
+        {
+          "name": "15ml Bottle with Brush",
+          "stock": 150
+        }
+      ],
+      "stock": 150,
+      "status": "active",
+      "product_type": "Nail Essentials",
+      "categories": [
+        "Nail Essentials",
+        "Best Sellers"
+      ],
+      "shape": null,
+      "themes": [
+        "Minimalist Chic"
+      ],
+      "is_best_seller": true,
+      "is_bundle": false,
+      "description": "Professional grade, fast-drying brush-on nail adhesive engineered for maximum adhesion, zero air bubble retention, and up to 4 weeks of secure wear.",
+      "additional_info": {
+        "volume": "15ml",
+        "formula": "Ethyl Cyanoacrylate with Vitamin E nourishers",
+        "drying_time": "10-15 seconds"
+      },
+      "rating": 5,
+      "reviews_count": 82
+    },
+    {
+      "id": "prod-8",
+      "name": "Ultra-Bond Waterproof Gel Adhesive Tabs (Pack of 120)",
+      "slug": "ultra-bond-waterproof-gel-adhesive-tabs",
+      "SKU": "XON-ESS-002",
+      "images": [
+        "/assets/images/IMG_7110.JPG",
+        "/assets/images/IMG_7106.JPG"
+      ],
+      "price": 9,
+      "sale_price": null,
+      "sizes": [
+        "Pack of 120 Tabs (5 Sheets)"
+      ],
+      "variants": [
+        {
+          "name": "120 Tabs",
+          "stock": 200
+        }
+      ],
+      "stock": 200,
+      "status": "active",
+      "product_type": "Nail Essentials",
+      "categories": [
+        "Nail Essentials"
+      ],
+      "shape": null,
+      "themes": [],
+      "is_best_seller": false,
+      "is_bundle": false,
+      "description": "High-viscosity medical-grade double-sided gel tabs for damage-free nail application, ideal for weekend wear and effortless removal.",
+      "additional_info": {
+        "count": "120 tabs (12 various sizes per sheet)",
+        "benefit": "0% natural nail damage"
+      },
+      "rating": 4.8,
+      "reviews_count": 45
+    },
+    {
+      "id": "prod-9",
+      "name": "Organic Cuticle Recovery Elixir & Prep Kit",
+      "slug": "organic-cuticle-recovery-elixir-prep-kit",
+      "SKU": "XON-ESS-003",
+      "images": [
+        "/assets/images/IMG_7105.JPG",
+        "/assets/images/IMG_7110.JPG"
+      ],
+      "price": 18,
+      "sale_price": 15,
+      "sizes": [
+        "Standard"
+      ],
+      "variants": [
+        {
+          "name": "Full Kit",
+          "stock": 80
+        }
+      ],
+      "stock": 80,
+      "status": "active",
+      "product_type": "Nail Essentials",
+      "categories": [
+        "Nail Essentials"
+      ],
+      "shape": null,
+      "themes": [],
+      "is_best_seller": false,
+      "is_bundle": false,
+      "description": "Cold-pressed jojoba, sweet almond, and rosehip oil blend paired with dual-ended stainless steel precision cuticle tool and glass etching buffer.",
+      "additional_info": {
+        "ingredients": "Simmondsia Chinensis Seed Oil, Prunus Amygdalus Dulcis, Tocopherol",
+        "includes": "10ml Oil Dropper, Glass Buffer, Cuticle Tool"
+      },
+      "rating": 4.9,
+      "reviews_count": 31
+    },
+    {
+      "id": "prod-bundle-1",
+      "name": "Ultimate Luxury Velvet & Essentials Trio Bundle",
+      "slug": "ultimate-luxury-velvet-essentials-trio-bundle",
+      "SKU": "XON-BND-001",
+      "images": [
+        "/assets/images/IMG_7098.JPG"
+      ],
+      "price": 98,
+      "sale_price": 74,
+      "discount_percentage": 25,
+      "sizes": [
+        "S",
+        "M",
+        "L"
+      ],
+      "variants": [
+        {
+          "name": "Standard Bundle",
+          "stock": 30
+        }
+      ],
+      "stock": 30,
+      "status": "active",
+      "product_type": "Handmade Press-On Nails",
+      "categories": [
+        "Handmade Press-On Nails",
+        "Best Sellers"
+      ],
+      "shape": "Coffin",
+      "themes": [
+        "Cat Eye & Chrome"
+      ],
+      "is_best_seller": true,
+      "is_bundle": true,
+      "description": "Save 25% with this complete luxury set including 2 handcrafted designer nail sets (Chrome Velvet + French Rose) plus our Full Salon Pro Hold Adhesive & Prep toolkit.",
+      "additional_info": {
+        "bundle_includes": "2x 10-piece Handcrafted Nail Sets, 1x Salon Pro Hold Glue (15ml), 1x 120-pack Adhesive Tabs, 1x Glass Buffer"
+      },
+      "rating": 5,
+      "reviews_count": 56
+    },
+    {
+      "id": "prod-bundle-2",
+      "name": "Glamour Stiletto & Aurora Duo Bundle",
+      "slug": "glamour-stiletto-aurora-duo-bundle",
+      "SKU": "XON-BND-002",
+      "images": [
+        "/assets/images/IMG_7098.JPG"
+      ],
+      "price": 88,
+      "sale_price": 68,
+      "discount_percentage": 23,
+      "sizes": [
+        "S",
+        "M",
+        "L"
+      ],
+      "variants": [
+        {
+          "name": "Duo Set",
+          "stock": 25
+        }
+      ],
+      "stock": 25,
+      "status": "active",
+      "product_type": "Handmade Press-On Nails",
+      "categories": [
+        "Handmade Press-On Nails"
+      ],
+      "shape": "Stiletto",
+      "themes": [
+        "Glitz & Glamour"
+      ],
+      "is_best_seller": false,
+      "is_bundle": true,
+      "description": "Get our Obsidian Gold Foil Stiletto and Pearl Aurora Oval sets in one exclusive discounted luxury bundle.",
+      "additional_info": {
+        "bundle_includes": "2x Premium Nail Sets, 2x Application Kits"
+      },
+      "rating": 4.9,
+      "reviews_count": 22
+    }
+  ],
   "categories": [
     {
       "id": "cat-1",
@@ -103,483 +584,6 @@
       "type": "theme",
       "status": "active",
       "sort_order": 4
-    }
-  ],
-  "products": [
-    {
-      "id": "prod-1",
-      "name": "CF-35-0961 Luxury Chrome Velvet",
-      "slug": "cf-35-0961-luxury-chrome-velvet",
-      "SKU": "XON-CF-0961",
-      "images": [
-        "https://images.unsplash.com/photo-1632345031435-8727f6897d53?auto=format&fit=crop&w=800&q=80",
-        "https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=800&q=80",
-        "https://images.unsplash.com/photo-1519014816548-bf5fe059798b?auto=format&fit=crop&w=800&q=80"
-      ],
-      "price": 48,
-      "sale_price": 39,
-      "sizes": [
-        "XS",
-        "S",
-        "M",
-        "L",
-        "Custom"
-      ],
-      "variants": [
-        {
-          "name": "Short Coffin",
-          "stock": 25
-        },
-        {
-          "name": "Medium Coffin",
-          "stock": 18
-        },
-        {
-          "name": "Long Coffin",
-          "stock": 12
-        }
-      ],
-      "stock": 55,
-      "status": "active",
-      "product_type": "Handmade Press-On Nails",
-      "categories": [
-        "Handmade Press-On Nails",
-        "Best Sellers"
-      ],
-      "shape": "Coffin",
-      "themes": [
-        "Cat Eye & Chrome",
-        "Glitz & Glamour"
-      ],
-      "is_best_seller": true,
-      "is_bundle": false,
-      "description": "Handcrafted with salon-grade multi-layer gel and infused with ethereal velvet magnetic shimmer. Designed to deliver an ultra-luxe, durable finish that lasts for up to 3 weeks with proper application.",
-      "additional_info": {
-        "included": "10 Handcrafted Nails, Application Kit (Salon Glue, 24 Adhesive Tabs, Cuticle Pusher, Mini File, Prep Alcohol Pads)",
-        "finish": "Glossy Cat-Eye Magnetic Velvet",
-        "wear_time": "Tabs: 3-7 days | Glue: Up to 3 weeks",
-        "reusable": "Yes, with gentle removal"
-      },
-      "rating": 4.9,
-      "reviews_count": 38
-    },
-    {
-      "id": "prod-2",
-      "name": "AL-12-0442 Ethereal French Rose Almond",
-      "slug": "al-12-0442-ethereal-french-rose-almond",
-      "SKU": "XON-AL-0442",
-      "images": [
-        "https://images.unsplash.com/photo-1607779097040-26e80aa78e66?auto=format&fit=crop&w=800&q=80",
-        "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80"
-      ],
-      "price": 42,
-      "sale_price": 36,
-      "sizes": [
-        "XS",
-        "S",
-        "M",
-        "L"
-      ],
-      "variants": [
-        {
-          "name": "Medium Almond",
-          "stock": 30
-        }
-      ],
-      "stock": 45,
-      "status": "active",
-      "product_type": "Handmade Press-On Nails",
-      "categories": [
-        "Handmade Press-On Nails",
-        "Best Sellers"
-      ],
-      "shape": "Almond",
-      "themes": [
-        "French Modern",
-        "Minimalist Chic"
-      ],
-      "is_best_seller": true,
-      "is_bundle": false,
-      "description": "A timeless reimagination of the classic French manicure featuring a delicate soft-blush translucent base with crisp micro-sculpted white tips and pearl dust overspray.",
-      "additional_info": {
-        "included": "10 Handcrafted Nails, Full Professional Prep Kit",
-        "finish": "High-Gloss Glass Topcoat",
-        "wear_time": "Up to 3 weeks"
-      },
-      "rating": 5,
-      "reviews_count": 24
-    },
-    {
-      "id": "prod-3",
-      "name": "ST-99-0118 Obsidian Gold Foil Stiletto",
-      "slug": "st-99-0118-obsidian-gold-foil-stiletto",
-      "SKU": "XON-ST-0118",
-      "images": [
-        "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80",
-        "https://images.unsplash.com/photo-1519014816548-bf5fe059798b?auto=format&fit=crop&w=800&q=80"
-      ],
-      "price": 52,
-      "sale_price": 45,
-      "sizes": [
-        "XS",
-        "S",
-        "M",
-        "L"
-      ],
-      "variants": [
-        {
-          "name": "Long Stiletto",
-          "stock": 15
-        }
-      ],
-      "stock": 22,
-      "status": "active",
-      "product_type": "Handmade Press-On Nails",
-      "categories": [
-        "Handmade Press-On Nails"
-      ],
-      "shape": "Stiletto",
-      "themes": [
-        "Glitz & Glamour"
-      ],
-      "is_best_seller": false,
-      "is_bundle": false,
-      "description": "Dramatic pitch-black stiletto silhouette embellished with 24k gold leaf foil accents and encapsulated in ultra-clarity builder gel for an impenetrable luxury shield.",
-      "additional_info": {
-        "included": "10 Nails + Application Toolkit",
-        "finish": "Encapsulated Foil High Gloss"
-      },
-      "rating": 4.8,
-      "reviews_count": 19
-    },
-    {
-      "id": "prod-4",
-      "name": "SQ-44-0312 Nude Glaze Classic Square",
-      "slug": "sq-44-0312-nude-glaze-classic-square",
-      "SKU": "XON-SQ-0312",
-      "images": [
-        "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80"
-      ],
-      "price": 38,
-      "sale_price": null,
-      "sizes": [
-        "XS",
-        "S",
-        "M",
-        "L",
-        "Custom"
-      ],
-      "variants": [
-        {
-          "name": "Short Square",
-          "stock": 40
-        },
-        {
-          "name": "Medium Square",
-          "stock": 25
-        }
-      ],
-      "stock": 65,
-      "status": "active",
-      "product_type": "Handmade Press-On Nails",
-      "categories": [
-        "Handmade Press-On Nails"
-      ],
-      "shape": "Square",
-      "themes": [
-        "Minimalist Chic"
-      ],
-      "is_best_seller": false,
-      "is_bundle": false,
-      "description": "The everyday luxury essential. Clean, square contours with a translucent glazed donut milky finish that complements every skin tone effortlessly.",
-      "additional_info": {
-        "included": "10 Nails, Prep Kit",
-        "finish": "Milky Glaze Gloss"
-      },
-      "rating": 4.7,
-      "reviews_count": 15
-    },
-    {
-      "id": "prod-5",
-      "name": "OV-08-0720 Pearl Aurora Oval",
-      "slug": "ov-08-0720-pearl-aurora-oval",
-      "SKU": "XON-OV-0720",
-      "images": [
-        "https://images.unsplash.com/photo-1632345031435-8727f6897d53?auto=format&fit=crop&w=800&q=80"
-      ],
-      "price": 44,
-      "sale_price": 38,
-      "sizes": [
-        "S",
-        "M",
-        "L"
-      ],
-      "variants": [
-        {
-          "name": "Medium Oval",
-          "stock": 20
-        }
-      ],
-      "stock": 35,
-      "status": "active",
-      "product_type": "Handmade Press-On Nails",
-      "categories": [
-        "Handmade Press-On Nails",
-        "Best Sellers"
-      ],
-      "shape": "Oval",
-      "themes": [
-        "Cat Eye & Chrome"
-      ],
-      "is_best_seller": true,
-      "is_bundle": false,
-      "description": "Iridescent pearl powder buffed over a nude jelly base. Shifts between lavender, baby pink, and gold under natural light.",
-      "additional_info": {
-        "included": "10 Nails + Application Tools",
-        "finish": "Aurora Chrome Mirror Effect"
-      },
-      "rating": 4.9,
-      "reviews_count": 29
-    },
-    {
-      "id": "prod-6",
-      "name": "RD-19-0551 Ruby Jewel Round Short",
-      "slug": "rd-19-0551-ruby-jewel-round-short",
-      "SKU": "XON-RD-0551",
-      "images": [
-        "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80"
-      ],
-      "price": 46,
-      "sale_price": null,
-      "sizes": [
-        "XS",
-        "S",
-        "M"
-      ],
-      "variants": [
-        {
-          "name": "Short Round",
-          "stock": 18
-        }
-      ],
-      "stock": 28,
-      "status": "active",
-      "product_type": "Handmade Press-On Nails",
-      "categories": [
-        "Handmade Press-On Nails"
-      ],
-      "shape": "Round",
-      "themes": [
-        "Glitz & Glamour"
-      ],
-      "is_best_seller": false,
-      "is_bundle": false,
-      "description": "Deep crimson glass gel infused with micro garnet crystals. Perfect for compact active nail lengths without losing bold aesthetic impact.",
-      "additional_info": {
-        "included": "10 Nails + Complete Kit",
-        "finish": "Glass Gel"
-      },
-      "rating": 4.8,
-      "reviews_count": 11
-    },
-    {
-      "id": "prod-7",
-      "name": "X-ON Salon Pro Hold Nail Adhesive (15ml)",
-      "slug": "x-on-salon-pro-hold-nail-adhesive",
-      "SKU": "XON-ESS-001",
-      "images": [
-        "https://images.unsplash.com/photo-1608248597359-0062402741d4?auto=format&fit=crop&w=800&q=80"
-      ],
-      "price": 14,
-      "sale_price": 11.5,
-      "sizes": [
-        "15ml"
-      ],
-      "variants": [
-        {
-          "name": "15ml Bottle with Brush",
-          "stock": 150
-        }
-      ],
-      "stock": 150,
-      "status": "active",
-      "product_type": "Nail Essentials",
-      "categories": [
-        "Nail Essentials",
-        "Best Sellers"
-      ],
-      "shape": null,
-      "themes": [
-        "Minimalist Chic"
-      ],
-      "is_best_seller": true,
-      "is_bundle": false,
-      "description": "Professional grade, fast-drying brush-on nail adhesive engineered for maximum adhesion, zero air bubble retention, and up to 4 weeks of secure wear.",
-      "additional_info": {
-        "volume": "15ml",
-        "formula": "Ethyl Cyanoacrylate with Vitamin E nourishers",
-        "drying_time": "10-15 seconds"
-      },
-      "rating": 5,
-      "reviews_count": 82
-    },
-    {
-      "id": "prod-8",
-      "name": "Ultra-Bond Waterproof Gel Adhesive Tabs (Pack of 120)",
-      "slug": "ultra-bond-waterproof-gel-adhesive-tabs",
-      "SKU": "XON-ESS-002",
-      "images": [
-        "https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=800&q=80"
-      ],
-      "price": 9,
-      "sale_price": null,
-      "sizes": [
-        "Pack of 120 Tabs (5 Sheets)"
-      ],
-      "variants": [
-        {
-          "name": "120 Tabs",
-          "stock": 200
-        }
-      ],
-      "stock": 200,
-      "status": "active",
-      "product_type": "Nail Essentials",
-      "categories": [
-        "Nail Essentials"
-      ],
-      "shape": null,
-      "themes": [],
-      "is_best_seller": false,
-      "is_bundle": false,
-      "description": "High-viscosity medical-grade double-sided gel tabs for damage-free nail application, ideal for weekend wear and effortless removal.",
-      "additional_info": {
-        "count": "120 tabs (12 various sizes per sheet)",
-        "benefit": "0% natural nail damage"
-      },
-      "rating": 4.8,
-      "reviews_count": 45
-    },
-    {
-      "id": "prod-9",
-      "name": "Organic Cuticle Recovery Elixir & Prep Kit",
-      "slug": "organic-cuticle-recovery-elixir-prep-kit",
-      "SKU": "XON-ESS-003",
-      "images": [
-        "https://images.unsplash.com/photo-1608248597359-0062402741d4?auto=format&fit=crop&w=800&q=80"
-      ],
-      "price": 18,
-      "sale_price": 15,
-      "sizes": [
-        "Standard"
-      ],
-      "variants": [
-        {
-          "name": "Full Kit",
-          "stock": 80
-        }
-      ],
-      "stock": 80,
-      "status": "active",
-      "product_type": "Nail Essentials",
-      "categories": [
-        "Nail Essentials"
-      ],
-      "shape": null,
-      "themes": [],
-      "is_best_seller": false,
-      "is_bundle": false,
-      "description": "Cold-pressed jojoba, sweet almond, and rosehip oil blend paired with dual-ended stainless steel precision cuticle tool and glass etching buffer.",
-      "additional_info": {
-        "ingredients": "Simmondsia Chinensis Seed Oil, Prunus Amygdalus Dulcis, Tocopherol",
-        "includes": "10ml Oil Dropper, Glass Buffer, Cuticle Tool"
-      },
-      "rating": 4.9,
-      "reviews_count": 31
-    },
-    {
-      "id": "prod-bundle-1",
-      "name": "Ultimate Luxury Velvet & Essentials Trio Bundle",
-      "slug": "ultimate-luxury-velvet-essentials-trio-bundle",
-      "SKU": "XON-BND-001",
-      "images": [
-        "https://images.unsplash.com/photo-1632345031435-8727f6897d53?auto=format&fit=crop&w=800&q=80",
-        "https://images.unsplash.com/photo-1607779097040-26e80aa78e66?auto=format&fit=crop&w=800&q=80"
-      ],
-      "price": 98,
-      "sale_price": 74,
-      "discount_percentage": 25,
-      "sizes": [
-        "S",
-        "M",
-        "L"
-      ],
-      "variants": [
-        {
-          "name": "Standard Bundle",
-          "stock": 30
-        }
-      ],
-      "stock": 30,
-      "status": "active",
-      "product_type": "Handmade Press-On Nails",
-      "categories": [
-        "Handmade Press-On Nails",
-        "Best Sellers"
-      ],
-      "shape": "Coffin",
-      "themes": [
-        "Cat Eye & Chrome"
-      ],
-      "is_best_seller": true,
-      "is_bundle": true,
-      "description": "Save 25% with this complete luxury set including 2 handcrafted designer nail sets (Chrome Velvet + French Rose) plus our Full Salon Pro Hold Adhesive & Prep toolkit.",
-      "additional_info": {
-        "bundle_includes": "2x 10-piece Handcrafted Nail Sets, 1x Salon Pro Hold Glue (15ml), 1x 120-pack Adhesive Tabs, 1x Glass Buffer"
-      },
-      "rating": 5,
-      "reviews_count": 56
-    },
-    {
-      "id": "prod-bundle-2",
-      "name": "Glamour Stiletto & Aurora Duo Bundle",
-      "slug": "glamour-stiletto-aurora-duo-bundle",
-      "SKU": "XON-BND-002",
-      "images": [
-        "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80"
-      ],
-      "price": 88,
-      "sale_price": 68,
-      "discount_percentage": 23,
-      "sizes": [
-        "S",
-        "M",
-        "L"
-      ],
-      "variants": [
-        {
-          "name": "Duo Set",
-          "stock": 25
-        }
-      ],
-      "stock": 25,
-      "status": "active",
-      "product_type": "Handmade Press-On Nails",
-      "categories": [
-        "Handmade Press-On Nails"
-      ],
-      "shape": "Stiletto",
-      "themes": [
-        "Glitz & Glamour"
-      ],
-      "is_best_seller": false,
-      "is_bundle": true,
-      "description": "Get our Obsidian Gold Foil Stiletto and Pearl Aurora Oval sets in one exclusive discounted luxury bundle.",
-      "additional_info": {
-        "bundle_includes": "2x Premium Nail Sets, 2x Application Kits"
-      },
-      "rating": 4.9,
-      "reviews_count": 22
     }
   ],
   "pageContents": {
@@ -737,7 +741,7 @@
       "id": "blog-1",
       "title": "Extra Long Handmade Nail Luxury: Modern Artistry Meets Effortless Wear",
       "slug": "extra-long-handmade-nail-luxury",
-      "cover": "https://images.unsplash.com/photo-1632345031435-8727f6897d53?auto=format&fit=crop&w=1200&q=80",
+      "cover": "/assets/images/IMG_7098.JPG",
       "publish_date": "2026-09-20",
       "author": "X-ON Master Artist",
       "status": "published",
@@ -753,7 +757,7 @@
         },
         {
           "type": "image",
-          "url": "https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=1000&q=80",
+          "url": "/assets/images/IMG_7102.JPG",
           "caption": "Hand-painted cat eye chrome finish with multi-layered builder gel."
         },
         {
@@ -787,7 +791,7 @@
       "id": "blog-2",
       "title": "The Ultimate Guide to Measuring Your Nail Beds at Home",
       "slug": "ultimate-guide-measuring-nail-beds",
-      "cover": "https://images.unsplash.com/photo-1607779097040-26e80aa78e66?auto=format&fit=crop&w=1200&q=80",
+      "cover": "/assets/images/IMG_7103.JPG",
       "publish_date": "2026-09-15",
       "author": "X-ON Studio Team",
       "status": "published",
@@ -808,7 +812,7 @@
       "id": "blog-3",
       "title": "Press On. Slay On. Repeat: Caring for Reusable Nails",
       "slug": "press-on-slay-on-repeat-caring-guide",
-      "cover": "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1200&q=80",
+      "cover": "/assets/images/IMG_7104.JPG",
       "publish_date": "2026-09-10",
       "author": "X-ON Care Specialist",
       "status": "published",
@@ -831,7 +835,7 @@
       "id": "gal-1",
       "title": "Ethereal Velvet Chrome Cat-Eye",
       "collection": "Now Selling",
-      "media": "https://images.unsplash.com/photo-1632345031435-8727f6897d53?auto=format&fit=crop&w=800&q=80",
+      "media": "/assets/images/IMG_7098.JPG",
       "linked_product": "prod-1",
       "size_labels": [
         "S",
@@ -845,7 +849,7 @@
       "id": "gal-2",
       "title": "French Blossom Rosebud Almond",
       "collection": "Now Selling",
-      "media": "https://images.unsplash.com/photo-1607779097040-26e80aa78e66?auto=format&fit=crop&w=800&q=80",
+      "media": "/assets/images/IMG_7099.JPG",
       "linked_product": "prod-2",
       "size_labels": [
         "S",
@@ -858,7 +862,7 @@
       "id": "gal-3",
       "title": "Obsidian 24K Leaf Stiletto",
       "collection": "Now Selling",
-      "media": "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80",
+      "media": "/assets/images/IMG_7100.JPG",
       "linked_product": "prod-3",
       "size_labels": [
         "M",
@@ -871,7 +875,7 @@
       "id": "gal-4",
       "title": "Pearl Aurora Glaze Square",
       "collection": "Now Selling",
-      "media": "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
+      "media": "/assets/images/IMG_7101.JPG",
       "linked_product": "prod-5",
       "size_labels": [
         "S",
@@ -885,7 +889,7 @@
       "id": "gal-5",
       "title": "Ruby Crystal Petite Round",
       "collection": "Now Selling",
-      "media": "https://images.unsplash.com/photo-1519014816548-bf5fe059798b?auto=format&fit=crop&w=800&q=80",
+      "media": "/assets/images/IMG_7104.JPG",
       "linked_product": "prod-6",
       "size_labels": [
         "S",
@@ -898,7 +902,7 @@
       "id": "gal-6",
       "title": "Modern Minimalist Milk Glaze",
       "collection": "Now Selling",
-      "media": "https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=800&q=80",
+      "media": "/assets/images/IMG_7105.JPG",
       "linked_product": "prod-4",
       "size_labels": [
         "XS",
@@ -916,7 +920,7 @@
       "title": "Upcoming / Seasonal Collection 01 — Celestial Twilight",
       "collection_name": "Upcoming / Seasonal Collection 01",
       "subtitle": "Deep galaxy blues, holographic constellation charting, and luminous quartz accents.",
-      "media": "https://images.unsplash.com/photo-1519014816548-bf5fe059798b?auto=format&fit=crop&w=1000&q=80",
+      "media": "/assets/images/IMG_7098.JPG",
       "status": "active",
       "display_order": 1,
       "expected_launch": "Winter 2026"
@@ -926,7 +930,7 @@
       "title": "Upcoming / Seasonal Collection 02 — Golden Baroque Couture",
       "collection_name": "Upcoming / Seasonal Collection 02",
       "subtitle": "3D ornate gold filigree, antique pearls, and textured rococo gilding.",
-      "media": "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1000&q=80",
+      "media": "/assets/images/IMG_7102.JPG",
       "status": "active",
       "display_order": 2,
       "expected_launch": "Holiday 2026"
@@ -936,7 +940,7 @@
       "title": "Upcoming / Seasonal Collection 03 — Cyberpunk Chrome Fluid",
       "collection_name": "Upcoming / Seasonal Collection 03",
       "subtitle": "Molten liquid silver chrome 3D sculpting over smoked translucent glass.",
-      "media": "https://images.unsplash.com/photo-1632345031435-8727f6897d53?auto=format&fit=crop&w=1000&q=80",
+      "media": "/assets/images/IMG_7107.JPG",
       "status": "active",
       "display_order": 3,
       "expected_launch": "Spring 2027"
@@ -946,7 +950,7 @@
       "title": "Featured / New Collection — High-Artisan Runway Series",
       "collection_name": "Featured / New Collection",
       "subtitle": "Limited-edition bespoke wearable art handcrafted by master technicians.",
-      "media": "https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=1000&q=80",
+      "media": "/assets/images/IMG_7106.JPG",
       "status": "active",
       "display_order": 4,
       "expected_launch": "Exclusively for Members"
@@ -1030,6 +1034,65 @@
     }
   ],
   "orders": [
+    {
+      "id": "XON-ORD-7513",
+      "createdAt": "2026-09-23T06:58:55.025Z",
+      "updatedAt": "2026-09-23T06:58:55.025Z",
+      "customer": {
+        "name": "Bình Võ",
+        "email": "vtb22522005@gmail.com",
+        "phone": "0865786650",
+        "address": "1",
+        "city": "Ho Chi Minh",
+        "note": ""
+      },
+      "line_items": [
+        {
+          "id": "prod-4",
+          "name": "SQ-44-0312 Nude Glaze Classic Square",
+          "price": 38,
+          "quantity": 1,
+          "selectedSize": "XS",
+          "selectedVariant": "Short Square",
+          "image": "/assets/images/IMG_7101.JPG",
+          "sku": "XON-prod-4"
+        },
+        {
+          "id": "prod-4",
+          "name": "SQ-44-0312 Nude Glaze Classic Square",
+          "price": 38,
+          "quantity": 1,
+          "selectedSize": "L",
+          "selectedVariant": "Short Square",
+          "image": "/assets/images/IMG_7101.JPG",
+          "sku": "XON-prod-4"
+        },
+        {
+          "id": "prod-1",
+          "name": "CF-35-0961 Luxury Chrome Velvet",
+          "price": 39,
+          "quantity": 1,
+          "selectedSize": "XS",
+          "selectedVariant": "Short Coffin",
+          "image": "/assets/images/IMG_7098.JPG",
+          "sku": "XON-prod-1"
+        }
+      ],
+      "subtotal": 115,
+      "shipping": 0,
+      "total": 115,
+      "status": "Processing",
+      "payment_status": "Paid",
+      "payment_metadata": {
+        "method": "cod",
+        "channel": "Cash On Delivery"
+      },
+      "shipping_metadata": {
+        "address": "1",
+        "city": "Ho Chi Minh",
+        "method": "Standard Express Shipping"
+      }
+    },
     {
       "id": "XON-ORD-9012",
       "customer": {

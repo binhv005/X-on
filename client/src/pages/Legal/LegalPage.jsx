@@ -77,7 +77,7 @@ export default function LegalPage() {
             <ShieldCheck size={16} /> Official Brand Documentation
           </span>
 
-          <h1 className="font-heading" style={{ fontSize: '2.4rem', color: '#fff', marginBottom: '0.5rem' }}>
+          <h1 className="font-heading" style={{ fontSize: '2.4rem', color: 'var(--text-primary)', marginBottom: '0.5rem' }}>
             {title}
           </h1>
 
@@ -96,7 +96,7 @@ export default function LegalPage() {
             {body.split('\n\n').map((paragraph, idx) => {
               if (paragraph.startsWith('### ')) {
                 return (
-                  <h3 key={idx} className="font-heading" style={{ color: '#fff', fontSize: '1.25rem', marginTop: '1.25rem', marginBottom: '0.25rem' }}>
+                  <h3 key={idx} className="font-heading" style={{ color: 'var(--text-primary)', fontSize: '1.25rem', marginTop: '1.25rem', marginBottom: '0.25rem' }}>
                     {paragraph.replace('### ', '')}
                   </h3>
                 );
@@ -115,8 +115,8 @@ export default function LegalPage() {
             fontSize: '0.9rem',
             color: 'var(--text-secondary)'
           }}>
-            <strong style={{ color: '#fff' }}>Questions regarding our terms?</strong> Connect directly with our studio support at{' '}
-            <a href="tel:689-212-8888" style={{ color: 'var(--accent-gold-light)', fontWeight: 600 }}>689-212-8888</a> or visit us at{' '}
+            <strong style={{ color: 'var(--text-primary)' }}>Questions regarding our terms?</strong> Connect directly with our studio support at{' '}
+            <a href="tel:689-212-8888" style={{ color: 'var(--accent-gold-dark)', fontWeight: 600 }}>689-212-8888</a> or visit us at{' '}
             <strong>3168 Bill Beck Blvd, Kissimmee, FL 34744</strong>.
           </div>
         </div>

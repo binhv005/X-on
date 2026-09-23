@@ -89,11 +89,11 @@ export default function MyAccountPage() {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1.5rem', marginBottom: '2rem', borderBottom: '1px solid var(--border-subtle)', paddingBottom: '1.5rem' }}>
               <div>
                 <span className="brand-line">Account Profile</span>
-                <h1 className="font-heading" style={{ fontSize: '2rem', color: '#fff' }}>
+                <h1 className="font-heading" style={{ fontSize: '2rem', color: 'var(--text-primary)' }}>
                   Hello, {user.name || user.username}!
                 </h1>
                 <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
-                  Member Role: <strong style={{ color: 'var(--accent-gold-light)', textTransform: 'capitalize' }}>{user.role.replace('_', ' ')}</strong>
+                  Member Role: <strong style={{ color: 'var(--accent-gold-dark)', textTransform: 'capitalize' }}>{user.role.replace('_', ' ')}</strong>
                 </p>
               </div>
 
@@ -108,7 +108,7 @@ export default function MyAccountPage() {
 
             <div className="grid-2" style={{ marginBottom: '2rem' }}>
               <div style={{ padding: '1.5rem', background: 'var(--bg-secondary)', borderRadius: '8px', border: '1px solid var(--border-subtle)' }}>
-                <h4 className="font-heading" style={{ color: '#fff', marginBottom: '0.5rem', fontSize: '1rem' }}>Account Details</h4>
+                <h4 className="font-heading" style={{ color: 'var(--text-primary)', marginBottom: '0.5rem', fontSize: '1rem' }}>Account Details</h4>
                 <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
                   <div><strong>Email:</strong> {user.email}</div>
                   <div><strong>Username:</strong> {user.username}</div>
@@ -117,12 +117,12 @@ export default function MyAccountPage() {
               </div>
 
               <div style={{ padding: '1.5rem', background: 'var(--bg-secondary)', borderRadius: '8px', border: '1px solid var(--border-subtle)' }}>
-                <h4 className="font-heading" style={{ color: '#fff', marginBottom: '0.5rem', fontSize: '1rem' }}>Quick Shortcuts</h4>
+                <h4 className="font-heading" style={{ color: 'var(--text-primary)', marginBottom: '0.5rem', fontSize: '1rem' }}>Quick Shortcuts</h4>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', fontSize: '0.9rem' }}>
-                  <Link to="/shop" style={{ color: 'var(--accent-gold-light)' }}>→ Browse Handmade Nails</Link>
-                  <Link to="/bundle-and-save" style={{ color: 'var(--accent-gold-light)' }}>→ View Bundle & Save</Link>
+                  <Link to="/shop" style={{ color: 'var(--accent-gold-dark)', fontWeight: 600 }}>→ Browse Handmade Nails</Link>
+                  <Link to="/bundle-and-save" style={{ color: 'var(--accent-gold-dark)', fontWeight: 600 }}>→ View Bundle & Save</Link>
                   {user.role === 'admin' && (
-                    <Link to="/admin" style={{ color: '#ff9b85', fontWeight: 700 }}>→ Open Admin Dashboard</Link>
+                    <Link to="/admin" style={{ color: '#c87110', fontWeight: 700 }}>→ Open Admin Dashboard</Link>
                   )}
                 </div>
               </div>
@@ -358,7 +358,7 @@ export default function MyAccountPage() {
               width: '100%',
               padding: '2rem'
             }}>
-              <h3 className="font-heading" style={{ color: '#fff', fontSize: '1.25rem', marginBottom: '0.75rem' }}>
+              <h3 className="font-heading" style={{ color: 'var(--text-primary)', fontSize: '1.25rem', marginBottom: '0.75rem' }}>
                 Password Recovery
               </h3>
               <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginBottom: '1.5rem' }}>

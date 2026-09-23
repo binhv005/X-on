@@ -64,27 +64,27 @@ class ProductService {
 
     // Filter by Shape
     if (shape && shape.trim()) {
-      const shapeVal = shape.trim().toLowerCase();
-      products = products.filter(p => p.shape && p.shape.toLowerCase() === shapeVal);
+      const shapeSlug = slugify(shape);
+      products = products.filter(p => p.shape && (slugify(p.shape) === shapeSlug || p.shape.toLowerCase() === shape.trim().toLowerCase()));
     }
 
     // Filter by Product Type
     if (product_type && product_type.trim()) {
-      const pt = product_type.trim().toLowerCase();
-      if (pt === 'best sellers' || pt === 'best-sellers') {
-        products = products.filter(p => p.is_best_seller === true || (p.categories && p.categories.includes('Best Sellers')));
+      const ptSlug = slugify(product_type);
+      if (ptSlug === 'best-sellers' || ptSlug === 'best-seller') {
+        products = products.filter(p => p.is_best_seller === true || (p.categories && p.categories.some(c => slugify(c) === 'best-sellers')));
       } else {
         products = products.filter(p =>
-          (p.product_type && p.product_type.toLowerCase() === pt) ||
-          (p.categories && p.categories.some(c => c.toLowerCase() === pt))
+          (p.product_type && (slugify(p.product_type) === ptSlug || p.product_type.toLowerCase() === product_type.trim().toLowerCase())) ||
+          (p.categories && p.categories.some(c => slugify(c) === ptSlug || c.toLowerCase() === product_type.trim().toLowerCase()))
         );
       }
     }
 
     // Filter by Theme
     if (theme && theme.trim()) {
-      const th = theme.trim().toLowerCase();
-      products = products.filter(p => p.themes && p.themes.some(t => t.toLowerCase() === th));
+      const thSlug = slugify(theme);
+      products = products.filter(p => p.themes && p.themes.some(t => slugify(t) === thSlug || t.toLowerCase() === theme.trim().toLowerCase()));
     }
 
     // Filter by bundle
@@ -195,7 +195,7 @@ class ProductService {
       name: name.trim(),
       slug: uniqueSlug,
       SKU: SKU.trim().toUpperCase(),
-      images: Array.isArray(images) && images.length > 0 ? images : ['https://images.unsplash.com/photo-1632345031435-8727f6897d53?auto=format&fit=crop&w=800&q=80'],
+      images: Array.isArray(images) && images.length > 0 ? images : ['/assets/images/IMG_7098.JPG'],
       price: parseFloat(price),
       sale_price: sale_price !== undefined && sale_price !== '' && sale_price !== null ? parseFloat(sale_price) : null,
       sizes: Array.isArray(sizes) ? sizes : ['XS', 'S', 'M', 'L', 'Custom'],

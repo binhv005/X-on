@@ -2,7 +2,7 @@ import React from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import Header from '../header/Header';
 import Footer from '../footer/Footer';
-import Newsletter from '../footer/Newsletter';
+import CheckoutModal from '../cart/CheckoutModal';
 
 export default function CustomerLayout() {
   const location = useLocation();
@@ -18,8 +18,8 @@ export default function CustomerLayout() {
       <main style={{ flex: 1 }}>
         <Outlet />
       </main>
-      <Newsletter />
       <Footer />
+      <CheckoutModal />
     </div>
   );
 }

@@ -56,7 +56,7 @@ export default function AdminDashboardPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', marginBottom: '2.5rem' }}>
         <div>
           <span className="brand-line">Executive Overview</span>
-          <h1 className="font-heading" style={{ fontSize: '1.9rem', color: '#fff', margin: '0.25rem 0' }}>
+          <h1 className="font-heading" style={{ fontSize: '1.9rem', color: 'var(--text-primary)', margin: '0.25rem 0' }}>
             Operations & Catalog Dashboard
           </h1>
           <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
@@ -100,7 +100,7 @@ export default function AdminDashboardPage() {
             <span style={{ fontSize: '0.8rem', textTransform: 'uppercase', color: 'var(--text-muted)', fontWeight: 600 }}>Total Products</span>
             <Package size={20} color="var(--accent-gold)" />
           </div>
-          <div style={{ fontSize: '2rem', fontWeight: 800, color: '#fff', fontFamily: 'var(--font-heading)' }}>
+          <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--text-primary)', fontFamily: 'var(--font-heading)' }}>
             {kpis.totalProducts}
           </div>
           <span style={{ fontSize: '0.78rem', color: 'var(--accent-gold-light)' }}>
@@ -113,7 +113,7 @@ export default function AdminDashboardPage() {
             <span style={{ fontSize: '0.8rem', textTransform: 'uppercase', color: 'var(--text-muted)', fontWeight: 600 }}>Total Orders</span>
             <ShoppingCart size={20} color="#38bdf8" />
           </div>
-          <div style={{ fontSize: '2rem', fontWeight: 800, color: '#fff', fontFamily: 'var(--font-heading)' }}>
+          <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--text-primary)', fontFamily: 'var(--font-heading)' }}>
             {kpis.totalOrders}
           </div>
           <span style={{ fontSize: '0.78rem', color: '#38bdf8' }}>Storefront Orders</span>
@@ -124,7 +124,7 @@ export default function AdminDashboardPage() {
             <span style={{ fontSize: '0.8rem', textTransform: 'uppercase', color: 'var(--text-muted)', fontWeight: 600 }}>Wholesale Apps</span>
             <Building2 size={20} color="#a855f7" />
           </div>
-          <div style={{ fontSize: '2rem', fontWeight: 800, color: '#fff', fontFamily: 'var(--font-heading)' }}>
+          <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--text-primary)', fontFamily: 'var(--font-heading)' }}>
             {kpis.totalWholesale}
           </div>
           <span style={{ fontSize: '0.78rem', color: '#a855f7' }}>Salon & Spa Partners</span>
@@ -135,7 +135,7 @@ export default function AdminDashboardPage() {
             <span style={{ fontSize: '0.8rem', textTransform: 'uppercase', color: 'var(--text-muted)', fontWeight: 600 }}>Contact Inquiries</span>
             <Mail size={20} color="#34d399" />
           </div>
-          <div style={{ fontSize: '2rem', fontWeight: 800, color: '#fff', fontFamily: 'var(--font-heading)' }}>
+          <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--text-primary)', fontFamily: 'var(--font-heading)' }}>
             {kpis.totalInquiries}
           </div>
           <span style={{ fontSize: '0.78rem', color: '#34d399' }}>Customer Inquiries</span>
@@ -146,7 +146,7 @@ export default function AdminDashboardPage() {
             <span style={{ fontSize: '0.8rem', textTransform: 'uppercase', color: 'var(--text-muted)', fontWeight: 600 }}>Registered Users</span>
             <Users size={20} color="#f4acb7" />
           </div>
-          <div style={{ fontSize: '2rem', fontWeight: 800, color: '#fff', fontFamily: 'var(--font-heading)' }}>
+          <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--text-primary)', fontFamily: 'var(--font-heading)' }}>
             {kpis.totalCustomers}
           </div>
           <span style={{ fontSize: '0.78rem', color: '#f4acb7' }}>Customer Profiles</span>
@@ -163,8 +163,8 @@ export default function AdminDashboardPage() {
           padding: '1.5rem'
         }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
-            <h3 className="font-heading" style={{ fontSize: '1.15rem', color: '#fff' }}>Recent Storefront Orders</h3>
-            <Link to="/admin/orders" style={{ fontSize: '0.82rem', color: 'var(--accent-gold-light)', display: 'flex', alignItems: 'center', gap: '3px' }}>
+            <h3 className="font-heading" style={{ fontSize: '1.15rem', color: 'var(--text-primary)' }}>Recent Storefront Orders</h3>
+            <Link to="/admin/orders" style={{ fontSize: '0.82rem', color: 'var(--accent-gold-dark)', display: 'flex', alignItems: 'center', gap: '3px' }}>
               View All <ArrowRight size={13} />
             </Link>
           </div>
@@ -183,9 +183,9 @@ export default function AdminDashboardPage() {
                 <tbody>
                   {stats.recentOrders.map(order => (
                     <tr key={order.id} style={{ borderBottom: '1px solid var(--border-subtle)' }}>
-                      <td style={{ padding: '0.75rem', fontWeight: 600, color: 'var(--accent-gold-light)' }}>{order.id}</td>
-                      <td style={{ padding: '0.75rem', color: '#fff' }}>{order.customer?.name}</td>
-                      <td style={{ padding: '0.75rem', fontWeight: 600 }}>${order.total?.toFixed(2)}</td>
+                      <td style={{ padding: '0.75rem', fontWeight: 600, color: 'var(--accent-gold-dark)' }}>{order.id}</td>
+                      <td style={{ padding: '0.75rem', color: 'var(--text-primary)' }}>{order.customer?.name}</td>
+                      <td style={{ padding: '0.75rem', fontWeight: 600, color: 'var(--text-primary)' }}>${order.total?.toFixed(2)}</td>
                       <td style={{ padding: '0.75rem' }}>
                         <span className="badge badge-success" style={{ fontSize: '0.7rem' }}>{order.status}</span>
                       </td>
@@ -207,8 +207,8 @@ export default function AdminDashboardPage() {
           padding: '1.5rem'
         }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
-            <h3 className="font-heading" style={{ fontSize: '1.15rem', color: '#fff' }}>Recent Wholesale Applications</h3>
-            <Link to="/admin/users" style={{ fontSize: '0.82rem', color: 'var(--accent-gold-light)', display: 'flex', alignItems: 'center', gap: '3px' }}>
+            <h3 className="font-heading" style={{ fontSize: '1.15rem', color: 'var(--text-primary)' }}>Recent Wholesale Applications</h3>
+            <Link to="/admin/users" style={{ fontSize: '0.82rem', color: 'var(--accent-gold-dark)', display: 'flex', alignItems: 'center', gap: '3px' }}>
               View All <ArrowRight size={13} />
             </Link>
           </div>
@@ -218,7 +218,7 @@ export default function AdminDashboardPage() {
               {stats.recentWholesale.map(app => (
                 <div key={app.id} style={{ padding: '0.75rem 1rem', borderRadius: '6px', background: 'var(--bg-secondary)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', border: '1px solid var(--border-subtle)' }}>
                   <div>
-                    <div style={{ fontWeight: 600, color: '#fff', fontSize: '0.9rem' }}>{app.business_name}</div>
+                    <div style={{ fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.9rem' }}>{app.business_name}</div>
                     <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>{app.email} · {app.phone}</div>
                   </div>
                   <span className={`badge ${app.status === 'approved' ? 'badge-success' : 'badge-gold'}`} style={{ fontSize: '0.7rem' }}>

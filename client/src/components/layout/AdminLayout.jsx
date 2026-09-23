@@ -14,6 +14,7 @@ import {
   ExternalLink
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+import logoImg from '../../assets/images/logo.png';
 
 export default function AdminLayout() {
   const location = useLocation();
@@ -51,20 +52,22 @@ export default function AdminLayout() {
       }} className="admin-desktop-sidebar">
         {/* Brand Header */}
         <div style={{
-          padding: '1.5rem',
+          padding: '1.25rem 1.5rem',
           borderBottom: '1px solid var(--border-subtle)',
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'space-between'
+          justifyContent: 'center'
         }}>
-          <div>
-            <span className="font-heading" style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--accent-gold)' }}>
-              X-ON
-            </span>
-            <span style={{ fontSize: '0.72rem', display: 'block', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
-              Admin Management
-            </span>
-          </div>
+          <img
+            src={logoImg}
+            alt="X-ON Logo"
+            style={{
+              height: '46px',
+              width: 'auto',
+              objectFit: 'contain',
+              display: 'block'
+            }}
+          />
         </div>
 
         {/* Navigation Items */}
@@ -197,7 +200,7 @@ export default function AdminLayout() {
           >
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
               <span className="font-heading" style={{ fontSize: '1.3rem', color: 'var(--accent-gold)' }}>X-ON Admin</span>
-              <button onClick={() => setMobileSidebarOpen(false)} style={{ background: 'transparent', border: 'none', color: '#fff' }}>
+              <button onClick={() => setMobileSidebarOpen(false)} style={{ background: 'transparent', border: 'none', color: 'var(--text-primary)' }}>
                 <X size={20} />
               </button>
             </div>
@@ -210,8 +213,9 @@ export default function AdminLayout() {
                   style={{
                     padding: '0.75rem',
                     borderRadius: '6px',
-                    color: location.pathname === item.path ? '#fff' : 'var(--text-secondary)',
+                    color: location.pathname === item.path ? 'var(--text-primary)' : 'var(--text-secondary)',
                     background: location.pathname === item.path ? 'rgba(212, 175, 55, 0.15)' : 'transparent',
+                    fontWeight: location.pathname === item.path ? 700 : 500,
                     textDecoration: 'none',
                     fontSize: '0.9rem'
                   }}

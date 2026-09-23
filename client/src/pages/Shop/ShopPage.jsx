@@ -121,8 +121,8 @@ export default function ShopPage() {
           borderRadius: 'var(--radius-md)',
           marginBottom: '2rem'
         }}>
-          {/* Live Search Input */}
-          <div style={{ position: 'relative', flex: 1, minWidth: '240px', maxWidth: '400px' }}>
+          {/* Live Search Input (Expanded width) */}
+          <div style={{ position: 'relative', flex: '1 1 340px', maxWidth: '650px' }}>
             <input
               type="text"
               placeholder="Search by name, SKU, shape..."
@@ -166,8 +166,13 @@ export default function ShopPage() {
 
         {/* Main Grid: Sidebar + Product Grid */}
         <div style={{ display: 'grid', gridTemplateColumns: '280px 1fr', gap: '2rem', alignItems: 'start' }} className="shop-layout">
-          {/* Desktop Filter Sidebar */}
-          <aside className="shop-sidebar">
+          {/* Desktop Filter Sidebar (Sticky on scroll) */}
+          <aside className="shop-sidebar" style={{
+            position: 'sticky',
+            top: '92px',
+            alignSelf: 'flex-start',
+            zIndex: 10
+          }}>
             <FilterSidebar
               search={search}
               setSearch={setSearch}
@@ -198,7 +203,7 @@ export default function ShopPage() {
                 borderRadius: 'var(--radius-md)'
               }}>
                 <Sparkles size={36} color="var(--accent-gold)" style={{ marginBottom: '1rem' }} />
-                <h3 className="font-heading" style={{ color: '#fff', fontSize: '1.4rem', marginBottom: '0.5rem' }}>
+                <h3 className="font-heading" style={{ color: 'var(--text-primary)', fontSize: '1.4rem', marginBottom: '0.5rem' }}>
                   No Products Found
                 </h3>
                 <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem', fontSize: '0.95rem' }}>
@@ -251,7 +256,7 @@ export default function ShopPage() {
             overflowY: 'auto'
           }} onClick={e => e.stopPropagation()}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-              <h3 className="font-heading" style={{ color: '#fff', fontSize: '1.2rem' }}>Filters</h3>
+              <h3 className="font-heading" style={{ color: 'var(--text-primary)', fontSize: '1.2rem' }}>Filters</h3>
               <button onClick={() => setMobileFilterOpen(false)} className="btn btn-secondary btn-sm">Close</button>
             </div>
             <FilterSidebar

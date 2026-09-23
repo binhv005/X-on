@@ -32,7 +32,7 @@ export default function Modal({ isOpen, onClose, title, children, maxWidth = '65
           padding: '1.25rem 1.75rem',
           borderBottom: '1px solid var(--border-subtle)'
         }}>
-          <h3 className="font-heading" style={{ fontSize: '1.2rem', color: '#fff' }}>{title}</h3>
+          <h3 className="font-heading" style={{ fontSize: '1.25rem', color: 'var(--text-primary)' }}>{title}</h3>
           <button
             onClick={onClose}
             style={{

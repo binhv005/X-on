@@ -12,7 +12,7 @@ import {
   AlertCircle
 } from 'lucide-react';
 import { api } from '../../../services/api';
-import Drawer from '../../../components/common/Drawer';
+import Modal from '../../../components/common/Modal';
 import ConfirmDialog from '../../../components/common/ConfirmDialog';
 import LoadingSpinner from '../../../components/common/LoadingSpinner';
 import { useToast } from '../../../context/ToastContext';
@@ -265,7 +265,7 @@ export default function AdminBlogGalleryPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', marginBottom: '2rem' }}>
         <div>
           <span className="brand-line">Media & Visual Content</span>
-          <h1 className="font-heading" style={{ fontSize: '1.8rem', color: '#fff', margin: '0.25rem 0' }}>
+          <h1 className="font-heading" style={{ fontSize: '1.8rem', color: 'var(--text-primary)', margin: '0.25rem 0' }}>
             Blog & Gallery Management
           </h1>
         </div>
@@ -329,7 +329,7 @@ export default function AdminBlogGalleryPage() {
                     </div>
                   </td>
                   <td style={{ padding: '0.75rem 1rem' }}>
-                    <div style={{ fontWeight: 600, color: '#fff' }}>{post.title}</div>
+                    <div style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{post.title}</div>
                     <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>/{post.slug}</div>
                   </td>
                   <td style={{ padding: '0.75rem 1rem', color: 'var(--text-secondary)' }}>{post.author}</td>
@@ -376,8 +376,8 @@ export default function AdminBlogGalleryPage() {
                       <img src={item.media} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                     </div>
                   </td>
-                  <td style={{ padding: '0.75rem 1rem', fontWeight: 600, color: '#fff' }}>{item.title}</td>
-                  <td style={{ padding: '0.75rem 1rem', color: 'var(--accent-gold-light)' }}>{item.collection}</td>
+                  <td style={{ padding: '0.75rem 1rem', fontWeight: 600, color: 'var(--text-primary)' }}>{item.title}</td>
+                  <td style={{ padding: '0.75rem 1rem', color: 'var(--accent-gold-dark)' }}>{item.collection}</td>
                   <td style={{ padding: '0.75rem 1rem' }}>
                     {Array.isArray(item.size_labels) ? item.size_labels.join(', ') : 'S, M, L'}
                   </td>
@@ -424,8 +424,8 @@ export default function AdminBlogGalleryPage() {
                     </div>
                   </td>
                   <td style={{ padding: '0.75rem 1rem' }}>
-                    <div style={{ fontWeight: 600, color: '#fff' }}>{col.title}</div>
-                    <div style={{ fontSize: '0.75rem', color: 'var(--accent-gold-light)' }}>{col.collection_name}</div>
+                    <div style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{col.title}</div>
+                    <div style={{ fontSize: '0.75rem', color: 'var(--accent-gold-dark)' }}>{col.collection_name}</div>
                   </td>
                   <td style={{ padding: '0.75rem 1rem', color: 'var(--text-secondary)' }}>{col.expected_launch}</td>
                   <td style={{ padding: '0.75rem 1rem' }}>{col.display_order}</td>
@@ -449,12 +449,12 @@ export default function AdminBlogGalleryPage() {
         </div>
       )}
 
-      {/* Drawer Form Modal */}
-      <Drawer
+      {/* Centered Modal Form */}
+      <Modal
         isOpen={isDrawerOpen}
         onClose={() => setIsDrawerOpen(false)}
         title={editingItem ? `Edit ${drawerMode}` : `Add New ${drawerMode}`}
-        width="600px"
+        maxWidth="680px"
       >
         <form onSubmit={handleSaveItem}>
           {drawerMode === 'blog' && (
@@ -621,7 +621,7 @@ export default function AdminBlogGalleryPage() {
             </button>
           </div>
         </form>
-      </Drawer>
+      </Modal>
 
       {/* Delete Confirmation Popup */}
       <ConfirmDialog

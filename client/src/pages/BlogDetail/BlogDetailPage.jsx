@@ -74,7 +74,7 @@ export default function BlogDetailPage() {
   if (!post) {
     return (
       <div className="section-py container" style={{ textAlign: 'center' }}>
-        <h2 className="font-heading" style={{ color: '#fff', marginBottom: '1rem' }}>Article Not Found</h2>
+        <h2 className="font-heading" style={{ color: 'var(--text-primary)', marginBottom: '1rem' }}>Article Not Found</h2>
         <p style={{ color: 'var(--text-secondary)', marginBottom: '2rem' }}>The requested article does not exist or has been removed.</p>
         <Link to="/blog" className="btn btn-primary">Back to Journal</Link>
       </div>
@@ -100,7 +100,7 @@ export default function BlogDetailPage() {
             </span>
           </div>
 
-          <h1 className="font-heading" style={{ fontSize: 'clamp(2rem, 4.5vw, 3rem)', color: '#fff', lineHeight: 1.25, marginBottom: '1.5rem' }}>
+          <h1 className="font-heading" style={{ fontSize: 'clamp(2rem, 4.5vw, 3rem)', color: 'var(--text-primary)', lineHeight: 1.25, marginBottom: '1.5rem' }}>
             {post.title}
           </h1>
 
@@ -144,7 +144,7 @@ export default function BlogDetailPage() {
             post.content_blocks.map((block, idx) => {
               if (block.type === 'heading') {
                 return (
-                  <h2 key={idx} className="font-heading" style={{ color: '#fff', fontSize: '1.6rem', marginTop: '1rem' }}>
+                  <h2 key={idx} className="font-heading" style={{ color: 'var(--text-primary)', fontSize: '1.6rem', marginTop: '1rem' }}>
                     {block.text}
                   </h2>
                 );
@@ -189,7 +189,7 @@ export default function BlogDetailPage() {
         <section style={{ marginBottom: '4rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '2rem' }}>
             <MessageSquare size={22} color="var(--accent-gold)" />
-            <h3 className="font-heading" style={{ color: '#fff', fontSize: '1.4rem' }}>
+            <h3 className="font-heading" style={{ color: 'var(--text-primary)', fontSize: '1.4rem' }}>
               Discussion ({post.comments?.length || 0})
             </h3>
           </div>
@@ -223,7 +223,7 @@ export default function BlogDetailPage() {
             borderRadius: 'var(--radius-md)',
             padding: '2rem'
           }}>
-            <h4 className="font-heading" style={{ color: '#fff', fontSize: '1.2rem', marginBottom: '1.25rem' }}>
+            <h4 className="font-heading" style={{ color: 'var(--text-primary)', fontSize: '1.2rem', marginBottom: '1.25rem' }}>
               Leave a Reply
             </h4>
             <form onSubmit={handleCommentSubmit}>

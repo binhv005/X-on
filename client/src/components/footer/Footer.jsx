@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, Phone, Sparkles, ShieldCheck } from 'lucide-react';
+import { MapPin, Phone, ShieldCheck } from 'lucide-react';
+import logoImg from '../../assets/images/logo.png';
+import Newsletter from './Newsletter';
 
 export default function Footer() {
   return (
@@ -12,6 +14,7 @@ export default function Footer() {
       color: 'var(--text-secondary)'
     }}>
       <div className="container">
+        {/* Main Footer Links & Info */}
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
@@ -20,31 +23,37 @@ export default function Footer() {
         }}>
           {/* Brand Col */}
           <div style={{ maxWidth: '340px' }}>
-            <Link to="/" style={{ display: 'inline-block', marginBottom: '1rem' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <span className="font-heading" style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--text-primary)', letterSpacing: '0.1em' }}>
-                  X-ON
-                </span>
-                <Sparkles size={16} color="var(--accent-gold)" />
+            <Link to="/" style={{ display: 'inline-block', marginBottom: '1rem', textDecoration: 'none' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                <img
+                  src={logoImg}
+                  alt="X-ON Logo"
+                  style={{
+                    height: '56px',
+                    width: 'auto',
+                    objectFit: 'contain'
+                  }}
+                />
               </div>
             </Link>
-            <p className="brand-line" style={{ marginBottom: '1rem', fontSize: '0.8rem' }}>
+            <p className="brand-line" style={{ marginBottom: '0.85rem', fontSize: '0.85rem' }}>
               Press On. Slay On. Repeat.
             </p>
-            <p style={{ fontSize: '0.9rem', lineHeight: '1.6', color: 'var(--text-muted)', marginBottom: '1.5rem' }}>
-              X-ON is where modern nail artistry meets effortless beauty. Offering handmade press-on nails and carefully selected nail essentials designed with quality, style, and performance in mind.
+            <p style={{ fontSize: '0.9rem', lineHeight: '1.65', color: 'var(--text-secondary)', marginBottom: '1.25rem' }}>
+              X-ON is where modern nail artistry meets effortless luxury. Handcrafted bespoke press-on nails and premium essentials designed for long-lasting salon elegance.
             </p>
-            <div style={{ display: 'flex', gap: '0.75rem' }}>
+
+            <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
               <a
                 href="https://instagram.com"
                 target="_blank"
                 rel="noreferrer"
                 style={{
-                  width: '36px', height: '36px', borderRadius: '50%', background: 'var(--bg-surface-elevated)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-primary)', border: '1px solid var(--border-subtle)'
+                  width: '38px', height: '38px', borderRadius: '50%', background: 'var(--bg-surface-elevated)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-primary)', border: '1px solid var(--border-subtle)', transition: 'all 0.2s ease'
                 }}
                 title="Instagram"
               >
-                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
                   <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
                   <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
@@ -55,11 +64,11 @@ export default function Footer() {
                 target="_blank"
                 rel="noreferrer"
                 style={{
-                  width: '36px', height: '36px', borderRadius: '50%', background: 'var(--bg-surface-elevated)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-primary)', border: '1px solid var(--border-subtle)'
+                  width: '38px', height: '38px', borderRadius: '50%', background: 'var(--bg-surface-elevated)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-primary)', border: '1px solid var(--border-subtle)', transition: 'all 0.2s ease'
                 }}
                 title="Facebook"
               >
-                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
                 </svg>
               </a>
@@ -68,7 +77,7 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h4 className="font-heading" style={{ fontSize: '1rem', color: '#fff', letterSpacing: '0.08em', marginBottom: '1.25rem', textTransform: 'uppercase' }}>
+            <h4 className="font-heading" style={{ fontSize: '1rem', color: 'var(--text-primary)', letterSpacing: '0.08em', marginBottom: '1.25rem', textTransform: 'uppercase' }}>
               Explore X-ON
             </h4>
             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.75rem', fontSize: '0.9rem' }}>
@@ -83,7 +92,7 @@ export default function Footer() {
 
           {/* Business & Pro */}
           <div>
-            <h4 className="font-heading" style={{ fontSize: '1rem', color: '#fff', letterSpacing: '0.08em', marginBottom: '1.25rem', textTransform: 'uppercase' }}>
+            <h4 className="font-heading" style={{ fontSize: '1rem', color: 'var(--text-primary)', letterSpacing: '0.08em', marginBottom: '1.25rem', textTransform: 'uppercase' }}>
               Partnerships & Info
             </h4>
             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.75rem', fontSize: '0.9rem' }}>
@@ -98,7 +107,7 @@ export default function Footer() {
 
           {/* Contact & Location Block */}
           <div>
-            <h4 className="font-heading" style={{ fontSize: '1rem', color: '#fff', letterSpacing: '0.08em', marginBottom: '1.25rem', textTransform: 'uppercase' }}>
+            <h4 className="font-heading" style={{ fontSize: '1rem', color: 'var(--text-primary)', letterSpacing: '0.08em', marginBottom: '1.25rem', textTransform: 'uppercase' }}>
               Kissimmee Studio
             </h4>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', fontSize: '0.9rem' }}>
@@ -129,6 +138,15 @@ export default function Footer() {
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Newsletter Section: Email, Phone & Join Us on 1 single row */}
+        <div style={{
+          borderTop: '1px solid var(--border-subtle)',
+          paddingTop: '1rem',
+          paddingBottom: '1rem'
+        }}>
+          <Newsletter />
         </div>
 
         {/* Bottom Bar */}

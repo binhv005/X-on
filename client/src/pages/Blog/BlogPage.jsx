@@ -83,7 +83,7 @@ export default function BlogPage() {
                       fontFamily: 'var(--font-heading)',
                       fontSize: '1.2rem',
                       fontWeight: 600,
-                      color: '#fff',
+                      color: 'var(--text-primary)',
                       lineHeight: 1.4,
                       marginBottom: '0.75rem'
                     }}>

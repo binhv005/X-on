@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Search, Eye, Filter, CheckCircle, Package, Truck, CreditCard } from 'lucide-react';
 import { api } from '../../../services/api';
-import Drawer from '../../../components/common/Drawer';
+import Modal from '../../../components/common/Modal';
 import LoadingSpinner from '../../../components/common/LoadingSpinner';
 import { useToast } from '../../../context/ToastContext';
 
@@ -13,9 +13,9 @@ export default function AdminOrdersPage() {
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
 
-  // Selected Order Drawer
+  // Selected Order Centered Modal
   const [selectedOrder, setSelectedOrder] = useState(null);
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [updatingStatus, setUpdatingStatus] = useState(false);
   const [newStatus, setNewStatus] = useState('');
   const [trackingNumber, setTrackingNumber] = useState('');
@@ -45,7 +45,22 @@ export default function AdminOrdersPage() {
     setSelectedOrder(order);
     setNewStatus(order.status);
     setTrackingNumber(order.shipping_metadata?.tracking || '');
-    setIsDrawerOpen(true);
+    setIsModalOpen(true);
+  };
+
+  const handleQuickStatusChange = async (orderId, targetStatus) => {
+    try {
+      setOrders(prev => prev.map(o => o.id === orderId ? { ...o, status: targetStatus } : o));
+      const res = await api.updateOrderStatus(orderId, { status: targetStatus });
+      if (res.success) {
+        addToast(`Order ${orderId} status changed to ${targetStatus}`, 'success');
+      } else {
+        throw new Error(res.message || 'Failed to update order status');
+      }
+    } catch (err) {
+      addToast(err.message || 'Error updating status', 'error');
+      loadOrders();
+    }
   };
 
   const handleUpdateStatus = async (e) => {
@@ -74,7 +89,7 @@ export default function AdminOrdersPage() {
       {/* Header */}
       <div style={{ marginBottom: '2rem' }}>
         <span className="brand-line">Fulfillment & Sales</span>
-        <h1 className="font-heading" style={{ fontSize: '1.8rem', color: '#fff', margin: '0.25rem 0' }}>
+        <h1 className="font-heading" style={{ fontSize: '1.8rem', color: 'var(--text-primary)', margin: '0.25rem 0' }}>
           Orders Management
         </h1>
       </div>
@@ -93,7 +108,7 @@ export default function AdminOrdersPage() {
         marginBottom: '1.5rem'
       }}>
         {/* Search */}
-        <div style={{ position: 'relative', flex: 1, minWidth: '220px', maxWidth: '360px' }}>
+        <div style={{ position: 'relative', flex: '1 1 300px', maxWidth: '550px' }}>
           <input
             type="text"
             placeholder="Search by Order ID, customer name/email..."
@@ -154,10 +169,10 @@ export default function AdminOrdersPage() {
                     <tr key={order.id} style={{ borderBottom: '1px solid var(--border-subtle)' }}>
                       <td style={{ padding: '1rem', fontWeight: 700, color: 'var(--accent-gold-light)' }}>{order.id}</td>
                       <td style={{ padding: '1rem' }}>
-                        <div style={{ fontWeight: 600, color: '#fff' }}>{order.customer?.name}</div>
+                        <div style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{order.customer?.name}</div>
                         <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{order.customer?.email}</div>
                       </td>
-                      <td style={{ padding: '1rem', fontWeight: 700, color: '#fff' }}>
+                      <td style={{ padding: '1rem', fontWeight: 700, color: 'var(--text-primary)' }}>
                         ${order.total?.toFixed(2)}
                       </td>
                       <td style={{ padding: '1rem' }}>
@@ -166,12 +181,44 @@ export default function AdminOrdersPage() {
                         </span>
                       </td>
                       <td style={{ padding: '1rem' }}>
-                        <span className={`badge ${
-                          order.status === 'Completed' ? 'badge-success' :
-                          order.status === 'Cancelled' ? 'badge-sale' : 'badge-neutral'
-                        }`}>
-                          {order.status}
-                        </span>
+                        <select
+                          value={order.status || 'Processing'}
+                          onChange={(e) => handleQuickStatusChange(order.id, e.target.value)}
+                          style={{
+                            padding: '0.35rem 0.75rem',
+                            borderRadius: '9999px',
+                            fontSize: '0.75rem',
+                            fontWeight: 700,
+                            letterSpacing: '0.05em',
+                            textTransform: 'uppercase',
+                            border: '1px solid',
+                            cursor: 'pointer',
+                            outline: 'none',
+                            transition: 'all 0.2s ease',
+                            background:
+                              order.status === 'Completed'
+                                ? '#dcfce7'
+                                : order.status === 'Cancelled'
+                                ? '#fee2e2'
+                                : '#fef3c7',
+                            color:
+                              order.status === 'Completed'
+                                ? '#15803d'
+                                : order.status === 'Cancelled'
+                                ? '#b91c1c'
+                                : '#854d0e',
+                            borderColor:
+                              order.status === 'Completed'
+                                ? '#86efac'
+                                : order.status === 'Cancelled'
+                                ? '#fca5a5'
+                                : '#fde047',
+                          }}
+                        >
+                          <option value="Processing" style={{ background: '#fff', color: '#854d0e' }}>Processing</option>
+                          <option value="Completed" style={{ background: '#fff', color: '#15803d' }}>Completed</option>
+                          <option value="Cancelled" style={{ background: '#fff', color: '#b91c1c' }}>Cancelled</option>
+                        </select>
                       </td>
                       <td style={{ padding: '1rem', color: 'var(--text-muted)', fontSize: '0.8rem' }}>
                         {order.createdAt ? new Date(order.createdAt).toLocaleDateString() : 'Recent'}
@@ -194,18 +241,18 @@ export default function AdminOrdersPage() {
         </div>
       )}
 
-      {/* Order Detail Drawer */}
-      <Drawer
-        isOpen={isDrawerOpen}
-        onClose={() => setIsDrawerOpen(false)}
+      {/* Order Detail Centered Modal */}
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
         title={`Order Details: ${selectedOrder?.id}`}
-        width="620px"
+        maxWidth="750px"
       >
         {selectedOrder && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
             {/* Customer & Status Header */}
             <div style={{ padding: '1.25rem', background: 'var(--bg-secondary)', borderRadius: '8px', border: '1px solid var(--border-subtle)' }}>
-              <h4 className="font-heading" style={{ color: 'var(--accent-gold-light)', marginBottom: '0.75rem' }}>
+              <h4 className="font-heading" style={{ color: 'var(--accent-gold-dark)', marginBottom: '0.75rem' }}>
                 Customer Information
               </h4>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: '0.75rem', fontSize: '0.88rem' }}>
@@ -217,7 +264,7 @@ export default function AdminOrdersPage() {
 
             {/* Line Items */}
             <div>
-              <h4 className="font-heading" style={{ color: '#fff', marginBottom: '1rem' }}>
+              <h4 className="font-heading" style={{ color: 'var(--text-primary)', marginBottom: '1rem' }}>
                 Purchased Items ({selectedOrder.line_items?.length || 0})
               </h4>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
@@ -232,7 +279,7 @@ export default function AdminOrdersPage() {
                     border: '1px solid var(--border-subtle)'
                   }}>
                     <div>
-                      <div style={{ fontWeight: 600, color: '#fff', fontSize: '0.9rem' }}>{item.name}</div>
+                      <div style={{ fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.9rem' }}>{item.name}</div>
                       <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
                         Size: <strong>{item.size || 'M'}</strong> | Qty: <strong>{item.quantity}</strong>
                       </div>
@@ -264,7 +311,7 @@ export default function AdminOrdersPage() {
                 <span style={{ color: 'var(--text-muted)' }}>Shipping:</span>
                 <span>${selectedOrder.shipping?.toFixed(2)}</span>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', borderTop: '1px solid var(--border-subtle)', paddingTop: '0.5rem', fontWeight: 800, fontSize: '1.1rem', color: '#fff' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', borderTop: '1px solid var(--border-subtle)', paddingTop: '0.5rem', fontWeight: 800, fontSize: '1.1rem', color: 'var(--text-primary)' }}>
                 <span>Total:</span>
                 <span style={{ color: 'var(--accent-gold)' }}>${selectedOrder.total?.toFixed(2)}</span>
               </div>
@@ -273,7 +320,7 @@ export default function AdminOrdersPage() {
             {/* Shipping & Payment Meta */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', fontSize: '0.85rem' }}>
               <div style={{ padding: '1rem', background: 'var(--bg-secondary)', borderRadius: '6px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: 'var(--accent-gold-light)', fontWeight: 600, marginBottom: '0.4rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: 'var(--accent-gold-dark)', fontWeight: 600, marginBottom: '0.4rem' }}>
                   <Truck size={15} /> Shipping Metadata
                 </div>
                 <div><strong>Address:</strong> {selectedOrder.shipping_metadata?.address || 'Studio Pickup'}</div>
@@ -282,7 +329,7 @@ export default function AdminOrdersPage() {
               </div>
 
               <div style={{ padding: '1rem', background: 'var(--bg-secondary)', borderRadius: '6px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: 'var(--accent-gold-light)', fontWeight: 600, marginBottom: '0.4rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: 'var(--accent-gold-dark)', fontWeight: 600, marginBottom: '0.4rem' }}>
                   <CreditCard size={15} /> Payment Reference
                 </div>
                 <div><strong>Method:</strong> {selectedOrder.payment_metadata?.method || 'Online Checkout'}</div>
@@ -292,7 +339,7 @@ export default function AdminOrdersPage() {
 
             {/* Status Update Form */}
             <form onSubmit={handleUpdateStatus} style={{ borderTop: '1px solid var(--border-subtle)', paddingTop: '1.5rem' }}>
-              <h4 className="font-heading" style={{ color: '#fff', fontSize: '1rem', marginBottom: '1rem' }}>
+              <h4 className="font-heading" style={{ color: 'var(--text-primary)', fontSize: '1rem', marginBottom: '1rem' }}>
                 Update Fulfillment Status
               </h4>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
@@ -330,7 +377,7 @@ export default function AdminOrdersPage() {
             </form>
           </div>
         )}
-      </Drawer>
+      </Modal>
     </div>
   );
 }

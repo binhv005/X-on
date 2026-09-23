@@ -7,7 +7,9 @@ import {
   RotateCcw,
   Sparkles,
   CheckCircle2,
-  AlertCircle
+  AlertCircle,
+  Minus,
+  Plus
 } from 'lucide-react';
 import { api } from '../../services/api';
 import PriceDisplay from '../../components/product/PriceDisplay';
@@ -25,6 +27,7 @@ export default function ProductDetailPage() {
   const [product, setProduct] = useState(null);
   const [selectedImage, setSelectedImage] = useState('');
   const [selectedSize, setSelectedSize] = useState('M');
+  const [selectedVariant, setSelectedVariant] = useState('');
   const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState('description'); // description | additional | reviews
   const [loading, setLoading] = useState(true);
@@ -50,6 +53,9 @@ export default function ProductDetailPage() {
           if (res.data.sizes && res.data.sizes.length > 0) {
             setSelectedSize(res.data.sizes[0]);
           }
+          if (res.data.variants && res.data.variants.length > 0) {
+            setSelectedVariant(res.data.variants[0].name);
+          }
         }
       } catch (err) {
         console.error('Error loading product details:', err);
@@ -62,7 +68,7 @@ export default function ProductDetailPage() {
 
   const handleAddToCart = () => {
     if (!product) return;
-    addToCart(product, selectedSize, quantity);
+    addToCart(product, selectedSize, quantity, selectedVariant);
   };
 
   const handleReviewSubmit = async (e) => {
@@ -109,7 +115,7 @@ export default function ProductDetailPage() {
   if (!product) {
     return (
       <div className="section-py container" style={{ textAlign: 'center' }}>
-        <h2 className="font-heading" style={{ color: '#fff', marginBottom: '1rem' }}>Product Not Found</h2>
+        <h2 className="font-heading" style={{ color: 'var(--text-primary)', marginBottom: '1rem' }}>Product Not Found</h2>
         <p style={{ color: 'var(--text-secondary)', marginBottom: '2rem' }}>The product you are looking for may have been updated or removed.</p>
         <Link to="/shop" className="btn btn-primary">Return to Shop</Link>
       </div>
@@ -143,8 +149,12 @@ export default function ProductDetailPage() {
               marginBottom: '1rem'
             }}>
               <img
-                src={selectedImage || product.images?.[0]}
+                src={selectedImage || product.images?.[0] || '/assets/images/IMG_7098.JPG'}
                 alt={product.name}
+                onError={(e) => {
+                  e.currentTarget.onerror = null;
+                  e.currentTarget.src = '/assets/images/IMG_7098.JPG';
+                }}
                 style={{
                   position: 'absolute',
                   top: 0,
@@ -176,7 +186,15 @@ export default function ProductDetailPage() {
                       flexShrink: 0
                     }}
                   >
-                    <img src={img} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    <img
+                      src={img}
+                      alt=""
+                      onError={(e) => {
+                        e.currentTarget.onerror = null;
+                        e.currentTarget.src = '/assets/images/IMG_7098.JPG';
+                      }}
+                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    />
                   </button>
                 ))}
               </div>
@@ -189,7 +207,7 @@ export default function ProductDetailPage() {
               {product.shape ? `${product.shape} Shape | ${product.product_type}` : product.product_type}
             </span>
 
-            <h1 className="font-heading" style={{ fontSize: '2.2rem', color: '#fff', lineHeight: 1.25, marginBottom: '0.75rem' }}>
+            <h1 className="font-heading" style={{ fontSize: '2.2rem', color: 'var(--text-primary)', lineHeight: 1.25, marginBottom: '0.75rem' }}>
               {product.name}
             </h1>
 
@@ -211,45 +229,76 @@ export default function ProductDetailPage() {
               {product.description}
             </p>
 
-            {/* Size Selector */}
-            {product.sizes && product.sizes.length > 0 && (
-              <div style={{ marginBottom: '1.75rem' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.6rem' }}>
-                  <label className="form-label" style={{ margin: 0 }}>Select Size:</label>
-                  <Link to="/sizing-chart" style={{ fontSize: '0.8rem', color: 'var(--accent-gold-light)', textDecoration: 'underline' }}>
-                    Sizing Chart & Fit Guide
-                  </Link>
-                </div>
-                <div style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap' }}>
-                  {product.sizes.map(size => (
+            {/* Shape, Variant and Size Selection */}
+            {product.variants && product.variants.length > 0 && (
+              <div style={{ marginBottom: '1.5rem' }}>
+                <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.5rem', color: 'var(--text-primary)' }}>
+                  Select Length & Style:
+                </label>
+                <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                  {product.variants.map((v) => (
                     <button
-                      key={size}
+                      key={v.name}
                       type="button"
-                      onClick={() => setSelectedSize(size)}
+                      onClick={() => setSelectedVariant(v.name)}
                       style={{
-                        padding: '0.6rem 1.2rem',
+                        padding: '0.5rem 1rem',
                         borderRadius: '6px',
-                        border: selectedSize === size ? '1px solid var(--accent-gold)' : '1px solid var(--border-subtle)',
-                        background: selectedSize === size ? 'linear-gradient(135deg, rgba(212,175,55,0.25) 0%, rgba(212,175,55,0.1) 100%)' : 'var(--bg-secondary)',
-                        color: selectedSize === size ? '#fff' : 'var(--text-secondary)',
-                        fontWeight: selectedSize === size ? 700 : 500,
+                        fontSize: '0.85rem',
+                        fontWeight: 600,
                         cursor: 'pointer',
-                        transition: 'all 0.2s ease'
+                        background: selectedVariant === v.name ? 'var(--accent-gold)' : 'var(--bg-secondary)',
+                        color: selectedVariant === v.name ? '#fff' : 'var(--text-secondary)',
+                        border: selectedVariant === v.name ? '1px solid var(--accent-gold)' : '1px solid var(--border-subtle)'
                       }}
                     >
-                      {size}
+                      {v.name}
                     </button>
                   ))}
                 </div>
               </div>
             )}
 
-            {/* Quantity and Add to Cart */}
-            <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', marginBottom: '2.5rem', flexWrap: 'wrap' }}>
+            {product.sizes && product.sizes.length > 0 && (
+              <div style={{ marginBottom: '1.5rem' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+                  <label style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-primary)' }}>
+                    Select Size:
+                  </label>
+                  <Link to="/sizing-chart" style={{ fontSize: '0.80rem', color: 'var(--accent-gold-dark)', textDecoration: 'underline' }}>
+                    Sizing Guide
+                  </Link>
+                </div>
+                <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                  {product.sizes.map((s) => (
+                    <button
+                      key={s}
+                      type="button"
+                      onClick={() => setSelectedSize(s)}
+                      style={{
+                        padding: '0.5rem 1rem',
+                        borderRadius: '6px',
+                        fontSize: '0.85rem',
+                        fontWeight: 600,
+                        cursor: 'pointer',
+                        background: selectedSize === s ? 'var(--accent-gold)' : 'var(--bg-secondary)',
+                        color: selectedSize === s ? '#fff' : 'var(--text-secondary)',
+                        border: selectedSize === s ? '1px solid var(--accent-gold)' : '1px solid var(--border-subtle)'
+                      }}
+                    >
+                      {s}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Quantity Selector & Add to Cart */}
+            <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', marginBottom: '2rem', flexWrap: 'wrap' }}>
               <div style={{
-                display: 'inline-flex',
+                display: 'flex',
                 alignItems: 'center',
-                border: '1px solid var(--border-subtle)',
+                border: '1px solid var(--border-medium)',
                 borderRadius: '6px',
                 background: 'var(--bg-secondary)',
                 overflow: 'hidden'
@@ -257,19 +306,21 @@ export default function ProductDetailPage() {
                 <button
                   type="button"
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  style={{ padding: '0.75rem 1rem', background: 'transparent', border: 'none', color: '#fff', cursor: 'pointer' }}
+                  style={{ padding: '0.75rem 1rem', background: 'transparent', border: 'none', color: 'var(--text-primary)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                  aria-label="Decrease quantity"
                 >
-                  -
+                  <Minus size={15} />
                 </button>
-                <span style={{ padding: '0.75rem 1rem', minWidth: '40px', textAlign: 'center', fontWeight: 600 }}>
+                <span style={{ padding: '0.75rem 1rem', minWidth: '40px', textAlign: 'center', fontWeight: 600, color: 'var(--text-primary)' }}>
                   {quantity}
                 </span>
                 <button
                   type="button"
                   onClick={() => setQuantity(quantity + 1)}
-                  style={{ padding: '0.75rem 1rem', background: 'transparent', border: 'none', color: '#fff', cursor: 'pointer' }}
+                  style={{ padding: '0.75rem 1rem', background: 'transparent', border: 'none', color: 'var(--text-primary)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                  aria-label="Increase quantity"
                 >
-                  +
+                  <Plus size={15} />
                 </button>
               </div>
 
@@ -347,7 +398,7 @@ export default function ProductDetailPage() {
                 background: activeTab === 'description' ? 'var(--bg-surface)' : 'transparent',
                 border: 'none',
                 borderBottom: activeTab === 'description' ? '2px solid var(--accent-gold)' : '2px solid transparent',
-                color: activeTab === 'description' ? '#fff' : 'var(--text-secondary)',
+                color: activeTab === 'description' ? 'var(--text-primary)' : 'var(--text-secondary)',
                 fontWeight: 600,
                 cursor: 'pointer',
                 fontFamily: 'var(--font-heading)'
@@ -362,7 +413,7 @@ export default function ProductDetailPage() {
                 background: activeTab === 'additional' ? 'var(--bg-surface)' : 'transparent',
                 border: 'none',
                 borderBottom: activeTab === 'additional' ? '2px solid var(--accent-gold)' : '2px solid transparent',
-                color: activeTab === 'additional' ? '#fff' : 'var(--text-secondary)',
+                color: activeTab === 'additional' ? 'var(--text-primary)' : 'var(--text-secondary)',
                 fontWeight: 600,
                 cursor: 'pointer',
                 fontFamily: 'var(--font-heading)'
@@ -377,7 +428,7 @@ export default function ProductDetailPage() {
                 background: activeTab === 'reviews' ? 'var(--bg-surface)' : 'transparent',
                 border: 'none',
                 borderBottom: activeTab === 'reviews' ? '2px solid var(--accent-gold)' : '2px solid transparent',
-                color: activeTab === 'reviews' ? '#fff' : 'var(--text-secondary)',
+                color: activeTab === 'reviews' ? 'var(--text-primary)' : 'var(--text-secondary)',
                 fontWeight: 600,
                 cursor: 'pointer',
                 fontFamily: 'var(--font-heading)'
@@ -391,7 +442,7 @@ export default function ProductDetailPage() {
           <div style={{ padding: '2.5rem' }}>
             {activeTab === 'description' && (
               <div style={{ lineHeight: 1.8, color: 'var(--text-secondary)' }}>
-                <h3 className="font-heading" style={{ color: '#fff', marginBottom: '1rem', fontSize: '1.3rem' }}>
+                <h3 className="font-heading" style={{ color: 'var(--text-primary)', marginBottom: '1rem', fontSize: '1.3rem' }}>
                   Artisan Handcrafted Quality
                 </h3>
                 <p style={{ marginBottom: '1.25rem' }}>{product.description}</p>
@@ -403,7 +454,7 @@ export default function ProductDetailPage() {
 
             {activeTab === 'additional' && (
               <div>
-                <h3 className="font-heading" style={{ color: '#fff', marginBottom: '1.5rem', fontSize: '1.3rem' }}>
+                <h3 className="font-heading" style={{ color: 'var(--text-primary)', marginBottom: '1.5rem', fontSize: '1.3rem' }}>
                   Specifications & Application
                 </h3>
                 <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.95rem' }}>
@@ -411,7 +462,7 @@ export default function ProductDetailPage() {
                     {product.additional_info && typeof product.additional_info === 'object' ? (
                       Object.entries(product.additional_info).map(([k, v]) => (
                         <tr key={k} style={{ borderBottom: '1px solid var(--border-subtle)' }}>
-                          <td style={{ padding: '1rem 0', fontWeight: 600, color: 'var(--accent-gold-light)', width: '30%', textTransform: 'capitalize' }}>
+                          <td style={{ padding: '1rem 0', fontWeight: 600, color: 'var(--accent-gold-dark)', width: '30%', textTransform: 'capitalize' }}>
                             {k.replace(/_/g, ' ')}
                           </td>
                           <td style={{ padding: '1rem 0', color: 'var(--text-secondary)' }}>{v}</td>
@@ -432,7 +483,7 @@ export default function ProductDetailPage() {
             {activeTab === 'reviews' && (
               <div>
                 {/* Existing Reviews */}
-                <h3 className="font-heading" style={{ color: '#fff', marginBottom: '1.5rem', fontSize: '1.3rem' }}>
+                <h3 className="font-heading" style={{ color: 'var(--text-primary)', marginBottom: '1.5rem', fontSize: '1.3rem' }}>
                   Customer Feedback
                 </h3>
 
@@ -441,7 +492,7 @@ export default function ProductDetailPage() {
                     {product.reviews.map(rev => (
                       <div key={rev.id} style={{ padding: '1.5rem', borderRadius: '8px', background: 'var(--bg-secondary)', border: '1px solid var(--border-subtle)' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-                          <span style={{ fontWeight: 600, color: '#fff' }}>{rev.name}</span>
+                          <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{rev.name}</span>
                           <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{rev.date}</span>
                         </div>
                         <RatingStars rating={rev.rating} size={15} />

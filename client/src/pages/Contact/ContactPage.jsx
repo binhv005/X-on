@@ -110,18 +110,18 @@ export default function ContactPage() {
           {/* Left Column: Direct Info */}
           <div>
             <div className="glass-card" style={{ padding: '2.5rem', marginBottom: '2rem' }}>
-              <h3 className="font-heading" style={{ color: '#fff', fontSize: '1.4rem', marginBottom: '1.5rem' }}>
+              <h3 className="font-heading" style={{ color: 'var(--text-primary)', fontSize: '1.4rem', marginBottom: '1.5rem' }}>
                 Studio Contact Information
               </h3>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', fontSize: '1rem' }}>
                 <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
-                  <div style={{ width: '42px', height: '42px', borderRadius: '50%', background: 'rgba(212,175,55,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <div style={{ width: '42px', height: '42px', borderRadius: '50%', background: 'rgba(179, 135, 40, 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                     <Phone size={20} color="var(--accent-gold)" />
                   </div>
                   <div>
                     <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Phone Hotline</div>
-                    <a href="tel:689-212-8888" style={{ color: '#fff', fontWeight: 700, fontSize: '1.15rem' }}>
+                    <a href="tel:689-212-8888" style={{ color: 'var(--accent-gold-dark)', fontWeight: 700, fontSize: '1.15rem' }}>
                       689-212-8888
                     </a>
                   </div>
@@ -165,7 +165,7 @@ export default function ContactPage() {
             padding: '2.5rem',
             boxShadow: 'var(--shadow-gold)'
           }}>
-            <h3 className="font-heading" style={{ color: '#fff', fontSize: '1.4rem', marginBottom: '0.5rem' }}>
+            <h3 className="font-heading" style={{ color: 'var(--text-primary)', fontSize: '1.4rem', marginBottom: '0.5rem' }}>
               Contact X-ON Form
             </h3>
             <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginBottom: '2rem' }}>
@@ -177,7 +177,7 @@ export default function ContactPage() {
                 <div style={{ width: '56px', height: '56px', borderRadius: '50%', background: 'rgba(16,185,129,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1rem auto' }}>
                   <CheckCircle2 size={32} color="#10b981" />
                 </div>
-                <h4 className="font-heading" style={{ color: '#fff', fontSize: '1.3rem', marginBottom: '0.5rem' }}>
+                <h4 className="font-heading" style={{ color: 'var(--text-primary)', fontSize: '1.3rem', marginBottom: '0.5rem' }}>
                   Message Sent!
                 </h4>
                 <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', marginBottom: '1.5rem' }}>

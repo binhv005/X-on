@@ -122,7 +122,7 @@ export default function GalleryProductPage() {
                     <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
                       {item.collection || 'Now Selling'}
                     </span>
-                    <h3 className="font-heading" style={{ fontSize: '1.1rem', color: '#fff', margin: '0.4rem 0 0.75rem 0' }}>
+                    <h3 className="font-heading" style={{ fontSize: '1.1rem', color: 'var(--text-primary)', margin: '0.4rem 0 0.75rem 0' }}>
                       {item.title}
                     </h3>
                   </div>

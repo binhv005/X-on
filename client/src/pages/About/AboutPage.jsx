@@ -33,7 +33,7 @@ export default function AboutPage() {
   const brandDesc = content?.brand_description || `Created for nail lovers and professionals alike, X-ON offers handmade press-on nails and carefully selected nail essentials designed with quality, style, and performance in mind.\n\nFrom statement-making nail sets to everyday professional supplies, every X-ON product is chosen to make beautiful nails easier, faster, and more accessible—without compromising on a polished, luxury finish.\n\nX-ON — Press On. Slay On. Repeat.`;
   const address = content?.address || '3168 Bill Beck Blvd, Kissimmee, FL 34744';
   const phone = content?.phone || '689-212-8888';
-  const heroImage = content?.image || 'https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=1200&q=80';
+  const heroImage = content?.image || '/assets/images/IMG_7101.JPG';
 
   return (
     <div>
@@ -48,7 +48,7 @@ export default function AboutPage() {
           <span className="brand-line" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.75rem' }}>
             <Sparkles size={16} /> The Artistry of X-ON
           </span>
-          <h1 className="font-heading" style={{ fontSize: 'clamp(2.4rem, 5vw, 3.5rem)', color: '#fff', marginBottom: '1.25rem', lineHeight: 1.2 }}>
+          <h1 className="font-heading" style={{ fontSize: 'clamp(2.4rem, 5vw, 3.5rem)', color: 'var(--text-primary)', marginBottom: '1.25rem', lineHeight: 1.2 }}>
             {tagline}
           </h1>
           <p className="gradient-text-gold" style={{ fontSize: '1.25rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
@@ -63,7 +63,7 @@ export default function AboutPage() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '4rem', alignItems: 'center' }}>
             <div>
               <span className="brand-line">Our Craft & Mission</span>
-              <h2 className="font-heading" style={{ fontSize: '2.2rem', color: '#fff', margin: '0.5rem 0 1.5rem 0' }}>
+              <h2 className="font-heading" style={{ fontSize: '2.2rem', color: 'var(--text-primary)', margin: '0.5rem 0 1.5rem 0' }}>
                 Sculpted by Hand, Crafted for Distinction
               </h2>
 
@@ -82,17 +82,17 @@ export default function AboutPage() {
                 border: '1px solid var(--border-gold)',
                 boxShadow: 'var(--shadow-gold)'
               }}>
-                <h4 className="font-heading" style={{ color: 'var(--accent-gold-light)', fontSize: '1.1rem', marginBottom: '1rem' }}>
+                <h4 className="font-heading" style={{ color: 'var(--accent-gold-dark)', fontSize: '1.1rem', marginBottom: '1rem' }}>
                   X-ON Headquarters & Studio
                 </h4>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', fontSize: '0.95rem' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
                     <MapPin size={18} color="var(--accent-gold)" />
-                    <span>{address}</span>
+                    <span style={{ color: 'var(--text-primary)' }}>{address}</span>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
                     <Phone size={18} color="var(--accent-gold)" />
-                    <a href={`tel:${phone}`} style={{ color: '#fff', fontWeight: 600 }}>{phone}</a>
+                    <a href={`tel:${phone}`} style={{ color: 'var(--accent-gold-dark)', fontWeight: 600 }}>{phone}</a>
                   </div>
                 </div>
               </div>
@@ -131,7 +131,7 @@ export default function AboutPage() {
               <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'rgba(212,175,55,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.25rem' }}>
                 <Sparkles size={24} color="var(--accent-gold)" />
               </div>
-              <h3 className="font-heading" style={{ color: '#fff', fontSize: '1.25rem', marginBottom: '0.75rem' }}>
+              <h3 className="font-heading" style={{ color: 'var(--text-primary)', fontSize: '1.25rem', marginBottom: '0.75rem' }}>
                 Quality Without Compromise
               </h3>
               <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', lineHeight: 1.6 }}>
@@ -143,7 +143,7 @@ export default function AboutPage() {
               <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'rgba(212,175,55,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.25rem' }}>
                 <Award size={24} color="var(--accent-gold)" />
               </div>
-              <h3 className="font-heading" style={{ color: '#fff', fontSize: '1.25rem', marginBottom: '0.75rem' }}>
+              <h3 className="font-heading" style={{ color: 'var(--text-primary)', fontSize: '1.25rem', marginBottom: '0.75rem' }}>
                 Style & Trend Leadership
               </h3>
               <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', lineHeight: 1.6 }}>
@@ -155,7 +155,7 @@ export default function AboutPage() {
               <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'rgba(212,175,55,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.25rem' }}>
                 <HeartHandshake size={24} color="var(--accent-gold)" />
               </div>
-              <h3 className="font-heading" style={{ color: '#fff', fontSize: '1.25rem', marginBottom: '0.75rem' }}>
+              <h3 className="font-heading" style={{ color: 'var(--text-primary)', fontSize: '1.25rem', marginBottom: '0.75rem' }}>
                 Effortless Performance
               </h3>
               <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', lineHeight: 1.6 }}>

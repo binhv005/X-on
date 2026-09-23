@@ -112,6 +112,25 @@ button, input, select, textarea {
   padding-right: 1.5rem;
 }
 
+/* Grid Layouts */
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.75rem;
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
 /* Typography Utilities */
 .font-heading {
   font-family: var(--font-heading);
@@ -323,36 +342,47 @@ button, input, select, textarea {
 .badge {
   display: inline-flex;
   align-items: center;
-  gap: 0.25rem;
-  padding: 0.25rem 0.65rem;
+  gap: 0.3rem;
+  padding: 0.35rem 0.75rem;
   border-radius: var(--radius-full);
-  font-size: 0.75rem;
-  font-weight: 700;
+  font-size: 0.72rem;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(8px);
 }
 
 .badge-gold {
-  background: rgba(179, 135, 40, 0.12);
-  color: var(--accent-gold-dark);
-  border: 1px solid var(--border-gold);
+  background: linear-gradient(135deg, #d4af37 0%, #aa8c2c 100%) !important;
+  color: #0d0d11 !important;
+  border: 1px solid #fff2d1 !important;
+  font-weight: 800;
+  box-shadow: 0 3px 12px rgba(212, 175, 55, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  text-shadow: none;
 }
 
 .badge-sale {
-  background: rgba(200, 109, 86, 0.15);
-  color: #b84c32;
-  border: 1px solid rgba(200, 109, 86, 0.35);
+  background: linear-gradient(135deg, #e11d48 0%, #be123c 100%) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.5) !important;
+  font-weight: 800;
+  box-shadow: 0 3px 12px rgba(225, 29, 72, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .badge-success {
-  background: rgba(5, 150, 105, 0.12);
-  color: #047857;
-  border: 1px solid rgba(5, 150, 105, 0.3);
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  box-shadow: 0 3px 12px rgba(16, 185, 129, 0.45);
 }
 
 .badge-neutral {
-  background: rgba(0, 0, 0, 0.06);
-  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.9);
+  color: #1a1a1f;
+  border: 1px solid var(--border-medium);
 }
 
 /* Modal and Drawer */

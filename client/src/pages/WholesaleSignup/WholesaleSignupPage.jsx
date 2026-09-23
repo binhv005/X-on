@@ -88,8 +88,12 @@ export default function WholesaleSignupPage() {
               boxShadow: 'var(--shadow-md)'
             }}>
               <img
-                src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1000&q=80"
+                src="/assets/images/IMG_7101.JPG"
                 alt="X-ON Wholesale Partner Showcase"
+                onError={(e) => {
+                  e.currentTarget.onerror = null;
+                  e.currentTarget.src = '/assets/images/IMG_7098.JPG';
+                }}
                 style={{ width: '100%', height: '320px', objectFit: 'cover' }}
               />
             </div>
@@ -137,7 +141,7 @@ export default function WholesaleSignupPage() {
                 }}>
                   <CheckCircle2 size={36} color="#10b981" />
                 </div>
-                <h3 className="font-heading" style={{ color: '#fff', fontSize: '1.5rem', marginBottom: '0.75rem' }}>
+                <h3 className="font-heading" style={{ color: 'var(--text-primary)', fontSize: '1.5rem', marginBottom: '0.75rem' }}>
                   Application Received!
                 </h3>
                 <p style={{ color: 'var(--text-secondary)', lineHeight: 1.7, marginBottom: '2rem' }}>
@@ -165,7 +169,7 @@ export default function WholesaleSignupPage() {
               </div>
             ) : (
               <form onSubmit={handleSubmit}>
-                <h3 className="font-heading" style={{ color: '#fff', fontSize: '1.4rem', marginBottom: '0.5rem' }}>
+                <h3 className="font-heading" style={{ color: 'var(--text-primary)', fontSize: '1.4rem', marginBottom: '0.5rem' }}>
                   Register Wholesale Account
                 </h3>
                 <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginBottom: '2rem' }}>

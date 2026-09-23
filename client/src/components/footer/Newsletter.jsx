@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, CheckCircle2, AlertCircle, ArrowRight } from 'lucide-react';
+import { CheckCircle2, AlertCircle } from 'lucide-react';
+import { useToast } from '../../context/ToastContext';
 
 export default function Newsletter() {
+  const { addToast } = useToast();
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
-  const [agreed, setAgreed] = useState(true);
   const [status, setStatus] = useState('idle'); // idle | loading | success | error
   const [message, setMessage] = useState('');
 
@@ -14,119 +15,162 @@ export default function Newsletter() {
     if (!email || !email.includes('@')) {
       setStatus('error');
       setMessage('Please enter a valid email address.');
-      return;
-    }
-    if (!agreed) {
-      setStatus('error');
-      setMessage('Please agree to receive updates and accept our Privacy Policy.');
+      addToast?.('Please enter a valid email address.', 'error');
       return;
     }
 
     setStatus('loading');
     setTimeout(() => {
       setStatus('success');
-      setMessage('Thank you for subscribing to X-ON VIP updates! Check your inbox for your 10% welcome gift.');
+      setMessage('Thank you for joining X-ON VIP! Check your inbox & SMS for exclusive deals.');
+      addToast?.('Welcome to X-ON VIP! You have successfully subscribed.', 'success');
       setEmail('');
       setPhone('');
-    }, 800);
+    }, 600);
   };
 
   return (
-    <section style={{
-      background: 'linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-surface) 100%)',
-      borderTop: '1px solid var(--border-subtle)',
-      borderBottom: '1px solid var(--border-subtle)',
-      padding: '4.5rem 1rem'
-    }}>
-      <div className="container" style={{ maxWidth: '800px', textAlign: 'center' }}>
-        <span className="brand-line" style={{ display: 'block', marginBottom: '0.5rem' }}>
-          Join The Inner Circle
-        </span>
-        <h2 className="font-heading" style={{ fontSize: '2.2rem', color: '#fff', marginBottom: '1rem' }}>
-          X-ON Newsletter / Updates
-        </h2>
-        <p style={{ color: 'var(--text-secondary)', marginBottom: '2rem', fontSize: '1rem', lineHeight: '1.6' }}>
-          Be the first to preview limited artisan collections, seasonal color drops, and professional nail care masterclasses.
-        </p>
-
-        {status === 'success' ? (
-          <div style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '0.75rem',
-            padding: '1rem 1.75rem',
-            background: 'rgba(16, 185, 129, 0.12)',
-            border: '1px solid rgba(16, 185, 129, 0.3)',
-            borderRadius: '8px',
-            color: '#34d399',
-            fontSize: '0.95rem'
+    <div id="newsletter" style={{ width: '100%', padding: '1.75rem 0' }}>
+      <div style={{
+        display: 'flex',
+        flexWrap: 'wrap',
+        gap: '2.5rem',
+        alignItems: 'center',
+        justifyContent: 'space-between'
+      }}>
+        {/* Explanatory Text on the Same Row */}
+        <div style={{ flex: '1 1 280px', maxWidth: '380px' }}>
+          <h3 style={{
+            fontSize: '1.2rem',
+            fontWeight: 800,
+            color: 'var(--text-primary)',
+            marginBottom: '0.25rem',
+            letterSpacing: '-0.01em',
+            textTransform: 'uppercase'
           }}>
-            <CheckCircle2 size={20} />
-            <span>{message}</span>
-          </div>
-        ) : (
-          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center' }}>
+            X-ON Newsletter / Updates
+          </h3>
+          <p style={{
+            fontSize: '0.88rem',
+            color: 'var(--text-secondary)',
+            lineHeight: 1.45,
+            margin: 0
+          }}>
+            Sign up for emails and texts to be the first to know about exclusive deals, launches & updates!
+          </p>
+        </div>
+
+        {/* Form Inputs & Button */}
+        <div style={{ flex: '2 1 480px' }}>
+          {status === 'success' ? (
             <div style={{
-              display: 'flex',
-              gap: '0.75rem',
-              width: '100%',
-              maxWidth: '560px',
-              flexDirection: 'row',
-              flexWrap: 'wrap'
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.6rem',
+              padding: '0.85rem 1.5rem',
+              background: 'rgba(5, 150, 105, 0.1)',
+              border: '1px solid rgba(5, 150, 105, 0.3)',
+              borderRadius: '4px',
+              color: 'var(--status-success)',
+              fontWeight: 600,
+              fontSize: '0.92rem'
             }}>
-              <input
-                type="email"
-                placeholder="Enter your email address"
-                className="form-input"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-                style={{ flex: 1, minWidth: '220px' }}
-                disabled={status === 'loading'}
-                required
-              />
-              <button
-                type="submit"
-                className="btn btn-primary"
-                disabled={status === 'loading'}
-                style={{ whiteSpace: 'nowrap' }}
-              >
-                {status === 'loading' ? 'Subscribing...' : (
-                  <>
-                    Subscribe <ArrowRight size={16} />
-                  </>
-                )}
-              </button>
+              <CheckCircle2 size={18} style={{ flexShrink: 0 }} />
+              <span>{message}</span>
             </div>
-
-            {status === 'error' && (
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: '#ef4444', fontSize: '0.85rem' }}>
-                <AlertCircle size={15} />
-                <span>{message}</span>
+          ) : (
+            <form onSubmit={handleSubmit} style={{
+              display: 'flex',
+              gap: '1.5rem',
+              alignItems: 'flex-end',
+              flexWrap: 'wrap',
+              width: '100%'
+            }}>
+              {/* Email Underlined Input */}
+              <div style={{ flex: '1 1 200px' }}>
+                <input
+                  type="email"
+                  required
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  disabled={status === 'loading'}
+                  style={{
+                    width: '100%',
+                    padding: '0.65rem 0',
+                    background: 'transparent',
+                    border: 'none',
+                    borderBottom: '1.5px solid var(--text-primary)',
+                    color: 'var(--text-primary)',
+                    fontSize: '0.95rem',
+                    outline: 'none',
+                    borderRadius: 0,
+                    fontFamily: 'inherit'
+                  }}
+                />
               </div>
-            )}
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '0.5rem', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-              <input
-                type="checkbox"
-                id="newsletter-consent"
-                checked={agreed}
-                onChange={e => setAgreed(e.target.checked)}
-                style={{ accentColor: 'var(--accent-gold)' }}
-              />
-              <label htmlFor="newsletter-consent" style={{ cursor: 'pointer' }}>
-                I agree to receive marketing communications and agree to the{' '}
-                <Link to="/legal/terms" style={{ color: 'var(--accent-gold-light)', textDecoration: 'underline' }}>
-                  Terms
-                </Link>{' '}
-                &{' '}
-                <Link to="/legal/privacy-policy" style={{ color: 'var(--accent-gold-light)', textDecoration: 'underline' }}>
-                  Privacy Policy
-                </Link>.
-              </label>
+              {/* Phone Underlined Input */}
+              <div style={{ flex: '1 1 200px' }}>
+                <input
+                  type="tel"
+                  placeholder="Enter your phone number"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  disabled={status === 'loading'}
+                  style={{
+                    width: '100%',
+                    padding: '0.65rem 0',
+                    background: 'transparent',
+                    border: 'none',
+                    borderBottom: '1.5px solid var(--text-primary)',
+                    color: 'var(--text-primary)',
+                    fontSize: '0.95rem',
+                    outline: 'none',
+                    borderRadius: 0,
+                    fontFamily: 'inherit'
+                  }}
+                />
+              </div>
+
+              {/* JOIN US Button */}
+              <div style={{ flexShrink: 0 }}>
+                <button
+                  type="submit"
+                  disabled={status === 'loading'}
+                  style={{
+                    background: '#000000',
+                    color: '#ffffff',
+                    border: 'none',
+                    padding: '0.75rem 2rem',
+                    fontSize: '0.9rem',
+                    fontWeight: 800,
+                    letterSpacing: '0.06em',
+                    textTransform: 'uppercase',
+                    borderRadius: '0px',
+                    cursor: 'pointer',
+                    transition: 'opacity 0.2s ease',
+                    whiteSpace: 'nowrap',
+                    opacity: status === 'loading' ? 0.7 : 1
+                  }}
+                >
+                  {status === 'loading' ? 'JOINING...' : 'JOIN US'}
+                </button>
+              </div>
+            </form>
+          )}
+
+          {status === 'error' && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: '#ef4444', fontSize: '0.82rem', marginTop: '0.5rem' }}>
+              <AlertCircle size={14} />
+              <span>{message}</span>
             </div>
-          </form>
-        )}
+          )}
+        </div>
       </div>
-    </section>
+    </div>
   );
 }
+
+
+

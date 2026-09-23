@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useCart } from '../../context/CartContext';
+import logoImg from '../../assets/images/logo.png';
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -65,38 +66,24 @@ export default function Header() {
         borderBottom: '1px solid var(--border-subtle)',
         transition: 'all 0.3s ease'
       }}>
-        {/* Top Announcement Bar */}
-        <div style={{
-          background: 'linear-gradient(90deg, #f5efe6 0%, #faecd8 50%, #f5efe6 100%)',
-          borderBottom: '1px solid rgba(179, 135, 40, 0.2)',
-          padding: '0.4rem 1rem',
-          fontSize: '0.78rem',
-          textAlign: 'center',
-          color: 'var(--accent-gold-dark)',
-          fontWeight: 600,
-          letterSpacing: '0.06em'
-        }}>
-          <span>✨ FREE APPLICATION KIT WITH EVERY HANDMADE SET | PRESS ON. SLAY ON. REPEAT. ✨</span>
-        </div>
 
         {/* Main Navbar */}
-        <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '72px' }}>
+        <div style={{ maxWidth: '1440px', width: '100%', margin: '0 auto', padding: '0 1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '72px', gap: '1rem' }}>
           {/* Brand Logo */}
-          <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', textDecoration: 'none' }}>
-            <span className="font-heading" style={{
-              fontSize: '1.85rem',
-              fontWeight: 800,
-              letterSpacing: '0.12em',
-              background: 'linear-gradient(135deg, #1c1c21 0%, #b38728 60%, #8c6716 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent'
-            }}>
-              X-ON
-            </span>
+          <Link to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', flexShrink: 0 }}>
+            <img
+              src={logoImg}
+              alt="X-ON Logo"
+              style={{
+                height: '52px',
+                width: 'auto',
+                objectFit: 'contain'
+              }}
+            />
           </Link>
 
           {/* Desktop Navigation Links */}
-          <nav className="desktop-nav" style={{ display: 'flex', alignItems: 'center', gap: '1.4rem' }}>
+          <nav className="desktop-nav">
             <Link to="/" className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}>
               Home
             </Link>
@@ -146,7 +133,7 @@ export default function Header() {
                       onMouseOver={e => e.currentTarget.style.background = 'var(--bg-surface-elevated)'}
                       onMouseOut={e => e.currentTarget.style.background = 'transparent'}
                     >
-                      <div style={{ fontSize: '0.9rem', fontWeight: 600, color: '#fff' }}>{item.name}</div>
+                      <div style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-primary)' }}>{item.name}</div>
                       <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{item.desc}</div>
                     </Link>
                   ))}
@@ -190,11 +177,12 @@ export default function Header() {
                         padding: '0.5rem 0.75rem',
                         borderRadius: '4px',
                         fontSize: '0.85rem',
-                        color: 'var(--text-secondary)',
-                        textDecoration: 'none'
+                        color: 'var(--text-primary)',
+                        textDecoration: 'none',
+                        transition: 'all 0.2s ease'
                       }}
-                      onMouseOver={e => { e.currentTarget.style.background = 'var(--bg-surface-elevated)'; e.currentTarget.style.color = '#fff'; }}
-                      onMouseOut={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--text-secondary)'; }}
+                      onMouseOver={e => { e.currentTarget.style.background = 'var(--bg-surface-elevated)'; e.currentTarget.style.color = 'var(--accent-gold-dark)'; }}
+                      onMouseOut={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--text-primary)'; }}
                     >
                       {item.name}
                     </Link>
@@ -247,17 +235,17 @@ export default function Header() {
                 }}>
                   <Link
                     to="/gallery-product"
-                    style={{ display: 'block', padding: '0.5rem 0.75rem', borderRadius: '4px', fontSize: '0.85rem', color: 'var(--text-secondary)' }}
-                    onMouseOver={e => { e.currentTarget.style.background = 'var(--bg-surface-elevated)'; e.currentTarget.style.color = '#fff'; }}
-                    onMouseOut={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--text-secondary)'; }}
+                    style={{ display: 'block', padding: '0.5rem 0.75rem', borderRadius: '4px', fontSize: '0.85rem', color: 'var(--text-primary)', textDecoration: 'none', transition: 'all 0.2s ease' }}
+                    onMouseOver={e => { e.currentTarget.style.background = 'var(--bg-surface-elevated)'; e.currentTarget.style.color = 'var(--accent-gold-dark)'; }}
+                    onMouseOut={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--text-primary)'; }}
                   >
                     Gallery Product (Now Selling)
                   </Link>
                   <Link
                     to="/gallery-coming-soon"
-                    style={{ display: 'block', padding: '0.5rem 0.75rem', borderRadius: '4px', fontSize: '0.85rem', color: 'var(--text-secondary)' }}
-                    onMouseOver={e => { e.currentTarget.style.background = 'var(--bg-surface-elevated)'; e.currentTarget.style.color = '#fff'; }}
-                    onMouseOut={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--text-secondary)'; }}
+                    style={{ display: 'block', padding: '0.5rem 0.75rem', borderRadius: '4px', fontSize: '0.85rem', color: 'var(--text-primary)', textDecoration: 'none', transition: 'all 0.2s ease' }}
+                    onMouseOver={e => { e.currentTarget.style.background = 'var(--bg-surface-elevated)'; e.currentTarget.style.color = 'var(--accent-gold-dark)'; }}
+                    onMouseOut={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--text-primary)'; }}
                   >
                     Gallery Coming Soon
                   </Link>
@@ -305,16 +293,18 @@ export default function Header() {
             </Link>
 
             <Link
-              to="/shop"
+              to="/cart"
               style={{
                 position: 'relative',
                 color: 'var(--text-primary)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                padding: '0.4rem'
+                padding: '0.4rem',
+                textDecoration: 'none'
               }}
               title="Shopping Bag"
+              aria-label="View shopping bag"
             >
               <ShoppingBag size={21} />
               {totalCount > 0 && (
@@ -374,22 +364,23 @@ export default function Header() {
           flexDirection: 'column',
           gap: '1.25rem'
         }}>
-          <Link to="/" style={{ fontSize: '1.1rem', fontWeight: 600, color: '#fff' }}>Home</Link>
-          <Link to="/shop" style={{ fontSize: '1.1rem', fontWeight: 600, color: '#fff' }}>Shop All</Link>
+          <Link to="/" style={{ fontSize: '1.1rem', fontWeight: 600, color: 'var(--text-primary)' }}>Home</Link>
+          <Link to="/shop" style={{ fontSize: '1.1rem', fontWeight: 600, color: 'var(--text-primary)' }}>Shop All</Link>
           <div style={{ paddingLeft: '1rem', display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
             <Link to="/shop?product_type=handmade-press-on-nails" style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>Handmade Press-On Nails</Link>
             <Link to="/shop?product_type=nail-essentials" style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>Nail Essentials</Link>
             <Link to="/shop?product_type=best-sellers" style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>Best Sellers</Link>
           </div>
-          <Link to="/about" style={{ fontSize: '1.1rem', fontWeight: 600, color: '#fff' }}>About X-ON</Link>
-          <Link to="/wholesale-signup" style={{ fontSize: '1.1rem', fontWeight: 600, color: '#fff' }}>Wholesale Signup</Link>
-          <Link to="/bundle-and-save" style={{ fontSize: '1.1rem', fontWeight: 600, color: '#fff' }}>Bundle and Save</Link>
-          <Link to="/sizing-chart" style={{ fontSize: '1.1rem', fontWeight: 600, color: '#fff' }}>Sizing Chart</Link>
-          <Link to="/gallery-product" style={{ fontSize: '1.1rem', fontWeight: 600, color: '#fff' }}>Product Gallery</Link>
-          <Link to="/gallery-coming-soon" style={{ fontSize: '1.1rem', fontWeight: 600, color: '#fff' }}>Gallery Coming Soon</Link>
-          <Link to="/blog" style={{ fontSize: '1.1rem', fontWeight: 600, color: '#fff' }}>Blog</Link>
-          <Link to="/contact-us" style={{ fontSize: '1.1rem', fontWeight: 600, color: '#fff' }}>Contact Us</Link>
-          <Link to="/my-account" style={{ fontSize: '1.1rem', fontWeight: 600, color: 'var(--accent-gold)' }}>My Account / Login</Link>
+          <Link to="/about" style={{ fontSize: '1.1rem', fontWeight: 600, color: 'var(--text-primary)' }}>About X-ON</Link>
+          <Link to="/wholesale-signup" style={{ fontSize: '1.1rem', fontWeight: 600, color: 'var(--text-primary)' }}>Wholesale Signup</Link>
+          <Link to="/bundle-and-save" style={{ fontSize: '1.1rem', fontWeight: 600, color: 'var(--text-primary)' }}>Bundle and Save</Link>
+          <Link to="/sizing-chart" style={{ fontSize: '1.1rem', fontWeight: 600, color: 'var(--text-primary)' }}>Sizing Chart</Link>
+          <Link to="/gallery-product" style={{ fontSize: '1.1rem', fontWeight: 600, color: 'var(--text-primary)' }}>Product Gallery</Link>
+          <Link to="/gallery-coming-soon" style={{ fontSize: '1.1rem', fontWeight: 600, color: 'var(--text-primary)' }}>Gallery Coming Soon</Link>
+          <Link to="/blog" style={{ fontSize: '1.1rem', fontWeight: 600, color: 'var(--text-primary)' }}>Blog</Link>
+          <Link to="/contact-us" style={{ fontSize: '1.1rem', fontWeight: 600, color: 'var(--text-primary)' }}>Contact Us</Link>
+          <Link to="/cart" style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--accent-gold-dark)' }}>Shopping Bag ({totalCount})</Link>
+          <Link to="/my-account" style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--accent-gold-dark)' }}>My Account / Login</Link>
           {isAdmin && (
             <Link to="/admin" style={{ fontSize: '1.1rem', fontWeight: 600, color: '#ff9b85' }}>Admin Portal</Link>
           )}
@@ -398,17 +389,38 @@ export default function Header() {
 
       {/* Responsive Styles Injection */}
       <style>{`
+        .desktop-nav {
+          display: flex;
+          align-items: center;
+          gap: 1.15rem;
+          white-space: nowrap;
+          flex-shrink: 1;
+        }
         .nav-link {
-          font-size: 0.88rem;
+          font-size: 0.85rem;
           font-weight: 500;
           color: var(--text-secondary);
           transition: color 0.2s ease;
           text-decoration: none;
+          white-space: nowrap !important;
+          display: inline-flex;
+          align-items: center;
+          gap: 4px;
+          flex-shrink: 0;
+          line-height: 1;
         }
         .nav-link:hover, .nav-link.active {
           color: var(--accent-gold);
         }
-        @media (max-width: 1100px) {
+        @media (max-width: 1300px) {
+          .desktop-nav {
+            gap: 0.85rem;
+          }
+          .nav-link {
+            font-size: 0.82rem;
+          }
+        }
+        @media (max-width: 1180px) {
           .desktop-nav {
             display: none !important;
           }
