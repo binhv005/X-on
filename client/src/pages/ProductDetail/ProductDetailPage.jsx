@@ -571,10 +571,11 @@ export default function ProductDetailPage() {
                 style={{
                   flex: 1,
                   minWidth: '200px',
-                  background: isOutOfStock ? '#9ca3af' : undefined,
-                  borderColor: isOutOfStock ? '#9ca3af' : undefined,
+                  background: isOutOfStock ? '#4b5563' : undefined,
+                  borderColor: isOutOfStock ? '#4b5563' : undefined,
+                  color: '#ffffff',
                   cursor: isOutOfStock ? 'not-allowed' : 'pointer',
-                  opacity: isOutOfStock ? 0.7 : 1
+                  opacity: isOutOfStock ? 0.85 : 1
                 }}
               >
                 <ShoppingBag size={18} /> {isOutOfStock ? 'Out of Stock' : 'Add to Cart'}
