@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CheckCircle2, AlertCircle } from 'lucide-react';
 import { useToast } from '../../context/ToastContext';
+import { api } from '../../services/api';
 
 export default function Newsletter() {
   const { addToast } = useToast();
@@ -10,7 +11,7 @@ export default function Newsletter() {
   const [status, setStatus] = useState('idle'); // idle | loading | success | error
   const [message, setMessage] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!email || !email.includes('@')) {
       setStatus('error');
@@ -19,14 +20,32 @@ export default function Newsletter() {
       return;
     }
 
-    setStatus('loading');
-    setTimeout(() => {
-      setStatus('success');
-      setMessage('Thank you for joining X-ON VIP! Check your inbox & SMS for exclusive deals.');
-      addToast?.('Welcome to X-ON VIP! You have successfully subscribed.', 'success');
-      setEmail('');
-      setPhone('');
-    }, 600);
+    try {
+      setStatus('loading');
+      setMessage('');
+      const res = await api.submitInquiry({
+        name: 'VIP Newsletter Subscriber',
+        email: email.trim(),
+        phone: phone.trim(),
+        type: 'newsletter',
+        message: `Subscribed to X-ON VIP Newsletter & Text Updates.${phone.trim() ? ` Phone: ${phone.trim()}` : ''}`
+      });
+
+      if (res.success || res.data) {
+        setStatus('success');
+        setMessage('Thank you for joining X-ON VIP! Your subscription has been saved.');
+        addToast?.('Welcome to X-ON VIP! You have successfully subscribed.', 'success');
+        setEmail('');
+        setPhone('');
+      } else {
+        throw new Error(res.message || 'Subscription failed');
+      }
+    } catch (err) {
+      setStatus('error');
+      const errText = err.message || 'Failed to subscribe. Please try again.';
+      setMessage(errText);
+      addToast?.(errText, 'error');
+    }
   };
 
   return (

@@ -253,9 +253,19 @@ export default function AdminUsersWholesalePage() {
                 ) : (
                   inquiries.map(inq => (
                     <tr key={inq.id} style={{ borderBottom: '1px solid var(--border-subtle)' }}>
-                      <td style={{ padding: '1rem', fontWeight: 600, color: 'var(--text-primary)' }}>{inq.name}</td>
+                      <td style={{ padding: '1rem', fontWeight: 600, color: 'var(--text-primary)' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', flexWrap: 'wrap' }}>
+                          <span>{inq.name}</span>
+                          {inq.type === 'newsletter' && (
+                            <span className="badge badge-gold" style={{ fontSize: '0.68rem', padding: '0.15rem 0.45rem' }}>VIP Newsletter</span>
+                          )}
+                        </div>
+                      </td>
                       <td style={{ padding: '1rem' }}>
                         <div style={{ color: 'var(--accent-gold-dark)', fontWeight: 600 }}>{inq.email}</div>
+                        {inq.phone && (
+                          <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Tel: {inq.phone}</div>
+                        )}
                         {inq.order_number && (
                           <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Order: {inq.order_number}</div>
                         )}
@@ -395,6 +405,8 @@ export default function AdminUsersWholesalePage() {
             <div style={{ padding: '1.25rem', background: 'var(--bg-secondary)', borderRadius: '8px', border: '1px solid var(--border-subtle)', fontSize: '0.9rem', display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
               <div><strong>Sender:</strong> {selectedInquiry.name}</div>
               <div><strong>Email:</strong> {selectedInquiry.email}</div>
+              {selectedInquiry.phone && <div><strong>Phone:</strong> {selectedInquiry.phone}</div>}
+              <div><strong>Type:</strong> {selectedInquiry.type === 'newsletter' ? 'VIP Newsletter Subscription' : 'General Contact'}</div>
               <div><strong>Order Reference:</strong> {selectedInquiry.order_number || 'N/A'}</div>
               <div><strong>Received:</strong> {selectedInquiry.createdAt ? new Date(selectedInquiry.createdAt).toLocaleString() : 'N/A'}</div>
             </div>

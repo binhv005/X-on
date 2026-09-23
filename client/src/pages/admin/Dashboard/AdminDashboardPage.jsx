@@ -251,7 +251,14 @@ export default function AdminDashboardPage() {
               {stats.recentInquiries.map(inq => (
                 <div key={inq.id} style={{ padding: '0.75rem 1rem', borderRadius: '6px', background: 'var(--bg-secondary)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '0.75rem', border: '1px solid var(--border-subtle)' }}>
                   <div style={{ minWidth: 0 }}>
-                    <div style={{ fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.9rem', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{inq.name} — {inq.email}</div>
+                    <div style={{ fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.9rem', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', display: 'flex', alignItems: 'center', gap: '0.4rem', flexWrap: 'wrap' }}>
+                      <span>{inq.name}</span>
+                      {inq.type === 'newsletter' && (
+                        <span className="badge badge-gold" style={{ fontSize: '0.65rem', padding: '0.1rem 0.35rem' }}>VIP Newsletter</span>
+                      )}
+                      <span style={{ color: 'var(--text-secondary)', fontWeight: 400 }}>— {inq.email}</span>
+                      {inq.phone && <span style={{ color: 'var(--accent-gold-dark)', fontSize: '0.8rem' }}>({inq.phone})</span>}
+                    </div>
                     <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{inq.message}</div>
                   </div>
                   <span className={`badge ${inq.status === 'resolved' ? 'badge-success' : inq.status === 'in_review' ? 'badge-gold' : 'badge-neutral'}`} style={{ fontSize: '0.7rem', flexShrink: 0 }}>

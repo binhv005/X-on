@@ -2,13 +2,7 @@ import { inquiryRepository } from '../repositories/inquiryRepository.js';
 
 class InquiryService {
   submitInquiry(data) {
-    const { name, email, order_number, message } = data;
-
-    if (!name || !name.trim()) {
-      const err = new Error('First & Last Name is required.');
-      err.status = 400;
-      throw err;
-    }
+    const { name, email, phone, order_number, message, type } = data;
 
     if (!email || !email.trim()) {
       const err = new Error('Email Address is required.');
@@ -24,31 +18,30 @@ class InquiryService {
       throw err;
     }
 
-    if (!message || !message.trim()) {
-      const err = new Error('Message is required.');
+    const isNewsletter = type === 'newsletter' || (!name && !message);
+    const finalName = (name && name.trim()) || (isNewsletter ? 'VIP Newsletter Subscriber' : '');
+    if (!isNewsletter && !finalName) {
+      const err = new Error('First & Last Name is required.');
       err.status = 400;
       throw err;
     }
 
-    if (message.trim().length < 10) {
+    const finalMessage = (message && message.trim()) || (isNewsletter ? `Subscribed to X-ON VIP Newsletter & Updates.${phone ? ` Phone: ${phone}` : ''}` : '');
+    if (!isNewsletter && finalMessage.length < 10) {
       const err = new Error('Message should be at least 10 characters so our artists can help you better.');
       err.status = 400;
       throw err;
     }
 
-    if (name.trim().length > 120) {
-      const err = new Error('Name is too long (max 120 characters).');
-      err.status = 400;
-      throw err;
-    }
-
     return inquiryRepository.create({
-      name: name.trim(),
+      name: finalName.slice(0, 120),
       email: emailNorm,
+      phone: phone ? phone.trim().slice(0, 40) : '',
       order_number: order_number ? order_number.trim().slice(0, 80) : '',
-      message: message.trim().slice(0, 5000),
+      message: finalMessage.slice(0, 5000),
+      type: isNewsletter ? 'newsletter' : (type || 'contact'),
       status: 'new',
-      note: ''
+      note: isNewsletter ? 'Joined VIP mailing list' : ''
     });
   }
 
