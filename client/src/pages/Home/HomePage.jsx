@@ -140,27 +140,27 @@ export default function HomePage() {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Hero single intro video (middle video played first individually)
+  // Hero single intro video (optimized Cloudinary CDN for instant mobile streaming)
   const singleIntroVideo = {
     id: 'intro-vid',
     title: 'Acrygel Haute Couture',
-    src: '/assets/videos/1K34PRO8E_DMCL0D.mp4',
-    fallback: 'https://res.cloudinary.com/ai1z2oaj/video/upload/v1790134359/1K34PRO8E_DMCL0D.mp4'
+    src: 'https://res.cloudinary.com/ai1z2oaj/video/upload/q_auto,f_auto,w_960/v1790134359/1K34PRO8E_DMCL0D.mp4',
+    fallback: '/assets/videos/1K34PRO8E_DMCL0D.mp4'
   };
 
-  // Hero dual split videos (left and right side-by-side)
+  // Hero dual split videos (optimized Cloudinary CDN)
   const duoHeroVideos = [
     {
       id: 'duo-left',
       title: 'Artisan Floral & Pearl Swatches',
-      src: '/assets/videos/1K34PRO84_DMCL0D.mp4',
-      fallback: 'https://res.cloudinary.com/ai1z2oaj/video/upload/v1790134363/1K34PRO84_DMCL0D.mp4'
+      src: 'https://res.cloudinary.com/ai1z2oaj/video/upload/q_auto,f_auto,w_720/v1790134363/1K34PRO84_DMCL0D.mp4',
+      fallback: '/assets/videos/1K34PRO84_DMCL0D.mp4'
     },
     {
       id: 'duo-right',
       title: 'Moonlight Cat Eye & Chrome Couture',
-      src: '/assets/videos/1K34PRO8K_DMCL0D.mp4',
-      fallback: 'https://res.cloudinary.com/ai1z2oaj/video/upload/v1790134357/1K34PRO8E_DMCL0D_1.mp4'
+      src: 'https://res.cloudinary.com/ai1z2oaj/video/upload/q_auto,f_auto,w_720/v1790134357/1K34PRO8E_DMCL0D_1.mp4',
+      fallback: '/assets/videos/1K34PRO8K_DMCL0D.mp4'
     }
   ];
 
@@ -330,17 +330,20 @@ export default function HomePage() {
 
 
 
-        {/* Bottom Left Action Buttons: SHOP NOW & CALL NOW */}
-        <div style={{
-          position: 'absolute',
-          bottom: '2.5rem',
-          left: '2.5rem',
-          zIndex: 15,
-          display: 'flex',
-          alignItems: 'center',
-          gap: '1.25rem',
-          flexWrap: 'wrap'
-        }}>
+        {/* Bottom Left Action Buttons: SHOP NOW & CALL NOW (Desktop/Tablet only, hidden on mobile) */}
+        <div
+          className="hero-action-buttons"
+          style={{
+            position: 'absolute',
+            bottom: '2.5rem',
+            left: '2.5rem',
+            zIndex: 15,
+            display: 'flex',
+            alignItems: 'center',
+            gap: '1.25rem',
+            flexWrap: 'wrap'
+          }}
+        >
           {/* SHOP NOW Button */}
           <Link
             to="/shop"
@@ -394,6 +397,9 @@ export default function HomePage() {
         {/* Responsive Mobile Styles */}
         <style>{`
           @media (max-width: 900px) {
+            .hero-action-buttons {
+              display: none !important;
+            }
             .hero-video-grid {
               grid-template-columns: 1fr !important;
             }
