@@ -749,7 +749,10 @@ export default function HomePage() {
             margin: '0 auto'
           }}>
             {bestSellers.map(product => {
-              const image = product.images && product.images.length > 0 ? product.images[0] : '/assets/images/IMG_7098.webp';
+              const rawImg = product.images && product.images.length > 0 ? product.images[0] : '';
+              const image = (rawImg && (rawImg.startsWith('http://') || rawImg.startsWith('https://')))
+                ? rawImg
+                : 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237942/x-on/products/IMG_7098.webp';
               return (
                 <div
                   key={product.id}
@@ -786,7 +789,7 @@ export default function HomePage() {
                       alt={product.name}
                       onError={(e) => {
                         e.currentTarget.onerror = null;
-                        e.currentTarget.src = '/assets/images/IMG_7098.webp';
+                        e.currentTarget.src = 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237942/x-on/products/IMG_7098.webp';
                       }}
                       style={{
                         width: '100%',

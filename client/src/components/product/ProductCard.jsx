@@ -14,7 +14,13 @@ const CLOUDINARY_IMG_MAP = {
   'IMG_7106': 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237964/x-on/products/IMG_7106.webp',
   'IMG_7107': 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237967/x-on/products/IMG_7107.webp',
   'IMG_7110': 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237968/x-on/products/IMG_7110.webp',
-  'IMG_7111': 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237969/x-on/products/IMG_7111.webp'
+  'IMG_7111': 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237969/x-on/products/IMG_7111.webp',
+  '0a9ef85d-1399-40c6-927c-a9a7b5858f6d': 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790241340/x-on/products/0a9ef85d-1399-40c6-927c-a9a7b5858f6d.webp',
+  '8ba0b55c-fdc6-441d-9c9e-4af35d3fab65': 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790241341/x-on/products/8ba0b55c-fdc6-441d-9c9e-4af35d3fab65.webp',
+  'ChatGPT-Image-18_51_04-20-thg-7-2026': 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790241343/x-on/products/ChatGPT-Image-18_51_04-20-thg-7-2026.webp',
+  'gallery': 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790241344/x-on/products/gallery.webp',
+  'bundle-promo-bg': 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790241345/x-on/products/bundle-promo-bg.webp',
+  'bundle-banner-bg': 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790241346/x-on/products/bundle-banner-bg.webp'
 };
 
 function resolveProductImage(url) {
@@ -24,7 +30,7 @@ function resolveProductImage(url) {
     return clean;
   }
   for (const [key, cdnUrl] of Object.entries(CLOUDINARY_IMG_MAP)) {
-    if (clean === key || clean === `${key}.webp` || clean === `/assets/images/${key}.webp`) return cdnUrl;
+    if (clean === key || clean === `${key}.webp` || clean === `/assets/images/${key}.webp` || clean.includes(key)) return cdnUrl;
   }
   return clean.startsWith('/') ? clean : `/${clean}`;
 }
@@ -39,6 +45,7 @@ export default function ProductCard({ product, compact = false, imageAspect = '1
     : (typeof product.images === 'string' && product.images ? [product.images] : []);
   const images = rawImages.length > 0 ? rawImages : [CLOUDINARY_IMG_MAP['IMG_7098']];
   const primaryImage = resolveProductImage(images[0] || CLOUDINARY_IMG_MAP['IMG_7098']);
+  const secondaryImage = images[1] ? resolveProductImage(images[1]) : null;
 
   // Standard sizes to display (or from product)
   const allDisplaySizes = ['XS', 'S', 'M', 'L'];
@@ -73,7 +80,7 @@ export default function ProductCard({ product, compact = false, imageAspect = '1
             paddingTop: compact ? '85%' : imageAspect
           }}
         >
-          {/* Primary Image with Smooth Hover Zoom In */}
+          {/* Primary Image */}
           <img
             src={primaryImage}
             alt={product.name}
@@ -90,11 +97,37 @@ export default function ProductCard({ product, compact = false, imageAspect = '1
               height: '100%',
               objectFit: 'cover',
               filter: isOutOfStock ? 'grayscale(35%)' : 'none',
-              opacity: isOutOfStock ? 0.85 : 1,
+              opacity: isOutOfStock ? 0.85 : (isHovered && secondaryImage ? 0 : 1),
               transform: isHovered ? 'scale(1.08)' : 'scale(1)',
-              transition: 'transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease, filter 0.3s ease'
+              transition: 'transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.35s ease, filter 0.3s ease'
             }}
           />
+
+          {/* Secondary Image (Crossfade on Hover) */}
+          {secondaryImage && (
+            <img
+              src={secondaryImage}
+              alt={`${product.name} alternate view`}
+              loading="lazy"
+              onError={(e) => {
+                e.currentTarget.onerror = null;
+                e.currentTarget.style.display = 'none';
+              }}
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                filter: isOutOfStock ? 'grayscale(35%)' : 'none',
+                opacity: isHovered ? 1 : 0,
+                transform: isHovered ? 'scale(1.08)' : 'scale(1)',
+                transition: 'transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.35s ease',
+                pointerEvents: 'none'
+              }}
+            />
+          )}
         </Link>
 
         {/* Favorite Heart Button (Top Right) */}
