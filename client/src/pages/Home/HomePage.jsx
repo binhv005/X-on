@@ -33,7 +33,7 @@ import motifBottom from '../../assets/images/findus-motif-bottom.png';
 import bundlePromoBg from '../../assets/images/bundle-promo-bg.jpg';
 import stepCardBg from '../../assets/images/step-card-bg.jpg';
 
-// Scroll-triggered Video Component: optimized for instant playback on mobile & desktop
+// Scroll-triggered Video Component: shows pure black until video is actively playing
 function ScrollPlayVideo({
   src,
   fallback,
@@ -45,12 +45,13 @@ function ScrollPlayVideo({
   playsInline = true,
   autoPlay = true,
   preload = 'auto',
-  poster,
   ...rest
 }) {
   const videoRef = React.useRef(null);
+  const [isPlaying, setIsPlaying] = React.useState(false);
 
   React.useEffect(() => {
+    setIsPlaying(false);
     const video = videoRef.current;
     if (!video) return;
 
@@ -65,9 +66,7 @@ function ScrollPlayVideo({
     const tryPlay = () => {
       const playPromise = video.play();
       if (playPromise !== undefined) {
-        playPromise.catch(() => {
-          // Autoplay policy prevented playback, ignore or retry
-        });
+        playPromise.catch(() => {});
       }
     };
 
@@ -95,36 +94,53 @@ function ScrollPlayVideo({
   }, [src]);
 
   return (
-    <video
-      ref={videoRef}
-      src={src}
-      autoPlay={autoPlay}
-      loop={loop}
-      muted={muted}
-      playsInline={playsInline}
-      webkit-playsinline="true"
-      x5-playsinline="true"
-      preload={preload}
-      poster={poster}
-      onEnded={onEnded}
-      onLoadedData={(e) => {
-        e.currentTarget.play().catch(() => {});
-      }}
-      onError={(e) => {
-        if (fallback && e.currentTarget.src !== fallback) {
-          e.currentTarget.src = fallback;
-          e.currentTarget.load();
-          e.currentTarget.play().catch(() => {});
-        }
-      }}
+    <div
       style={{
-        objectFit: 'cover',
-        display: 'block',
-        ...style
+        position: 'relative',
+        width: '100%',
+        height: '100%',
+        backgroundColor: '#000000',
+        overflow: 'hidden'
       }}
-      className={className}
-      {...rest}
-    />
+    >
+      <video
+        ref={videoRef}
+        src={src}
+        autoPlay={autoPlay}
+        loop={loop}
+        muted={muted}
+        playsInline={playsInline}
+        webkit-playsinline="true"
+        x5-playsinline="true"
+        preload={preload}
+        onEnded={onEnded}
+        onPlaying={() => setIsPlaying(true)}
+        onTimeUpdate={(e) => {
+          if (e.currentTarget.currentTime > 0.05 && !isPlaying) {
+            setIsPlaying(true);
+          }
+        }}
+        onError={(e) => {
+          if (fallback && e.currentTarget.src !== fallback) {
+            e.currentTarget.src = fallback;
+            e.currentTarget.load();
+            e.currentTarget.play().catch(() => {});
+          }
+        }}
+        style={{
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          display: 'block',
+          backgroundColor: '#000000',
+          opacity: isPlaying ? 1 : 0,
+          transition: 'opacity 0.25s ease',
+          ...style
+        }}
+        className={className}
+        {...rest}
+      />
+    </div>
   );
 }
 
@@ -236,7 +252,7 @@ export default function HomePage() {
         height: 'calc(100vh - 73px)',
         minHeight: 'calc(100vh - 73px)',
         overflow: 'hidden',
-        background: '#09090c',
+        background: '#000000',
         transition: 'all 0.5s ease'
       }}>
         {/* STAGE 1: SINGLE INTRO VIDEO (MIDDLE VIDEO) */}
