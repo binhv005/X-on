@@ -1,151 +1,14 @@
 {
   "products": [
     {
-      "id": "xon_1790154630492_gma5eh",
-      "createdAt": "2026-09-23T09:10:30.492Z",
-      "updatedAt": "2026-09-23T09:10:30.492Z",
-      "name": "test2",
-      "slug": "test2",
-      "SKU": "XON-347",
-      "images": [
-        "/assets/images/IMG_7098.webp"
-      ],
-      "price": 10000,
-      "sale_price": 20000,
-      "sizes": [
-        "XS",
-        "S",
-        "M",
-        "L",
-        "Custom"
-      ],
-      "variants": [],
-      "stock": 25,
-      "status": "active",
-      "product_type": "Handmade Press-On Nails",
-      "categories": [
-        "Handmade Press-On Nails"
-      ],
-      "shape": "Coffin",
-      "themes": [
-        "Cat Eye & Chrome"
-      ],
-      "size_stock": {
-        "XS": 5,
-        "S": 5,
-        "M": 5,
-        "L": 5,
-        "Custom": 5
-      },
-      "is_best_seller": false,
-      "is_bundle": false,
-      "discount_percentage": null,
-      "description": "Handcrafted with salon-grade builder gel and high-clarity topcoat.",
-      "additional_info": {
-        "included": "10 Nails + Complete Application Kit",
-        "finish": "Glossy Gel",
-        "wear_time": "Up to 3 weeks"
-      },
-      "rating": 5,
-      "reviews_count": 0
-    },
-    {
-      "id": "xon_1790153046729_t56828",
-      "createdAt": "2026-09-23T08:44:06.729Z",
-      "updatedAt": "2026-09-23T09:05:28.461Z",
-      "name": "test",
-      "slug": "test-1",
-      "SKU": "XON-664",
-      "images": [
-        "https://images.unsplash.com/photo-1632345031435-8727f6897d53?auto=format&fit=crop&w=800&q=80",
-        "/uploads/product-1790153022787-378699367.JPG",
-        "/uploads/product-1790153022819-652600574.JPG",
-        "/uploads/product-1790153022833-445699180.JPG",
-        "/uploads/product-1790153022847-568941864.JPG"
-      ],
-      "price": 4000,
-      "sale_price": 2000000,
-      "sizes": [
-        "XS",
-        "S",
-        "M",
-        "L",
-        "Custom"
-      ],
-      "variants": [],
-      "stock": 0,
-      "status": "out_of_stock",
-      "product_type": "Handmade Press-On Nails",
-      "categories": [
-        "Handmade Press-On Nails"
-      ],
-      "shape": "Coffin",
-      "themes": [
-        "Cat Eye & Chrome"
-      ],
-      "is_best_seller": true,
-      "is_bundle": true,
-      "discount_percentage": null,
-      "description": "Handcrafted with salon-grade builder gel and high-clarity topcoat.",
-      "additional_info": {
-        "included": "10 Nails + Complete Application Kit",
-        "finish": "Glossy Gel",
-        "wear_time": "Up to 3 weeks"
-      },
-      "rating": 5,
-      "reviews_count": 0
-    },
-    {
-      "id": "xon_1790149055708_jqfap5",
-      "createdAt": "2026-09-23T07:37:35.708Z",
-      "updatedAt": "2026-09-23T08:00:44.993Z",
-      "name": "test",
-      "slug": "test",
-      "SKU": "XON-151",
-      "images": [
-        "https://images.unsplash.com/photo-1632345031435-8727f6897d53?auto=format&fit=crop&w=800&q=80"
-      ],
-      "price": 40000,
-      "sale_price": 25000.01,
-      "sizes": [
-        "XS",
-        "S",
-        "M",
-        "L",
-        "Custom"
-      ],
-      "variants": [],
-      "stock": 25,
-      "status": "draft",
-      "product_type": "Handmade Press-On Nails",
-      "categories": [
-        "Handmade Press-On Nails"
-      ],
-      "shape": "Coffin",
-      "themes": [
-        "Cat Eye & Chrome"
-      ],
-      "is_best_seller": false,
-      "is_bundle": false,
-      "discount_percentage": null,
-      "description": "Handcrafted with salon-grade builder gel and high-clarity topcoat.",
-      "additional_info": {
-        "included": "10 Nails + Complete Application Kit",
-        "finish": "Glossy Gel",
-        "wear_time": "Up to 3 weeks"
-      },
-      "rating": 5,
-      "reviews_count": 0
-    },
-    {
       "id": "prod-1",
       "name": "CF-35-0961 Luxury Chrome Velvet",
       "slug": "cf-35-0961-luxury-chrome-velvet",
       "SKU": "XON-CF-0961",
       "images": [
         "/assets/images/IMG_7098.webp",
-        "/assets/images/IMG_7102.webp"
-
+        "/assets/images/IMG_7102.webp",
+        "/assets/images/IMG_7103.webp"
       ],
       "price": 48,
       "sale_price": 39,
@@ -201,8 +64,8 @@
       "SKU": "XON-AL-0442",
       "images": [
         "/assets/images/IMG_7099.webp",
-        "/assets/images/IMG_7103.webp"
-
+        "/assets/images/IMG_7103.webp",
+        "/assets/images/IMG_7107.webp"
       ],
       "price": 42,
       "sale_price": 36,
@@ -248,8 +111,8 @@
       "SKU": "XON-ST-0118",
       "images": [
         "/assets/images/IMG_7100.webp",
-        "/assets/images/IMG_7102.webp"
-
+        "/assets/images/IMG_7102.webp",
+        "/assets/images/IMG_7104.webp"
       ],
       "price": 52,
       "sale_price": 45,
@@ -292,8 +155,8 @@
       "SKU": "XON-SQ-0312",
       "images": [
         "/assets/images/IMG_7101.webp",
-        "/assets/images/IMG_7098.webp"
-
+        "/assets/images/IMG_7098.webp",
+        "/assets/images/IMG_7105.webp"
       ],
       "price": 38,
       "sale_price": null,
@@ -340,9 +203,9 @@
       "slug": "ov-08-0720-pearl-aurora-oval",
       "SKU": "XON-OV-0720",
       "images": [
+        "/assets/images/IMG_7102.webp",
         "/assets/images/IMG_7103.webp",
         "/assets/images/IMG_7104.webp"
-
       ],
       "price": 44,
       "sale_price": 38,
@@ -385,8 +248,8 @@
       "SKU": "XON-RD-0551",
       "images": [
         "/assets/images/IMG_7104.webp",
-        "/assets/images/IMG_7099.webp"
-
+        "/assets/images/IMG_7099.webp",
+        "/assets/images/IMG_7100.webp"
       ],
       "price": 46,
       "sale_price": null,
@@ -429,7 +292,6 @@
       "images": [
         "/assets/images/IMG_7106.webp",
         "/assets/images/IMG_7110.webp"
-
       ],
       "price": 14,
       "sale_price": 11.5,
@@ -472,7 +334,6 @@
       "images": [
         "/assets/images/IMG_7110.webp",
         "/assets/images/IMG_7106.webp"
-
       ],
       "price": 9,
       "sale_price": null,
@@ -510,8 +371,7 @@
       "SKU": "XON-ESS-003",
       "images": [
         "/assets/images/IMG_7105.webp",
-        "/assets/images/IMG_7110.webp"
-
+        "/assets/images/IMG_7101.webp"
       ],
       "price": 18,
       "sale_price": 15,
@@ -548,8 +408,9 @@
       "slug": "ultimate-luxury-velvet-essentials-trio-bundle",
       "SKU": "XON-BND-001",
       "images": [
-        "/assets/images/IMG_7098.webp"
-
+        "/assets/images/IMG_7107.webp",
+        "/assets/images/IMG_7098.webp",
+        "/assets/images/IMG_7106.webp"
       ],
       "price": 98,
       "sale_price": 74,
@@ -591,8 +452,9 @@
       "slug": "glamour-stiletto-aurora-duo-bundle",
       "SKU": "XON-BND-002",
       "images": [
-        "/assets/images/IMG_7098.webp"
-
+        "/assets/images/IMG_7103.webp",
+        "/assets/images/IMG_7100.webp",
+        "/assets/images/IMG_7102.webp"
       ],
       "price": 88,
       "sale_price": 68,

@@ -156,6 +156,12 @@ export default function ProductDetailPage() {
     );
   }
 
+  const rawProductImages = Array.isArray(product?.images)
+    ? product.images.filter(Boolean)
+    : (typeof product?.images === 'string' && product?.images ? [product.images] : []);
+  const productImages = rawProductImages.length > 0 ? rawProductImages : ['/assets/images/IMG_7098.webp'];
+  const activeImage = (selectedImage && productImages.includes(selectedImage)) ? selectedImage : productImages[0];
+
   return (
     <div className="section-py" style={{ paddingTop: '2.5rem' }}>
       <div className="container">
@@ -184,7 +190,7 @@ export default function ProductDetailPage() {
               boxShadow: 'var(--shadow-sm)'
             }}>
               <img
-                src={selectedImage || product.images?.[0] || '/assets/images/IMG_7098.webp'}
+                src={activeImage}
                 alt={product.name}
                 onError={(e) => {
                   e.currentTarget.onerror = null;
@@ -202,14 +208,14 @@ export default function ProductDetailPage() {
               />
 
               {/* Prev / Next Navigation Arrows (Only if multiple images) */}
-              {product.images && product.images.length > 1 && (
+              {productImages.length > 1 && (
                 <>
                   <button
                     type="button"
                     onClick={() => {
-                      const currentIdx = product.images.indexOf(selectedImage || product.images[0]);
-                      const prevIdx = (currentIdx - 1 + product.images.length) % product.images.length;
-                      setSelectedImage(product.images[prevIdx]);
+                      const currentIdx = productImages.indexOf(activeImage);
+                      const prevIdx = (currentIdx - 1 + productImages.length) % productImages.length;
+                      setSelectedImage(productImages[prevIdx]);
                     }}
                     aria-label="Previous Image"
                     style={{
@@ -241,9 +247,9 @@ export default function ProductDetailPage() {
                   <button
                     type="button"
                     onClick={() => {
-                      const currentIdx = product.images.indexOf(selectedImage || product.images[0]);
-                      const nextIdx = (currentIdx + 1) % product.images.length;
-                      setSelectedImage(product.images[nextIdx]);
+                      const currentIdx = productImages.indexOf(activeImage);
+                      const nextIdx = (currentIdx + 1) % productImages.length;
+                      setSelectedImage(productImages[nextIdx]);
                     }}
                     aria-label="Next Image"
                     style={{
@@ -287,14 +293,14 @@ export default function ProductDetailPage() {
                     letterSpacing: '0.04em',
                     zIndex: 2
                   }}>
-                    {Math.max(1, product.images.indexOf(selectedImage || product.images[0]) + 1)} / {product.images.length}
+                    {Math.max(1, productImages.indexOf(activeImage) + 1)} / {productImages.length}
                   </div>
                 </>
               )}
             </div>
 
             {/* Thumbnail Strip */}
-            {product.images && product.images.length > 1 && (
+            {productImages.length > 1 && (
               <div style={{
                 display: 'flex',
                 gap: '0.75rem',
@@ -302,8 +308,8 @@ export default function ProductDetailPage() {
                 paddingBottom: '0.5rem',
                 scrollbarWidth: 'thin'
               }}>
-                {product.images.map((img, idx) => {
-                  const isActive = (selectedImage || product.images[0]) === img;
+                {productImages.map((img, idx) => {
+                  const isActive = activeImage === img;
                   return (
                     <button
                       key={idx}

@@ -209,7 +209,15 @@ export default function BlogDetailPage() {
                   return (
                     <div key={idx}>
                       <div className="bd-cover">
-                        <img src={block.url} alt={block.caption || post.title} loading="lazy" />
+                        <img
+                          src={block.url || '/assets/images/IMG_7098.webp'}
+                          alt={block.caption || post.title}
+                          loading="lazy"
+                          onError={(e) => {
+                            e.currentTarget.onerror = null;
+                            e.currentTarget.src = '/assets/images/IMG_7098.webp';
+                          }}
+                        />
                       </div>
                       {block.caption && <span className="bd-caption">{block.caption}</span>}
                     </div>
@@ -240,7 +248,14 @@ export default function BlogDetailPage() {
             {/* Cover lớn nếu content chưa có ảnh nào */}
             {images.length === 0 && mainImage && (
               <div className="bd-cover">
-                <img src={mainImage.url} alt={post.title} />
+                <img
+                  src={mainImage.url || '/assets/images/IMG_7098.webp'}
+                  alt={post.title}
+                  onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = '/assets/images/IMG_7098.webp';
+                  }}
+                />
               </div>
             )}
 
@@ -252,7 +267,15 @@ export default function BlogDetailPage() {
                 <div className="bd-gallery">
                   {galleryImages.map((url, i) => (
                     <a key={i} href={url} target="_blank" rel="noreferrer">
-                      <img src={url} alt={`${post.title} detail ${i + 1}`} loading="lazy" />
+                      <img
+                        src={url || '/assets/images/IMG_7098.webp'}
+                        alt={`${post.title} detail ${i + 1}`}
+                        loading="lazy"
+                        onError={(e) => {
+                          e.currentTarget.onerror = null;
+                          e.currentTarget.src = '/assets/images/IMG_7098.webp';
+                        }}
+                      />
                     </a>
                   ))}
                 </div>

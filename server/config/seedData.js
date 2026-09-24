@@ -29,8 +29,8 @@ export function seedInitialData() {
       SKU: 'XON-CF-0961',
       images: [
         '/assets/images/IMG_7098.webp',
-        '/assets/images/IMG_7098.webp',
-        '/assets/images/IMG_7098.webp'
+        '/assets/images/IMG_7102.webp',
+        '/assets/images/IMG_7103.webp'
       ],
       price: 48.00,
       sale_price: 39.00,
@@ -64,8 +64,9 @@ export function seedInitialData() {
       slug: 'al-12-0442-ethereal-french-rose-almond',
       SKU: 'XON-AL-0442',
       images: [
-        '/assets/images/IMG_7098.webp',
-        '/assets/images/IMG_7098.webp'
+        '/assets/images/IMG_7099.webp',
+        '/assets/images/IMG_7103.webp',
+        '/assets/images/IMG_7107.webp'
       ],
       price: 42.00,
       sale_price: 36.00,
@@ -96,8 +97,9 @@ export function seedInitialData() {
       slug: 'st-99-0118-obsidian-gold-foil-stiletto',
       SKU: 'XON-ST-0118',
       images: [
-        '/assets/images/IMG_7098.webp',
-        '/assets/images/IMG_7098.webp'
+        '/assets/images/IMG_7100.webp',
+        '/assets/images/IMG_7102.webp',
+        '/assets/images/IMG_7104.webp'
       ],
       price: 52.00,
       sale_price: 45.00,
@@ -127,7 +129,9 @@ export function seedInitialData() {
       slug: 'sq-44-0312-nude-glaze-classic-square',
       SKU: 'XON-SQ-0312',
       images: [
-        '/assets/images/IMG_7098.webp'
+        '/assets/images/IMG_7101.webp',
+        '/assets/images/IMG_7098.webp',
+        '/assets/images/IMG_7105.webp'
       ],
       price: 38.00,
       sale_price: null,
@@ -158,7 +162,9 @@ export function seedInitialData() {
       slug: 'ov-08-0720-pearl-aurora-oval',
       SKU: 'XON-OV-0720',
       images: [
-        '/assets/images/IMG_7098.webp'
+        '/assets/images/IMG_7102.webp',
+        '/assets/images/IMG_7103.webp',
+        '/assets/images/IMG_7104.webp'
       ],
       price: 44.00,
       sale_price: 38.00,
@@ -186,7 +192,9 @@ export function seedInitialData() {
       slug: 'rd-19-0551-ruby-jewel-round-short',
       SKU: 'XON-RD-0551',
       images: [
-        '/assets/images/IMG_7098.webp'
+        '/assets/images/IMG_7104.webp',
+        '/assets/images/IMG_7099.webp',
+        '/assets/images/IMG_7100.webp'
       ],
       price: 46.00,
       sale_price: null,
@@ -215,7 +223,8 @@ export function seedInitialData() {
       slug: 'x-on-salon-pro-hold-nail-adhesive',
       SKU: 'XON-ESS-001',
       images: [
-        '/assets/images/IMG_7098.webp'
+        '/assets/images/IMG_7106.webp',
+        '/assets/images/IMG_7110.webp'
       ],
       price: 14.00,
       sale_price: 11.50,
@@ -244,7 +253,8 @@ export function seedInitialData() {
       slug: 'ultra-bond-waterproof-gel-adhesive-tabs',
       SKU: 'XON-ESS-002',
       images: [
-        '/assets/images/IMG_7098.webp'
+        '/assets/images/IMG_7110.webp',
+        '/assets/images/IMG_7106.webp'
       ],
       price: 9.00,
       sale_price: null,
@@ -272,7 +282,8 @@ export function seedInitialData() {
       slug: 'organic-cuticle-recovery-elixir-prep-kit',
       SKU: 'XON-ESS-003',
       images: [
-        '/assets/images/IMG_7098.webp'
+        '/assets/images/IMG_7105.webp',
+        '/assets/images/IMG_7101.webp'
       ],
       price: 18.00,
       sale_price: 15.00,
@@ -301,8 +312,9 @@ export function seedInitialData() {
       slug: 'ultimate-luxury-velvet-essentials-trio-bundle',
       SKU: 'XON-BND-001',
       images: [
+        '/assets/images/IMG_7107.webp',
         '/assets/images/IMG_7098.webp',
-        '/assets/images/IMG_7098.webp'
+        '/assets/images/IMG_7106.webp'
       ],
       price: 98.00,
       sale_price: 74.00,
@@ -330,7 +342,9 @@ export function seedInitialData() {
       slug: 'glamour-stiletto-aurora-duo-bundle',
       SKU: 'XON-BND-002',
       images: [
-        '/assets/images/IMG_7098.webp'
+        '/assets/images/IMG_7103.webp',
+        '/assets/images/IMG_7100.webp',
+        '/assets/images/IMG_7102.webp'
       ],
       price: 88.00,
       sale_price: 68.00,
@@ -545,7 +559,7 @@ export function seedInitialData() {
       id: 'gal-2',
       title: 'French Blossom Rosebud Almond',
       collection: 'Now Selling',
-      media: '/assets/images/IMG_7098.webp',
+      media: '/assets/images/IMG_7099.webp',
       linked_product: 'prod-2',
       size_labels: ['S', 'M'],
       status: 'published',
@@ -555,7 +569,7 @@ export function seedInitialData() {
       id: 'gal-3',
       title: 'Obsidian 24K Leaf Stiletto',
       collection: 'Now Selling',
-      media: '/assets/images/IMG_7098.webp',
+      media: '/assets/images/IMG_7100.webp',
       linked_product: 'prod-3',
       size_labels: ['M', 'L'],
       status: 'published',
@@ -565,7 +579,7 @@ export function seedInitialData() {
       id: 'gal-4',
       title: 'Pearl Aurora Glaze Square',
       collection: 'Now Selling',
-      media: '/assets/images/IMG_7098.webp',
+      media: '/assets/images/IMG_7101.webp',
       linked_product: 'prod-5',
       size_labels: ['S', 'M', 'L'],
       status: 'published',
@@ -575,7 +589,7 @@ export function seedInitialData() {
       id: 'gal-5',
       title: 'Ruby Crystal Petite Round',
       collection: 'Now Selling',
-      media: '/assets/images/IMG_7098.webp',
+      media: '/assets/images/IMG_7104.webp',
       linked_product: 'prod-6',
       size_labels: ['S', 'M'],
       status: 'published',
@@ -585,7 +599,7 @@ export function seedInitialData() {
       id: 'gal-6',
       title: 'Modern Minimalist Milk Glaze',
       collection: 'Now Selling',
-      media: '/assets/images/IMG_7098.webp',
+      media: '/assets/images/IMG_7105.webp',
       linked_product: 'prod-4',
       size_labels: ['XS', 'S', 'M', 'L'],
       status: 'published',

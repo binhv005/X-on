@@ -259,7 +259,15 @@ export default function GalleryProductPage() {
                 return (
                   <article key={item.id} className="gp-card">
                     <div className="gp-media">
-                      <img src={item.media} alt={item.title} loading="lazy" />
+                      <img
+                        src={item.media || '/assets/images/IMG_7098.webp'}
+                        alt={item.title}
+                        loading="lazy"
+                        onError={(e) => {
+                          e.currentTarget.onerror = null;
+                          e.currentTarget.src = '/assets/images/IMG_7098.webp';
+                        }}
+                      />
                       <button
                         type="button"
                         onClick={() => toggleFavorite(item.id)}

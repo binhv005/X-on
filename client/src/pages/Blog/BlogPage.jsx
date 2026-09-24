@@ -124,7 +124,14 @@ export default function BlogPage() {
           <article className="blog-featured">
             <Link to={`/blog/${featured.slug}`} className="blog-featured-media">
               <span className="blog-badge-featured">FEATURED</span>
-              <img src={featured.cover} alt={featured.title} />
+              <img
+                src={featured.cover || '/assets/images/IMG_7098.webp'}
+                alt={featured.title}
+                onError={(e) => {
+                  e.currentTarget.onerror = null;
+                  e.currentTarget.src = '/assets/images/IMG_7098.webp';
+                }}
+              />
             </Link>
             <div className="blog-featured-content">
               <Link to={`/blog/${featured.slug}`}>
@@ -151,7 +158,15 @@ export default function BlogPage() {
             {paged.map((post) => (
               <article key={post.id} className="blog-card">
                 <Link to={`/blog/${post.slug}`} className="blog-card-media">
-                  <img src={post.cover} alt={post.title} loading="lazy" />
+                  <img
+                    src={post.cover || '/assets/images/IMG_7098.webp'}
+                    alt={post.title}
+                    loading="lazy"
+                    onError={(e) => {
+                      e.currentTarget.onerror = null;
+                      e.currentTarget.src = '/assets/images/IMG_7098.webp';
+                    }}
+                  />
                 </Link>
                 <div className="blog-card-body">
                   <Link to={`/blog/${post.slug}`}>

@@ -37,8 +37,10 @@ app.use(express.json({ limit: '15mb' }));
 app.use(express.urlencoded({ extended: true, limit: '15mb' }));
 app.use(morgan('dev'));
 
-// Static serve uploaded files
+// Static serve uploaded files and client public assets
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/assets', express.static(path.join(__dirname, '../client/public/assets')));
+app.use(express.static(path.join(__dirname, '../client/public')));
 
 // API Routes
 app.use('/api/products', productRoutes);

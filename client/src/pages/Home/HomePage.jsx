@@ -379,7 +379,7 @@ export default function HomePage() {
 
 
 
-        {/* Bottom Left Action Buttons: SHOP NOW & CALL NOW (Desktop/Tablet only, hidden on mobile) */}
+        {/* Bottom Left Action Buttons: SHOP NOW & CALL NOW */}
         <div
           className="hero-action-buttons"
           style={{
@@ -418,9 +418,9 @@ export default function HomePage() {
             SHOP NOW
           </Link>
 
-          {/* CALL NOW Button */}
-          <a
-            href="tel:689-212-8888"
+          {/* CALL NOW / CONTACT Button */}
+          <Link
+            to="/contact"
             style={{
               background: 'linear-gradient(135deg, #e86154 0%, #c44237 100%)',
               color: '#ffffff',
@@ -440,20 +440,45 @@ export default function HomePage() {
             onMouseOut={e => { e.currentTarget.style.filter = 'brightness(1)'; e.currentTarget.style.transform = 'translateY(0)'; }}
           >
             CALL NOW
-          </a>
+          </Link>
         </div>
 
         {/* Responsive Mobile Styles */}
         <style>{`
           @media (max-width: 900px) {
             .hero-action-buttons {
-              display: none !important;
+              bottom: 1.5rem !important;
+              left: 1rem !important;
+              right: 1rem !important;
+              justify-content: center !important;
+              gap: 0.75rem !important;
+            }
+            .hero-action-buttons a {
+              flex: 1 1 0 !important;
+              text-align: center !important;
+              padding: 0.8rem 1rem !important;
+              font-size: 0.85rem !important;
+              max-width: 180px !important;
             }
             .hero-video-grid {
               grid-template-columns: 1fr !important;
             }
             .hero-col-1, .hero-col-2 {
               display: none !important;
+            }
+          }
+          @media (max-width: 480px) {
+            .hero-action-buttons {
+              bottom: 1.25rem !important;
+              left: 0.75rem !important;
+              right: 0.75rem !important;
+              gap: 0.5rem !important;
+            }
+            .hero-action-buttons a {
+              padding: 0.7rem 0.5rem !important;
+              font-size: 0.78rem !important;
+              letter-spacing: 0.05em !important;
+              max-width: 160px !important;
             }
           }
           @media (min-width: 901px) and (max-width: 1200px) {

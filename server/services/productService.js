@@ -277,6 +277,10 @@ class ProductService {
     if (updates.size_stock !== undefined) updates.size_stock = updates.size_stock;
     if (updates.is_best_seller !== undefined) updates.is_best_seller = Boolean(updates.is_best_seller);
     if (updates.is_bundle !== undefined) updates.is_bundle = Boolean(updates.is_bundle);
+    if (updates.images !== undefined) {
+      const filteredImages = Array.isArray(updates.images) ? updates.images.filter(Boolean) : (updates.images ? [updates.images] : []);
+      updates.images = filteredImages.length > 0 ? filteredImages : ['/assets/images/IMG_7098.webp'];
+    }
 
     return productRepository.update(id, updates);
   }

@@ -28,6 +28,20 @@ import ConfirmDialog from '../../../components/common/ConfirmDialog';
 import LoadingSpinner from '../../../components/common/LoadingSpinner';
 import { useToast } from '../../../context/ToastContext';
 
+const AVAILABLE_STORE_IMAGES = [
+  { name: 'IMG_7098 (Chrome Velvet)', path: '/assets/images/IMG_7098.webp' },
+  { name: 'IMG_7099 (Rose Almond)', path: '/assets/images/IMG_7099.webp' },
+  { name: 'IMG_7100 (Obsidian Gold)', path: '/assets/images/IMG_7100.webp' },
+  { name: 'IMG_7101 (Nude Glaze)', path: '/assets/images/IMG_7101.webp' },
+  { name: 'IMG_7102 (Pearl Velvet)', path: '/assets/images/IMG_7102.webp' },
+  { name: 'IMG_7103 (Aurora Oval)', path: '/assets/images/IMG_7103.webp' },
+  { name: 'IMG_7104 (Ruby Jewel)', path: '/assets/images/IMG_7104.webp' },
+  { name: 'IMG_7105 (Cuticle Elixir)', path: '/assets/images/IMG_7105.webp' },
+  { name: 'IMG_7106 (Salon Glue)', path: '/assets/images/IMG_7106.webp' },
+  { name: 'IMG_7107 (Velvet Trio)', path: '/assets/images/IMG_7107.webp' },
+  { name: 'IMG_7110 (Adhesive Tabs)', path: '/assets/images/IMG_7110.webp' }
+];
+
 export default function AdminProductsPage() {
   const [searchParams] = useSearchParams();
   const { addToast } = useToast();
@@ -75,6 +89,23 @@ export default function AdminProductsPage() {
   const fileInputRef = useRef(null);
   const [uploadingImage, setUploadingImage] = useState(false);
   const [newImageUrl, setNewImageUrl] = useState('');
+
+  const handleTogglePresetImage = (imagePath) => {
+    setFormData(prev => {
+      const current = prev.images || [];
+      if (current.includes(imagePath)) {
+        return {
+          ...prev,
+          images: current.filter(img => img !== imagePath)
+        };
+      } else {
+        return {
+          ...prev,
+          images: [...current, imagePath]
+        };
+      }
+    });
+  };
 
   const handleImageFileChange = async (e) => {
     const files = Array.from(e.target.files || []);
@@ -624,12 +655,20 @@ export default function AdminProductsPage() {
                   </tr>
                 ) : (
                   filteredProducts.map(product => {
-                    const img = product.images?.[0] || 'https://images.unsplash.com/photo-1632345031435-8727f6897d53?auto=format&fit=crop&w=150&q=80';
+                    const img = product.images?.[0] || '/assets/images/IMG_7098.webp';
                     return (
                       <tr key={product.id} style={{ borderBottom: '1px solid var(--border-subtle)', transition: 'background 0.15s ease', whiteSpace: 'nowrap' }}>
                         <td style={{ padding: '0.75rem 1rem', whiteSpace: 'nowrap' }}>
-                          <div style={{ width: '48px', height: '48px', borderRadius: '6px', overflow: 'hidden', border: '1px solid var(--border-subtle)' }}>
-                            <img src={img} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                          <div style={{ width: '48px', height: '48px', borderRadius: '6px', overflow: 'hidden', border: '1px solid var(--border-subtle)', background: '#f5f5f5' }}>
+                            <img
+                              src={img}
+                              alt=""
+                              onError={(e) => {
+                                e.currentTarget.onerror = null;
+                                e.currentTarget.src = '/assets/images/IMG_7098.webp';
+                              }}
+                              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                            />
                           </div>
                         </td>
                         <td style={{ padding: '0.75rem 1rem', whiteSpace: 'nowrap' }}>
@@ -1157,7 +1196,7 @@ export default function AdminProductsPage() {
             </div>
 
             {/* Direct URL Input Option with Add Button */}
-            <div style={{ display: 'flex', gap: '0.5rem' }}>
+            <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1rem' }}>
               <div style={{ position: 'relative', flex: 1 }}>
                 <input
                   type="text"
@@ -1170,7 +1209,7 @@ export default function AdminProductsPage() {
                       handleAddImageUrl();
                     }
                   }}
-                  placeholder="Or paste an image URL directly (e.g. https://...)"
+                  placeholder="Or paste an image URL directly (e.g. /assets/images/... or https://...)"
                   style={{ fontSize: '0.85rem', paddingLeft: '2.4rem' }}
                 />
                 <Link2 size={16} color="var(--text-muted)" style={{ position: 'absolute', left: '0.85rem', top: '50%', transform: 'translateY(-50%)' }} />
@@ -1184,6 +1223,81 @@ export default function AdminProductsPage() {
               >
                 + Add Image
               </button>
+            </div>
+
+            {/* Quick Store Asset Library Picker */}
+            <div style={{
+              background: 'rgba(212, 175, 55, 0.04)',
+              border: '1px solid rgba(212, 175, 55, 0.25)',
+              borderRadius: '8px',
+              padding: '0.75rem 0.85rem'
+            }}>
+              <div style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--accent-gold-dark)', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <span>📁 Select from Store Asset Library (client/public/assets/images):</span>
+                <span style={{ fontSize: '0.72rem', fontWeight: 500, color: 'var(--text-muted)' }}>Click thumbnail to toggle in gallery</span>
+              </div>
+              <div style={{
+                display: 'flex',
+                gap: '0.5rem',
+                overflowX: 'auto',
+                paddingBottom: '0.35rem',
+                scrollbarWidth: 'thin'
+              }}>
+                {AVAILABLE_STORE_IMAGES.map((preset) => {
+                  const isSelected = (formData.images || []).includes(preset.path);
+                  return (
+                    <button
+                      key={preset.path}
+                      type="button"
+                      onClick={() => handleTogglePresetImage(preset.path)}
+                      title={`${preset.name} (${isSelected ? 'Click to remove' : 'Click to add'})`}
+                      style={{
+                        position: 'relative',
+                        width: '54px',
+                        height: '54px',
+                        borderRadius: '6px',
+                        overflow: 'hidden',
+                        border: isSelected ? '2px solid var(--accent-gold)' : '1px solid var(--border-subtle)',
+                        background: '#ffffff',
+                        cursor: 'pointer',
+                        padding: 0,
+                        flexShrink: 0,
+                        boxShadow: isSelected ? '0 0 0 2px rgba(212, 175, 55, 0.3)' : 'none',
+                        transition: 'all 0.15s ease'
+                      }}
+                    >
+                      <img
+                        src={preset.path}
+                        alt={preset.name}
+                        onError={(e) => {
+                          e.currentTarget.onerror = null;
+                          e.currentTarget.src = '/assets/images/IMG_7098.webp';
+                        }}
+                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                      />
+                      {isSelected && (
+                        <div style={{
+                          position: 'absolute',
+                          top: '2px',
+                          right: '2px',
+                          background: 'var(--accent-gold)',
+                          color: '#ffffff',
+                          borderRadius: '50%',
+                          width: '14px',
+                          height: '14px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          fontSize: '0.6rem',
+                          fontWeight: 800
+                        }}>
+                          ✓
+                        </div>
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           </div>
 

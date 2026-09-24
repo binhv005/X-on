@@ -7,9 +7,12 @@ export default function ProductCard({ product, compact = false, imageAspect = '1
   const [isHovered, setIsHovered] = useState(false);
   const isOutOfStock = product.status === 'out_of_stock' || (product.stock !== undefined && Number(product.stock) <= 0);
   const hasSale = !isOutOfStock && product.sale_price !== null && product.sale_price !== undefined && product.sale_price < product.price;
-  const images = Array.isArray(product.images) && product.images.length > 0 ? product.images : ['/assets/images/IMG_7098.webp'];
-  const primaryImage = images[0];
-  const secondaryImage = images[1] || null;
+  const rawImages = Array.isArray(product.images)
+    ? product.images.filter(Boolean)
+    : (typeof product.images === 'string' && product.images ? [product.images] : []);
+  const images = rawImages.length > 0 ? rawImages : ['/assets/images/IMG_7098.webp'];
+  const primaryImage = images[0] || '/assets/images/IMG_7098.webp';
+  const secondaryImage = (images.length > 1 && images[1] !== primaryImage) ? images[1] : null;
 
   // Standard sizes to display (or from product)
   const allDisplaySizes = ['XS', 'S', 'M', 'L'];

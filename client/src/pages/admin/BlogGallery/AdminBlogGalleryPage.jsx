@@ -778,8 +778,16 @@ export default function AdminBlogGalleryPage() {
               ) : filteredGallery.map(item => (
                 <tr key={item.id} style={{ borderBottom: '1px solid var(--border-subtle)' }}>
                   <td style={{ padding: '0.75rem 1rem' }}>
-                    <div style={{ width: '48px', height: '48px', borderRadius: '4px', overflow: 'hidden' }}>
-                      <img src={item.media} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    <div style={{ width: '48px', height: '48px', borderRadius: '4px', overflow: 'hidden', background: '#f5f5f5' }}>
+                      <img
+                        src={item.media}
+                        alt=""
+                        onError={(e) => {
+                          e.currentTarget.onerror = null;
+                          e.currentTarget.src = '/assets/images/IMG_7098.webp';
+                        }}
+                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                      />
                     </div>
                   </td>
                   <td style={{ padding: '0.75rem 1rem', fontWeight: 600, color: 'var(--text-primary)' }}>{item.title}</td>
@@ -831,8 +839,16 @@ export default function AdminBlogGalleryPage() {
               ) : filteredComingSoon.map(col => (
                 <tr key={col.id} style={{ borderBottom: '1px solid var(--border-subtle)' }}>
                   <td style={{ padding: '0.75rem 1rem' }}>
-                    <div style={{ width: '60px', height: '40px', borderRadius: '4px', overflow: 'hidden' }}>
-                      <img src={col.media} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    <div style={{ width: '60px', height: '40px', borderRadius: '4px', overflow: 'hidden', background: '#f5f5f5' }}>
+                      <img
+                        src={col.media}
+                        alt=""
+                        onError={(e) => {
+                          e.currentTarget.onerror = null;
+                          e.currentTarget.src = '/assets/images/IMG_7098.webp';
+                        }}
+                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                      />
                     </div>
                   </td>
                   <td style={{ padding: '0.75rem 1rem' }}>
@@ -899,10 +915,13 @@ export default function AdminBlogGalleryPage() {
                     {[
                       '/assets/images/IMG_7098.webp',
                       '/assets/images/IMG_7099.webp',
+                      '/assets/images/IMG_7100.webp',
                       '/assets/images/IMG_7101.webp',
                       '/assets/images/IMG_7102.webp',
                       '/assets/images/IMG_7103.webp',
                       '/assets/images/IMG_7104.webp',
+                      '/assets/images/IMG_7105.webp',
+                      '/assets/images/IMG_7106.webp',
                       '/assets/images/IMG_7107.webp',
                       '/assets/images/IMG_7110.webp'
                     ].map((img, i) => (
@@ -1136,7 +1155,9 @@ export default function AdminBlogGalleryPage() {
                       '/assets/images/IMG_7103.webp',
                       '/assets/images/IMG_7104.webp',
                       '/assets/images/IMG_7105.webp',
-                      '/assets/images/IMG_7106.webp'
+                      '/assets/images/IMG_7106.webp',
+                      '/assets/images/IMG_7107.webp',
+                      '/assets/images/IMG_7110.webp'
                     ].map((img, i) => (
                       <button
                         key={i}
