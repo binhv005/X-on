@@ -31,6 +31,7 @@ import findUsBg from '../../assets/images/findus-bg.webp';
 import motifTop from '../../assets/images/findus-motif-top.webp';
 import motifBottom from '../../assets/images/findus-motif-bottom.webp';
 import bundlePromoBg from '../../assets/images/bundle-promo-bg.webp';
+import stepCardBg from '../../assets/images/step-card-bg.webp';
 import bundleBannerBg from '../../assets/images/bundle-banner-bg.webp';
 
 // Scroll-triggered Video Component: shows fallback image or pure black until video is actively playing
