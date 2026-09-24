@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
-  Sparkles, Calendar, Bell, ArrowRight, Play,
-  Volume2, VolumeX, CheckCircle2, Camera, Gem, MapPin, X,
-  Truck, ShieldCheck, Leaf, Crown
+  Sparkles, Calendar, Bell, ArrowRight,
+  CheckCircle2, Gem, MapPin, X,
+  Truck, ShieldCheck, Leaf, Crown, ChevronDown
 } from 'lucide-react';
 import { api } from '../../services/api';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
@@ -49,17 +49,10 @@ const FALLBACK_CARDS = [
   }
 ];
 
-const REEL_SRC = '/assets/videos/1K34PRO8K_DMCL0D.mp4';
-
 export default function GalleryComingSoonPage() {
   const { addToast } = useToast();
   const [collections, setCollections] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  // Studio reel modal
-  const [reelModalOpen, setReelModalOpen] = useState(false);
-  const [isMuted, setIsMuted] = useState(true);
-  const videoRef = useRef(null);
 
   // Notify modal
   const [notifyModalOpen, setNotifyModalOpen] = useState(false);
@@ -82,10 +75,6 @@ export default function GalleryComingSoonPage() {
     loadCollections();
   }, []);
 
-  useEffect(() => {
-    if (videoRef.current) videoRef.current.muted = isMuted;
-  }, [isMuted, reelModalOpen]);
-
   const handleOpenNotify = (colTitle) => {
     setSelectedColTitle(colTitle);
     setNotifySuccess(false);
@@ -102,6 +91,47 @@ export default function GalleryComingSoonPage() {
       setNotifyEmail('');
       setNotifySuccess(false);
     }, 2000);
+  };
+
+  const smoothScrollTo = (targetPosition, duration = 850) => {
+    const startPosition = window.pageYOffset || document.documentElement.scrollTop;
+    const distance = targetPosition - startPosition;
+    let startTime = null;
+
+    const prevScrollBehavior = document.documentElement.style.scrollBehavior;
+    document.documentElement.style.scrollBehavior = 'auto';
+
+    // Ease-in-out cubic: chuyển động nhẹ nhàng từ tốn lúc bắt đầu, êm ái khi dừng
+    const easeInOutCubic = (t) => {
+      return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    };
+
+    const step = (currentTime) => {
+      if (!startTime) startTime = currentTime;
+      const timeElapsed = currentTime - startTime;
+      const progress = Math.min(timeElapsed / duration, 1);
+      const ease = easeInOutCubic(progress);
+
+      window.scrollTo(0, startPosition + distance * ease);
+
+      if (timeElapsed < duration) {
+        requestAnimationFrame(step);
+      } else {
+        document.documentElement.style.scrollBehavior = prevScrollBehavior;
+      }
+    };
+
+    requestAnimationFrame(step);
+  };
+
+  const scrollToCollections = () => {
+    const el = document.getElementById('upcoming-collections');
+    if (el) {
+      const headerOffset = 72; // Chiều cao Header cố định
+      const elementPosition = el.getBoundingClientRect().top;
+      const targetY = elementPosition + (window.pageYOffset || document.documentElement.scrollTop) - headerOffset;
+      smoothScrollTo(targetY, 850);
+    }
   };
 
   if (loading) {
@@ -128,41 +158,31 @@ export default function GalleryComingSoonPage() {
       <section className="gcs-hero">
         <div className="gcs-container">
           <div className="gcs-hero-grid">
-            <div>
+            <div className="gcs-hero-content">
               <span className="gcs-eyebrow">
-                <Sparkles size={14} /> Exclusive Sneak Peeks
+                <Sparkles size={13} /> Exclusive Sneak Peeks
               </span>
               <h1 className="gcs-title">
-                Gallery —<br />
                 Coming Soon Collections
               </h1>
               <p className="gcs-desc">
-                Preview our upcoming seasonal releases and high-concept artisan collections currently
-                in development at our Kissimmee design studio.
+                Preview our upcoming seasonal releases and handcrafted artisan collections in development.
               </p>
               <div className="gcs-cta-row">
-                <a href="#upcoming-collections" className="gcs-btn-gold">
+                <button
+                  type="button"
+                  onClick={scrollToCollections}
+                  className="gcs-btn-gold"
+                >
                   Explore Upcoming <ArrowRight size={15} />
-                </a>
-                <button type="button" className="gcs-btn-ghost" onClick={() => setReelModalOpen(true)}>
-                  <Play size={14} fill="#ffffff" /> Watch Studio Reel
                 </button>
               </div>
-              <div className="gcs-stats">
-                <div className="gcs-stat">
-                  <b>{list.length}</b>
-                  <span>Upcoming Collections</span>
-                </div>
-                <div className="gcs-stat-sep" />
-                <div className="gcs-stat">
-                  <b>100%</b>
-                  <span>Handcrafted Designs</span>
-                </div>
-                <div className="gcs-stat-sep" />
-                <div className="gcs-stat">
-                  <b>Be First</b>
-                  <span>Get Notified</span>
-                </div>
+              <div className="gcs-hero-pills">
+                <span className="gcs-pill-item">{list.length} Upcoming Drops</span>
+                <span className="gcs-pill-dot">•</span>
+                <span className="gcs-pill-item">100% Handcrafted</span>
+                <span className="gcs-pill-dot">•</span>
+                <span className="gcs-pill-item">VIP Early Access</span>
               </div>
             </div>
 
@@ -176,36 +196,18 @@ export default function GalleryComingSoonPage() {
             </div>
           </div>
         </div>
-      </section>
 
-      {/* ================= FEATURE BAR ================= */}
-      <div className="gcs-features">
-        <div className="gcs-container">
-          <div className="gcs-features-grid">
-            <div className="gcs-feature">
-              <span className="gcs-feature-ico"><Camera size={22} strokeWidth={1.8} /></span>
-              <div>
-                <b>Real Studio Previews</b>
-                <p>See authentic behind-the-scenes content from our design process.</p>
-              </div>
-            </div>
-            <div className="gcs-feature">
-              <span className="gcs-feature-ico"><Gem size={22} strokeWidth={1.8} /></span>
-              <div>
-                <b>Upcoming Trends</b>
-                <p>Be the first to know what&rsquo;s next in nail artistry.</p>
-              </div>
-            </div>
-            <div className="gcs-feature">
-              <span className="gcs-feature-ico"><Bell size={22} strokeWidth={1.8} /></span>
-              <div>
-                <b>Get Notified</b>
-                <p>Join our list and never miss a new drop.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+        {/* Nút chỉ dẫn cuộn xuống */}
+        <button
+          type="button"
+          onClick={scrollToCollections}
+          className="gcs-scroll-indicator"
+          aria-label="Scroll to upcoming collections"
+        >
+          <span>Scroll to explore</span>
+          <ChevronDown size={14} className="gcs-bounce" />
+        </button>
+      </section>
 
       {/* ================= WHAT'S COMING NEXT ================= */}
       <div className="gcs-list" id="upcoming-collections" style={{ scrollMarginTop: '90px' }}>
@@ -249,49 +251,44 @@ export default function GalleryComingSoonPage() {
         </div>
       </div>
 
-      {/* ================= QUOTE BAND ================= */}
+      {/* ================= QUOTE BAND — Tràn viền 100%, 2 chùm hoa đều 2 bên ================= */}
       <section className="gcs-quote">
-        <div className="gcs-quote-inner">
-          <p>&ldquo;Artistry Takes Time,<br />But Beauty is Always Worth the Wait.&rdquo;</p>
-          <span>X-ON</span>
-        </div>
+        <p>&ldquo; Artistry Takes Time, But Beauty is Always Worth Waiting For &rdquo;</p>
+        <span>— &nbsp;X - O N&nbsp; —</span>
       </section>
 
-      {/* ================= TRUST BAR ================= */}
-      <div className="gcs-trust">
-        <div className="gcs-container">
-          <div className="gcs-trust-grid">
-            <div className="gcs-trust-item"><Crown size={30} strokeWidth={1.6} /><span>Handcrafted<br />Excellence</span></div>
-            <div className="gcs-trust-item"><Truck size={30} strokeWidth={1.6} /><span>Global<br />Shipping</span></div>
-            <div className="gcs-trust-item"><ShieldCheck size={30} strokeWidth={1.6} /><span>Trusted by<br />Professionals</span></div>
-            <div className="gcs-trust-item"><Leaf size={30} strokeWidth={1.6} /><span>Sustainable<br />Beauty Practices</span></div>
+      {/* ================= TRUST STRIP — Giống trang Gallery Product ================= */}
+      <div className="gcs-container" style={{ marginTop: '2.5rem', marginBottom: 0 }}>
+        <div className="gcs-trust">
+          <div className="gcs-trust-item">
+            <span className="gcs-trust-ico">
+              <Crown size={22} strokeWidth={1.8} />
+            </span>
+            <div>
+              <strong>Curated Collections</strong>
+              <span>Fresh designs added regularly</span>
+            </div>
+          </div>
+          <div className="gcs-trust-item">
+            <span className="gcs-trust-ico">
+              <Truck size={22} strokeWidth={1.8} />
+            </span>
+            <div>
+              <strong>Global Shipping</strong>
+              <span>Beauty delivered worldwide</span>
+            </div>
+          </div>
+          <div className="gcs-trust-item">
+            <span className="gcs-trust-ico">
+              <ShieldCheck size={22} strokeWidth={1.8} />
+            </span>
+            <div>
+              <strong>Trusted by Professionals</strong>
+              <span>Salon-grade quality you can trust</span>
+            </div>
           </div>
         </div>
       </div>
-
-      {/* ================= STUDIO REEL MODAL ================= */}
-      {reelModalOpen && (
-        <div className="gcs-overlay" onClick={() => setReelModalOpen(false)}>
-          <div className="gcs-modal gcs-modal-video" onClick={(e) => e.stopPropagation()}>
-            <div className="gcs-modal-head">
-              <h3 className="gcs-modal-title" style={{ color: '#e9dcc2' }}>
-                <Sparkles size={20} color="#d4a338" /> Studio Teaser Reel
-              </h3>
-              <button type="button" className="gcs-x" onClick={() => setReelModalOpen(false)} aria-label="Close">
-                <X size={17} />
-              </button>
-            </div>
-            <video ref={videoRef} src={REEL_SRC} controls autoPlay muted={isMuted} playsInline />
-            <div className="gcs-video-bar">
-              <small>X-ON Kissimmee Design Studio — Behind the Craft</small>
-              <button type="button" className="gcs-mute" onClick={() => setIsMuted((m) => !m)}>
-                {isMuted ? <VolumeX size={15} /> : <Volume2 size={15} />}
-                {isMuted ? 'Unmute' : 'Mute'}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* ================= NOTIFY MODAL ================= */}
       {notifyModalOpen && (

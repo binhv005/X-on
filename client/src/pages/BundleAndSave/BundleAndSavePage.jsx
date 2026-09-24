@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Sparkles, Tag, Gift, CheckCircle, Copy, Check, Percent, ArrowRight, Star } from 'lucide-react';
+import { Sparkles, Gift, Copy, Check, Percent, ArrowRight, Star } from 'lucide-react';
 import { api } from '../../services/api';
 import ProductCard from '../../components/product/ProductCard';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
@@ -49,8 +49,7 @@ export default function BundleAndSavePage() {
   }
 
   const heading = content?.heading || 'Bundle and Save';
-  const subheading = content?.subheading || 'Curated luxury pairings and essential nail toolkits with exclusive discount pricing.';
-  const bannerDiscount = content?.banner_discount || 'Up to 25% OFF';
+  const subheading = content?.subheading || 'Luxury nail pairings & essential toolkits at exclusive bundle prices.';
 
   const discountTiers = [
     {
@@ -100,30 +99,10 @@ export default function BundleAndSavePage() {
         overflow: 'hidden'
       }}>
         <div className="container" style={{ maxWidth: '850px', position: 'relative', zIndex: 2 }}>
-          <div style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '0.5rem',
-            padding: '0.45rem 1.3rem',
-            borderRadius: '999px',
-            background: 'rgba(212, 175, 55, 0.22)',
-            border: '1px solid rgba(245, 211, 118, 0.55)',
-            color: '#f5d376',
-            fontWeight: 800,
-            fontSize: '0.85rem',
-            marginBottom: '1.25rem',
-            textTransform: 'uppercase',
-            letterSpacing: '0.08em',
-            boxShadow: '0 2px 10px rgba(0,0,0,0.3)',
-            backdropFilter: 'blur(6px)'
-          }}>
-            <Tag size={15} color="#f5d376" /> Exclusive Savings: {bannerDiscount}
-          </div>
-
           <h1 className="font-heading" style={{
             fontSize: 'clamp(2.4rem, 5vw, 3.8rem)',
             color: '#ffffff',
-            marginBottom: '1.25rem',
+            marginBottom: '1rem',
             letterSpacing: '-0.02em',
             lineHeight: 1.2,
             textShadow: '0 3px 20px rgba(0, 0, 0, 0.8), 0 1px 4px rgba(0, 0, 0, 0.9)'
@@ -133,35 +112,15 @@ export default function BundleAndSavePage() {
           <p style={{
             color: '#f3f4f6',
             fontSize: '1.15rem',
-            maxWidth: '680px',
-            margin: '0 auto 2.25rem auto',
-            lineHeight: 1.7,
+            maxWidth: '720px',
+            margin: '0 auto',
+            lineHeight: 1.6,
             fontWeight: 500,
+            textWrap: 'balance',
             textShadow: '0 2px 10px rgba(0, 0, 0, 0.8)'
           }}>
             {subheading}
           </p>
-
-          <div style={{
-            display: 'flex',
-            justifyContent: 'center',
-            gap: '2rem',
-            flexWrap: 'wrap',
-            fontSize: '0.95rem',
-            fontWeight: 600,
-            color: '#ffffff',
-            textShadow: '0 2px 8px rgba(0, 0, 0, 0.8)'
-          }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
-              <CheckCircle size={18} color="#f5d376" /> 2+ Designer Nail Sets Included
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
-              <CheckCircle size={18} color="#f5d376" /> Full Salon Pro Hold Glue (15ml)
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
-              <CheckCircle size={18} color="#f5d376" /> 120-Pack Ultra-Bond Adhesive Tabs
-            </div>
-          </div>
         </div>
       </section>
 

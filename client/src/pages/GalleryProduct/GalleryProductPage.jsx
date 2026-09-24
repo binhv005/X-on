@@ -76,10 +76,51 @@ export default function GalleryProductPage() {
     return ['all', ...set];
   }, [items]);
 
+  const smoothScrollTo = (targetPosition, duration = 1000) => {
+    const startPosition = window.pageYOffset || document.documentElement.scrollTop;
+    const distance = targetPosition - startPosition;
+    let startTime = null;
+
+    const prevScrollBehavior = document.documentElement.style.scrollBehavior;
+    document.documentElement.style.scrollBehavior = 'auto';
+
+    // Ease-in-out cubic: chuyển động nhẹ nhàng từ tốn lúc bắt đầu, êm ái khi dừng
+    const easeInOutCubic = (t) => {
+      return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    };
+
+    const step = (currentTime) => {
+      if (!startTime) startTime = currentTime;
+      const timeElapsed = currentTime - startTime;
+      const progress = Math.min(timeElapsed / duration, 1);
+      const ease = easeInOutCubic(progress);
+
+      window.scrollTo(0, startPosition + distance * ease);
+
+      if (timeElapsed < duration) {
+        requestAnimationFrame(step);
+      } else {
+        document.documentElement.style.scrollBehavior = prevScrollBehavior;
+      }
+    };
+
+    requestAnimationFrame(step);
+  };
+
+  const scrollToGallery = () => {
+    const el = document.getElementById('gallery-showcase');
+    if (el) {
+      const headerOffset = 72; // Chiều cao Header cố định
+      const elementPosition = el.getBoundingClientRect().top;
+      const targetY = elementPosition + (window.pageYOffset || document.documentElement.scrollTop) - headerOffset;
+      smoothScrollTo(targetY, 1000);
+    }
+  };
+
   const handlePageChange = (newPage) => {
     if (newPage < 1 || newPage > pagination.totalPages) return;
     setPage(newPage);
-    window.scrollTo({ top: 420, behavior: 'smooth' });
+    scrollToGallery();
   };
 
   if (loading) {
@@ -88,51 +129,37 @@ export default function GalleryProductPage() {
 
   return (
     <div className="gp">
-      {/* ===== 1. HERO — nền gallery.png ===== */}
+      {/* ===== 1. HERO — nền gallery.png (chiếm vừa 1 màn hình) ===== */}
       <section className="gp-hero">
         <div className="gp-container gp-hero-grid">
-          <div>
+          <div className="gp-hero-content">
             <span className="gp-eyebrow">
-              <Sparkles size={14} /> Visual Showcase
+              <Sparkles size={13} /> Visual Showcase
             </span>
             <h1 className="gp-title">
-              Now Selling —<br />
               Product Gallery
             </h1>
             <p className="gp-desc">
-              Immerse yourself in our handcrafted wearable art gallery. Discover real studio lighting
-              captures and high-definition details of current active collections.
+              Discover our handcrafted wearable nail art, captured in authentic studio light and fine detail.
             </p>
-            <div style={{ marginBottom: '0.4rem' }}>
+            <div className="gp-hero-actions">
               <Link to="/shop" className="gp-btn-gold">
                 Shop Now <ArrowRight size={15} />
               </Link>
+              <button
+                type="button"
+                onClick={scrollToGallery}
+                className="gp-btn-ghost"
+              >
+                Explore Gallery
+              </button>
             </div>
-            <div className="gp-hero-feats">
-              <div className="gp-feat">
-                <Heart size={20} strokeWidth={1.75} />
-                <span className="gp-feat-text">
-                  Handmade
-                  <br />
-                  With Love
-                </span>
-              </div>
-              <div className="gp-feat">
-                <Camera size={20} strokeWidth={1.75} />
-                <span className="gp-feat-text">
-                  Studio Lighting
-                  <br />
-                  Photos
-                </span>
-              </div>
-              <div className="gp-feat">
-                <Gem size={20} strokeWidth={1.75} />
-                <span className="gp-feat-text">
-                  Real Designs,
-                  <br />
-                  Real Details
-                </span>
-              </div>
+            <div className="gp-hero-pills">
+              <span className="gp-pill">100% Handcrafted</span>
+              <span className="gp-pill-dot">•</span>
+              <span className="gp-pill">Studio Lighting</span>
+              <span className="gp-pill-dot">•</span>
+              <span className="gp-pill">True-to-Life Details</span>
             </div>
           </div>
 
@@ -150,10 +177,21 @@ export default function GalleryProductPage() {
             </div>
           </div>
         </div>
+
+        {/* Nút chỉ dẫn cuộn xuống gallery */}
+        <button
+          type="button"
+          onClick={scrollToGallery}
+          className="gp-scroll-indicator"
+          aria-label="Scroll to gallery"
+        >
+          <span>Scroll to explore</span>
+          <ChevronDown size={14} className="gp-bounce" />
+        </button>
       </section>
 
       {/* ===== 2. BODY ===== */}
-      <div className="gp-container gp-body">
+      <div className="gp-container gp-body" id="gallery-showcase" style={{ scrollMarginTop: '84px' }}>
         <div className="gp-crumb">
           <Link to="/">Home</Link>
           <span className="sep">›</span>
@@ -264,8 +302,16 @@ export default function GalleryProductPage() {
             />
           </>
         )}
+      </div>
 
-        {/* ===== 4. TRUST STRIP ===== */}
+      {/* ===== 4. QUOTE BANNER — Tràn 100% full-width không có khoảng trống 2 bên ===== */}
+      <div className="gp-quote">
+        <p>&ldquo; More Nails, More Possibilities &rdquo;</p>
+        <span>— &nbsp;X - O N&nbsp; —</span>
+      </div>
+
+      {/* ===== 5. TRUST STRIP ===== */}
+      <div className="gp-container" style={{ marginTop: '2.5rem' }}>
         <div className="gp-trust">
           <div className="gp-trust-item">
             <span className="gp-trust-ico">
@@ -294,12 +340,6 @@ export default function GalleryProductPage() {
               <span>Salon-grade quality you can trust</span>
             </div>
           </div>
-        </div>
-
-        {/* ===== 5. QUOTE BANNER ===== */}
-        <div className="gp-quote">
-          <p>&ldquo; More Nails, More Possibilities &rdquo;</p>
-          <span>— &nbsp;X - O N&nbsp; —</span>
         </div>
       </div>
     </div>

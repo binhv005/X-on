@@ -14,9 +14,9 @@
 .bd-hero {
   position: relative;
   width: 100%;
-  /* Vừa khít 1 màn hình: trừ đi chiều cao header sticky (~106px) */
-  min-height: calc(100vh - 106px);
-  min-height: calc(100svh - 106px);
+  /* Vừa khít 1 màn hình: trừ đi chiều cao header sticky (72px) */
+  min-height: calc(100vh - 72px);
+  min-height: calc(100svh - 72px);
   display: flex;
   align-items: center;
   overflow: hidden;
@@ -694,7 +694,7 @@ a.bd-tag:hover {
 
 @media (max-width: 768px) {
   .bd-hero {
-    min-height: calc(100svh - 106px);
+    min-height: calc(100svh - 72px);
     background-position: center;
     background-image:
       linear-gradient(to bottom,

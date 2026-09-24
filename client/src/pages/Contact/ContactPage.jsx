@@ -101,13 +101,54 @@ export default function ContactPage() {
     }
   };
 
+  const smoothScrollTo = (targetPosition, duration = 850) => {
+    const startPosition = window.pageYOffset || document.documentElement.scrollTop;
+    const distance = targetPosition - startPosition;
+    let startTime = null;
+
+    const prevScrollBehavior = document.documentElement.style.scrollBehavior;
+    document.documentElement.style.scrollBehavior = 'auto';
+
+    const easeInOutCubic = (t) => {
+      return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    };
+
+    const step = (currentTime) => {
+      if (!startTime) startTime = currentTime;
+      const timeElapsed = currentTime - startTime;
+      const progress = Math.min(timeElapsed / duration, 1);
+      const ease = easeInOutCubic(progress);
+
+      window.scrollTo(0, startPosition + distance * ease);
+
+      if (timeElapsed < duration) {
+        requestAnimationFrame(step);
+      } else {
+        document.documentElement.style.scrollBehavior = prevScrollBehavior;
+      }
+    };
+
+    requestAnimationFrame(step);
+  };
+
+  const scrollToForm = (e) => {
+    e.preventDefault();
+    const el = document.getElementById('xc-form');
+    if (el) {
+      const headerOffset = 72;
+      const elementPosition = el.getBoundingClientRect().top;
+      const targetY = elementPosition + (window.pageYOffset || document.documentElement.scrollTop) - headerOffset;
+      smoothScrollTo(targetY, 850);
+    }
+  };
+
   return (
     <div className="xcontact">
       {/* ================= HERO — LET'S TALK NAILS ================= */}
       <section className="xc-hero">
         <div className="xc-container">
           <div className="xc-hero-grid">
-            <div>
+            <div className="xc-hero-left">
               <div className="xc-eyebrow">Contact Us</div>
               <h1 className="xc-hero-title">
                 LET&rsquo;S TALK
@@ -116,19 +157,18 @@ export default function ContactPage() {
                 <span className="xc-spark">✦</span>
               </h1>
               <p className="xc-hero-sub">
-                Questions, orders, wholesale or just want to say hello?
+                Questions, custom sets, or wholesale inquiries?
                 <br />
-                We&rsquo;re here for you.
+                We&rsquo;re here to assist you.
               </p>
-              <p className="xc-hero-desc">
-                X-ON is where modern nail artistry meets effortless beauty. We offer handmade press-on
-                nails and carefully selected nail essentials designed with quality, style, and
-                performance in mind.
-              </p>
-              <div className="xc-hero-script">Press On. Slay On. Repeat.</div>
-              <a href="#xc-form" className="xc-btn-wine">
+              <button
+                type="button"
+                onClick={scrollToForm}
+                className="xc-btn-wine"
+                style={{ marginTop: '0.85rem' }}
+              >
                 Get in touch <ArrowRight size={15} />
-              </a>
+              </button>
             </div>
 
             <div className="xc-hero-visual" aria-hidden="true">
@@ -186,10 +226,6 @@ export default function ContactPage() {
               <div className="xc-eyebrow">Why Choose</div>
               <h2 className="xc-why-title">X-ON?</h2>
             </div>
-            <p className="xc-why-desc">
-              More than just nails — X-ON brings you closer to the beauty you love, with quality you
-              can trust.
-            </p>
             <div className="xc-why-script">
               Nail Art
               <br />A Better You ♡
@@ -254,7 +290,7 @@ export default function ContactPage() {
       <section className="xc-contact" id="xc-form" style={{ scrollMarginTop: '90px' }}>
         <div className="xc-container">
           <div className="xc-contact-grid">
-            <div>
+            <div className="xc-contact-info">
               <h2 className="xc-contact-title">
                 CONTACT
                 <br />
@@ -263,8 +299,7 @@ export default function ContactPage() {
               <div className="xc-contact-rule" aria-hidden="true" />
               <p className="xc-contact-sub">We&rsquo;d love to hear from you!</p>
               <p className="xc-contact-desc">
-                Have a question about our products, an order, wholesale, or anything else? Send us a
-                message and we&rsquo;ll get back to you as soon as possible.
+                Have a question about our products or an order? Send us a message and we&rsquo;ll get back to you promptly.
               </p>
 
               <div className="xc-info-row">

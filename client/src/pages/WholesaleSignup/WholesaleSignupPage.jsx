@@ -119,32 +119,28 @@ export default function WholesaleSignupPage() {
               Registration
             </h1>
             <p className="xws-desc">
-              Partner with X-ON to offer salon-grade handmade press-on nails and curated essentials
-              in your beauty studio, boutique, or salon chain with tiered volume pricing.
+              Handmade salon-grade press-on nails for studios, boutiques &amp; salon chains.
             </p>
 
             <div className="xws-perks">
               <div className="xws-perk">
                 <span className="xws-perk-ico"><Tag size={22} /></span>
                 <b>Tiered Margins</b>
-                <p>Exclusive 35% – 50% wholesale discounts on handcrafted nail sets.</p>
+                <p>Up to 50% off sets.</p>
               </div>
               <div className="xws-perk">
                 <span className="xws-perk-ico"><Diamond size={22} /></span>
                 <b>Priority Batching</b>
-                <p>Dedicated artisan team handling your salon&rsquo;s scheduled reorders.</p>
+                <p>Fast salon reorders.</p>
               </div>
               <div className="xws-perk">
                 <span className="xws-perk-ico"><Gift size={22} /></span>
                 <b>Marketing Support</b>
-                <p>Counter display packaging and bespoke fitting sets included.</p>
+                <p>Displays + fitting kits.</p>
               </div>
             </div>
 
             <div className="xws-script-gold">Beauty Grows Stronger Together ♡</div>
-            <div className="xws-script-sub">X-ON WHOLESALE PROGRAM</div>
-
-            <div className="xws-handmade-note">Handmade<br />With Love ♡</div>
           </div>
 
           {/* ================= FORM CARD ================= */}
@@ -187,8 +183,7 @@ export default function WholesaleSignupPage() {
                 <div className="xws-card-eyebrow">Join Our Community</div>
                 <h2 className="xws-card-title">Register Wholesale Account</h2>
                 <p className="xws-card-sub">
-                  Please complete the business registration form below.
-                  Our team will review your application and get back to you within 2–3 business days.
+                  Complete the form below — approval within 2–3 business days.
                 </p>
 
                 <form onSubmit={handleSubmit} noValidate>

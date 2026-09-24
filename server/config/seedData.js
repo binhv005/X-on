@@ -381,7 +381,7 @@ export function seedInitialData() {
     sizing: {
       page_title: 'Sizing Chart & Fit Guide',
       intro_heading: 'Finding Your Perfect X-ON Fit',
-      intro_body: 'Achieving a bespoke salon fit with X-ON press-on nails starts with precise measurement. Use our standard sizing mapping below or order a custom sizing set tailored to your exact natural nail beds.',
+      intro_body: 'Measure once for a bespoke salon fit — use XS–L presets or custom mm sizing below.',
       mapping_headers: ['Size', 'Thumb', 'Index', 'Middle', 'Ring', 'Pinky'],
       sizes: [
         { size: 'XS', thumb: '14mm', index: '10mm', middle: '11mm', ring: '10mm', pinky: '7mm' },
@@ -402,7 +402,7 @@ export function seedInitialData() {
     bundle: {
       page_title: 'Bundle & Save',
       heading: 'Bundle and Save',
-      subheading: 'Curated luxury pairings and essential nail toolkits with exclusive discount pricing.',
+      subheading: 'Luxury nail pairings & essential toolkits at exclusive bundle prices.',
       banner_discount: 'Up to 25% OFF',
       disclaimer: 'Discounts automatically applied at checkout when purchasing bundle packages.'
     },
