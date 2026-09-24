@@ -15,7 +15,7 @@ import {
   ShieldAlert
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
-import logoImg from '../../assets/images/logo.png';
+import logoImg from '../../assets/images/logo.webp';
 import LoadingSpinner from '../common/LoadingSpinner';
 
 export default function AdminLayout() {

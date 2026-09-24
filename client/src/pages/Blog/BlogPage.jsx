@@ -87,7 +87,7 @@ export default function BlogPage() {
 
   return (
     <div className="blog-page">
-      {/* ===== HERO — nền blog_hero.png ===== */}
+      {/* ===== HERO — nền blog_hero.webp ===== */}
       <section className="blog-hero">
         <div className="blog-hero-inner">
           <span className="blog-eyebrow">

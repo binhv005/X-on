@@ -4,7 +4,7 @@ import { api } from '../../services/api';
 import ProductCard from '../../components/product/ProductCard';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
 import { useToast } from '../../context/ToastContext';
-import bundleBannerBg from '../../assets/images/bundle-banner-bg.png';
+import bundleBannerBg from '../../assets/images/bundle-banner-bg.webp';
 
 export default function BundleAndSavePage() {
   const [content, setContent] = useState(null);

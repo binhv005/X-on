@@ -27,7 +27,7 @@
 /* ---------- HERO ---------- */
 .gcs-hero {
   position: relative;
-  background-image: url('/assets/images/comingsoon.png');
+  background-image: url('/assets/images/comingsoon.webp');
   background-size: cover;
   background-position: 70% center;
   background-repeat: no-repeat;
@@ -221,7 +221,7 @@
 .gcs-quote {
   position: relative;
   width: 100%;
-  background-image: url('/assets/images/gallery-quote-floral-bg.jpg');
+  background-image: url('/assets/images/gallery-quote-floral-bg.webp');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

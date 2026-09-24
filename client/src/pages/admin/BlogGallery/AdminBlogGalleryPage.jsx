@@ -112,7 +112,7 @@ function ImageUploadField({ label, value, onChange, placeholder = 'https://...',
               alt="Preview"
               onError={(e) => {
                 e.currentTarget.onerror = null;
-                e.currentTarget.src = '/assets/images/IMG_7098.JPG';
+                e.currentTarget.src = '/assets/images/IMG_7098.webp';
               }}
               style={{ width: '100%', height: '100%', objectFit: 'cover' }}
             />
@@ -897,14 +897,14 @@ export default function AdminBlogGalleryPage() {
                   </span>
                   <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
                     {[
-                      '/assets/images/IMG_7098.JPG',
-                      '/assets/images/IMG_7099.JPG',
-                      '/assets/images/IMG_7101.JPG',
-                      '/assets/images/IMG_7102.JPG',
-                      '/assets/images/IMG_7103.JPG',
-                      '/assets/images/IMG_7104.JPG',
-                      '/assets/images/IMG_7107.JPG',
-                      '/assets/images/IMG_7110.JPG'
+                      '/assets/images/IMG_7098.webp',
+                      '/assets/images/IMG_7099.webp',
+                      '/assets/images/IMG_7101.webp',
+                      '/assets/images/IMG_7102.webp',
+                      '/assets/images/IMG_7103.webp',
+                      '/assets/images/IMG_7104.webp',
+                      '/assets/images/IMG_7107.webp',
+                      '/assets/images/IMG_7110.webp'
                     ].map((img, i) => (
                       <button
                         key={i}
@@ -1128,15 +1128,15 @@ export default function AdminBlogGalleryPage() {
                   </span>
                   <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
                     {[
-                      '/assets/images/IMG_7098.JPG',
-                      '/assets/images/IMG_7099.JPG',
-                      '/assets/images/IMG_7100.JPG',
-                      '/assets/images/IMG_7101.JPG',
-                      '/assets/images/IMG_7102.JPG',
-                      '/assets/images/IMG_7103.JPG',
-                      '/assets/images/IMG_7104.JPG',
-                      '/assets/images/IMG_7105.JPG',
-                      '/assets/images/IMG_7106.JPG'
+                      '/assets/images/IMG_7098.webp',
+                      '/assets/images/IMG_7099.webp',
+                      '/assets/images/IMG_7100.webp',
+                      '/assets/images/IMG_7101.webp',
+                      '/assets/images/IMG_7102.webp',
+                      '/assets/images/IMG_7103.webp',
+                      '/assets/images/IMG_7104.webp',
+                      '/assets/images/IMG_7105.webp',
+                      '/assets/images/IMG_7106.webp'
                     ].map((img, i) => (
                       <button
                         key={i}
@@ -1266,10 +1266,10 @@ export default function AdminBlogGalleryPage() {
                   </span>
                   <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
                     {[
-                      '/assets/images/IMG_7107.JPG',
-                      '/assets/images/IMG_7110.JPG',
-                      '/assets/images/IMG_7111.JPG',
-                      '/assets/images/IMG_7098.JPG'
+                      '/assets/images/IMG_7107.webp',
+                      '/assets/images/IMG_7110.webp',
+                      '/assets/images/IMG_7111.webp',
+                      '/assets/images/IMG_7098.webp'
                     ].map((img, i) => (
                       <button
                         key={i}

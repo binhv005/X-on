@@ -29,7 +29,7 @@ class BlogService {
     return blogRepository.create({
       title,
       slug: calculatedSlug,
-      cover: cover || '/assets/images/IMG_7098.JPG',
+      cover: cover || '/assets/images/IMG_7098.webp',
       publish_date: publish_date || new Date().toISOString().split('T')[0],
       author: author || 'X-ON Team',
       excerpt: excerpt || '',

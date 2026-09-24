@@ -78,7 +78,7 @@ export default function CheckoutModal() {
         quantity: item.quantity,
         selectedSize: item.selectedSize,
         selectedVariant: item.selectedVariant || '',
-        image: item.images && item.images.length > 0 ? item.images[0] : '/assets/images/IMG_7098.JPG',
+        image: item.images && item.images.length > 0 ? item.images[0] : '/assets/images/IMG_7098.webp',
         sku: item.sku || `XON-${item.id}`
       }));
 

@@ -257,7 +257,7 @@ export default function CartPage() {
                 {/* Items Rows */}
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
                   {items.map((item, idx) => {
-                    const itemImage = (item.images && item.images.length > 0) ? item.images[0] : '/assets/images/IMG_7098.JPG';
+                    const itemImage = (item.images && item.images.length > 0) ? item.images[0] : '/assets/images/IMG_7098.webp';
                     const unitPrice = item.sale_price !== null && item.sale_price !== undefined ? item.sale_price : item.price;
                     const lineTotal = (unitPrice * item.quantity).toFixed(2);
                     const isSale = item.sale_price !== null && item.sale_price !== undefined && item.sale_price < item.price;
@@ -295,7 +295,7 @@ export default function CartPage() {
                               alt={item.name}
                               onError={(e) => {
                                 e.currentTarget.onerror = null;
-                                e.currentTarget.src = '/assets/images/IMG_7098.JPG';
+                                e.currentTarget.src = '/assets/images/IMG_7098.webp';
                               }}
                               style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                             />

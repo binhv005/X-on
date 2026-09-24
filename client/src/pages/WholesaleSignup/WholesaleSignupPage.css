@@ -27,7 +27,7 @@
 /* ---------- HERO with photo background ---------- */
 .xws-hero {
   position: relative;
-  background-image: url('/assets/images/wholesale-signup.png');
+  background-image: url('/assets/images/wholesale-signup.webp');
   background-size: cover;
   background-position: center 30%;
   background-repeat: no-repeat;

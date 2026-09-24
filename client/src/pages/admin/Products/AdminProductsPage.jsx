@@ -986,7 +986,7 @@ export default function AdminProductsPage() {
                         }}
                         onError={(e) => {
                           e.currentTarget.onerror = null;
-                          e.currentTarget.src = '/assets/images/IMG_7098.JPG';
+                          e.currentTarget.src = '/assets/images/IMG_7098.webp';
                         }}
                       />
 

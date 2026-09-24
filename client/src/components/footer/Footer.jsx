@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { MapPin, Phone } from 'lucide-react';
-import logoImg from '../../assets/images/logo-transparent.png';
+import logoImg from '../../assets/images/logo-transparent.webp';
 import Newsletter from './Newsletter';
 
 export default function Footer() {

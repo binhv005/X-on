@@ -8,7 +8,7 @@
       "slug": "test2",
       "SKU": "XON-347",
       "images": [
-        "/assets/images/IMG_7098.JPG"
+        "/assets/images/IMG_7098.webp"
       ],
       "price": 10000,
       "sale_price": 20000,
@@ -143,8 +143,8 @@
       "slug": "cf-35-0961-luxury-chrome-velvet",
       "SKU": "XON-CF-0961",
       "images": [
-        "/assets/images/IMG_7098.JPG",
-        "/assets/images/IMG_7102.JPG"
+        "/assets/images/IMG_7098.webp",
+        "/assets/images/IMG_7102.webp"
 
       ],
       "price": 48,
@@ -200,8 +200,8 @@
       "slug": "al-12-0442-ethereal-french-rose-almond",
       "SKU": "XON-AL-0442",
       "images": [
-        "/assets/images/IMG_7099.JPG",
-        "/assets/images/IMG_7103.JPG"
+        "/assets/images/IMG_7099.webp",
+        "/assets/images/IMG_7103.webp"
 
       ],
       "price": 42,
@@ -247,8 +247,8 @@
       "slug": "st-99-0118-obsidian-gold-foil-stiletto",
       "SKU": "XON-ST-0118",
       "images": [
-        "/assets/images/IMG_7100.JPG",
-        "/assets/images/IMG_7102.JPG"
+        "/assets/images/IMG_7100.webp",
+        "/assets/images/IMG_7102.webp"
 
       ],
       "price": 52,
@@ -291,8 +291,8 @@
       "slug": "sq-44-0312-nude-glaze-classic-square",
       "SKU": "XON-SQ-0312",
       "images": [
-        "/assets/images/IMG_7101.JPG",
-        "/assets/images/IMG_7098.JPG"
+        "/assets/images/IMG_7101.webp",
+        "/assets/images/IMG_7098.webp"
 
       ],
       "price": 38,
@@ -340,8 +340,8 @@
       "slug": "ov-08-0720-pearl-aurora-oval",
       "SKU": "XON-OV-0720",
       "images": [
-        "/assets/images/IMG_7103.JPG",
-        "/assets/images/IMG_7104.JPG"
+        "/assets/images/IMG_7103.webp",
+        "/assets/images/IMG_7104.webp"
 
       ],
       "price": 44,
@@ -384,8 +384,8 @@
       "slug": "rd-19-0551-ruby-jewel-round-short",
       "SKU": "XON-RD-0551",
       "images": [
-        "/assets/images/IMG_7104.JPG",
-        "/assets/images/IMG_7099.JPG"
+        "/assets/images/IMG_7104.webp",
+        "/assets/images/IMG_7099.webp"
 
       ],
       "price": 46,
@@ -427,8 +427,8 @@
       "slug": "x-on-salon-pro-hold-nail-adhesive",
       "SKU": "XON-ESS-001",
       "images": [
-        "/assets/images/IMG_7106.JPG",
-        "/assets/images/IMG_7110.JPG"
+        "/assets/images/IMG_7106.webp",
+        "/assets/images/IMG_7110.webp"
 
       ],
       "price": 14,
@@ -470,8 +470,8 @@
       "slug": "ultra-bond-waterproof-gel-adhesive-tabs",
       "SKU": "XON-ESS-002",
       "images": [
-        "/assets/images/IMG_7110.JPG",
-        "/assets/images/IMG_7106.JPG"
+        "/assets/images/IMG_7110.webp",
+        "/assets/images/IMG_7106.webp"
 
       ],
       "price": 9,
@@ -509,8 +509,8 @@
       "slug": "organic-cuticle-recovery-elixir-prep-kit",
       "SKU": "XON-ESS-003",
       "images": [
-        "/assets/images/IMG_7105.JPG",
-        "/assets/images/IMG_7110.JPG"
+        "/assets/images/IMG_7105.webp",
+        "/assets/images/IMG_7110.webp"
 
       ],
       "price": 18,
@@ -548,7 +548,7 @@
       "slug": "ultimate-luxury-velvet-essentials-trio-bundle",
       "SKU": "XON-BND-001",
       "images": [
-        "/assets/images/IMG_7098.JPG"
+        "/assets/images/IMG_7098.webp"
 
       ],
       "price": 98,
@@ -591,7 +591,7 @@
       "slug": "glamour-stiletto-aurora-duo-bundle",
       "SKU": "XON-BND-002",
       "images": [
-        "/assets/images/IMG_7098.JPG"
+        "/assets/images/IMG_7098.webp"
 
       ],
       "price": 88,
@@ -890,7 +890,7 @@
       "id": "blog-1",
       "title": "Extra Long Handmade Nail Luxury: Modern Artistry Meets Effortless Wear",
       "slug": "extra-long-handmade-nail-luxury",
-      "cover": "/assets/images/IMG_7098.JPG",
+      "cover": "/assets/images/IMG_7098.webp",
 
       "publish_date": "2026-09-20",
       "author": "X-ON Master Artist",
@@ -907,7 +907,7 @@
         },
         {
           "type": "image",
-          "url": "/assets/images/IMG_7102.JPG",
+          "url": "/assets/images/IMG_7102.webp",
 
           "caption": "Hand-painted cat eye chrome finish with multi-layered builder gel."
         },
@@ -964,7 +964,7 @@
       "id": "blog-2",
       "title": "The Ultimate Guide to Measuring Your Nail Beds at Home",
       "slug": "ultimate-guide-measuring-nail-beds",
-      "cover": "/assets/images/IMG_7103.JPG",
+      "cover": "/assets/images/IMG_7103.webp",
 
       "publish_date": "2026-09-15",
       "author": "X-ON Studio Team",
@@ -987,7 +987,7 @@
       "id": "blog-3",
       "title": "Press On. Slay On. Repeat: Caring for Reusable Nails",
       "slug": "press-on-slay-on-repeat-caring-guide",
-      "cover": "/assets/images/IMG_7104.JPG",
+      "cover": "/assets/images/IMG_7104.webp",
 
       "publish_date": "2026-09-10",
       "author": "X-ON Care Specialist",
@@ -1012,7 +1012,7 @@
       "id": "gal-1",
       "title": "Emerald Luxe Set",
       "collection": "Now Selling",
-      "media": "/assets/images/IMG_7098.JPG",
+      "media": "/assets/images/IMG_7098.webp",
       "linked_product": "prod-1",
 
       "size_labels": [
@@ -1033,7 +1033,7 @@
       "id": "gal-2",
       "title": "Blooming Grace",
       "collection": "Now Selling",
-      "media": "/assets/images/IMG_7099.JPG",
+      "media": "/assets/images/IMG_7099.webp",
 
       "linked_product": "prod-2",
       "size_labels": [
@@ -1053,7 +1053,7 @@
       "id": "gal-3",
       "title": "Ocean Whisper",
       "collection": "Now Selling",
-      "media": "/assets/images/IMG_7100.JPG",
+      "media": "/assets/images/IMG_7100.webp",
       "linked_product": "prod-3",
 
       "size_labels": [
@@ -1073,7 +1073,7 @@
       "id": "gal-4",
       "title": "Midnight Rouge",
       "collection": "Now Selling",
-      "media": "/assets/images/IMG_7101.JPG",
+      "media": "/assets/images/IMG_7101.webp",
       "linked_product": "prod-5",
 
       "size_labels": [
@@ -1094,7 +1094,7 @@
       "id": "gal-5",
       "title": "Petal Dreams",
       "collection": "Now Selling",
-      "media": "/assets/images/IMG_7104.JPG",
+      "media": "/assets/images/IMG_7104.webp",
 
       "linked_product": "prod-6",
       "size_labels": [
@@ -1114,7 +1114,7 @@
       "id": "gal-6",
       "title": "Spring Whisper",
       "collection": "Now Selling",
-      "media": "/assets/images/IMG_7105.JPG",
+      "media": "/assets/images/IMG_7105.webp",
       "linked_product": "prod-4",
       "size_labels": [
         "XS",
@@ -1137,7 +1137,7 @@
       "updatedAt": "2026-09-23T04:36:52.556Z",
       "title": "Golden Charm",
       "collection": "Now Selling",
-      "media": "/assets/images/IMG_7106.JPG",
+      "media": "/assets/images/IMG_7106.webp",
       "linked_product": "prod-5",
       "size_labels": [
         "S",
@@ -1158,7 +1158,7 @@
       "updatedAt": "2026-09-23T04:36:52.559Z",
       "title": "Lavender Ribbon",
       "collection": "Now Selling",
-      "media": "/assets/images/IMG_7102.JPG",
+      "media": "/assets/images/IMG_7102.webp",
       "linked_product": "prod-1",
       "size_labels": [
         "S",
@@ -1179,7 +1179,7 @@
       "title": "Upcoming / Seasonal Collection 01 — Celestial Twilight",
       "collection_name": "Upcoming / Seasonal Collection 01",
       "subtitle": "Deep galaxy blues, holographic constellation charting, and luminous quartz accents.",
-      "media": "/assets/images/IMG_7098.JPG",
+      "media": "/assets/images/IMG_7098.webp",
 
       "status": "active",
       "display_order": 1,
@@ -1192,7 +1192,7 @@
       "title": "Upcoming / Seasonal Collection 02 — Golden Baroque Couture",
       "collection_name": "Upcoming / Seasonal Collection 02",
       "subtitle": "3D ornate gold filigree, antique pearls, and textured rococo gilding.",
-      "media": "/assets/images/IMG_7102.JPG",
+      "media": "/assets/images/IMG_7102.webp",
 
       "status": "active",
       "display_order": 2,
@@ -1205,7 +1205,7 @@
       "title": "Upcoming / Seasonal Collection 03 — Cyberpunk Chrome Fluid",
       "collection_name": "Upcoming / Seasonal Collection 03",
       "subtitle": "Molten liquid silver chrome 3D sculpting over smoked translucent glass.",
-      "media": "/assets/images/IMG_7107.JPG",
+      "media": "/assets/images/IMG_7107.webp",
 
       "status": "active",
       "display_order": 3,
@@ -1218,7 +1218,7 @@
       "title": "Featured / New Collection — High-Artisan Runway Series",
       "collection_name": "Featured / New Collection",
       "subtitle": "Limited-edition bespoke wearable art handcrafted by master technicians.",
-      "media": "/assets/images/IMG_7106.JPG",
+      "media": "/assets/images/IMG_7106.webp",
 
       "status": "active",
       "display_order": 4,
@@ -1449,7 +1449,7 @@
           "quantity": 1,
           "selectedSize": "XS",
           "selectedVariant": "Short Coffin",
-          "image": "/assets/images/IMG_7098.JPG",
+          "image": "/assets/images/IMG_7098.webp",
           "sku": "XON-prod-1"
         }
       ],
@@ -1488,7 +1488,7 @@
           "quantity": 1,
           "selectedSize": "XS",
           "selectedVariant": "Short Square",
-          "image": "/assets/images/IMG_7101.JPG",
+          "image": "/assets/images/IMG_7101.webp",
           "sku": "XON-prod-4"
         },
         {
@@ -1498,7 +1498,7 @@
           "quantity": 1,
           "selectedSize": "L",
           "selectedVariant": "Short Square",
-          "image": "/assets/images/IMG_7101.JPG",
+          "image": "/assets/images/IMG_7101.webp",
           "sku": "XON-prod-4"
         },
         {
@@ -1508,7 +1508,7 @@
           "quantity": 1,
           "selectedSize": "XS",
           "selectedVariant": "Short Coffin",
-          "image": "/assets/images/IMG_7098.JPG",
+          "image": "/assets/images/IMG_7098.webp",
           "sku": "XON-prod-1"
         }
       ],

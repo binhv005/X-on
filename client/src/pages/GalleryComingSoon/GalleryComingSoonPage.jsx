@@ -18,7 +18,7 @@ const FALLBACK_CARDS = [
     desc: 'A soft and romantic collection inspired by spring florals, featuring delicate 3D petals, pearls, and pastel tones.',
     season: 'Spring 2025',
     launch: 'Mar 15, 2025',
-    media: '/assets/images/IMG_7106.JPG'
+    media: '/assets/images/IMG_7106.webp'
   },
   {
     id: 'celestial-twilight',
@@ -27,7 +27,7 @@ const FALLBACK_CARDS = [
     desc: 'Deep galaxy blues, holographic constellation charting, and luminous quartz accents.',
     season: 'Summer 2025',
     launch: 'Jun 10, 2025',
-    media: '/assets/images/IMG_7104.JPG'
+    media: '/assets/images/IMG_7104.webp'
   },
   {
     id: 'golden-baroque',
@@ -36,7 +36,7 @@ const FALLBACK_CARDS = [
     desc: 'Dramatic gold filigree, antique pearls, and textured rococo gilding.',
     season: 'Fall 2025',
     launch: 'Aug 25, 2025',
-    media: '/assets/images/IMG_7102.JPG'
+    media: '/assets/images/IMG_7102.webp'
   },
   {
     id: 'runway-featured',
@@ -45,7 +45,7 @@ const FALLBACK_CARDS = [
     desc: 'Limited-edition bespoke wearable art handcrafted by master technicians, exclusively for members.',
     season: 'Members Exclusive',
     launch: 'Exclusively for Members',
-    media: '/assets/images/IMG_7098.JPG'
+    media: '/assets/images/IMG_7098.webp'
   }
 ];
 

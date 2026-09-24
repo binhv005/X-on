@@ -84,7 +84,7 @@ class GalleryService {
       title,
       collection_name: collection_name || title,
       subtitle: subtitle || '',
-      media: media || '/assets/images/IMG_7098.JPG',
+      media: media || '/assets/images/IMG_7098.webp',
       status: status || 'active',
       display_order: parseInt(display_order, 10) || 0,
       expected_launch: expected_launch || 'Coming Soon'

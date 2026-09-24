@@ -184,11 +184,11 @@ export default function ProductDetailPage() {
               boxShadow: 'var(--shadow-sm)'
             }}>
               <img
-                src={selectedImage || product.images?.[0] || '/assets/images/IMG_7098.JPG'}
+                src={selectedImage || product.images?.[0] || '/assets/images/IMG_7098.webp'}
                 alt={product.name}
                 onError={(e) => {
                   e.currentTarget.onerror = null;
-                  e.currentTarget.src = '/assets/images/IMG_7098.JPG';
+                  e.currentTarget.src = '/assets/images/IMG_7098.webp';
                 }}
                 style={{
                   position: 'absolute',
@@ -334,7 +334,7 @@ export default function ProductDetailPage() {
                         alt={`Thumbnail ${idx + 1}`}
                         onError={(e) => {
                           e.currentTarget.onerror = null;
-                          e.currentTarget.src = '/assets/images/IMG_7098.JPG';
+                          e.currentTarget.src = '/assets/images/IMG_7098.webp';
                         }}
                         style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                       />

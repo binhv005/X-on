@@ -27,11 +27,11 @@ import ProductCard from '../../components/product/ProductCard';
 import PriceDisplay from '../../components/product/PriceDisplay';
 import RatingStars from '../../components/common/RatingStars';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
-import findUsBg from '../../assets/images/findus-bg.jpg';
-import motifTop from '../../assets/images/findus-motif-top.png';
-import motifBottom from '../../assets/images/findus-motif-bottom.png';
-import bundlePromoBg from '../../assets/images/bundle-promo-bg.jpg';
-import stepCardBg from '../../assets/images/step-card-bg.jpg';
+import findUsBg from '../../assets/images/findus-bg.webp';
+import motifTop from '../../assets/images/findus-motif-top.webp';
+import motifBottom from '../../assets/images/findus-motif-bottom.webp';
+import bundlePromoBg from '../../assets/images/bundle-promo-bg.webp';
+import stepCardBg from '../../assets/images/step-card-bg.webp';
 
 // Scroll-triggered Video Component: shows pure black until video is actively playing
 function ScrollPlayVideo({
@@ -241,7 +241,7 @@ export default function HomePage() {
   const heroHeading = content?.hero_heading || 'X-ON';
   const heroTagline = content?.hero_tagline || 'Press On. Slay On. Repeat.';
   const heroDesc = content?.hero_description || 'Where modern nail artistry meets effortless beauty. Handcrafted press-on sets and curated nail essentials designed for nail lovers and salon professionals alike.';
-  const heroImg = content?.hero_image || '/assets/images/IMG_7098.JPG';
+  const heroImg = content?.hero_image || '/assets/images/IMG_7098.webp';
 
   return (
     <div style={{ overflowX: 'hidden' }}>
@@ -691,7 +691,7 @@ export default function HomePage() {
             margin: '0 auto'
           }}>
             {bestSellers.map(product => {
-              const image = product.images && product.images.length > 0 ? product.images[0] : '/assets/images/IMG_7098.JPG';
+              const image = product.images && product.images.length > 0 ? product.images[0] : '/assets/images/IMG_7098.webp';
               return (
                 <div
                   key={product.id}
@@ -728,7 +728,7 @@ export default function HomePage() {
                       alt={product.name}
                       onError={(e) => {
                         e.currentTarget.onerror = null;
-                        e.currentTarget.src = '/assets/images/IMG_7098.JPG';
+                        e.currentTarget.src = '/assets/images/IMG_7098.webp';
                       }}
                       style={{
                         width: '100%',

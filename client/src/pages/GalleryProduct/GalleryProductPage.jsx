@@ -129,7 +129,7 @@ export default function GalleryProductPage() {
 
   return (
     <div className="gp">
-      {/* ===== 1. HERO — nền gallery.png (chiếm vừa 1 màn hình) ===== */}
+      {/* ===== 1. HERO — nền gallery.webp (chiếm vừa 1 màn hình) ===== */}
       <section className="gp-hero">
         <div className="gp-container gp-hero-grid">
           <div className="gp-hero-content">

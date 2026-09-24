@@ -7,7 +7,7 @@ export default function ProductCard({ product, compact = false, imageAspect = '1
   const [isHovered, setIsHovered] = useState(false);
   const isOutOfStock = product.status === 'out_of_stock' || (product.stock !== undefined && Number(product.stock) <= 0);
   const hasSale = !isOutOfStock && product.sale_price !== null && product.sale_price !== undefined && product.sale_price < product.price;
-  const images = Array.isArray(product.images) && product.images.length > 0 ? product.images : ['/assets/images/IMG_7098.JPG'];
+  const images = Array.isArray(product.images) && product.images.length > 0 ? product.images : ['/assets/images/IMG_7098.webp'];
   const primaryImage = images[0];
   const secondaryImage = images[1] || null;
 
@@ -51,7 +51,7 @@ export default function ProductCard({ product, compact = false, imageAspect = '1
             loading="lazy"
             onError={(e) => {
               e.currentTarget.onerror = null;
-              e.currentTarget.src = '/assets/images/IMG_7098.JPG';
+              e.currentTarget.src = '/assets/images/IMG_7098.webp';
             }}
             style={{
               position: 'absolute',

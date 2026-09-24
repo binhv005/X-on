@@ -235,7 +235,7 @@ class ProductService {
       name: name.trim(),
       slug: uniqueSlug,
       SKU: SKU.trim().toUpperCase(),
-      images: Array.isArray(images) && images.length > 0 ? images : ['/assets/images/IMG_7098.JPG'],
+      images: Array.isArray(images) && images.length > 0 ? images : ['/assets/images/IMG_7098.webp'],
       price: parseFloat(price),
       sale_price: sale_price !== undefined && sale_price !== '' && sale_price !== null ? parseFloat(sale_price) : null,
       sizes: parsedSizes,

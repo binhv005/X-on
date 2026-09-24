@@ -13,7 +13,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useCart } from '../../context/CartContext';
-import logoImg from '../../assets/images/logo.png';
+import logoImg from '../../assets/images/logo.webp';
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);

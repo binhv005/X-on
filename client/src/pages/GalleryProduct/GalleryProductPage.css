@@ -26,10 +26,10 @@
   padding-right: 24px;
 }
 
-/* ============ HERO — gallery.png làm nền full-bleed ============ */
+/* ============ HERO — gallery.webp làm nền full-bleed ============ */
 .gp-hero {
   position: relative;
-  background-image: url('/assets/images/gallery.png');
+  background-image: url('/assets/images/gallery.webp');
   background-size: cover;
   background-position: 72% center;
   background-repeat: no-repeat;
@@ -639,7 +639,7 @@
 .gp-quote {
   position: relative;
   width: 100%;
-  background-image: url('/assets/images/gallery-quote-floral-bg.jpg');
+  background-image: url('/assets/images/gallery-quote-floral-bg.webp');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

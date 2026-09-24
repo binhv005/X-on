@@ -174,14 +174,14 @@ export default function ContactPage() {
             <div className="xc-hero-visual" aria-hidden="true">
               <div className="xc-arch">
                 <img
-                  src="/assets/images/IMG_7098.JPG"
+                  src="/assets/images/IMG_7098.webp"
                   alt="X-ON handmade emerald and gold press-on nails"
                   loading="eager"
                 />
               </div>
               <div className="xc-polaroid">
                 <img
-                  src="/assets/images/IMG_7106.JPG"
+                  src="/assets/images/IMG_7106.webp"
                   alt="X-ON pink 3D floral press-on nails"
                   loading="lazy"
                 />
@@ -235,7 +235,7 @@ export default function ContactPage() {
           <div className="xc-why-grid">
             <article className="xc-why-card">
               <img
-                src="/assets/images/IMG_7101.JPG"
+                src="/assets/images/IMG_7101.webp"
                 alt="Handmade citrus and floral press-on nails"
                 loading="lazy"
               />
@@ -262,7 +262,7 @@ export default function ContactPage() {
 
             <article className="xc-why-card">
               <img
-                src="/assets/images/IMG_7104.JPG"
+                src="/assets/images/IMG_7104.webp"
                 alt="Blue chrome and mosaic nail essentials collection"
                 loading="lazy"
               />
@@ -438,7 +438,7 @@ export default function ContactPage() {
         <div className="xc-container">
           <div className="xc-ws-banner">
             <img
-              src="/assets/images/IMG_7105.JPG"
+              src="/assets/images/IMG_7105.webp"
               alt="Yellow 3D floral wholesale press-on nails"
               loading="lazy"
             />

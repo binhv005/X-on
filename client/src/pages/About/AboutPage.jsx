@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Sparkles, MapPin, Phone, Check, Award, HeartHandshake, ArrowRight } from 'lucide-react';
 import { api } from '../../services/api';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
-import aboutHeroBg from '../../assets/images/about-hero-bg.jpg';
+import aboutHeroBg from '../../assets/images/about-hero-bg.webp';
 
 export default function AboutPage() {
   const [content, setContent] = useState(null);
@@ -37,7 +37,7 @@ export default function AboutPage() {
   const brandDesc = content?.brand_description || `X-ON delivers handmade bespoke press-on nails and curated essentials designed for effortless luxury and lasting performance.\n\nMaking salon-quality manicures faster, easier, and accessible to everyone — without compromising on a polished finish.`;
   const address = content?.address || '3168 Bill Beck Blvd, Kissimmee, FL 34744';
   const phone = content?.phone || '689-212-8888';
-  const heroImage = content?.image || '/assets/images/IMG_7101.JPG';
+  const heroImage = content?.image || '/assets/images/IMG_7101.webp';
 
   return (
     <div>
@@ -122,11 +122,11 @@ export default function AboutPage() {
                 position: 'relative'
               }}>
                 <img
-                  src={heroImage || '/assets/images/IMG_7101.JPG'}
+                  src={heroImage || '/assets/images/IMG_7101.webp'}
                   alt="X-ON Artisanal Nails"
                   onError={(e) => {
                     e.currentTarget.onerror = null;
-                    e.currentTarget.src = '/assets/images/IMG_7101.JPG';
+                    e.currentTarget.src = '/assets/images/IMG_7101.webp';
                   }}
                   style={{ width: '100%', height: '520px', objectFit: 'cover' }}
                 />
@@ -171,7 +171,7 @@ export default function AboutPage() {
             >
               <div style={{ width: '42%', minHeight: '190px', flexShrink: 0, position: 'relative' }}>
                 <img
-                  src="/assets/images/IMG_7101.JPG"
+                  src="/assets/images/IMG_7101.webp"
                   alt="Quality Without Compromise"
                   style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
                 />
@@ -213,7 +213,7 @@ export default function AboutPage() {
             >
               <div style={{ width: '42%', minHeight: '190px', flexShrink: 0, position: 'relative' }}>
                 <img
-                  src="/assets/images/IMG_7106.JPG"
+                  src="/assets/images/IMG_7106.webp"
                   alt="Style & Trend Leadership"
                   style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
                 />
@@ -255,7 +255,7 @@ export default function AboutPage() {
             >
               <div style={{ width: '42%', minHeight: '190px', flexShrink: 0, position: 'relative' }}>
                 <img
-                  src="/assets/images/IMG_7107.JPG"
+                  src="/assets/images/IMG_7107.webp"
                   alt="Effortless Performance"
                   style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
                 />

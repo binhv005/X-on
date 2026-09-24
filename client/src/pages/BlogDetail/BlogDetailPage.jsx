@@ -169,7 +169,7 @@ export default function BlogDetailPage() {
 
   return (
     <div className="bd-page">
-      {/* ================= HERO — nền hero_blogdetail.png ================= */}
+      {/* ================= HERO — nền hero_blogdetail.webp ================= */}
       <section className="bd-hero">
         <div className="bd-hero-inner">
           <Link to="/blog" className="bd-back">

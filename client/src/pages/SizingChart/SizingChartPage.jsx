@@ -19,10 +19,10 @@ import { api } from '../../services/api';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
 
 // Direct Image Asset Imports for 100% Vite build & runtime resolution
-import topShowcaseBanner from '../../assets/images/ChatGPT-Image-18_51_04-20-thg-7-2026.png';
-import nailShapesBannerImg from '../../assets/images/8ba0b55c-fdc6-441d-9c9e-4af35d3fab65.png';
-import customNailBarGuideImg from '../../assets/images/0a9ef85d-1399-40c6-927c-a9a7b5858f6d.png';
-import stepCardBg from '../../assets/images/step-card-bg.jpg';
+import topShowcaseBanner from '../../assets/images/ChatGPT-Image-18_51_04-20-thg-7-2026.webp';
+import nailShapesBannerImg from '../../assets/images/8ba0b55c-fdc6-441d-9c9e-4af35d3fab65.webp';
+import customNailBarGuideImg from '../../assets/images/0a9ef85d-1399-40c6-927c-a9a7b5858f6d.webp';
+import stepCardBg from '../../assets/images/step-card-bg.webp';
 
 export default function SizingChartPage() {
   const [content, setContent] = useState(null);
@@ -162,7 +162,7 @@ export default function SizingChartPage() {
           alt="X-ON Nail Sizing & Shape Showcase"
           onError={(e) => {
             e.currentTarget.onerror = null;
-            e.currentTarget.src = '/assets/images/ChatGPT-Image-18_51_04-20-thg-7-2026.png';
+            e.currentTarget.src = '/assets/images/ChatGPT-Image-18_51_04-20-thg-7-2026.webp';
           }}
           style={{
             position: 'absolute',
@@ -363,7 +363,7 @@ export default function SizingChartPage() {
                   alt="X-ON Custom Nail Bar Sizing & Measurement Guide"
                   onError={(e) => {
                     e.currentTarget.onerror = null;
-                    e.currentTarget.src = '/assets/images/0a9ef85d-1399-40c6-927c-a9a7b5858f6d.png';
+                    e.currentTarget.src = '/assets/images/0a9ef85d-1399-40c6-927c-a9a7b5858f6d.webp';
                   }}
                   style={{
                     width: '100%',
@@ -691,7 +691,7 @@ export default function SizingChartPage() {
                   alt="X-ON Sizing Chart Nail Shapes & Length"
                   onError={(e) => {
                     e.currentTarget.onerror = null;
-                    e.currentTarget.src = '/assets/images/8ba0b55c-fdc6-441d-9c9e-4af35d3fab65.png';
+                    e.currentTarget.src = '/assets/images/8ba0b55c-fdc6-441d-9c9e-4af35d3fab65.webp';
                   }}
                   style={{
                     width: '100%',
