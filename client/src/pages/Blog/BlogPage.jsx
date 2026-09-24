@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { Sparkles, Search, ArrowRight, ChevronRight, Mail, Leaf } from 'lucide-react';
+import { Sparkles, Search, ArrowRight, ChevronRight } from 'lucide-react';
 import { api } from '../../services/api';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
 import './BlogPage.css';
@@ -37,8 +37,6 @@ export default function BlogPage() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
-  const [email, setEmail] = useState('');
-  const [subscribed, setSubscribed] = useState(false);
 
   useEffect(() => {
     async function loadBlog() {
@@ -82,12 +80,6 @@ export default function BlogPage() {
   const totalPages = Math.max(1, Math.ceil(gridSource.length / PAGE_SIZE));
   const safePage = Math.min(page, totalPages);
   const paged = gridSource.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE);
-
-  const handleSubscribe = (e) => {
-    e.preventDefault();
-    if (!email.includes('@')) return;
-    setSubscribed(true);
-  };
 
   if (loading) {
     return <LoadingSpinner text="Loading X-ON beauty & nail articles..." />;
@@ -222,42 +214,6 @@ export default function BlogPage() {
           </div>
         )}
 
-        {/* ===== NEWSLETTER BANNER — nền blog_hero.png ===== */}
-        <section className="blog-newsletter">
-          <div className="blog-newsletter-inner">
-            <div className="blog-newsletter-title">
-              <Leaf size={22} />
-              <div>
-                <h3>Join the X-ON Community</h3>
-                <p>Get the latest nail trends, new collections, and exclusive tips straight to your inbox.</p>
-              </div>
-            </div>
-            <div>
-              {subscribed ? (
-                <div className="blog-newsletter-success">
-                  Welcome to the community! Please check your inbox to confirm.
-                </div>
-              ) : (
-                <form className="blog-newsletter-form" onSubmit={handleSubscribe}>
-                  <Mail size={16} />
-                  <input
-                    type="email"
-                    required
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Your email address"
-                  />
-                  <button type="submit" className="blog-subscribe-btn">
-                    Subscribe <ArrowRight size={14} />
-                  </button>
-                </form>
-              )}
-            </div>
-            <div className="blog-newsletter-side">
-              <span>Beauty<br />Crafted<br />To Inspire</span>
-            </div>
-          </div>
-        </section>
       </div>
     </div>
   );

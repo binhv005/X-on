@@ -9,7 +9,6 @@ import {
   Layers,
   Sliders,
   ArrowRight,
-  CheckCircle2,
   Heart,
   ShoppingBag,
   Info,
@@ -147,9 +146,8 @@ export default function SizingChartPage() {
       {/* 1. Full-width Hero Header Banner with Image Background & Dark Overlay */}
       <section style={{
         position: 'relative',
-        minHeight: '460px',
-        padding: '6rem 1.5rem 5.5rem 1.5rem',
-        borderBottom: '1px solid rgba(255, 255, 255, 0.12)',
+        padding: '6.5rem 1.5rem 5.5rem 1.5rem',
+        borderBottom: '1px solid rgba(0, 0, 0, 0.15)',
         textAlign: 'center',
         overflow: 'hidden',
         display: 'flex',
@@ -175,39 +173,20 @@ export default function SizingChartPage() {
           }}
         />
 
-        {/* Black / Dark Overlay */}
+        {/* Soft Overlay — giống Bundle and Save, không đen gắt */}
         <div style={{
           position: 'absolute',
           inset: 0,
-          background: 'linear-gradient(180deg, rgba(14, 16, 20, 0.78) 0%, rgba(14, 16, 20, 0.88) 100%)',
+          background: 'radial-gradient(circle at center, rgba(15, 15, 18, 0.42) 0%, rgba(15, 15, 18, 0.72) 100%)',
           zIndex: 2
         }} />
 
         {/* Hero Content Over Image */}
         <div className="container" style={{ maxWidth: '850px', position: 'relative', zIndex: 3 }}>
-          <div style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '0.5rem',
-            padding: '0.45rem 1.35rem',
-            borderRadius: '999px',
-            background: 'rgba(212, 175, 55, 0.22)',
-            border: '1px solid rgba(245, 211, 118, 0.55)',
-            color: '#f5d376',
-            fontWeight: 800,
-            fontSize: '0.84rem',
-            marginBottom: '1.25rem',
-            textTransform: 'uppercase',
-            letterSpacing: '0.08em',
-            backdropFilter: 'blur(6px)'
-          }}>
-            <Ruler size={15} color="#f5d376" /> Salon-Grade Precision Fit
-          </div>
-
           <h1 className="font-heading" style={{
             fontSize: 'clamp(2.4rem, 5vw, 3.8rem)',
             color: '#ffffff',
-            marginBottom: '1.15rem',
+            marginBottom: '1rem',
             letterSpacing: '-0.02em',
             lineHeight: 1.2,
             textShadow: '0 4px 20px rgba(0, 0, 0, 0.8)'
@@ -218,38 +197,18 @@ export default function SizingChartPage() {
           <p style={{
             color: '#e5e7eb',
             fontSize: '1.1rem',
-            maxWidth: '680px',
-            margin: '0 auto 2.25rem auto',
+            maxWidth: '640px',
+            margin: '0 auto',
             lineHeight: 1.65,
+            textWrap: 'balance',
             textShadow: '0 2px 8px rgba(0, 0, 0, 0.7)'
           }}>
-            {content?.intro_body || 'Achieving a bespoke salon fit with X-ON press-on nails starts with precise measurement. Use our standard sizing mapping below or order a custom sizing set tailored to your exact natural nail beds.'}
+            {content?.intro_body || 'Measure once for a bespoke salon fit — use XS–L presets or custom mm sizing below.'}
           </p>
-
-          {/* Quick Value Badges */}
-          <div style={{
-            display: 'flex',
-            justifyContent: 'center',
-            gap: '1.5rem',
-            flexWrap: 'wrap',
-            fontSize: '0.92rem',
-            color: '#ffffff',
-            fontWeight: 500
-          }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', textShadow: '0 2px 6px rgba(0,0,0,0.8)' }}>
-              <CheckCircle2 size={17} color="#f5d376" /> Standard XS – L Presets
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', textShadow: '0 2px 6px rgba(0,0,0,0.8)' }}>
-              <CheckCircle2 size={17} color="#f5d376" /> 100% Custom mm Supported
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', textShadow: '0 2px 6px rgba(0,0,0,0.8)' }}>
-              <CheckCircle2 size={17} color="#f5d376" /> 6 Artisan Silhouettes
-            </div>
-          </div>
         </div>
       </section>
 
-      <div className="section-py" style={{ paddingTop: '3.5rem', paddingBottom: '5rem' }}>
+      <div className="section-py" style={{ paddingTop: '3.5rem', paddingBottom: '2.5rem' }}>
         <div className="container">
           {/* Navigation Tab Switcher */}
           <div style={{
@@ -332,7 +291,7 @@ export default function SizingChartPage() {
                       Precise millimeter (mm) dimensions measured at the widest point of each natural nail bed
                     </span>
                   </div>
-                  <span className="badge badge-gold" style={{ fontSize: '0.85rem', padding: '0.45rem 1rem' }}>
+                  <span style={{ fontSize: '0.85rem', fontWeight: 800, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--accent-gold-dark, #8c6716)' }}>
                     Thumb → Pinky
                   </span>
                 </div>
@@ -358,7 +317,7 @@ export default function SizingChartPage() {
                         }}>
                           <td style={{ padding: '1.15rem 1.5rem', fontWeight: 800 }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                              <span className="badge badge-gold" style={{ fontSize: '0.9rem', minWidth: '42px', textAlign: 'center' }}>
+                              <span style={{ fontSize: '0.95rem', fontWeight: 800, color: 'var(--accent-gold-dark, #8c6716)' }}>
                                 {row.size}
                               </span>
                               {row.popular && (
@@ -708,7 +667,7 @@ export default function SizingChartPage() {
                       <h4 className="font-heading" style={{ color: 'var(--accent-gold-dark)', fontSize: '1.35rem', margin: 0 }}>
                         {shape.name}
                       </h4>
-                      <span className="badge badge-gold" style={{ fontSize: '0.75rem' }}>{shape.tag}</span>
+                      <span style={{ fontSize: '0.75rem', fontWeight: 800, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--accent-gold-dark, #8c6716)' }}>{shape.tag}</span>
                     </div>
                     <p style={{ color: 'var(--text-secondary)', fontSize: '0.92rem', lineHeight: 1.7, margin: 0 }}>
                       {shape.desc}
@@ -747,7 +706,7 @@ export default function SizingChartPage() {
                         <h4 className="font-heading" style={{ color: 'var(--text-primary)', fontSize: '1.4rem', margin: 0 }}>
                           {len.name}
                         </h4>
-                        <span className="badge badge-gold" style={{ fontSize: '0.85rem' }}>{len.length}</span>
+                        <span style={{ fontSize: '0.85rem', fontWeight: 800, color: 'var(--accent-gold-dark, #8c6716)' }}>{len.length}</span>
                       </div>
                       <span style={{ display: 'inline-block', fontSize: '0.8rem', fontWeight: 700, color: 'var(--accent-gold-dark)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '0.75rem' }}>
                         {len.tag}
@@ -761,39 +720,127 @@ export default function SizingChartPage() {
               </div>
             </div>
           )}
-
-          {/* Studio Support Bottom Card */}
-          <div style={{
-            marginTop: '5rem',
-            background: 'linear-gradient(135deg, #14161a 0%, #1e222b 100%)',
-            borderRadius: '24px',
-            padding: '3.5rem 2.5rem',
-            textAlign: 'center',
-            color: '#ffffff',
-            boxShadow: '0 16px 40px rgba(0, 0, 0, 0.25)',
-            position: 'relative',
-            overflow: 'hidden'
-          }}>
-            <span className="brand-line" style={{ color: '#f5d376', marginBottom: '0.5rem', display: 'block' }}>
-              Still Unsure About Your Fit?
-            </span>
-            <h3 className="font-heading" style={{ fontSize: '2.2rem', color: '#ffffff', marginBottom: '1rem' }}>
-              We Handcraft 100% Custom Sizing
-            </h3>
-            <p style={{ color: '#d1d5db', maxWidth: '620px', margin: '0 auto 2rem auto', fontSize: '1rem', lineHeight: 1.7 }}>
-              If your measurements fall between standard presets, simply select <strong>"Custom"</strong> at checkout and note your thumb-to-pinky millimeter dimensions. Our Kissimmee artisan team will craft your bespoke set to perfection.
-            </p>
-            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-              <Link to="/shop" className="btn btn-primary" style={{ background: '#f5d376', color: '#111827', border: 'none' }}>
-                Shop All Nails
-              </Link>
-              <Link to="/contact-us" className="btn btn-outline" style={{ borderColor: 'rgba(255,255,255,0.4)', color: '#ffffff' }}>
-                Contact Sizing Support
-              </Link>
-            </div>
-          </div>
         </div>
       </div>
+
+      {/* Full-width Studio Support Section — đồng bộ tone ấm sang trọng với Quick Size Matcher */}
+      <section style={{
+        width: '100%',
+        background: 'linear-gradient(135deg, #faf6f0 0%, #f5efe6 100%)',
+        borderTop: '1px solid var(--border-gold, rgba(179, 135, 40, 0.3))',
+        borderBottom: '1px solid var(--border-gold, rgba(179, 135, 40, 0.3))',
+        padding: '3.2rem 1.5rem 2.6rem 1.5rem',
+        position: 'relative',
+        overflow: 'hidden'
+      }}>
+        {/* Subtle decorative glow for soft luxury feel */}
+        <div style={{
+          position: 'absolute',
+          top: '-50%',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          width: '700px',
+          height: '400px',
+          background: 'radial-gradient(circle, rgba(212, 175, 55, 0.18) 0%, rgba(255, 255, 255, 0) 70%)',
+          pointerEvents: 'none'
+        }} />
+
+        <div style={{
+          maxWidth: '740px',
+          margin: '0 auto',
+          textAlign: 'center',
+          position: 'relative',
+          zIndex: 1
+        }}>
+          <span style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '0.45rem',
+            color: 'var(--accent-gold-dark, #8c6716)',
+            fontSize: '0.78rem',
+            fontWeight: 800,
+            letterSpacing: '0.18em',
+            textTransform: 'uppercase',
+            marginBottom: '0.45rem'
+          }}>
+            <Sparkles size={13} color="var(--accent-gold-dark, #8c6716)" /> Still Unsure About Your Fit?
+          </span>
+
+          <h3 className="font-heading" style={{
+            fontSize: 'clamp(1.75rem, 3.2vw, 2.2rem)',
+            color: 'var(--text-primary, #1c1c21)',
+            marginBottom: '0.7rem',
+            fontWeight: 700,
+            letterSpacing: '-0.01em',
+            lineHeight: 1.25
+          }}>
+            We Handcraft 100% Custom Sizing
+          </h3>
+
+          <p style={{
+            color: 'var(--text-secondary, #525260)',
+            maxWidth: '620px',
+            margin: '0 auto 1.6rem auto',
+            fontSize: '0.96rem',
+            lineHeight: 1.68
+          }}>
+            If your measurements fall between standard presets, simply select <strong style={{ color: 'var(--text-primary, #1c1c21)' }}>"Custom"</strong> at checkout and note your thumb-to-pinky millimeter dimensions. Our Kissimmee artisan team will craft your bespoke set to perfection.
+          </p>
+
+          <div style={{ display: 'flex', gap: '0.85rem', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap' }}>
+            <Link
+              to="/shop"
+              className="btn btn-primary"
+              style={{
+                background: 'linear-gradient(135deg, #cfa83b 0%, #b38728 100%)',
+                color: '#ffffff',
+                border: 'none',
+                padding: '12px 28px',
+                borderRadius: '6px',
+                fontWeight: 700,
+                fontSize: '0.82rem',
+                letterSpacing: '0.08em',
+                textTransform: 'uppercase',
+                boxShadow: '0 4px 14px rgba(179, 135, 40, 0.28)',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                transition: 'all 0.25s ease'
+              }}
+            >
+              Shop All Nails <ArrowRight size={14} />
+            </Link>
+            <Link
+              to="/contact-us"
+              className="btn"
+              style={{
+                background: '#ffffff',
+                color: 'var(--accent-gold-dark, #8c6716)',
+                border: '1.5px solid var(--border-gold, rgba(179, 135, 40, 0.45))',
+                padding: '12px 24px',
+                borderRadius: '6px',
+                fontWeight: 700,
+                fontSize: '0.82rem',
+                letterSpacing: '0.04em',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px',
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)',
+                transition: 'all 0.25s ease'
+              }}
+            >
+              Contact Sizing Support
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Khoảng nền màu trắng bên dưới tạo khoảng cách với footer */}
+      <div style={{
+        width: '100%',
+        height: '3.5rem',
+        background: '#ffffff'
+      }} />
     </div>
   );
 }

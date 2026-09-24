@@ -30,8 +30,16 @@
 .xcontact .xc-script { font-family: 'Great Vibes', cursive; font-weight: 400; }
 
 /* ---------- HERO — vừa 1 màn hình ---------- */
-.xc-hero { position: relative; padding: 40px 0; overflow: hidden; }
-.xc-hero .xc-container { max-width: 1280px; }
+.xc-hero {
+  position: relative;
+  min-height: calc(100vh - 72px);
+  display: flex;
+  align-items: center;
+  padding: 40px 0;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+.xc-hero .xc-container { max-width: 1280px; width: 100%; }
 .xc-hero::before {
   content: '';
   position: absolute; top: -140px; right: -120px;
@@ -50,8 +58,10 @@
   position: relative; z-index: 1;
   display: grid; grid-template-columns: 1.08fr 0.92fr;
   gap: 48px; align-items: center;
-  min-height: calc(100vh - 220px);
-  max-height: 760px;
+  width: 100%;
+}
+.xc-hero-left {
+  transform: translateY(-24px);
 }
 .xc-eyebrow {
   display: flex; align-items: center; gap: 16px;
@@ -75,7 +85,13 @@
   color: var(--accent-gold, #b38728);
 }
 .xc-hero-title .xc-spark { color: var(--accent-gold, #b38728); font-size: 0.45em; vertical-align: super; margin-left: 6px; }
-.xc-hero-sub { font-size: 16px; font-weight: 700; line-height: 1.5; margin-bottom: 10px; color: var(--text-primary, #1c1c21); }
+.xc-hero-sub {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.65;
+  margin: 14px 0 20px;
+  color: var(--text-secondary, #525260);
+}
 .xc-hero-desc { font-size: 14px; line-height: 1.7; color: var(--text-secondary, #525260); max-width: 480px; margin-bottom: 6px; }
 .xc-hero-script {
   font-family: 'Great Vibes', cursive;
@@ -101,10 +117,10 @@
 }
 
 /* hero visuals — gọn lại */
-.xc-hero-visual { position: relative; min-height: 440px; max-height: 560px; }
+.xc-hero-visual { position: relative; min-height: 460px; }
 .xc-arch {
   position: absolute; top: 0; left: 0;
-  width: 62%; height: 400px;
+  width: 62%; height: 420px;
   border-radius: 999px 999px 18px 18px;
   overflow: hidden; background: #fff;
   border: 6px solid #fff;
@@ -148,8 +164,11 @@
 /* ---------- WHY — vừa 1 màn hình ---------- */
 .xc-why { padding: 40px 0; position: relative; background: var(--bg-secondary, #f4efe8); border-top: 1px solid var(--border-subtle, rgba(0,0,0,0.08)); border-bottom: 1px solid var(--border-subtle, rgba(0,0,0,0.08)); }
 .xc-why-head {
-  display: grid; grid-template-columns: 0.9fr 1.3fr 0.8fr;
-  gap: 20px; align-items: end; margin-bottom: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 28px;
+  gap: 20px;
 }
 .xc-why-title { font-family: var(--font-heading, 'Cinzel', serif); font-size: clamp(30px, 3.2vw, 42px); font-weight: 700; line-height: 1.15; letter-spacing: 0.04em; color: var(--text-primary, #1c1c21); margin-top: 6px; }
 .xc-why-desc { font-size: 14px; line-height: 1.65; color: var(--text-secondary, #525260); max-width: 460px; padding-bottom: 6px; }
@@ -184,14 +203,21 @@
 .xc-text-link:hover { color: var(--accent-gold, #b38728); border-color: var(--accent-gold, #b38728); }
 
 /* ---------- CONTACT — vừa 1 màn hình ---------- */
-.xc-contact { padding: 40px 0; position: relative; background: var(--bg-primary, #fcfbf9); }
+.xc-contact { padding: 60px 0; position: relative; background: var(--bg-primary, #fcfbf9); }
 .xc-contact::before {
   content: ''; position: absolute; left: -80px; bottom: 100px;
   width: 380px; height: 200px;
   background: radial-gradient(closest-side, rgba(179,135,40,0.10), rgba(179,135,40,0) 70%);
   pointer-events: none;
 }
-.xc-contact-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 0.92fr 1.08fr; gap: 40px; align-items: start; }
+.xc-contact-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 0.92fr 1.08fr;
+  gap: 48px;
+  align-items: center;
+}
 .xc-contact-title { font-family: var(--font-heading, 'Cinzel', serif); font-weight: 700; font-size: clamp(34px, 3.5vw, 50px); line-height: 1.15; letter-spacing: 0.04em; color: var(--text-primary, #1c1c21); }
 .xc-contact-title span {
   background: linear-gradient(135deg, #8c6716 0%, #b38728 50%, #cfa83b 100%);

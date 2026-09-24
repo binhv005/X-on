@@ -239,7 +239,7 @@ export default function Header() {
                     onMouseOver={e => { e.currentTarget.style.background = 'var(--bg-surface-elevated)'; e.currentTarget.style.color = 'var(--accent-gold-dark)'; }}
                     onMouseOut={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--text-primary)'; }}
                   >
-                    Gallery Product (Now Selling)
+                    Gallery Product
                   </Link>
                   <Link
                     to="/gallery-coming-soon"
