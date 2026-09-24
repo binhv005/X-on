@@ -1,11 +1,10 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Upload, Link2, X, Image as ImageIcon } from 'lucide-react';
 import { useToast } from '../../context/ToastContext';
 
-const MAX_SIZE = 5 * 1024 * 1024;
+const MAX_SIZE = 15 * 1024 * 1024; // 15MB limit
 
-// Ảnh chọn từ máy CHỈ preview tại chỗ, KHÔNG upload ngay.
-// File được giữ lại qua onFileChange và upload ẩn ở lúc nhấn Save.
+// Preview file locally before saving, or paste direct Cloudinary/HTTPS link
 export default function ImageInput({ value = '', onChange, label = 'Image', required = false, onFileChange }) {
   const { addToast } = useToast();
   const fileRef = useRef(null);
@@ -14,8 +13,19 @@ export default function ImageInput({ value = '', onChange, label = 'Image', requ
   const [localPreview, setLocalPreview] = useState('');
   const [fileName, setFileName] = useState('');
 
+  // Cleanup object URL on unmount or when localPreview changes
+  useEffect(() => {
+    return () => {
+      if (localPreview && localPreview.startsWith('blob:')) {
+        URL.revokeObjectURL(localPreview);
+      }
+    };
+  }, [localPreview]);
+
   const discardPending = () => {
-    if (localPreview) URL.revokeObjectURL(localPreview);
+    if (localPreview && localPreview.startsWith('blob:')) {
+      URL.revokeObjectURL(localPreview);
+    }
     setLocalPreview('');
     setFileName('');
     onFileChange?.(null);
@@ -25,15 +35,18 @@ export default function ImageInput({ value = '', onChange, label = 'Image', requ
   const selectFile = (file) => {
     if (!file) return;
     if (!file.type.startsWith('image/')) {
-      addToast('Only image files are allowed (jpg, png, webp).', 'error');
+      addToast('Only image files are allowed (jpg, png, webp, gif).', 'error');
       return;
     }
     if (file.size > MAX_SIZE) {
-      addToast('Image must be under 5MB.', 'error');
+      addToast('Image must be under 15MB.', 'error');
       return;
     }
-    if (localPreview) URL.revokeObjectURL(localPreview);
-    setLocalPreview(URL.createObjectURL(file));
+    if (localPreview && localPreview.startsWith('blob:')) {
+      URL.revokeObjectURL(localPreview);
+    }
+    const previewUrl = URL.createObjectURL(file);
+    setLocalPreview(previewUrl);
     setFileName(file.name);
     onFileChange?.(file);
   };

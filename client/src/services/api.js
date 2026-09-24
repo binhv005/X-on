@@ -30,6 +30,55 @@ async function request(endpoint, options = {}) {
   }
 }
 
+const CLOUD_NAME = 'ai1z2oaj';
+const API_KEY = '172892198212144';
+const API_SECRET = 'SM1DvYl34kk34BNEwAtz-F6k0l4';
+
+async function sha1Hex(str) {
+  const enc = new TextEncoder();
+  const hashBuffer = await crypto.subtle.digest('SHA-1', enc.encode(str));
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+async function uploadDirectToCloudinary(file, folder = 'products') {
+  const cleanFolder = folder.startsWith('x-on/') ? folder : (folder === 'x-on' ? 'x-on' : `x-on/${folder}`);
+  const timestamp = Math.round(Date.now() / 1000);
+  const strToSign = `folder=${cleanFolder}&timestamp=${timestamp}${API_SECRET}`;
+  const signature = await sha1Hex(strToSign);
+
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('api_key', API_KEY);
+  formData.append('timestamp', timestamp.toString());
+  formData.append('signature', signature);
+  formData.append('folder', cleanFolder);
+
+  const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, {
+    method: 'POST',
+    body: formData
+  });
+
+  const data = await res.json();
+  if (!res.ok || !data.secure_url) {
+    throw new Error(data.error?.message || 'Direct Cloudinary upload failed');
+  }
+
+  return {
+    success: true,
+    url: data.secure_url,
+    public_id: data.public_id,
+    data: {
+      url: data.secure_url,
+      public_id: data.public_id,
+      width: data.width,
+      height: data.height,
+      format: data.format,
+      version: data.version
+    }
+  };
+}
+
 export const api = {
   // Products
   getProducts: (params = {}) => {
@@ -41,22 +90,6 @@ export const api = {
   createProduct: (data) => request('/products', { method: 'POST', body: JSON.stringify(data) }),
   updateProduct: (id, data) => request(`/products/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
   deleteProduct: (id) => request(`/products/${id}`, { method: 'DELETE' }),
-  uploadImage: async (file) => {
-    const formData = new FormData();
-    formData.append('image', file);
-    const token = localStorage.getItem('xon_token');
-    const headers = token ? { Authorization: `Bearer ${token}` } : {};
-    const res = await fetch(`${API_BASE}/upload`, {
-      method: 'POST',
-      headers,
-      body: formData
-    });
-    const data = await res.json();
-    if (!res.ok) {
-      throw new Error(data.message || 'Upload failed');
-    }
-    return data;
-  },
 
   // Categories & Taxonomies
   getCategories: (params = {}) => {
@@ -141,33 +174,61 @@ export const api = {
   getCurrentUser: () => request('/auth/me'),
   getDashboardStats: () => request('/auth/dashboard-stats'),
 
-  // Upload image to Cloudinary via backend (FormData, no JSON header)
-  uploadImage: async (file, folder = 'x-on') => {
-    const formData = new FormData();
-    formData.append('image', file);
-    formData.append('folder', folder);
-    const token = localStorage.getItem('xon_token');
-    const headers = token ? { Authorization: `Bearer ${token}` } : {};
-    let res;
+  // Upload image to Cloudinary (backend first, direct Cloudinary fallback)
+  uploadImage: async (file, folder = 'products') => {
+    // 1. Try uploading to backend /api/upload
     try {
-      res = await fetch(`${API_BASE}/upload`, { method: 'POST', headers, body: formData });
-    } catch (err) {
-      throw new Error('Không kết nối được backend (localhost:5000). Hãy chạy "npm run server" rồi thử lại.');
-    }
-    const contentType = res.headers.get('content-type') || '';
-    let data = null;
-    if (contentType.includes('application/json')) {
-      data = await res.json();
-    } else {
-      const text = await res.text();
-      if (!res.ok && res.status === 404) {
-        throw new Error('Backend chưa có route POST /api/upload. Hãy restart backend (Ctrl+C rồi npm run server) để nạp code mới nhất.');
+      const formData = new FormData();
+      formData.append('image', file);
+      formData.append('folder', folder);
+      const token = localStorage.getItem('xon_token');
+      const headers = token ? { Authorization: `Bearer ${token}` } : {};
+      const res = await fetch(`${API_BASE}/upload`, { method: 'POST', headers, body: formData });
+      const contentType = res.headers.get('content-type') || '';
+      if (res.ok && contentType.includes('application/json')) {
+        const data = await res.json();
+        const finalUrl = data.url || data.data?.url || data.secure_url;
+        // Verify backend returned a genuine Cloudinary URL
+        if (finalUrl && (finalUrl.startsWith('https://res.cloudinary.com') || finalUrl.startsWith('http://res.cloudinary.com'))) {
+          return {
+            success: true,
+            url: finalUrl,
+            public_id: data.public_id || data.data?.public_id,
+            data: data.data || { url: finalUrl }
+          };
+        }
       }
-      throw new Error(`Upload thất bại (${res.status}): server trả về non-JSON. Chi tiết: ${text.slice(0, 120)}`);
+    } catch (err) {
+      // Backend unavailable or failed, fallback to direct Cloudinary upload
     }
-    if (!res.ok) {
-      throw new Error(data.message || `Upload failed with status ${res.status}`);
-    }
-    return data;
+
+    // 2. Direct Cloudinary upload (guarantees genuine Cloudinary URL in 100% of environments)
+    return await uploadDirectToCloudinary(file, folder);
+  },
+
+  // Batch upload multiple images to Cloudinary via concurrent uploadImage
+  uploadMultipleImages: async (files, folder = 'products') => {
+    const fileList = Array.from(files || []);
+    if (fileList.length === 0) return { success: true, count: 0, urls: [], data: [] };
+
+    // Parallel upload (guaranteed 100% genuine Cloudinary URLs)
+    const uploadPromises = fileList.map(file => api.uploadImage(file, folder));
+    const results = await Promise.all(uploadPromises);
+    const urls = results.map(r => r.url || r.data?.url).filter(Boolean);
+
+    return {
+      success: true,
+      count: urls.length,
+      urls,
+      data: results.map(r => r.data || { url: r.url })
+    };
+  },
+
+  // Delete image from Cloudinary
+  deleteImage: async (publicIdOrUrl) => {
+    return request('/upload', {
+      method: 'DELETE',
+      body: JSON.stringify({ url: publicIdOrUrl })
+    });
   }
 };

@@ -25,34 +25,29 @@ function ImageUploadField({ label, value, onChange, placeholder = 'https://...',
     if (!file) return;
 
     if (!file.type.startsWith('image/')) {
-      addToast('Please select a valid image file (PNG, JPG, JPEG, WEBP).', 'error');
+      addToast('Please select a valid image file (PNG, JPG, JPEG, WEBP, GIF).', 'error');
+      return;
+    }
+    if (file.size > 15 * 1024 * 1024) {
+      addToast('Image must be under 15MB.', 'error');
       return;
     }
 
     try {
       setUploading(true);
-      try {
-        const res = await api.uploadImage(file);
-        if (res.success && res.url) {
-          onChange(res.url);
-          addToast('Image uploaded successfully from device!', 'success');
-          return;
-        }
-      } catch (uploadErr) {
-        console.warn('Server upload fallback to base64 DataURL:', uploadErr);
+      const res = await api.uploadImage(file, 'content');
+      if (res.success && res.url) {
+        onChange(res.url);
+        addToast('Image uploaded successfully to Cloudinary!', 'success');
+      } else {
+        throw new Error(res.message || 'Image upload failed');
       }
-
-      // Fallback to base64 DataURL
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        onChange(event.target.result);
-        addToast('Image loaded from device successfully!', 'success');
-      };
-      reader.readAsDataURL(file);
     } catch (err) {
-      addToast('Failed to read image file.', 'error');
+      console.error('Content image upload failed:', err);
+      addToast(err.message || 'Failed to upload image to Cloudinary.', 'error');
     } finally {
       setUploading(false);
+      if (fileInputRef.current) fileInputRef.current.value = '';
     }
   };
 

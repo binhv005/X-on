@@ -2,6 +2,33 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Heart } from 'lucide-react';
 
+const CLOUDINARY_IMG_MAP = {
+  'IMG_7098': 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237942/x-on/products/IMG_7098.webp',
+  'IMG_7099': 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237944/x-on/products/IMG_7099.webp',
+  'IMG_7100': 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237945/x-on/products/IMG_7100.webp',
+  'IMG_7101': 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237948/x-on/products/IMG_7101.webp',
+  'IMG_7102': 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237953/x-on/products/IMG_7102.webp',
+  'IMG_7103': 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237957/x-on/products/IMG_7103.webp',
+  'IMG_7104': 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237959/x-on/products/IMG_7104.webp',
+  'IMG_7105': 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237962/x-on/products/IMG_7105.webp',
+  'IMG_7106': 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237964/x-on/products/IMG_7106.webp',
+  'IMG_7107': 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237967/x-on/products/IMG_7107.webp',
+  'IMG_7110': 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237968/x-on/products/IMG_7110.webp',
+  'IMG_7111': 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237969/x-on/products/IMG_7111.webp'
+};
+
+function resolveProductImage(url) {
+  if (!url || typeof url !== 'string') return 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237942/x-on/products/IMG_7098.webp';
+  const clean = url.trim();
+  if (clean.startsWith('http://') || clean.startsWith('https://')) {
+    return clean;
+  }
+  for (const [key, cdnUrl] of Object.entries(CLOUDINARY_IMG_MAP)) {
+    if (clean === key || clean === `${key}.webp` || clean === `/assets/images/${key}.webp`) return cdnUrl;
+  }
+  return clean.startsWith('/') ? clean : `/${clean}`;
+}
+
 export default function ProductCard({ product, compact = false, imageAspect = '100%' }) {
   const [isFavorite, setIsFavorite] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -10,8 +37,8 @@ export default function ProductCard({ product, compact = false, imageAspect = '1
   const rawImages = Array.isArray(product.images)
     ? product.images.filter(Boolean)
     : (typeof product.images === 'string' && product.images ? [product.images] : []);
-  const images = rawImages.length > 0 ? rawImages : ['/assets/images/IMG_7098.webp'];
-  const primaryImage = images[0] || '/assets/images/IMG_7098.webp';
+  const images = rawImages.length > 0 ? rawImages : [CLOUDINARY_IMG_MAP['IMG_7098']];
+  const primaryImage = resolveProductImage(images[0] || CLOUDINARY_IMG_MAP['IMG_7098']);
 
   // Standard sizes to display (or from product)
   const allDisplaySizes = ['XS', 'S', 'M', 'L'];
@@ -53,7 +80,7 @@ export default function ProductCard({ product, compact = false, imageAspect = '1
             loading="lazy"
             onError={(e) => {
               e.currentTarget.onerror = null;
-              e.currentTarget.src = '/assets/images/IMG_7098.webp';
+              e.currentTarget.src = CLOUDINARY_IMG_MAP['IMG_7098'];
             }}
             style={{
               position: 'absolute',

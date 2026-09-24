@@ -28,9 +28,9 @@ export function seedInitialData() {
       slug: 'cf-35-0961-luxury-chrome-velvet',
       SKU: 'XON-CF-0961',
       images: [
-        '/assets/images/IMG_7098.webp',
-        '/assets/images/IMG_7102.webp',
-        '/assets/images/IMG_7103.webp'
+        'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237942/x-on/products/IMG_7098.webp',
+        'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237967/x-on/products/IMG_7107.webp',
+        'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790241343/x-on/products/ChatGPT-Image-18_51_04-20-thg-7-2026.webp'
       ],
       price: 48.00,
       sale_price: 39.00,
@@ -64,9 +64,9 @@ export function seedInitialData() {
       slug: 'al-12-0442-ethereal-french-rose-almond',
       SKU: 'XON-AL-0442',
       images: [
-        '/assets/images/IMG_7099.webp',
-        '/assets/images/IMG_7103.webp',
-        '/assets/images/IMG_7107.webp'
+        'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237944/x-on/products/IMG_7099.webp',
+        'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790241340/x-on/products/0a9ef85d-1399-40c6-927c-a9a7b5858f6d.webp',
+        'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237953/x-on/products/IMG_7102.webp'
       ],
       price: 42.00,
       sale_price: 36.00,
@@ -97,9 +97,9 @@ export function seedInitialData() {
       slug: 'st-99-0118-obsidian-gold-foil-stiletto',
       SKU: 'XON-ST-0118',
       images: [
-        '/assets/images/IMG_7100.webp',
-        '/assets/images/IMG_7102.webp',
-        '/assets/images/IMG_7104.webp'
+        'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237945/x-on/products/IMG_7100.webp',
+        'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790241341/x-on/products/8ba0b55c-fdc6-441d-9c9e-4af35d3fab65.webp',
+        'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237959/x-on/products/IMG_7104.webp'
       ],
       price: 52.00,
       sale_price: 45.00,
@@ -129,9 +129,9 @@ export function seedInitialData() {
       slug: 'sq-44-0312-nude-glaze-classic-square',
       SKU: 'XON-SQ-0312',
       images: [
-        '/assets/images/IMG_7101.webp',
-        '/assets/images/IMG_7105.webp',
-        '/assets/images/IMG_7111.webp'
+        'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237948/x-on/products/IMG_7101.webp',
+        'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237969/x-on/products/IMG_7111.webp',
+        'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790241343/x-on/products/ChatGPT-Image-18_51_04-20-thg-7-2026.webp'
       ],
       price: 38.00,
       sale_price: null,
@@ -162,9 +162,9 @@ export function seedInitialData() {
       slug: 'ov-08-0720-pearl-aurora-oval',
       SKU: 'XON-OV-0720',
       images: [
-        '/assets/images/IMG_7102.webp',
-        '/assets/images/IMG_7103.webp',
-        '/assets/images/IMG_7104.webp'
+        'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237953/x-on/products/IMG_7102.webp',
+        'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790241340/x-on/products/0a9ef85d-1399-40c6-927c-a9a7b5858f6d.webp',
+        'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237957/x-on/products/IMG_7103.webp'
       ],
       price: 44.00,
       sale_price: 38.00,
@@ -192,9 +192,9 @@ export function seedInitialData() {
       slug: 'rd-19-0551-ruby-jewel-round-short',
       SKU: 'XON-RD-0551',
       images: [
-        '/assets/images/IMG_7104.webp',
-        '/assets/images/IMG_7099.webp',
-        '/assets/images/IMG_7100.webp'
+        'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237957/x-on/products/IMG_7103.webp',
+        'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237959/x-on/products/IMG_7104.webp',
+        'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237967/x-on/products/IMG_7107.webp'
       ],
       price: 46.00,
       sale_price: null,
@@ -223,8 +223,8 @@ export function seedInitialData() {
       slug: 'x-on-salon-pro-hold-nail-adhesive',
       SKU: 'XON-ESS-001',
       images: [
-        '/assets/images/IMG_7106.webp',
-        '/assets/images/IMG_7110.webp'
+        'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237964/x-on/products/IMG_7106.webp',
+        'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237968/x-on/products/IMG_7110.webp'
       ],
       price: 14.00,
       sale_price: 11.50,
@@ -253,8 +253,8 @@ export function seedInitialData() {
       slug: 'ultra-bond-waterproof-gel-adhesive-tabs',
       SKU: 'XON-ESS-002',
       images: [
-        '/assets/images/IMG_7110.webp',
-        '/assets/images/IMG_7106.webp'
+        'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237968/x-on/products/IMG_7110.webp',
+        'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237964/x-on/products/IMG_7106.webp'
       ],
       price: 9.00,
       sale_price: null,
@@ -282,8 +282,9 @@ export function seedInitialData() {
       slug: 'organic-cuticle-recovery-elixir-prep-kit',
       SKU: 'XON-ESS-003',
       images: [
-        '/assets/images/IMG_7105.webp',
-        '/assets/images/IMG_7101.webp'
+        'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237962/x-on/products/IMG_7105.webp',
+        'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790241344/x-on/products/gallery.webp',
+        'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237948/x-on/products/IMG_7101.webp'
       ],
       price: 18.00,
       sale_price: 15.00,
@@ -312,9 +313,9 @@ export function seedInitialData() {
       slug: 'ultimate-luxury-velvet-essentials-trio-bundle',
       SKU: 'XON-BND-001',
       images: [
-        '/assets/images/IMG_7107.webp',
-        '/assets/images/IMG_7102.webp',
-        '/assets/images/IMG_7106.webp'
+        'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790241345/x-on/products/bundle-promo-bg.webp',
+        'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237942/x-on/products/IMG_7098.webp',
+        'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237964/x-on/products/IMG_7106.webp'
       ],
       price: 98.00,
       sale_price: 74.00,
@@ -342,9 +343,9 @@ export function seedInitialData() {
       slug: 'glamour-stiletto-aurora-duo-bundle',
       SKU: 'XON-BND-002',
       images: [
-        '/assets/images/IMG_7103.webp',
-        '/assets/images/IMG_7100.webp',
-        '/assets/images/IMG_7102.webp'
+        'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790241346/x-on/products/bundle-banner-bg.webp',
+        'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237945/x-on/products/IMG_7100.webp',
+        'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237953/x-on/products/IMG_7102.webp'
       ],
       price: 88.00,
       sale_price: 68.00,
@@ -373,7 +374,7 @@ export function seedInitialData() {
       hero_heading: 'X-ON',
       hero_tagline: 'Press On. Slay On. Repeat.',
       hero_description: 'Where modern nail artistry meets effortless beauty. Handcrafted press-on sets and curated nail essentials designed for nail lovers and salon professionals alike.',
-      hero_image: '/assets/images/IMG_7098.webp',
+      hero_image: 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237942/x-on/products/IMG_7098.webp',
       hero_cta_text: 'Shop The Collection',
       hero_cta_link: '/shop',
       brand_info_title: 'The X-ON Standard',
@@ -390,7 +391,7 @@ export function seedInitialData() {
       brand_description: 'Created for nail lovers and professionals alike, X-ON offers handmade press-on nails and carefully selected nail essentials designed with quality, style, and performance in mind.\n\nFrom statement-making nail sets to everyday professional supplies, every X-ON product is chosen to make beautiful nails easier, faster, and more accessible—without compromising on a polished, luxury finish.\n\nX-ON — Press On. Slay On. Repeat.',
       address: '3168 Bill Beck Blvd, Kissimmee, FL 34744',
       phone: '689-212-8888',
-      image: '/assets/images/IMG_7098.webp'
+      image: 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237942/x-on/products/IMG_7098.webp'
     },
     sizing: {
       page_title: 'Sizing Chart & Fit Guide',
@@ -454,7 +455,7 @@ export function seedInitialData() {
       id: 'blog-1',
       title: 'Extra Long Handmade Nail Luxury: Modern Artistry Meets Effortless Wear',
       slug: 'extra-long-handmade-nail-luxury',
-      cover: '/assets/images/IMG_7098.webp',
+      cover: 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237942/x-on/products/IMG_7098.webp',
       publish_date: '2026-09-20',
       author: 'X-ON Master Artist',
       status: 'published',
@@ -470,7 +471,7 @@ export function seedInitialData() {
         },
         {
           type: 'image',
-          url: '/assets/images/IMG_7098.webp',
+          url: 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237942/x-on/products/IMG_7098.webp',
           caption: 'Hand-painted cat eye chrome finish with multi-layered builder gel.'
         },
         {
@@ -504,7 +505,7 @@ export function seedInitialData() {
       id: 'blog-2',
       title: 'The Ultimate Guide to Measuring Your Nail Beds at Home',
       slug: 'ultimate-guide-measuring-nail-beds',
-      cover: '/assets/images/IMG_7098.webp',
+      cover: 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237942/x-on/products/IMG_7098.webp',
       publish_date: '2026-09-15',
       author: 'X-ON Studio Team',
       status: 'published',
@@ -525,7 +526,7 @@ export function seedInitialData() {
       id: 'blog-3',
       title: 'Press On. Slay On. Repeat: Caring for Reusable Nails',
       slug: 'press-on-slay-on-repeat-caring-guide',
-      cover: '/assets/images/IMG_7098.webp',
+      cover: 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237942/x-on/products/IMG_7098.webp',
       publish_date: '2026-09-10',
       author: 'X-ON Care Specialist',
       status: 'published',
@@ -549,7 +550,7 @@ export function seedInitialData() {
       id: 'gal-1',
       title: 'Ethereal Velvet Chrome Cat-Eye',
       collection: 'Now Selling',
-      media: '/assets/images/IMG_7098.webp',
+      media: 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237942/x-on/products/IMG_7098.webp',
       linked_product: 'prod-1',
       size_labels: ['S', 'M', 'L'],
       status: 'published',
@@ -559,7 +560,7 @@ export function seedInitialData() {
       id: 'gal-2',
       title: 'French Blossom Rosebud Almond',
       collection: 'Now Selling',
-      media: '/assets/images/IMG_7099.webp',
+      media: 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237944/x-on/products/IMG_7099.webp',
       linked_product: 'prod-2',
       size_labels: ['S', 'M'],
       status: 'published',
@@ -569,7 +570,7 @@ export function seedInitialData() {
       id: 'gal-3',
       title: 'Obsidian 24K Leaf Stiletto',
       collection: 'Now Selling',
-      media: '/assets/images/IMG_7100.webp',
+      media: 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237945/x-on/products/IMG_7100.webp',
       linked_product: 'prod-3',
       size_labels: ['M', 'L'],
       status: 'published',
@@ -579,7 +580,7 @@ export function seedInitialData() {
       id: 'gal-4',
       title: 'Pearl Aurora Glaze Square',
       collection: 'Now Selling',
-      media: '/assets/images/IMG_7101.webp',
+      media: 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237948/x-on/products/IMG_7101.webp',
       linked_product: 'prod-5',
       size_labels: ['S', 'M', 'L'],
       status: 'published',
@@ -589,7 +590,7 @@ export function seedInitialData() {
       id: 'gal-5',
       title: 'Ruby Crystal Petite Round',
       collection: 'Now Selling',
-      media: '/assets/images/IMG_7104.webp',
+      media: 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237959/x-on/products/IMG_7104.webp',
       linked_product: 'prod-6',
       size_labels: ['S', 'M'],
       status: 'published',
@@ -599,7 +600,7 @@ export function seedInitialData() {
       id: 'gal-6',
       title: 'Modern Minimalist Milk Glaze',
       collection: 'Now Selling',
-      media: '/assets/images/IMG_7105.webp',
+      media: 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237962/x-on/products/IMG_7105.webp',
       linked_product: 'prod-4',
       size_labels: ['XS', 'S', 'M', 'L'],
       status: 'published',
@@ -613,7 +614,7 @@ export function seedInitialData() {
       title: 'Upcoming / Seasonal Collection 01 — Celestial Twilight',
       collection_name: 'Upcoming / Seasonal Collection 01',
       subtitle: 'Deep galaxy blues, holographic constellation charting, and luminous quartz accents.',
-      media: '/assets/images/IMG_7098.webp',
+      media: 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237942/x-on/products/IMG_7098.webp',
       status: 'active',
       display_order: 1,
       expected_launch: 'Winter 2026'
@@ -623,7 +624,7 @@ export function seedInitialData() {
       title: 'Upcoming / Seasonal Collection 02 — Golden Baroque Couture',
       collection_name: 'Upcoming / Seasonal Collection 02',
       subtitle: '3D ornate gold filigree, antique pearls, and textured rococo gilding.',
-      media: '/assets/images/IMG_7098.webp',
+      media: 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237942/x-on/products/IMG_7098.webp',
       status: 'active',
       display_order: 2,
       expected_launch: 'Holiday 2026'
@@ -633,7 +634,7 @@ export function seedInitialData() {
       title: 'Upcoming / Seasonal Collection 03 — Cyberpunk Chrome Fluid',
       collection_name: 'Upcoming / Seasonal Collection 03',
       subtitle: 'Molten liquid silver chrome 3D sculpting over smoked translucent glass.',
-      media: '/assets/images/IMG_7098.webp',
+      media: 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237942/x-on/products/IMG_7098.webp',
       status: 'active',
       display_order: 3,
       expected_launch: 'Spring 2027'
@@ -643,7 +644,7 @@ export function seedInitialData() {
       title: 'Featured / New Collection — High-Artisan Runway Series',
       collection_name: 'Featured / New Collection',
       subtitle: 'Limited-edition bespoke wearable art handcrafted by master technicians.',
-      media: '/assets/images/IMG_7098.webp',
+      media: 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237942/x-on/products/IMG_7098.webp',
       status: 'active',
       display_order: 4,
       expected_launch: 'Exclusively for Members'

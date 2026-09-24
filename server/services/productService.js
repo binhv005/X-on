@@ -231,11 +231,17 @@ class ProductService {
       });
     }
 
+    const rawImages = Array.isArray(images) ? images : (images ? [images] : []);
+    const sanitizedImages = rawImages
+      .filter(img => typeof img === 'string' && img.trim())
+      .map(img => img.trim())
+      .filter(img => !img.startsWith('blob:') && !img.startsWith('data:image'));
+
     return productRepository.create({
       name: name.trim(),
       slug: uniqueSlug,
       SKU: SKU.trim().toUpperCase(),
-      images: Array.isArray(images) && images.length > 0 ? images : ['/assets/images/IMG_7098.webp'],
+      images: sanitizedImages.length > 0 ? sanitizedImages : ['https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237942/x-on/products/IMG_7098.webp'],
       price: parseFloat(price),
       sale_price: sale_price !== undefined && sale_price !== '' && sale_price !== null ? parseFloat(sale_price) : null,
       sizes: parsedSizes,
@@ -278,8 +284,12 @@ class ProductService {
     if (updates.is_best_seller !== undefined) updates.is_best_seller = Boolean(updates.is_best_seller);
     if (updates.is_bundle !== undefined) updates.is_bundle = Boolean(updates.is_bundle);
     if (updates.images !== undefined) {
-      const filteredImages = Array.isArray(updates.images) ? updates.images.filter(Boolean) : (updates.images ? [updates.images] : []);
-      updates.images = filteredImages.length > 0 ? filteredImages : ['/assets/images/IMG_7098.webp'];
+      const rawImgs = Array.isArray(updates.images) ? updates.images : (updates.images ? [updates.images] : []);
+      const sanitized = rawImgs
+        .filter(img => typeof img === 'string' && img.trim())
+        .map(img => img.trim())
+        .filter(img => !img.startsWith('blob:') && !img.startsWith('data:image'));
+      updates.images = sanitized.length > 0 ? sanitized : product.images || ['https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237942/x-on/products/IMG_7098.webp'];
     }
 
     return productRepository.update(id, updates);

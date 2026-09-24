@@ -28,19 +28,6 @@ import ConfirmDialog from '../../../components/common/ConfirmDialog';
 import LoadingSpinner from '../../../components/common/LoadingSpinner';
 import { useToast } from '../../../context/ToastContext';
 
-const AVAILABLE_STORE_IMAGES = [
-  { name: 'IMG_7098 (Chrome Velvet)', path: '/assets/images/IMG_7098.webp' },
-  { name: 'IMG_7099 (Rose Almond)', path: '/assets/images/IMG_7099.webp' },
-  { name: 'IMG_7100 (Obsidian Gold)', path: '/assets/images/IMG_7100.webp' },
-  { name: 'IMG_7101 (Nude Glaze)', path: '/assets/images/IMG_7101.webp' },
-  { name: 'IMG_7102 (Pearl Velvet)', path: '/assets/images/IMG_7102.webp' },
-  { name: 'IMG_7103 (Aurora Oval)', path: '/assets/images/IMG_7103.webp' },
-  { name: 'IMG_7104 (Ruby Jewel)', path: '/assets/images/IMG_7104.webp' },
-  { name: 'IMG_7105 (Cuticle Elixir)', path: '/assets/images/IMG_7105.webp' },
-  { name: 'IMG_7106 (Salon Glue)', path: '/assets/images/IMG_7106.webp' },
-  { name: 'IMG_7107 (Velvet Trio)', path: '/assets/images/IMG_7107.webp' },
-  { name: 'IMG_7110 (Adhesive Tabs)', path: '/assets/images/IMG_7110.webp' }
-];
 
 export default function AdminProductsPage() {
   const [searchParams] = useSearchParams();
@@ -90,21 +77,59 @@ export default function AdminProductsPage() {
   const [uploadingImage, setUploadingImage] = useState(false);
   const [newImageUrl, setNewImageUrl] = useState('');
 
-  const handleTogglePresetImage = (imagePath) => {
-    setFormData(prev => {
-      const current = prev.images || [];
-      if (current.includes(imagePath)) {
-        return {
-          ...prev,
-          images: current.filter(img => img !== imagePath)
-        };
-      } else {
-        return {
-          ...prev,
-          images: [...current, imagePath]
-        };
+  const CLOUDINARY_IMG_MAP = {
+    'IMG_7098': 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237942/x-on/products/IMG_7098.webp',
+    'IMG_7099': 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237944/x-on/products/IMG_7099.webp',
+    'IMG_7100': 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237945/x-on/products/IMG_7100.webp',
+    'IMG_7101': 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237948/x-on/products/IMG_7101.webp',
+    'IMG_7102': 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237953/x-on/products/IMG_7102.webp',
+    'IMG_7103': 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237957/x-on/products/IMG_7103.webp',
+    'IMG_7104': 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237959/x-on/products/IMG_7104.webp',
+    'IMG_7105': 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237962/x-on/products/IMG_7105.webp',
+    'IMG_7106': 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237964/x-on/products/IMG_7106.webp',
+    'IMG_7107': 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237967/x-on/products/IMG_7107.webp',
+    'IMG_7110': 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237968/x-on/products/IMG_7110.webp',
+    'IMG_7111': 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237969/x-on/products/IMG_7111.webp',
+    'product-1790150268757-727058313': 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790238191/x-on/products/product-1790150268757-727058313.jpg',
+    'product-1790152063086-93707191': 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790238192/x-on/products/product-1790152063086-93707191.jpg',
+    'product-1790153022787-378699367': 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790238193/x-on/products/product-1790153022787-378699367.jpg',
+    'product-1790153022819-652600574': 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790238195/x-on/products/product-1790153022819-652600574.jpg',
+    'product-1790153022833-445699180': 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790238196/x-on/products/product-1790153022833-445699180.jpg',
+    'product-1790153022847-568941864': 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790238199/x-on/products/product-1790153022847-568941864.jpg'
+  };
+
+  const normalizeImageUrl = (url) => {
+    if (!url || typeof url !== 'string') return CLOUDINARY_IMG_MAP['IMG_7098'];
+    let clean = url.trim();
+    if (clean.startsWith('http://') || clean.startsWith('https://')) {
+      return clean;
+    }
+    // Check if filename contains IMG_7xxx or known CDN keys
+    for (const [key, cdnUrl] of Object.entries(CLOUDINARY_IMG_MAP)) {
+      if (clean.includes(key)) {
+        return cdnUrl;
       }
-    });
+    }
+    // Handle Windows absolute local path or legacy relative assets
+    if (/^[a-zA-Z]:\\/i.test(clean) || clean.includes('\\')) {
+      clean = clean.replace(/\\/g, '/');
+      const filename = clean.split('/').pop() || '';
+      for (const [key, cdnUrl] of Object.entries(CLOUDINARY_IMG_MAP)) {
+        if (filename.includes(key)) return cdnUrl;
+      }
+      return CLOUDINARY_IMG_MAP['IMG_7098'];
+    }
+    if (/^IMG_\d+(\.(webp|jpg|jpeg|png))?$/i.test(clean)) {
+      for (const [key, cdnUrl] of Object.entries(CLOUDINARY_IMG_MAP)) {
+        if (clean.includes(key)) return cdnUrl;
+      }
+    }
+    if (clean.startsWith('assets/')) return `/${clean}`;
+    if (clean.startsWith('uploads/')) return `/${clean}`;
+    if (!clean.startsWith('/') && !clean.startsWith('data:') && !clean.startsWith('blob:')) {
+      return `/assets/images/${clean}`;
+    }
+    return clean || CLOUDINARY_IMG_MAP['IMG_7098'];
   };
 
   const handleImageFileChange = async (e) => {
@@ -116,39 +141,27 @@ export default function AdminProductsPage() {
         addToast('Please select valid image files (PNG, JPG, JPEG, WEBP, GIF).', 'error');
         return;
       }
+      if (file.size > 15 * 1024 * 1024) {
+        addToast(`File ${file.name} exceeds 15MB limit.`, 'error');
+        return;
+      }
     }
 
     try {
       setUploadingImage(true);
-      const uploadedUrls = [];
-
-      for (const file of files) {
-        try {
-          const res = await api.uploadImage(file);
-          if (res.success && res.url) {
-            uploadedUrls.push(res.url);
-            continue;
-          }
-        } catch (uploadErr) {
-          console.warn('Backend upload fallback to base64 DataURL:', uploadErr);
-        }
-
-        // Fallback to base64 for instant preview
-        const base64Url = await new Promise((resolve) => {
-          const reader = new FileReader();
-          reader.onload = (event) => resolve(event.target.result);
-          reader.readAsDataURL(file);
-        });
-        uploadedUrls.push(base64Url);
+      const res = await api.uploadMultipleImages(files, 'products');
+      if (res.success && Array.isArray(res.urls) && res.urls.length > 0) {
+        setFormData(prev => ({
+          ...prev,
+          images: [...(prev.images || []).filter(Boolean), ...res.urls]
+        }));
+        addToast(`${res.urls.length} image(s) uploaded successfully to Cloudinary!`, 'success');
+      } else {
+        throw new Error(res?.message || 'Failed to upload image(s) to Cloudinary');
       }
-
-      setFormData(prev => ({
-        ...prev,
-        images: [...(prev.images || []).filter(Boolean), ...uploadedUrls]
-      }));
-      addToast(`${uploadedUrls.length} image(s) uploaded successfully!`, 'success');
     } catch (err) {
-      addToast('Failed to read image files.', 'error');
+      console.error('Image upload failed:', err);
+      addToast(err.message || 'Failed to upload image(s) to Cloudinary.', 'error');
     } finally {
       setUploadingImage(false);
       if (fileInputRef.current) fileInputRef.current.value = '';
@@ -157,14 +170,15 @@ export default function AdminProductsPage() {
 
   const handleAddImageUrl = (e) => {
     if (e && e.preventDefault) e.preventDefault();
-    const url = newImageUrl.trim();
-    if (!url) return;
+    const rawUrl = newImageUrl.trim();
+    if (!rawUrl) return;
+    const norm = normalizeImageUrl(rawUrl);
     setFormData(prev => ({
       ...prev,
-      images: [...(prev.images || []).filter(Boolean), url]
+      images: [...(prev.images || []).filter(Boolean), norm]
     }));
     setNewImageUrl('');
-    addToast('Image URL added to gallery', 'success');
+    addToast('Image added to gallery', 'success');
   };
 
   const handleRemoveImage = (indexToRemove) => {
@@ -445,9 +459,16 @@ export default function AdminProductsPage() {
       setFormLoading(true);
       setFormError('');
 
+      const payload = {
+        ...formData,
+        images: Array.isArray(formData.images) && formData.images.length > 0
+          ? formData.images
+          : [CLOUDINARY_IMG_MAP['IMG_7098']]
+      };
+
       if (editingProduct) {
         // Update product
-        const res = await api.updateProduct(editingProduct.id, formData);
+        const res = await api.updateProduct(editingProduct.id, payload);
         if (res.success) {
           addToast(`Product "${formData.name}" updated successfully!`, 'success');
           setIsModalOpen(false);
@@ -455,7 +476,7 @@ export default function AdminProductsPage() {
         }
       } else {
         // Create product
-        const res = await api.createProduct(formData);
+        const res = await api.createProduct(payload);
         if (res.success) {
           addToast(`Product "${formData.name}" created successfully!`, 'success');
           setIsModalOpen(false);
@@ -655,7 +676,8 @@ export default function AdminProductsPage() {
                   </tr>
                 ) : (
                   filteredProducts.map(product => {
-                    const img = product.images?.[0] || '/assets/images/IMG_7098.webp';
+                    const rawImg = (product.images && product.images.length > 0) ? product.images[0] : '';
+                    const img = normalizeImageUrl(rawImg);
                     return (
                       <tr key={product.id} style={{ borderBottom: '1px solid var(--border-subtle)', transition: 'background 0.15s ease', whiteSpace: 'nowrap' }}>
                         <td style={{ padding: '0.75rem 1rem', whiteSpace: 'nowrap' }}>
@@ -665,7 +687,7 @@ export default function AdminProductsPage() {
                               alt=""
                               onError={(e) => {
                                 e.currentTarget.onerror = null;
-                                e.currentTarget.src = '/assets/images/IMG_7098.webp';
+                                e.currentTarget.src = CLOUDINARY_IMG_MAP['IMG_7098'];
                               }}
                               style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                             />
@@ -998,7 +1020,7 @@ export default function AdminProductsPage() {
               }}>
                 {formData.images.map((imgUrl, idx) => (
                   <div
-                    key={idx}
+                    key={`${imgUrl}_${idx}`}
                     style={{
                       position: 'relative',
                       borderRadius: '8px',
@@ -1013,7 +1035,7 @@ export default function AdminProductsPage() {
                     {/* Thumbnail Image */}
                     <div style={{ position: 'relative', paddingTop: '100%', background: '#f5f5f5' }}>
                       <img
-                        src={imgUrl}
+                        src={normalizeImageUrl(imgUrl)}
                         alt={`Product img ${idx + 1}`}
                         style={{
                           position: 'absolute',
@@ -1025,9 +1047,31 @@ export default function AdminProductsPage() {
                         }}
                         onError={(e) => {
                           e.currentTarget.onerror = null;
-                          e.currentTarget.src = '/assets/images/IMG_7098.webp';
+                          e.currentTarget.style.display = 'none';
+                          const fallbackEl = e.currentTarget.parentElement?.querySelector('.img-fallback-placeholder');
+                          if (fallbackEl) fallbackEl.style.display = 'flex';
                         }}
                       />
+                      <div
+                        className="img-fallback-placeholder"
+                        style={{
+                          display: 'none',
+                          position: 'absolute',
+                          inset: 0,
+                          flexDirection: 'column',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          padding: '0.4rem',
+                          background: '#fef2f2',
+                          color: '#dc2626',
+                          textAlign: 'center'
+                        }}
+                      >
+                        <AlertCircle size={20} color="#dc2626" />
+                        <span style={{ fontSize: '0.65rem', marginTop: '2px', fontWeight: 600 }}>
+                          Image Not Found
+                        </span>
+                      </div>
 
                       {/* Main Cover Badge */}
                       {idx === 0 ? (
@@ -1225,81 +1269,7 @@ export default function AdminProductsPage() {
               </button>
             </div>
 
-            {/* Quick Store Asset Library Picker */}
-            <div style={{
-              background: 'rgba(212, 175, 55, 0.04)',
-              border: '1px solid rgba(212, 175, 55, 0.25)',
-              borderRadius: '8px',
-              padding: '0.75rem 0.85rem'
-            }}>
-              <div style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--accent-gold-dark)', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <span>📁 Select from Store Asset Library (client/public/assets/images):</span>
-                <span style={{ fontSize: '0.72rem', fontWeight: 500, color: 'var(--text-muted)' }}>Click thumbnail to toggle in gallery</span>
-              </div>
-              <div style={{
-                display: 'flex',
-                gap: '0.5rem',
-                overflowX: 'auto',
-                paddingBottom: '0.35rem',
-                scrollbarWidth: 'thin'
-              }}>
-                {AVAILABLE_STORE_IMAGES.map((preset) => {
-                  const isSelected = (formData.images || []).includes(preset.path);
-                  return (
-                    <button
-                      key={preset.path}
-                      type="button"
-                      onClick={() => handleTogglePresetImage(preset.path)}
-                      title={`${preset.name} (${isSelected ? 'Click to remove' : 'Click to add'})`}
-                      style={{
-                        position: 'relative',
-                        width: '54px',
-                        height: '54px',
-                        borderRadius: '6px',
-                        overflow: 'hidden',
-                        border: isSelected ? '2px solid var(--accent-gold)' : '1px solid var(--border-subtle)',
-                        background: '#ffffff',
-                        cursor: 'pointer',
-                        padding: 0,
-                        flexShrink: 0,
-                        boxShadow: isSelected ? '0 0 0 2px rgba(212, 175, 55, 0.3)' : 'none',
-                        transition: 'all 0.15s ease'
-                      }}
-                    >
-                      <img
-                        src={preset.path}
-                        alt={preset.name}
-                        onError={(e) => {
-                          e.currentTarget.onerror = null;
-                          e.currentTarget.src = '/assets/images/IMG_7098.webp';
-                        }}
-                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                      />
-                      {isSelected && (
-                        <div style={{
-                          position: 'absolute',
-                          top: '2px',
-                          right: '2px',
-                          background: 'var(--accent-gold)',
-                          color: '#ffffff',
-                          borderRadius: '50%',
-                          width: '14px',
-                          height: '14px',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          fontSize: '0.6rem',
-                          fontWeight: 800
-                        }}>
-                          ✓
-                        </div>
-                      )}
-                    </button>
-                  );
-                })}
-              </div>
             </div>
-          </div>
 
           {/* Description */}
           <div className="form-group">

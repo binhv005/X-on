@@ -21,7 +21,35 @@ import LoadingSpinner from '../../../components/common/LoadingSpinner';
 import ImageInput from '../../../components/common/ImageInput';
 import { useToast } from '../../../context/ToastContext';
 
-function ImageUploadField({ label, value, onChange, placeholder = 'https://...', helpText }) {
+const CLOUDINARY_IMG_MAP = {
+  'IMG_7098': 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237942/x-on/products/IMG_7098.webp',
+  'IMG_7099': 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237944/x-on/products/IMG_7099.webp',
+  'IMG_7100': 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237945/x-on/products/IMG_7100.webp',
+  'IMG_7101': 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237948/x-on/products/IMG_7101.webp',
+  'IMG_7102': 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237953/x-on/products/IMG_7102.webp',
+  'IMG_7103': 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237957/x-on/products/IMG_7103.webp',
+  'IMG_7104': 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237959/x-on/products/IMG_7104.webp',
+  'IMG_7105': 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237962/x-on/products/IMG_7105.webp',
+  'IMG_7106': 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237964/x-on/products/IMG_7106.webp',
+  'IMG_7107': 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237967/x-on/products/IMG_7107.webp',
+  'IMG_7110': 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237968/x-on/products/IMG_7110.webp',
+  'IMG_7111': 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237969/x-on/products/IMG_7111.webp'
+};
+
+const resolveImageUrl = (url) => {
+  if (!url || typeof url !== 'string') return 'https://res.cloudinary.com/ai1z2oaj/image/upload/v1790237942/x-on/products/IMG_7098.webp';
+  const clean = url.trim();
+  if (clean.startsWith('http://') || clean.startsWith('https://')) {
+    return clean;
+  }
+  // Check if filename contains IMG_7xxx or local assets
+  for (const [key, cdnUrl] of Object.entries(CLOUDINARY_IMG_MAP)) {
+    if (clean === key || clean === `${key}.webp`) return cdnUrl;
+  }
+  return clean.startsWith('/') ? clean : `/${clean}`;
+};
+
+function ImageUploadField({ label, value, onChange, placeholder = 'https://...', helpText, folder = 'gallery' }) {
   const fileInputRef = useRef(null);
   const [uploading, setUploading] = useState(false);
   const { addToast } = useToast();
@@ -31,34 +59,29 @@ function ImageUploadField({ label, value, onChange, placeholder = 'https://...',
     if (!file) return;
 
     if (!file.type.startsWith('image/')) {
-      addToast('Please select a valid image file (PNG, JPG, JPEG, WEBP).', 'error');
+      addToast('Please select a valid image file (PNG, JPG, JPEG, WEBP, GIF).', 'error');
+      return;
+    }
+    if (file.size > 15 * 1024 * 1024) {
+      addToast('Image must be under 15MB.', 'error');
       return;
     }
 
     try {
       setUploading(true);
-      try {
-        const res = await api.uploadImage(file);
-        if (res.success && res.url) {
-          onChange(res.url);
-          addToast('Image uploaded successfully from device!', 'success');
-          return;
-        }
-      } catch (uploadErr) {
-        console.warn('Server upload fallback to base64 DataURL:', uploadErr);
+      const res = await api.uploadImage(file, folder);
+      if (res.success && res.url) {
+        onChange(res.url);
+        addToast('Image uploaded successfully to Cloudinary!', 'success');
+      } else {
+        throw new Error(res.message || 'Image upload failed');
       }
-
-      // Fallback to base64 DataURL
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        onChange(event.target.result);
-        addToast('Image loaded from device successfully!', 'success');
-      };
-      reader.readAsDataURL(file);
     } catch (err) {
-      addToast('Failed to read image file.', 'error');
+      console.error('Image upload failed:', err);
+      addToast(err.message || 'Failed to upload image to Cloudinary.', 'error');
     } finally {
       setUploading(false);
+      if (fileInputRef.current) fileInputRef.current.value = '';
     }
   };
 
@@ -360,7 +383,7 @@ export default function AdminBlogGalleryPage() {
       setBlogForm({
         title: '',
         slug: '',
-        cover: 'https://images.unsplash.com/photo-1632345031435-8727f6897d53?auto=format&fit=crop&w=1200&q=80',
+        cover: '',
         publish_date: new Date().toISOString().split('T')[0],
         author: 'X-ON Master Artist',
         excerpt: '',
@@ -371,7 +394,7 @@ export default function AdminBlogGalleryPage() {
       setGalleryForm({
         title: '',
         collection: 'Now Selling',
-        media: 'https://images.unsplash.com/photo-1632345031435-8727f6897d53?auto=format&fit=crop&w=800&q=80',
+        media: '',
         linked_product: '',
         size_labels: 'S, M, L',
         status: 'published',
@@ -382,7 +405,7 @@ export default function AdminBlogGalleryPage() {
         title: '',
         collection_name: `Upcoming / Seasonal Collection 0${comingSoon.length + 1}`,
         subtitle: '',
-        media: 'https://images.unsplash.com/photo-1519014816548-bf5fe059798b?auto=format&fit=crop&w=1000&q=80',
+        media: '',
         status: 'active',
         display_order: comingSoon.length + 1,
         expected_launch: 'Coming Soon'
@@ -432,11 +455,11 @@ export default function AdminBlogGalleryPage() {
   };
 
   // Upload ẩn lúc Save, không toast riêng để khỏi làm phiền người dùng
-  const uploadSilent = async (file, folder) => {
+  const uploadSilent = async (file, folder = 'blog') => {
     const res = await api.uploadImage(file, folder);
-    const url = res?.data?.url;
-    if (!url) throw new Error('Image upload failed. Please try again.');
-    return url;
+    const url = res?.url || res?.data?.url;
+    if (url) return url;
+    throw new Error(res?.message || 'Image upload to Cloudinary failed. Please try again.');
   };
 
   const handleSaveItem = async (e) => {
@@ -635,40 +658,46 @@ export default function AdminBlogGalleryPage() {
       <div style={{
         display: 'flex',
         gap: '0.5rem',
-        marginBottom: '2rem',
+        marginBottom: '1.5rem',
         borderBottom: '1px solid var(--border-subtle)',
-        paddingBottom: '0.5rem'
+        paddingBottom: '0.5rem',
+        overflowX: 'auto',
+        WebkitOverflowScrolling: 'touch',
+        flexWrap: 'nowrap'
       }}>
         <button
           onClick={() => setActiveTab('blog')}
           className={`btn btn-sm ${activeTab === 'blog' ? 'btn-primary' : 'btn-secondary'}`}
+          style={{ whiteSpace: 'nowrap', flexShrink: 0 }}
         >
           <FileText size={15} /> Blog Posts ({blogPosts.length})
         </button>
         <button
           onClick={() => setActiveTab('gallery')}
           className={`btn btn-sm ${activeTab === 'gallery' ? 'btn-primary' : 'btn-secondary'}`}
+          style={{ whiteSpace: 'nowrap', flexShrink: 0 }}
         >
           <ImageIcon size={15} /> Product Gallery ({galleryItems.length})
         </button>
         <button
           onClick={() => setActiveTab('coming_soon')}
           className={`btn btn-sm ${activeTab === 'coming_soon' ? 'btn-primary' : 'btn-secondary'}`}
+          style={{ whiteSpace: 'nowrap', flexShrink: 0 }}
         >
-          <Sparkles size={15} /> Coming Soon Collections ({comingSoon.length})
+          <Sparkles size={15} /> Coming Soon ({comingSoon.length})
         </button>
       </div>
 
-      {/* Search / Filter toolbar (giữ query khi edit xong/quay lại list) */}
+      {/* Search / Filter toolbar */}
       <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', alignItems: 'center', marginBottom: '1.25rem' }}>
-        <div style={{ position: 'relative', minWidth: '220px', maxWidth: '340px', width: '100%' }}>
+        <div style={{ position: 'relative', minWidth: '220px', maxWidth: '340px', flex: '1 1 220px' }}>
           <input
             type="text"
             placeholder={activeTab === 'blog' ? 'Search title, slug, author...' : activeTab === 'gallery' ? 'Search design, collection...' : 'Search collection, title...'}
             className="form-input"
             value={listSearch}
             onChange={(e) => setListSearch(e.target.value)}
-            style={{ paddingLeft: '2.4rem', fontSize: '0.85rem' }}
+            style={{ paddingLeft: '2.4rem', fontSize: '0.85rem', width: '100%' }}
           />
           <span style={{ position: 'absolute', left: '0.85rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }}>⌕</span>
         </div>
@@ -676,7 +705,7 @@ export default function AdminBlogGalleryPage() {
           className="form-input"
           value={listStatus}
           onChange={(e) => setListStatus(e.target.value)}
-          style={{ width: 'auto', fontSize: '0.85rem' }}
+          style={{ width: 'auto', fontSize: '0.85rem', flexShrink: 0 }}
         >
           <option value="all">All statuses</option>
           {activeTab === 'coming_soon' ? (
@@ -703,177 +732,191 @@ export default function AdminBlogGalleryPage() {
       {/* Tab 1: Blog Table */}
       {activeTab === 'blog' && (
         <div style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-md)', overflow: 'hidden' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.88rem' }}>
-            <thead>
-              <tr style={{ background: 'var(--bg-secondary)', borderBottom: '1px solid var(--border-subtle)', color: 'var(--text-muted)' }}>
-                <th style={{ padding: '1rem' }}>Cover</th>
-                <th style={{ padding: '1rem' }}>Title / Slug</th>
-                <th style={{ padding: '1rem' }}>Author</th>
-                <th style={{ padding: '1rem' }}>Date</th>
-                <th style={{ padding: '1rem' }}>Status</th>
-                <th style={{ padding: '1rem', textAlign: 'right' }}>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredBlogs.length === 0 ? (
-                <tr>
-                  <td colSpan="6" style={{ textAlign: 'center', padding: '2.5rem', color: 'var(--text-muted)' }}>
-                    No blog posts match your search/filter.
-                  </td>
+          <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
+            <table style={{ width: '100%', minWidth: '780px', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.88rem', whiteSpace: 'nowrap' }}>
+              <thead>
+                <tr style={{ background: 'var(--bg-secondary)', borderBottom: '1px solid var(--border-subtle)', color: 'var(--text-muted)', whiteSpace: 'nowrap' }}>
+                  <th style={{ padding: '1rem', width: '80px', whiteSpace: 'nowrap' }}>Cover</th>
+                  <th style={{ padding: '1rem', whiteSpace: 'nowrap' }}>Title / Slug</th>
+                  <th style={{ padding: '1rem', whiteSpace: 'nowrap' }}>Author</th>
+                  <th style={{ padding: '1rem', whiteSpace: 'nowrap' }}>Date</th>
+                  <th style={{ padding: '1rem', whiteSpace: 'nowrap' }}>Status</th>
+                  <th style={{ padding: '1rem', textAlign: 'right', whiteSpace: 'nowrap' }}>Actions</th>
                 </tr>
-              ) : filteredBlogs.map(post => (
-                <tr key={post.id} style={{ borderBottom: '1px solid var(--border-subtle)' }}>
-                  <td style={{ padding: '0.75rem 1rem' }}>
-                    <div style={{ width: '56px', height: '40px', borderRadius: '4px', overflow: 'hidden' }}>
-                      <img src={post.cover} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                    </div>
-                  </td>
-                  <td style={{ padding: '0.75rem 1rem' }}>
-                    <div style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{post.title}</div>
-                    <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>/{post.slug}</div>
-                  </td>
-                  <td style={{ padding: '0.75rem 1rem', color: 'var(--text-secondary)' }}>{post.author}</td>
-                  <td style={{ padding: '0.75rem 1rem', color: 'var(--text-muted)' }}>{post.publish_date}</td>
-                  <td style={{ padding: '0.75rem 1rem' }}>
-                    <span className="badge badge-success">{post.status}</span>
-                  </td>
-                  <td style={{ padding: '0.75rem 1rem', textAlign: 'right' }}>
-                    <div style={{ display: 'inline-flex', gap: '0.4rem' }}>
-                      <button onClick={() => openEdit('blog', post)} className="btn btn-secondary btn-sm" style={{ padding: '0.35rem 0.55rem' }}>
-                        <Edit2 size={13} />
-                      </button>
-                      <button onClick={() => promptDelete('blog', post)} className="btn btn-danger btn-sm" style={{ padding: '0.35rem 0.55rem' }}>
-                        <Trash2 size={13} />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {filteredBlogs.length === 0 ? (
+                  <tr>
+                    <td colSpan="6" style={{ textAlign: 'center', padding: '2.5rem', color: 'var(--text-muted)' }}>
+                      No blog posts match your search/filter.
+                    </td>
+                  </tr>
+                ) : filteredBlogs.map(post => (
+                  <tr key={post.id} style={{ borderBottom: '1px solid var(--border-subtle)', whiteSpace: 'nowrap' }}>
+                    <td style={{ padding: '0.75rem 1rem', whiteSpace: 'nowrap' }}>
+                      <div style={{ width: '64px', height: '44px', borderRadius: '6px', overflow: 'hidden', background: '#f5f5f5', border: '1px solid var(--border-subtle)', flexShrink: 0 }}>
+                        <img
+                          src={resolveImageUrl(post.cover)}
+                          alt={post.title}
+                          onError={(e) => {
+                            e.currentTarget.onerror = null;
+                            e.currentTarget.src = CLOUDINARY_IMG_MAP['IMG_7098'];
+                          }}
+                          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                        />
+                      </div>
+                    </td>
+                    <td style={{ padding: '0.75rem 1rem', whiteSpace: 'nowrap' }}>
+                      <div style={{ fontWeight: 600, color: 'var(--text-primary)', whiteSpace: 'nowrap' }}>{post.title}</div>
+                      <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', whiteSpace: 'nowrap' }}>/{post.slug}</div>
+                    </td>
+                    <td style={{ padding: '0.75rem 1rem', color: 'var(--text-secondary)', whiteSpace: 'nowrap' }}>{post.author}</td>
+                    <td style={{ padding: '0.75rem 1rem', color: 'var(--text-muted)', whiteSpace: 'nowrap' }}>{post.publish_date}</td>
+                    <td style={{ padding: '0.75rem 1rem', whiteSpace: 'nowrap' }}>
+                      <span className="badge badge-success">{post.status}</span>
+                    </td>
+                    <td style={{ padding: '0.75rem 1rem', textAlign: 'right', whiteSpace: 'nowrap' }}>
+                      <div style={{ display: 'inline-flex', gap: '0.4rem' }}>
+                        <button onClick={() => openEdit('blog', post)} className="btn btn-secondary btn-sm" style={{ padding: '0.35rem 0.55rem' }}>
+                          <Edit2 size={13} />
+                        </button>
+                        <button onClick={() => promptDelete('blog', post)} className="btn btn-danger btn-sm" style={{ padding: '0.35rem 0.55rem' }}>
+                          <Trash2 size={13} />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
 
       {/* Tab 2: Gallery Table */}
       {activeTab === 'gallery' && (
         <div style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-md)', overflow: 'hidden' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.88rem' }}>
-            <thead>
-              <tr style={{ background: 'var(--bg-secondary)', borderBottom: '1px solid var(--border-subtle)', color: 'var(--text-muted)' }}>
-                <th style={{ padding: '1rem' }}>Media</th>
-                <th style={{ padding: '1rem' }}>Title</th>
-                <th style={{ padding: '1rem' }}>Collection</th>
-                <th style={{ padding: '1rem' }}>Sizes</th>
-                <th style={{ padding: '1rem' }}>Status</th>
-                <th style={{ padding: '1rem', textAlign: 'right' }}>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredGallery.length === 0 ? (
-                <tr>
-                  <td colSpan="6" style={{ textAlign: 'center', padding: '2.5rem', color: 'var(--text-muted)' }}>
-                    No gallery items match your search/filter.
-                  </td>
+          <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
+            <table style={{ width: '100%', minWidth: '780px', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.88rem', whiteSpace: 'nowrap' }}>
+              <thead>
+                <tr style={{ background: 'var(--bg-secondary)', borderBottom: '1px solid var(--border-subtle)', color: 'var(--text-muted)', whiteSpace: 'nowrap' }}>
+                  <th style={{ padding: '1rem', width: '70px', whiteSpace: 'nowrap' }}>Media</th>
+                  <th style={{ padding: '1rem', whiteSpace: 'nowrap' }}>Title</th>
+                  <th style={{ padding: '1rem', whiteSpace: 'nowrap' }}>Collection</th>
+                  <th style={{ padding: '1rem', whiteSpace: 'nowrap' }}>Sizes</th>
+                  <th style={{ padding: '1rem', whiteSpace: 'nowrap' }}>Status</th>
+                  <th style={{ padding: '1rem', textAlign: 'right', whiteSpace: 'nowrap' }}>Actions</th>
                 </tr>
-              ) : filteredGallery.map(item => (
-                <tr key={item.id} style={{ borderBottom: '1px solid var(--border-subtle)' }}>
-                  <td style={{ padding: '0.75rem 1rem' }}>
-                    <div style={{ width: '48px', height: '48px', borderRadius: '4px', overflow: 'hidden', background: '#f5f5f5' }}>
-                      <img
-                        src={item.media}
-                        alt=""
-                        onError={(e) => {
-                          e.currentTarget.onerror = null;
-                          e.currentTarget.src = '/assets/images/IMG_7098.webp';
-                        }}
-                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                      />
-                    </div>
-                  </td>
-                  <td style={{ padding: '0.75rem 1rem', fontWeight: 600, color: 'var(--text-primary)' }}>{item.title}</td>
-                  <td style={{ padding: '0.75rem 1rem', color: 'var(--accent-gold-dark)' }}>{item.collection}</td>
-                  <td style={{ padding: '0.75rem 1rem' }}>
-                    {Array.isArray(item.size_labels) ? item.size_labels.join(', ') : 'S, M, L'}
-                  </td>
-                  <td style={{ padding: '0.75rem 1rem' }}>
-                    <span className="badge badge-success">{item.status}</span>
-                  </td>
-                  <td style={{ padding: '0.75rem 1rem', textAlign: 'right' }}>
-                    <div style={{ display: 'inline-flex', gap: '0.4rem' }}>
-                      <button onClick={() => openEdit('gallery', item)} className="btn btn-secondary btn-sm" style={{ padding: '0.35rem 0.55rem' }}>
-                        <Edit2 size={13} />
-                      </button>
-                      <button onClick={() => promptDelete('gallery', item)} className="btn btn-danger btn-sm" style={{ padding: '0.35rem 0.55rem' }}>
-                        <Trash2 size={13} />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {filteredGallery.length === 0 ? (
+                  <tr>
+                    <td colSpan="6" style={{ textAlign: 'center', padding: '2.5rem', color: 'var(--text-muted)' }}>
+                      No gallery items match your search/filter.
+                    </td>
+                  </tr>
+                ) : filteredGallery.map(item => (
+                  <tr key={item.id} style={{ borderBottom: '1px solid var(--border-subtle)', whiteSpace: 'nowrap' }}>
+                    <td style={{ padding: '0.75rem 1rem', whiteSpace: 'nowrap' }}>
+                      <div style={{ width: '48px', height: '48px', borderRadius: '6px', overflow: 'hidden', background: '#f5f5f5', border: '1px solid var(--border-subtle)', flexShrink: 0 }}>
+                        <img
+                          src={resolveImageUrl(item.media)}
+                          alt={item.title}
+                          onError={(e) => {
+                            e.currentTarget.onerror = null;
+                            e.currentTarget.src = CLOUDINARY_IMG_MAP['IMG_7098'];
+                          }}
+                          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                        />
+                      </div>
+                    </td>
+                    <td style={{ padding: '0.75rem 1rem', fontWeight: 600, color: 'var(--text-primary)', whiteSpace: 'nowrap' }}>{item.title}</td>
+                    <td style={{ padding: '0.75rem 1rem', color: 'var(--accent-gold-dark)', whiteSpace: 'nowrap' }}>{item.collection}</td>
+                    <td style={{ padding: '0.75rem 1rem', whiteSpace: 'nowrap' }}>
+                      {Array.isArray(item.size_labels) ? item.size_labels.join(', ') : 'S, M, L'}
+                    </td>
+                    <td style={{ padding: '0.75rem 1rem', whiteSpace: 'nowrap' }}>
+                      <span className="badge badge-success">{item.status}</span>
+                    </td>
+                    <td style={{ padding: '0.75rem 1rem', textAlign: 'right', whiteSpace: 'nowrap' }}>
+                      <div style={{ display: 'inline-flex', gap: '0.4rem' }}>
+                        <button onClick={() => openEdit('gallery', item)} className="btn btn-secondary btn-sm" style={{ padding: '0.35rem 0.55rem' }}>
+                          <Edit2 size={13} />
+                        </button>
+                        <button onClick={() => promptDelete('gallery', item)} className="btn btn-danger btn-sm" style={{ padding: '0.35rem 0.55rem' }}>
+                          <Trash2 size={13} />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
 
       {/* Tab 3: Coming Soon Table */}
       {activeTab === 'coming_soon' && (
         <div style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-md)', overflow: 'hidden' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.88rem' }}>
-            <thead>
-              <tr style={{ background: 'var(--bg-secondary)', borderBottom: '1px solid var(--border-subtle)', color: 'var(--text-muted)' }}>
-                <th style={{ padding: '1rem' }}>Media Preview</th>
-                <th style={{ padding: '1rem' }}>Collection / Title</th>
-                <th style={{ padding: '1rem' }}>Launch Target</th>
-                <th style={{ padding: '1rem' }}>Order</th>
-                <th style={{ padding: '1rem' }}>Status</th>
-                <th style={{ padding: '1rem', textAlign: 'right' }}>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredComingSoon.length === 0 ? (
-                <tr>
-                  <td colSpan="6" style={{ textAlign: 'center', padding: '2.5rem', color: 'var(--text-muted)' }}>
-                    No collections match your search/filter.
-                  </td>
+          <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
+            <table style={{ width: '100%', minWidth: '780px', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.88rem', whiteSpace: 'nowrap' }}>
+              <thead>
+                <tr style={{ background: 'var(--bg-secondary)', borderBottom: '1px solid var(--border-subtle)', color: 'var(--text-muted)', whiteSpace: 'nowrap' }}>
+                  <th style={{ padding: '1rem', width: '80px', whiteSpace: 'nowrap' }}>Media Preview</th>
+                  <th style={{ padding: '1rem', whiteSpace: 'nowrap' }}>Collection / Title</th>
+                  <th style={{ padding: '1rem', whiteSpace: 'nowrap' }}>Launch Target</th>
+                  <th style={{ padding: '1rem', whiteSpace: 'nowrap' }}>Order</th>
+                  <th style={{ padding: '1rem', whiteSpace: 'nowrap' }}>Status</th>
+                  <th style={{ padding: '1rem', textAlign: 'right', whiteSpace: 'nowrap' }}>Actions</th>
                 </tr>
-              ) : filteredComingSoon.map(col => (
-                <tr key={col.id} style={{ borderBottom: '1px solid var(--border-subtle)' }}>
-                  <td style={{ padding: '0.75rem 1rem' }}>
-                    <div style={{ width: '60px', height: '40px', borderRadius: '4px', overflow: 'hidden', background: '#f5f5f5' }}>
-                      <img
-                        src={col.media}
-                        alt=""
-                        onError={(e) => {
-                          e.currentTarget.onerror = null;
-                          e.currentTarget.src = '/assets/images/IMG_7098.webp';
-                        }}
-                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                      />
-                    </div>
-                  </td>
-                  <td style={{ padding: '0.75rem 1rem' }}>
-                    <div style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{col.title}</div>
-                    <div style={{ fontSize: '0.75rem', color: 'var(--accent-gold-dark)' }}>{col.collection_name}</div>
-                  </td>
-                  <td style={{ padding: '0.75rem 1rem', color: 'var(--text-secondary)' }}>{col.expected_launch}</td>
-                  <td style={{ padding: '0.75rem 1rem' }}>{col.display_order}</td>
-                  <td style={{ padding: '0.75rem 1rem' }}>
-                    <span className="badge badge-success">{col.status}</span>
-                  </td>
-                  <td style={{ padding: '0.75rem 1rem', textAlign: 'right' }}>
-                    <div style={{ display: 'inline-flex', gap: '0.4rem' }}>
-                      <button onClick={() => openEdit('coming_soon', col)} className="btn btn-secondary btn-sm" style={{ padding: '0.35rem 0.55rem' }}>
-                        <Edit2 size={13} />
-                      </button>
-                      <button onClick={() => promptDelete('coming_soon', col)} className="btn btn-danger btn-sm" style={{ padding: '0.35rem 0.55rem' }}>
-                        <Trash2 size={13} />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {filteredComingSoon.length === 0 ? (
+                  <tr>
+                    <td colSpan="6" style={{ textAlign: 'center', padding: '2.5rem', color: 'var(--text-muted)' }}>
+                      No collections match your search/filter.
+                    </td>
+                  </tr>
+                ) : filteredComingSoon.map(col => (
+                  <tr key={col.id} style={{ borderBottom: '1px solid var(--border-subtle)', whiteSpace: 'nowrap' }}>
+                    <td style={{ padding: '0.75rem 1rem', whiteSpace: 'nowrap' }}>
+                      <div style={{ width: '64px', height: '44px', borderRadius: '6px', overflow: 'hidden', background: '#f5f5f5', border: '1px solid var(--border-subtle)', flexShrink: 0 }}>
+                        <img
+                          src={resolveImageUrl(col.media)}
+                          alt={col.title}
+                          onError={(e) => {
+                            e.currentTarget.onerror = null;
+                            e.currentTarget.src = CLOUDINARY_IMG_MAP['IMG_7098'];
+                          }}
+                          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                        />
+                      </div>
+                    </td>
+                    <td style={{ padding: '0.75rem 1rem', whiteSpace: 'nowrap' }}>
+                      <div style={{ fontWeight: 600, color: 'var(--text-primary)', whiteSpace: 'nowrap' }}>{col.title}</div>
+                      <div style={{ fontSize: '0.75rem', color: 'var(--accent-gold-dark)', whiteSpace: 'nowrap' }}>{col.collection_name}</div>
+                    </td>
+                    <td style={{ padding: '0.75rem 1rem', color: 'var(--text-secondary)', whiteSpace: 'nowrap' }}>{col.expected_launch}</td>
+                    <td style={{ padding: '0.75rem 1rem', whiteSpace: 'nowrap' }}>{col.display_order}</td>
+                    <td style={{ padding: '0.75rem 1rem', whiteSpace: 'nowrap' }}>
+                      <span className="badge badge-success">{col.status}</span>
+                    </td>
+                    <td style={{ padding: '0.75rem 1rem', textAlign: 'right', whiteSpace: 'nowrap' }}>
+                      <div style={{ display: 'inline-flex', gap: '0.4rem' }}>
+                        <button onClick={() => openEdit('coming_soon', col)} className="btn btn-secondary btn-sm" style={{ padding: '0.35rem 0.55rem' }}>
+                          <Edit2 size={13} />
+                        </button>
+                        <button onClick={() => promptDelete('coming_soon', col)} className="btn btn-danger btn-sm" style={{ padding: '0.35rem 0.55rem' }}>
+                          <Trash2 size={13} />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
 
@@ -907,43 +950,6 @@ export default function AdminBlogGalleryPage() {
                 onFileChange={setCoverFile}
                 required
               />
-                <div style={{ marginTop: '-0.25rem', marginBottom: '1rem' }}>
-                  <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'block', marginBottom: '0.35rem' }}>
-                    Quick Select Studio Photoshoot Asset:
-                  </span>
-                  <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
-                    {[
-                      '/assets/images/IMG_7098.webp',
-                      '/assets/images/IMG_7099.webp',
-                      '/assets/images/IMG_7100.webp',
-                      '/assets/images/IMG_7101.webp',
-                      '/assets/images/IMG_7102.webp',
-                      '/assets/images/IMG_7103.webp',
-                      '/assets/images/IMG_7104.webp',
-                      '/assets/images/IMG_7105.webp',
-                      '/assets/images/IMG_7106.webp',
-                      '/assets/images/IMG_7107.webp',
-                      '/assets/images/IMG_7110.webp'
-                    ].map((img, i) => (
-                      <button
-                        key={i}
-                        type="button"
-                        onClick={() => { setBlogForm({ ...blogForm, cover: img }); setCoverFile(null); }}
-                        style={{
-                          width: '42px',
-                          height: '42px',
-                          padding: 0,
-                          borderRadius: '4px',
-                          overflow: 'hidden',
-                          border: blogForm.cover === img ? '2px solid var(--accent-gold)' : '1px solid var(--border-subtle)',
-                          cursor: 'pointer'
-                        }}
-                      >
-                        <img src={img} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                      </button>
-                    ))}
-                  </div>
-                </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                 <div className="form-group">
@@ -1141,43 +1147,6 @@ export default function AdminBlogGalleryPage() {
                 onFileChange={setGalleryFile}
                 required
               />
-                <div style={{ marginTop: '-0.25rem', marginBottom: '1rem' }}>
-                  <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'block', marginBottom: '0.35rem' }}>
-                    Quick Select Studio Photoshoot Asset:
-                  </span>
-                  <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
-                    {[
-                      '/assets/images/IMG_7098.webp',
-                      '/assets/images/IMG_7099.webp',
-                      '/assets/images/IMG_7100.webp',
-                      '/assets/images/IMG_7101.webp',
-                      '/assets/images/IMG_7102.webp',
-                      '/assets/images/IMG_7103.webp',
-                      '/assets/images/IMG_7104.webp',
-                      '/assets/images/IMG_7105.webp',
-                      '/assets/images/IMG_7106.webp',
-                      '/assets/images/IMG_7107.webp',
-                      '/assets/images/IMG_7110.webp'
-                    ].map((img, i) => (
-                      <button
-                        key={i}
-                        type="button"
-                        onClick={() => { setGalleryForm({ ...galleryForm, media: img }); setGalleryFile(null); }}
-                        style={{
-                          width: '42px',
-                          height: '42px',
-                          padding: 0,
-                          borderRadius: '4px',
-                          overflow: 'hidden',
-                          border: galleryForm.media === img ? '2px solid var(--accent-gold)' : '1px solid var(--border-subtle)',
-                          cursor: 'pointer'
-                        }}
-                      >
-                        <img src={img} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                      </button>
-                    ))}
-                  </div>
-                </div>
 
               <div className="form-group">
                 <label className="form-label">Available Size Labels (Comma separated)</label>
