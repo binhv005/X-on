@@ -31,6 +31,7 @@ import findUsBg from '../../assets/images/findus-bg.jpg';
 import motifTop from '../../assets/images/findus-motif-top.png';
 import motifBottom from '../../assets/images/findus-motif-bottom.png';
 import bundlePromoBg from '../../assets/images/bundle-promo-bg.jpg';
+import stepCardBg from '../../assets/images/step-card-bg.jpg';
 
 // Scroll-triggered Video Component: only plays when scrolled into viewport
 function ScrollPlayVideo({ src, fallback, onEnded, style, className, loop = true, muted = true, playsInline = true, ...rest }) {
@@ -186,9 +187,8 @@ export default function HomePage() {
       <section style={{
         position: 'relative',
         width: '100%',
-        height: 'calc(100vh - 105px)',
-        minHeight: '560px',
-        maxHeight: '820px',
+        height: 'calc(100vh - 73px)',
+        minHeight: 'calc(100vh - 73px)',
         overflow: 'hidden',
         background: '#09090c',
         transition: 'all 0.5s ease'
@@ -922,7 +922,20 @@ export default function HomePage() {
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '2rem' }}>
-            <div className="glass-card" style={{ padding: '2.5rem 2rem', textAlign: 'center' }}>
+            <div className="glass-card" style={{
+              position: 'relative',
+              padding: '2.5rem 2rem',
+              textAlign: 'center',
+              backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.50), rgba(255, 255, 255, 0.50)), url(${stepCardBg})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              backgroundColor: '#ffdbe4',
+              borderRadius: '0px',
+              border: '1px solid rgba(232, 97, 84, 0.32)',
+              boxShadow: '0 10px 28px rgba(232, 97, 84, 0.12)',
+              overflow: 'hidden'
+            }}>
               <div style={{
                 width: '54px',
                 height: '54px',
@@ -939,15 +952,28 @@ export default function HomePage() {
               }}>
                 1
               </div>
-              <h3 className="font-heading" style={{ fontSize: '1.2rem', marginBottom: '0.75rem', color: 'var(--text-primary)' }}>
+              <h3 className="font-heading" style={{ fontSize: '1.2rem', marginBottom: '0.75rem', color: '#19181b' }}>
                 Measure & Prep
               </h3>
-              <p style={{ color: 'var(--text-secondary)', fontSize: '0.92rem', lineHeight: 1.6 }}>
+              <p style={{ color: '#4a444a', fontSize: '0.92rem', lineHeight: 1.6, fontWeight: 500 }}>
                 Gently push cuticles back, buff natural nail surface lightly with included buffer, and wipe clean with alcohol prep pad.
               </p>
             </div>
 
-            <div className="glass-card" style={{ padding: '2.5rem 2rem', textAlign: 'center' }}>
+            <div className="glass-card" style={{
+              position: 'relative',
+              padding: '2.5rem 2rem',
+              textAlign: 'center',
+              backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.50), rgba(255, 255, 255, 0.50)), url(${stepCardBg})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              backgroundColor: '#ffdbe4',
+              borderRadius: '0px',
+              border: '1px solid rgba(232, 97, 84, 0.32)',
+              boxShadow: '0 10px 28px rgba(232, 97, 84, 0.12)',
+              overflow: 'hidden'
+            }}>
               <div style={{
                 width: '54px',
                 height: '54px',
@@ -964,15 +990,28 @@ export default function HomePage() {
               }}>
                 2
               </div>
-              <h3 className="font-heading" style={{ fontSize: '1.2rem', marginBottom: '0.75rem', color: 'var(--text-primary)' }}>
+              <h3 className="font-heading" style={{ fontSize: '1.2rem', marginBottom: '0.75rem', color: '#19181b' }}>
                 Apply Adhesive
               </h3>
-              <p style={{ color: 'var(--text-secondary)', fontSize: '0.92rem', lineHeight: 1.6 }}>
+              <p style={{ color: '#4a444a', fontSize: '0.92rem', lineHeight: 1.6, fontWeight: 500 }}>
                 Choose adhesive sticky tabs for 3–7 day wear or salon brush-on glue for 2–3 week maximum durability.
               </p>
             </div>
 
-            <div className="glass-card" style={{ padding: '2.5rem 2rem', textAlign: 'center' }}>
+            <div className="glass-card" style={{
+              position: 'relative',
+              padding: '2.5rem 2rem',
+              textAlign: 'center',
+              backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.50), rgba(255, 255, 255, 0.50)), url(${stepCardBg})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              backgroundColor: '#ffdbe4',
+              borderRadius: '0px',
+              border: '1px solid rgba(232, 97, 84, 0.32)',
+              boxShadow: '0 10px 28px rgba(232, 97, 84, 0.12)',
+              overflow: 'hidden'
+            }}>
               <div style={{
                 width: '54px',
                 height: '54px',
@@ -989,10 +1028,10 @@ export default function HomePage() {
               }}>
                 3
               </div>
-              <h3 className="font-heading" style={{ fontSize: '1.2rem', marginBottom: '0.75rem', color: 'var(--text-primary)' }}>
+              <h3 className="font-heading" style={{ fontSize: '1.2rem', marginBottom: '0.75rem', color: '#19181b' }}>
                 Press On & Slay
               </h3>
-              <p style={{ color: 'var(--text-secondary)', fontSize: '0.92rem', lineHeight: 1.6 }}>
+              <p style={{ color: '#4a444a', fontSize: '0.92rem', lineHeight: 1.6, fontWeight: 500 }}>
                 Align nail tip at 45° angle from cuticle line, press firmly for 30 seconds. Repeat and enjoy instant glam!
               </p>
             </div>

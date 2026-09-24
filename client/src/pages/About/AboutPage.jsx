@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Sparkles, MapPin, Phone, Check, Award, HeartHandshake } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Sparkles, MapPin, Phone, Check, Award, HeartHandshake, ArrowRight } from 'lucide-react';
 import { api } from '../../services/api';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
+import aboutHeroBg from '../../assets/images/about-hero-bg.jpg';
 
 export default function AboutPage() {
   const [content, setContent] = useState(null);
@@ -29,8 +31,10 @@ export default function AboutPage() {
   }
 
   const brandLine = content?.brand_line || 'Press On. Slay On. Repeat.';
-  const tagline = content?.tagline || 'X-ON is where modern nail artistry meets effortless beauty.';
-  const brandDesc = content?.brand_description || `Created for nail lovers and professionals alike, X-ON offers handmade press-on nails and carefully selected nail essentials designed with quality, style, and performance in mind.\n\nFrom statement-making nail sets to everyday professional supplies, every X-ON product is chosen to make beautiful nails easier, faster, and more accessible—without compromising on a polished, luxury finish.\n\nX-ON — Press On. Slay On. Repeat.`;
+  const tagline = (content?.tagline && content.tagline !== 'X-ON is where modern nail artistry meets effortless beauty.')
+    ? content.tagline
+    : 'Modern Nail Artistry & Effortless Beauty';
+  const brandDesc = content?.brand_description || `X-ON delivers handmade bespoke press-on nails and curated essentials designed for effortless luxury and lasting performance.\n\nMaking salon-quality manicures faster, easier, and accessible to everyone — without compromising on a polished finish.`;
   const address = content?.address || '3168 Bill Beck Blvd, Kissimmee, FL 34744';
   const phone = content?.phone || '689-212-8888';
   const heroImage = content?.image || '/assets/images/IMG_7101.JPG';
@@ -40,23 +44,28 @@ export default function AboutPage() {
       {/* Hero Header */}
       <section style={{
         position: 'relative',
-        backgroundImage: `radial-gradient(circle at center, rgba(15, 15, 18, 0.32) 0%, rgba(15, 15, 18, 0.58) 100%), url('/assets/images/5722dbaed43e34aeec0d2ee69da7d7de.jpg')`,
+        minHeight: 'calc(100vh - 75px)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundImage: `radial-gradient(circle at center, rgba(15, 15, 18, 0.45) 0%, rgba(15, 15, 18, 0.70) 100%), url(${aboutHeroBg})`,
         backgroundPosition: 'center',
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
-        padding: '6.5rem 0 5.5rem 0',
-        borderBottom: '1px solid rgba(0, 0, 0, 0.1)',
+        backgroundColor: '#e3d2ea',
+        padding: '3rem 1.5rem',
+        borderBottom: '1px solid rgba(232, 97, 84, 0.25)',
         textAlign: 'center',
         overflow: 'hidden'
       }}>
-        <div className="container" style={{ maxWidth: '850px', position: 'relative', zIndex: 2 }}>
-          <span className="brand-line" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.85rem', color: '#f5d376', textShadow: '0 2px 8px rgba(0,0,0,0.6)' }}>
-            <Sparkles size={16} color="#f5d376" /> The Artistry of X-ON
+        <div className="container" style={{ maxWidth: '820px', position: 'relative', zIndex: 2 }}>
+          <span className="brand-line" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.85rem', color: '#fcaaa2', textShadow: '0 2px 10px rgba(0,0,0,0.6)', fontSize: '0.82rem', letterSpacing: '0.18em', fontWeight: 700 }}>
+            <Sparkles size={14} color="#fcaaa2" /> The Artistry of X-ON
           </span>
-          <h1 className="font-heading" style={{ fontSize: 'clamp(2.4rem, 5vw, 3.5rem)', color: '#ffffff', marginBottom: '1.25rem', lineHeight: 1.25, textShadow: '0 3px 18px rgba(0, 0, 0, 0.8), 0 1px 4px rgba(0, 0, 0, 0.9)' }}>
+          <h1 className="font-heading" style={{ fontSize: 'clamp(1.85rem, 3.8vw, 2.75rem)', color: '#ffffff', marginBottom: '1.15rem', lineHeight: 1.35, letterSpacing: '0.04em', textShadow: '0 3px 18px rgba(0, 0, 0, 0.7)' }}>
             {tagline}
           </h1>
-          <p style={{ fontSize: '1.25rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#f5d376', textShadow: '0 2px 10px rgba(0, 0, 0, 0.8)', margin: 0 }}>
+          <p style={{ fontSize: '0.95rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#fcaaa2', textShadow: '0 2px 10px rgba(0, 0, 0, 0.6)', margin: 0 }}>
             {brandLine}
           </p>
         </div>
@@ -65,29 +74,29 @@ export default function AboutPage() {
       {/* Main Narrative & Imagery */}
       <section className="section-py">
         <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '4rem', alignItems: 'center' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '3.5rem', alignItems: 'center' }}>
             <div>
               <span className="brand-line">Our Craft & Mission</span>
-              <h2 className="font-heading" style={{ fontSize: '2.2rem', color: 'var(--text-primary)', margin: '0.5rem 0 1.5rem 0' }}>
+              <h2 className="font-heading" style={{ fontSize: '2.1rem', color: 'var(--text-primary)', margin: '0.5rem 0 1.25rem 0', lineHeight: 1.25 }}>
                 Sculpted by Hand, Crafted for Distinction
               </h2>
 
-              <div style={{ color: 'var(--text-secondary)', fontSize: '1.05rem', lineHeight: 1.8, display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+              <div style={{ color: 'var(--text-secondary)', fontSize: '1rem', lineHeight: 1.7, display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                 {brandDesc.split('\n\n').map((paragraph, idx) => (
-                  <p key={idx}>{paragraph}</p>
+                  <p key={idx} style={{ margin: 0 }}>{paragraph}</p>
                 ))}
               </div>
 
               {/* Studio Info Card */}
               <div style={{
-                marginTop: '2.5rem',
-                padding: '1.75rem',
-                borderRadius: 'var(--radius-md)',
-                background: 'var(--bg-surface)',
-                border: '1px solid var(--border-gold)',
-                boxShadow: 'var(--shadow-gold)'
+                marginTop: '2rem',
+                padding: '1.5rem 1.75rem',
+                borderRadius: '0px',
+                background: '#faf0ee',
+                border: '1px solid rgba(232, 97, 84, 0.25)',
+                boxShadow: '0 4px 18px rgba(232, 97, 84, 0.08)'
               }}>
-                <h4 className="font-heading" style={{ color: 'var(--accent-gold-dark)', fontSize: '1.1rem', marginBottom: '1rem' }}>
+                <h4 className="font-heading" style={{ color: 'var(--accent-gold-dark)', fontSize: '1.05rem', marginBottom: '0.85rem', letterSpacing: '0.04em' }}>
                   X-ON Headquarters & Studio
                 </h4>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', fontSize: '0.95rem' }}>
@@ -97,7 +106,7 @@ export default function AboutPage() {
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
                     <Phone size={18} color="var(--accent-gold)" />
-                    <a href={`tel:${phone}`} style={{ color: 'var(--accent-gold-dark)', fontWeight: 600 }}>{phone}</a>
+                    <a href={`tel:${phone}`} style={{ color: 'var(--accent-gold-dark)', fontWeight: 600, textDecoration: 'none' }}>{phone}</a>
                   </div>
                 </div>
               </div>
@@ -106,10 +115,10 @@ export default function AboutPage() {
             {/* Visual Collage */}
             <div>
               <div style={{
-                borderRadius: 'var(--radius-lg)',
+                borderRadius: '0px',
                 overflow: 'hidden',
-                border: '1px solid var(--border-medium)',
-                boxShadow: 'var(--shadow-lg)',
+                border: '1px solid rgba(232, 97, 84, 0.2)',
+                boxShadow: 'var(--shadow-md)',
                 position: 'relative'
               }}>
                 <img
@@ -128,48 +137,143 @@ export default function AboutPage() {
       </section>
 
       {/* Pillars of Excellence */}
-      <section style={{ background: 'var(--bg-secondary)', borderTop: '1px solid var(--border-subtle)', borderBottom: '1px solid var(--border-subtle)', padding: '5rem 0' }}>
+      <section style={{ background: 'var(--bg-secondary)', borderTop: '1px solid var(--border-subtle)', borderBottom: '1px solid var(--border-subtle)', padding: '4rem 0' }}>
         <div className="container">
-          <div className="section-header">
+          <div className="section-header" style={{ marginBottom: '2.5rem' }}>
             <span className="brand-line">The Difference</span>
             <h2 className="section-title">Built on Three Foundations</h2>
           </div>
 
-          <div className="grid-3">
-            <div className="glass-card" style={{ padding: '2.25rem' }}>
-              <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'rgba(212,175,55,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.25rem' }}>
-                <Sparkles size={24} color="var(--accent-gold)" />
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(330px, 1fr))',
+            gap: '1.5rem',
+            alignItems: 'stretch'
+          }}>
+            {/* Card 1 */}
+            <div style={{
+              display: 'flex',
+              background: '#ffffff',
+              borderRadius: '0px',
+              border: '1px solid rgba(232, 97, 84, 0.16)',
+              boxShadow: '0 4px 16px rgba(232, 97, 84, 0.06)',
+              overflow: 'hidden',
+              transition: 'transform 0.25s ease, box-shadow 0.25s ease'
+            }}
+            onMouseOver={e => {
+              e.currentTarget.style.transform = 'translateY(-4px)';
+              e.currentTarget.style.boxShadow = '0 12px 28px rgba(232, 97, 84, 0.14)';
+            }}
+            onMouseOut={e => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = '0 4px 16px rgba(232, 97, 84, 0.06)';
+            }}
+            >
+              <div style={{ width: '42%', minHeight: '190px', flexShrink: 0, position: 'relative' }}>
+                <img
+                  src="/assets/images/IMG_7101.JPG"
+                  alt="Quality Without Compromise"
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                />
               </div>
-              <h3 className="font-heading" style={{ color: 'var(--text-primary)', fontSize: '1.25rem', marginBottom: '0.75rem' }}>
-                Quality Without Compromise
-              </h3>
-              <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', lineHeight: 1.6 }}>
-                Every set is layered with salon-strength soft gel and builder coatings, preventing chipping, bending, or thinning.
-              </p>
+              <div style={{ flex: 1, padding: '1.5rem 1.25rem', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                <span style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--accent-gold)', fontWeight: 700, marginBottom: '0.35rem' }}>
+                  Salon Quality
+                </span>
+                <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.45rem', lineHeight: 1.3 }}>
+                  Quality Without Compromise
+                </h3>
+                <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', lineHeight: 1.5, marginBottom: '0.85rem' }}>
+                  Multi-layer soft gel coating with zero chipping or bending.
+                </p>
+                <Link to="/shop?product_type=handmade-press-on-nails" style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-primary)', display: 'inline-flex', alignItems: 'center', gap: '4px', textDecoration: 'none', letterSpacing: '0.04em', textTransform: 'uppercase' }}>
+                  Shop Sets <ArrowRight size={13} color="var(--accent-gold)" />
+                </Link>
+              </div>
             </div>
 
-            <div className="glass-card" style={{ padding: '2.25rem' }}>
-              <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'rgba(212,175,55,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.25rem' }}>
-                <Award size={24} color="var(--accent-gold)" />
+            {/* Card 2 */}
+            <div style={{
+              display: 'flex',
+              background: '#ffffff',
+              borderRadius: '0px',
+              border: '1px solid rgba(232, 97, 84, 0.16)',
+              boxShadow: '0 4px 16px rgba(232, 97, 84, 0.06)',
+              overflow: 'hidden',
+              transition: 'transform 0.25s ease, box-shadow 0.25s ease'
+            }}
+            onMouseOver={e => {
+              e.currentTarget.style.transform = 'translateY(-4px)';
+              e.currentTarget.style.boxShadow = '0 12px 28px rgba(232, 97, 84, 0.14)';
+            }}
+            onMouseOut={e => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = '0 4px 16px rgba(232, 97, 84, 0.06)';
+            }}
+            >
+              <div style={{ width: '42%', minHeight: '190px', flexShrink: 0, position: 'relative' }}>
+                <img
+                  src="/assets/images/IMG_7106.JPG"
+                  alt="Style & Trend Leadership"
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                />
               </div>
-              <h3 className="font-heading" style={{ color: 'var(--text-primary)', fontSize: '1.25rem', marginBottom: '0.75rem' }}>
-                Style & Trend Leadership
-              </h3>
-              <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', lineHeight: 1.6 }}>
-                From runway-inspired velvet chrome to timeless French aesthetics, our collections define luxury nail fashion.
-              </p>
+              <div style={{ flex: 1, padding: '1.5rem 1.25rem', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                <span style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--accent-gold)', fontWeight: 700, marginBottom: '0.35rem' }}>
+                  Trend Forward
+                </span>
+                <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.45rem', lineHeight: 1.3 }}>
+                  Style & Trend Leadership
+                </h3>
+                <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', lineHeight: 1.5, marginBottom: '0.85rem' }}>
+                  Runway velvet chrome & timeless handcrafted aesthetics.
+                </p>
+                <Link to="/gallery-product" style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-primary)', display: 'inline-flex', alignItems: 'center', gap: '4px', textDecoration: 'none', letterSpacing: '0.04em', textTransform: 'uppercase' }}>
+                  View Gallery <ArrowRight size={13} color="var(--accent-gold)" />
+                </Link>
+              </div>
             </div>
 
-            <div className="glass-card" style={{ padding: '2.25rem' }}>
-              <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'rgba(212,175,55,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.25rem' }}>
-                <HeartHandshake size={24} color="var(--accent-gold)" />
+            {/* Card 3 */}
+            <div style={{
+              display: 'flex',
+              background: '#ffffff',
+              borderRadius: '0px',
+              border: '1px solid rgba(232, 97, 84, 0.16)',
+              boxShadow: '0 4px 16px rgba(232, 97, 84, 0.06)',
+              overflow: 'hidden',
+              transition: 'transform 0.25s ease, box-shadow 0.25s ease'
+            }}
+            onMouseOver={e => {
+              e.currentTarget.style.transform = 'translateY(-4px)';
+              e.currentTarget.style.boxShadow = '0 12px 28px rgba(232, 97, 84, 0.14)';
+            }}
+            onMouseOut={e => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = '0 4px 16px rgba(232, 97, 84, 0.06)';
+            }}
+            >
+              <div style={{ width: '42%', minHeight: '190px', flexShrink: 0, position: 'relative' }}>
+                <img
+                  src="/assets/images/IMG_7107.JPG"
+                  alt="Effortless Performance"
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                />
               </div>
-              <h3 className="font-heading" style={{ color: 'var(--text-primary)', fontSize: '1.25rem', marginBottom: '0.75rem' }}>
-                Effortless Performance
-              </h3>
-              <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', lineHeight: 1.6 }}>
-                Quick 10-minute application with durable salon hold for weeks of polished perfection.
-              </p>
+              <div style={{ flex: 1, padding: '1.5rem 1.25rem', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                <span style={{ fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--accent-gold)', fontWeight: 700, marginBottom: '0.35rem' }}>
+                  10-Min Routine
+                </span>
+                <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.45rem', lineHeight: 1.3 }}>
+                  Effortless Performance
+                </h3>
+                <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', lineHeight: 1.5, marginBottom: '0.85rem' }}>
+                  10-minute application for weeks of salon durability.
+                </p>
+                <Link to="/sizing-chart" style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-primary)', display: 'inline-flex', alignItems: 'center', gap: '4px', textDecoration: 'none', letterSpacing: '0.04em', textTransform: 'uppercase' }}>
+                  How To Apply <ArrowRight size={13} color="var(--accent-gold)" />
+                </Link>
+              </div>
             </div>
           </div>
         </div>
