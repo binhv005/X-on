@@ -12,7 +12,6 @@ export default function ProductCard({ product, compact = false, imageAspect = '1
     : (typeof product.images === 'string' && product.images ? [product.images] : []);
   const images = rawImages.length > 0 ? rawImages : ['/assets/images/IMG_7098.webp'];
   const primaryImage = images[0] || '/assets/images/IMG_7098.webp';
-  const secondaryImage = (images.length > 1 && images[1] !== primaryImage) ? images[1] : null;
 
   // Standard sizes to display (or from product)
   const allDisplaySizes = ['XS', 'S', 'M', 'L'];
@@ -47,7 +46,7 @@ export default function ProductCard({ product, compact = false, imageAspect = '1
             paddingTop: compact ? '85%' : imageAspect
           }}
         >
-          {/* Primary Image */}
+          {/* Primary Image with Smooth Hover Zoom In */}
           <img
             src={primaryImage}
             alt={product.name}
@@ -64,37 +63,11 @@ export default function ProductCard({ product, compact = false, imageAspect = '1
               height: '100%',
               objectFit: 'cover',
               filter: isOutOfStock ? 'grayscale(35%)' : 'none',
-              opacity: isOutOfStock ? 0.85 : (secondaryImage && isHovered ? 0 : 1),
-              transform: isHovered && !secondaryImage ? 'scale(1.05)' : 'scale(1)',
-              transition: 'opacity 0.4s ease, transform 0.4s ease, filter 0.4s ease'
+              opacity: isOutOfStock ? 0.85 : 1,
+              transform: isHovered ? 'scale(1.08)' : 'scale(1)',
+              transition: 'transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease, filter 0.3s ease'
             }}
           />
-
-          {/* Secondary Image on Hover */}
-          {secondaryImage && (
-            <img
-              src={secondaryImage}
-              alt={`${product.name} alternate view`}
-              loading="lazy"
-              onError={(e) => {
-                e.currentTarget.onerror = null;
-                e.currentTarget.src = primaryImage;
-              }}
-              style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-                filter: isOutOfStock ? 'grayscale(35%)' : 'none',
-                opacity: isHovered ? (isOutOfStock ? 0.85 : 1) : 0,
-                transform: isHovered ? 'scale(1.04)' : 'scale(1)',
-                transition: 'opacity 0.4s ease, transform 0.4s ease',
-                pointerEvents: 'none'
-              }}
-            />
-          )}
         </Link>
 
         {/* Favorite Heart Button (Top Right) */}

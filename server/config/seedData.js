@@ -130,8 +130,8 @@ export function seedInitialData() {
       SKU: 'XON-SQ-0312',
       images: [
         '/assets/images/IMG_7101.webp',
-        '/assets/images/IMG_7098.webp',
-        '/assets/images/IMG_7105.webp'
+        '/assets/images/IMG_7105.webp',
+        '/assets/images/IMG_7111.webp'
       ],
       price: 38.00,
       sale_price: null,
@@ -313,7 +313,7 @@ export function seedInitialData() {
       SKU: 'XON-BND-001',
       images: [
         '/assets/images/IMG_7107.webp',
-        '/assets/images/IMG_7098.webp',
+        '/assets/images/IMG_7102.webp',
         '/assets/images/IMG_7106.webp'
       ],
       price: 98.00,
