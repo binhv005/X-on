@@ -140,7 +140,7 @@ export default function ProductCard({ product, compact = false, imageAspect = '1
           {isOutOfStock ? (
             <span style={{
               padding: '3px 8px',
-              borderRadius: '4px',
+              borderRadius: '0px',
               background: 'rgba(17, 24, 39, 0.88)',
               color: '#fff',
               fontSize: '0.68rem',
@@ -155,7 +155,7 @@ export default function ProductCard({ product, compact = false, imageAspect = '1
               {Boolean(product.is_best_seller) && (
                 <span style={{
                   padding: '3px 8px',
-                  borderRadius: '4px',
+                  borderRadius: '0px',
                   background: 'linear-gradient(135deg, #d4af37, #b8860b)',
                   color: '#ffffff',
                   fontSize: '0.68rem',
@@ -170,7 +170,7 @@ export default function ProductCard({ product, compact = false, imageAspect = '1
               {Boolean(product.is_bundle) && (
                 <span style={{
                   padding: '3px 8px',
-                  borderRadius: '4px',
+                  borderRadius: '0px',
                   background: 'rgba(15, 23, 42, 0.92)',
                   color: '#f8fafc',
                   fontSize: '0.68rem',
@@ -185,7 +185,7 @@ export default function ProductCard({ product, compact = false, imageAspect = '1
               {hasSale && (
                 <span style={{
                   padding: '3px 8px',
-                  borderRadius: '4px',
+                  borderRadius: '0px',
                   background: 'rgba(220, 38, 38, 0.9)',
                   color: '#fff',
                   fontSize: '0.7rem',
@@ -251,7 +251,7 @@ export default function ProductCard({ product, compact = false, imageAspect = '1
                 style={{
                   width: '32px',
                   height: '32px',
-                  borderRadius: '4px',
+                  borderRadius: '0px',
                   border: isAvailable ? '1px solid #d1d5db' : '1px solid #e5e7eb',
                   background: isAvailable
                     ? '#ffffff'

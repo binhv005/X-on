@@ -303,7 +303,7 @@ export default function HomePage() {
               border: '2px solid rgba(255, 255, 255, 0.95)',
               color: '#ffffff',
               padding: '0.9rem 2.25rem',
-              borderRadius: '6px',
+              borderRadius: '0px',
               fontWeight: 800,
               fontSize: '0.95rem',
               letterSpacing: '0.08em',
@@ -326,7 +326,7 @@ export default function HomePage() {
               background: 'linear-gradient(135deg, #df8924 0%, #c87110 100%)',
               color: '#ffffff',
               padding: '0.9rem 2.25rem',
-              borderRadius: '6px',
+              borderRadius: '0px',
               fontWeight: 800,
               fontSize: '0.95rem',
               letterSpacing: '0.08em',
@@ -427,7 +427,7 @@ export default function HomePage() {
             {/* Tile 1 */}
             <Link to="/shop?product_type=handmade-press-on-nails" style={{
               position: 'relative',
-              borderRadius: 'var(--radius-md)',
+              borderRadius: '0px',
               overflow: 'hidden',
               height: '340px',
               textDecoration: 'none',
@@ -466,7 +466,7 @@ export default function HomePage() {
             {/* Tile 2 */}
             <Link to="/shop?product_type=nail-essentials" style={{
               position: 'relative',
-              borderRadius: 'var(--radius-md)',
+              borderRadius: '0px',
               overflow: 'hidden',
               height: '340px',
               textDecoration: 'none',
@@ -505,7 +505,7 @@ export default function HomePage() {
             {/* Tile 3 */}
             <Link to="/bundle-and-save" style={{
               position: 'relative',
-              borderRadius: 'var(--radius-md)',
+              borderRadius: '0px',
               overflow: 'hidden',
               height: '340px',
               textDecoration: 'none',
@@ -558,7 +558,7 @@ export default function HomePage() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '3rem', alignItems: 'center' }}>
             {/* Video Player Box */}
             <div style={{
-              borderRadius: 'var(--radius-lg)',
+              borderRadius: '0px',
               overflow: 'hidden',
               boxShadow: '0 20px 45px rgba(0, 0, 0, 0.12)',
               border: '2px solid rgba(179, 135, 40, 0.4)',
@@ -581,7 +581,7 @@ export default function HomePage() {
                 background: 'rgba(0, 0, 0, 0.75)',
                 backdropFilter: 'blur(8px)',
                 padding: '0.85rem 1.25rem',
-                borderRadius: '8px',
+                borderRadius: '0px',
                 color: '#fff',
                 display: 'flex',
                 alignItems: 'center',
@@ -591,7 +591,7 @@ export default function HomePage() {
                   <div style={{ fontSize: '0.88rem', fontWeight: 700, color: 'var(--accent-gold-light)' }}>{craftsmanshipVideos[selectedVideo].title}</div>
                   <div style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.7)' }}>{craftsmanshipVideos[selectedVideo].subtitle}</div>
                 </div>
-                <span style={{ fontSize: '0.72rem', background: 'var(--accent-gold)', color: '#000', padding: '0.25rem 0.5rem', borderRadius: '4px', fontWeight: 800 }}>
+                <span style={{ fontSize: '0.72rem', background: 'var(--accent-gold)', color: '#000', padding: '0.25rem 0.5rem', borderRadius: '0px', fontWeight: 800 }}>
                   4K CLARITY
                 </span>
               </div>
@@ -612,7 +612,7 @@ export default function HomePage() {
                     onClick={() => setSelectedVideo(idx)}
                     style={{
                       padding: '1rem 1.25rem',
-                      borderRadius: '10px',
+                      borderRadius: '0px',
                       background: selectedVideo === idx ? 'var(--bg-surface)' : 'rgba(0,0,0,0.03)',
                       border: selectedVideo === idx ? '1px solid var(--accent-gold)' : '1px solid var(--border-subtle)',
                       boxShadow: selectedVideo === idx ? 'var(--shadow-md)' : 'none',
@@ -678,7 +678,7 @@ export default function HomePage() {
                     display: 'flex',
                     alignItems: 'center',
                     padding: '1rem',
-                    borderRadius: '14px',
+                    borderRadius: '0px',
                     gap: '1.25rem',
                     border: '1px solid var(--border-subtle)',
                     background: 'var(--bg-surface)',
@@ -696,7 +696,7 @@ export default function HomePage() {
                       width: '125px',
                       height: '125px',
                       flexShrink: 0,
-                      borderRadius: '10px',
+                      borderRadius: '0px',
                       overflow: 'hidden',
                       display: 'block'
                     }}
@@ -791,7 +791,7 @@ export default function HomePage() {
         <div className="container">
           <div style={{
             background: 'linear-gradient(135deg, #1c1c21 0%, #2a2824 50%, #1c1c21 100%)',
-            borderRadius: 'var(--radius-lg)',
+            borderRadius: '0px',
             padding: '3.5rem 2.5rem',
             color: '#fff',
             display: 'grid',
@@ -822,13 +822,13 @@ export default function HomePage() {
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-              <div style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(179, 135, 40, 0.3)', borderRadius: '12px', padding: '1.5rem', textAlign: 'center' }}>
+              <div style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(179, 135, 40, 0.3)', borderRadius: '0px', padding: '1.5rem', textAlign: 'center' }}>
                 <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--accent-gold-light)', marginBottom: '0.25rem' }}>15% OFF</div>
                 <div style={{ fontSize: '0.88rem', fontWeight: 600, color: '#fff' }}>Buy Any 2 Sets</div>
                 <div style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.6)', marginTop: '0.25rem' }}>Auto-applied at checkout</div>
               </div>
 
-              <div style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(179, 135, 40, 0.3)', borderRadius: '12px', padding: '1.5rem', textAlign: 'center' }}>
+              <div style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(179, 135, 40, 0.3)', borderRadius: '0px', padding: '1.5rem', textAlign: 'center' }}>
                 <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--accent-gold-light)', marginBottom: '0.25rem' }}>20% OFF</div>
                 <div style={{ fontSize: '0.88rem', fontWeight: 600, color: '#fff' }}>Buy 3+ Sets</div>
                 <div style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.6)', marginTop: '0.25rem' }}>Includes Free Shipping</div>
@@ -866,7 +866,7 @@ export default function HomePage() {
                     }}
                     style={{
                       padding: '0.45rem 1.1rem',
-                      borderRadius: '24px',
+                      borderRadius: '0px',
                       fontSize: '0.82rem',
                       fontWeight: isActive ? 700 : 500,
                       background: isActive ? 'linear-gradient(135deg, #b38728 0%, #8c6716 100%)' : 'var(--bg-surface)',
@@ -1061,7 +1061,7 @@ export default function HomePage() {
                   style={{
                     position: 'relative',
                     background: '#ffffff',
-                    borderRadius: '20px 20px 20px 4px',
+                    borderRadius: '0px',
                     padding: '1.35rem 1.35rem 1.15rem 1.35rem',
                     boxShadow: '0 8px 24px rgba(67, 76, 52, 0.07)',
                     border: '1px solid rgba(67, 76, 52, 0.08)',
@@ -1193,88 +1193,81 @@ export default function HomePage() {
       </section>
 
       {/* 11. FIND US & STUDIO SHOWCASE */}
-      <section className="section-py" style={{ borderTop: '1px solid var(--border-subtle)', background: 'var(--bg-secondary)' }}>
-        <div className="container" style={{ maxWidth: '1080px' }}>
+      <section style={{
+        position: 'relative',
+        width: '100%',
+        background: '#fcf6f3',
+        backgroundImage: `url(${findUsBg})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        borderTop: '1px solid var(--border-subtle)',
+        borderBottom: '1px solid var(--border-subtle)',
+        padding: '3.75rem 1.5rem',
+        textAlign: 'center',
+        overflow: 'hidden'
+      }}>
+        {/* Top-Right Nail Polish & Brush Motif */}
+        <img
+          src={motifTop}
+          alt=""
+          style={{
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            width: '200px',
+            maxWidth: '22%',
+            pointerEvents: 'none',
+            zIndex: 1,
+            userSelect: 'none'
+          }}
+        />
+
+        {/* Bottom-Left Nail Polish Bottle Motif */}
+        <img
+          src={motifBottom}
+          alt=""
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            width: '180px',
+            maxWidth: '20%',
+            pointerEvents: 'none',
+            zIndex: 1,
+            userSelect: 'none'
+          }}
+        />
+
+        {/* Content above motifs */}
+        <div style={{ position: 'relative', zIndex: 2, maxWidth: '760px', margin: '0 auto' }}>
+          <span className="brand-line" style={{ display: 'block', marginBottom: '0.45rem', fontSize: '0.85rem' }}>Visit Our Studio & Showcase</span>
+          <h2 className="font-heading" style={{ fontSize: '2.5rem', color: 'var(--text-primary)', marginBottom: '1.25rem' }}>
+            Find Us
+          </h2>
+          
+          {/* Location Block */}
           <div style={{
-            position: 'relative',
-            background: '#fcf6f3',
-            backgroundImage: `url(${findUsBg})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat',
-            border: '1px solid var(--border-gold)',
-            borderRadius: 'var(--radius-lg)',
-            padding: '3.25rem 2rem 3rem 2rem',
-            textAlign: 'center',
-            maxWidth: '1000px',
-            width: '100%',
-            margin: '0 auto',
-            boxShadow: 'var(--shadow-gold)',
-            overflow: 'hidden'
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '0.6rem',
+            fontSize: '1.08rem',
+            color: 'var(--text-primary)',
+            marginBottom: '1.85rem',
+            flexWrap: 'wrap'
           }}>
-            {/* Top-Right Nail Polish & Brush Motif */}
-            <img
-              src={motifTop}
-              alt=""
-              style={{
-                position: 'absolute',
-                top: 0,
-                right: 0,
-                width: '180px',
-                maxWidth: '22%',
-                pointerEvents: 'none',
-                zIndex: 1,
-                userSelect: 'none'
-              }}
-            />
+            <MapPin size={22} color="var(--accent-gold)" style={{ flexShrink: 0 }} />
+            <strong>X-ON — 3168 Bill Beck Blvd, Kissimmee, FL 34744.</strong>
+          </div>
 
-            {/* Bottom-Left Nail Polish Bottle Motif */}
-            <img
-              src={motifBottom}
-              alt=""
-              style={{
-                position: 'absolute',
-                bottom: 0,
-                left: 0,
-                width: '160px',
-                maxWidth: '20%',
-                pointerEvents: 'none',
-                zIndex: 1,
-                userSelect: 'none'
-              }}
-            />
-
-            {/* Content above motifs */}
-            <div style={{ position: 'relative', zIndex: 2, maxWidth: '720px', margin: '0 auto' }}>
-              <span className="brand-line" style={{ display: 'block', marginBottom: '0.45rem', fontSize: '0.85rem' }}>Visit Our Studio & Showcase</span>
-              <h2 className="font-heading" style={{ fontSize: '2.5rem', color: 'var(--text-primary)', marginBottom: '1.25rem' }}>
-                Find Us
-              </h2>
-              
-              {/* Location Block */}
-              <div style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '0.6rem',
-                fontSize: '1.08rem',
-                color: 'var(--text-primary)',
-                marginBottom: '1.85rem',
-                flexWrap: 'wrap'
-              }}>
-                <MapPin size={22} color="var(--accent-gold)" style={{ flexShrink: 0 }} />
-                <strong>X-ON — 3168 Bill Beck Blvd, Kissimmee, FL 34744.</strong>
-              </div>
-
-              <div style={{ display: 'flex', gap: '0.85rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-                <Link to="/contact-us" className="btn btn-primary" style={{ padding: '0.7rem 1.6rem' }}>
-                  Contact Our Studio
-                </Link>
-                <Link to="/wholesale-signup" className="btn btn-outline" style={{ background: 'rgba(255, 255, 255, 0.9)', padding: '0.7rem 1.6rem' }}>
-                  Wholesale Registration
-                </Link>
-              </div>
-            </div>
+          <div style={{ display: 'flex', gap: '0.85rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <Link to="/contact-us" className="btn btn-primary" style={{ padding: '0.7rem 1.6rem' }}>
+              Contact Our Studio
+            </Link>
+            <Link to="/wholesale-signup" className="btn btn-outline" style={{ background: 'rgba(255, 255, 255, 0.9)', padding: '0.7rem 1.6rem' }}>
+              Wholesale Registration
+            </Link>
           </div>
         </div>
       </section>
