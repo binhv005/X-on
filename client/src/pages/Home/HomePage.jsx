@@ -33,24 +33,57 @@ import motifBottom from '../../assets/images/findus-motif-bottom.png';
 import bundlePromoBg from '../../assets/images/bundle-promo-bg.jpg';
 import stepCardBg from '../../assets/images/step-card-bg.jpg';
 
-// Scroll-triggered Video Component: only plays when scrolled into viewport
-function ScrollPlayVideo({ src, fallback, onEnded, style, className, loop = true, muted = true, playsInline = true, ...rest }) {
+// Scroll-triggered Video Component: optimized for instant playback on mobile & desktop
+function ScrollPlayVideo({
+  src,
+  fallback,
+  onEnded,
+  style,
+  className,
+  loop = true,
+  muted = true,
+  playsInline = true,
+  autoPlay = true,
+  preload = 'auto',
+  poster,
+  ...rest
+}) {
   const videoRef = React.useRef(null);
 
   React.useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
+    // Critical for iOS Safari, WebKit and Android Chrome autoplay without delays
+    video.muted = true;
+    video.defaultMuted = true;
+    video.playsInline = true;
+    video.setAttribute('playsinline', 'true');
+    video.setAttribute('webkit-playsinline', 'true');
+    video.setAttribute('x5-playsinline', 'true');
+
+    const tryPlay = () => {
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          // Autoplay policy prevented playback, ignore or retry
+        });
+      }
+    };
+
+    // Instant attempt on mount for immediate hero display
+    tryPlay();
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          video.play().catch(() => {});
+          tryPlay();
         } else {
           video.pause();
         }
       },
       {
-        threshold: 0.15
+        threshold: 0.01
       }
     );
 
@@ -65,17 +98,30 @@ function ScrollPlayVideo({ src, fallback, onEnded, style, className, loop = true
     <video
       ref={videoRef}
       src={src}
+      autoPlay={autoPlay}
       loop={loop}
       muted={muted}
       playsInline={playsInline}
+      webkit-playsinline="true"
+      x5-playsinline="true"
+      preload={preload}
+      poster={poster}
       onEnded={onEnded}
+      onLoadedData={(e) => {
+        e.currentTarget.play().catch(() => {});
+      }}
       onError={(e) => {
         if (fallback && e.currentTarget.src !== fallback) {
           e.currentTarget.src = fallback;
+          e.currentTarget.load();
           e.currentTarget.play().catch(() => {});
         }
       }}
-      style={style}
+      style={{
+        objectFit: 'cover',
+        display: 'block',
+        ...style
+      }}
       className={className}
       {...rest}
     />
