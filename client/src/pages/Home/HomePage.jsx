@@ -31,12 +31,14 @@ import findUsBg from '../../assets/images/findus-bg.webp';
 import motifTop from '../../assets/images/findus-motif-top.webp';
 import motifBottom from '../../assets/images/findus-motif-bottom.webp';
 import bundlePromoBg from '../../assets/images/bundle-promo-bg.webp';
-import stepCardBg from '../../assets/images/step-card-bg.webp';
+import bundleBannerBg from '../../assets/images/bundle-banner-bg.webp';
 
-// Scroll-triggered Video Component: shows pure black until video is actively playing
+// Scroll-triggered Video Component: shows fallback image or pure black until video is actively playing
 function ScrollPlayVideo({
   src,
   fallback,
+  fallbackImage,
+  poster,
   onEnded,
   style,
   className,
@@ -49,9 +51,11 @@ function ScrollPlayVideo({
 }) {
   const videoRef = React.useRef(null);
   const [isPlaying, setIsPlaying] = React.useState(false);
+  const [hasError, setHasError] = React.useState(false);
 
   React.useEffect(() => {
     setIsPlaying(false);
+    setHasError(false);
     const video = videoRef.current;
     if (!video) return;
 
@@ -103,43 +107,69 @@ function ScrollPlayVideo({
         overflow: 'hidden'
       }}
     >
-      <video
-        ref={videoRef}
-        src={src}
-        autoPlay={autoPlay}
-        loop={loop}
-        muted={muted}
-        playsInline={playsInline}
-        webkit-playsinline="true"
-        x5-playsinline="true"
-        preload={preload}
-        onEnded={onEnded}
-        onPlaying={() => setIsPlaying(true)}
-        onTimeUpdate={(e) => {
-          if (e.currentTarget.currentTime > 0.05 && !isPlaying) {
-            setIsPlaying(true);
-          }
-        }}
-        onError={(e) => {
-          if (fallback && e.currentTarget.src !== fallback) {
-            e.currentTarget.src = fallback;
-            e.currentTarget.load();
-            e.currentTarget.play().catch(() => {});
-          }
-        }}
-        style={{
-          width: '100%',
-          height: '100%',
-          objectFit: 'cover',
-          display: 'block',
-          backgroundColor: '#000000',
-          opacity: isPlaying ? 1 : 0,
-          transition: 'opacity 0.25s ease',
-          ...style
-        }}
-        className={className}
-        {...rest}
-      />
+      {/* Fallback image when video is loading or fails */}
+      {fallbackImage && (
+        <img
+          src={fallbackImage}
+          alt="Fallback Banner"
+          style={{
+            position: 'absolute',
+            inset: 0,
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            display: 'block',
+            zIndex: 0
+          }}
+        />
+      )}
+
+      {!hasError && (
+        <video
+          ref={videoRef}
+          src={src}
+          poster={poster || fallbackImage}
+          autoPlay={autoPlay}
+          loop={loop}
+          muted={muted}
+          playsInline={playsInline}
+          webkit-playsinline="true"
+          x5-playsinline="true"
+          preload={preload}
+          onEnded={onEnded}
+          onPlaying={() => setIsPlaying(true)}
+          onTimeUpdate={(e) => {
+            if (e.currentTarget.currentTime > 0.05 && !isPlaying) {
+              setIsPlaying(true);
+            }
+          }}
+          onError={(e) => {
+            if (fallback && e.currentTarget.src !== fallback && !e.currentTarget.src.endsWith(fallback)) {
+              e.currentTarget.src = fallback;
+              e.currentTarget.load();
+              e.currentTarget.play().catch(() => {
+                setHasError(true);
+              });
+            } else {
+              setHasError(true);
+            }
+          }}
+          style={{
+            position: 'relative',
+            zIndex: 1,
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            display: 'block',
+            backgroundColor: fallbackImage ? 'transparent' : '#000000',
+            opacity: isPlaying ? 1 : (fallbackImage ? 0 : 0),
+            transition: 'opacity 0.35s ease',
+            ...style
+          }}
+          className={className}
+          {...rest}
+        />
+      )}
     </div>
   );
 }
@@ -270,6 +300,7 @@ export default function HomePage() {
             <ScrollPlayVideo
               src={singleIntroVideo.src}
               fallback={singleIntroVideo.fallback}
+              fallbackImage={bundleBannerBg}
               loop={false}
               muted
               playsInline
@@ -314,6 +345,7 @@ export default function HomePage() {
                 <ScrollPlayVideo
                   src={video.src}
                   fallback={video.fallback}
+                  fallbackImage={bundleBannerBg}
                   loop={idx !== 0} // Loop right video, left triggers cycle back
                   muted
                   playsInline
