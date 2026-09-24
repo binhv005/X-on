@@ -23,7 +23,15 @@ export default function Footer() {
         }}>
           {/* Brand Col */}
           <div style={{ maxWidth: '340px' }}>
-            <Link to="/" style={{ display: 'inline-block', marginBottom: '1.25rem', textDecoration: 'none' }}>
+            <Link
+              to="/"
+              onClick={() => {
+                if (window.location.pathname === '/') {
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+              }}
+              style={{ display: 'inline-block', marginBottom: '1.25rem', textDecoration: 'none' }}
+            >
               <img
                 src={logoImg}
                 alt="X-ON Logo"

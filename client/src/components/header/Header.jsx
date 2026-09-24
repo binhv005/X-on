@@ -70,7 +70,15 @@ export default function Header() {
         {/* Main Navbar */}
         <div style={{ maxWidth: '1440px', width: '100%', margin: '0 auto', padding: '0 1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '72px', gap: '1rem' }}>
           {/* Brand Logo */}
-          <Link to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', flexShrink: 0 }}>
+          <Link
+            to="/"
+            onClick={() => {
+              if (location.pathname === '/') {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }
+            }}
+            style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', flexShrink: 0 }}
+          >
             <img
               src={logoImg}
               alt="X-ON Logo"
