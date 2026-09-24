@@ -921,117 +921,108 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '2rem' }}>
+          <div className="grid-3">
             <div className="glass-card" style={{
+              padding: '2.25rem 2rem',
               position: 'relative',
-              padding: '2.5rem 2rem',
-              textAlign: 'center',
-              backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.50), rgba(255, 255, 255, 0.50)), url(${stepCardBg})`,
+              borderRadius: '0px',
+              backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.40), rgba(255, 255, 255, 0.40)), url(${stepCardBg})`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat',
-              backgroundColor: '#ffdbe4',
-              borderRadius: '0px',
-              border: '1px solid rgba(232, 97, 84, 0.32)',
-              boxShadow: '0 10px 28px rgba(232, 97, 84, 0.12)',
-              overflow: 'hidden'
+              border: '1px solid rgba(232, 97, 84, 0.28)',
+              boxShadow: '0 8px 24px rgba(232, 97, 84, 0.08)'
             }}>
               <div style={{
-                width: '54px',
-                height: '54px',
+                width: '42px',
+                height: '42px',
                 borderRadius: '50%',
                 background: 'linear-gradient(135deg, #f88b80 0%, #e26155 100%)',
                 color: '#fff',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '1.4rem',
+                fontSize: '1.1rem',
                 fontWeight: 800,
-                margin: '0 auto 1.5rem auto',
-                boxShadow: '0 6px 16px rgba(232, 97, 84, 0.35)'
+                marginBottom: '1.25rem',
+                boxShadow: '0 4px 10px rgba(232, 97, 84, 0.35)'
               }}>
                 1
               </div>
-              <h3 className="font-heading" style={{ fontSize: '1.2rem', marginBottom: '0.75rem', color: '#19181b' }}>
+              <h3 className="font-heading" style={{ fontSize: '1.2rem', marginBottom: '0.65rem', color: '#19181b' }}>
                 Measure & Prep
               </h3>
-              <p style={{ color: '#4a444a', fontSize: '0.92rem', lineHeight: 1.6, fontWeight: 500 }}>
+              <p style={{ color: '#4a444a', fontSize: '0.92rem', lineHeight: 1.65, margin: 0, fontWeight: 500 }}>
                 Gently push cuticles back, buff natural nail surface lightly with included buffer, and wipe clean with alcohol prep pad.
               </p>
             </div>
 
             <div className="glass-card" style={{
+              padding: '2.25rem 2rem',
               position: 'relative',
-              padding: '2.5rem 2rem',
-              textAlign: 'center',
-              backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.50), rgba(255, 255, 255, 0.50)), url(${stepCardBg})`,
+              borderRadius: '0px',
+              backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.40), rgba(255, 255, 255, 0.40)), url(${stepCardBg})`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat',
-              backgroundColor: '#ffdbe4',
-              borderRadius: '0px',
-              border: '1px solid rgba(232, 97, 84, 0.32)',
-              boxShadow: '0 10px 28px rgba(232, 97, 84, 0.12)',
-              overflow: 'hidden'
+              border: '1px solid rgba(232, 97, 84, 0.28)',
+              boxShadow: '0 8px 24px rgba(232, 97, 84, 0.08)'
             }}>
               <div style={{
-                width: '54px',
-                height: '54px',
+                width: '42px',
+                height: '42px',
                 borderRadius: '50%',
                 background: 'linear-gradient(135deg, #f88b80 0%, #e26155 100%)',
                 color: '#fff',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '1.4rem',
+                fontSize: '1.1rem',
                 fontWeight: 800,
-                margin: '0 auto 1.5rem auto',
-                boxShadow: '0 6px 16px rgba(232, 97, 84, 0.35)'
+                marginBottom: '1.25rem',
+                boxShadow: '0 4px 10px rgba(232, 97, 84, 0.35)'
               }}>
                 2
               </div>
-              <h3 className="font-heading" style={{ fontSize: '1.2rem', marginBottom: '0.75rem', color: '#19181b' }}>
+              <h3 className="font-heading" style={{ fontSize: '1.2rem', marginBottom: '0.65rem', color: '#19181b' }}>
                 Apply Adhesive
               </h3>
-              <p style={{ color: '#4a444a', fontSize: '0.92rem', lineHeight: 1.6, fontWeight: 500 }}>
+              <p style={{ color: '#4a444a', fontSize: '0.92rem', lineHeight: 1.65, margin: 0, fontWeight: 500 }}>
                 Choose adhesive sticky tabs for 3–7 day wear or salon brush-on glue for 2–3 week maximum durability.
               </p>
             </div>
 
             <div className="glass-card" style={{
+              padding: '2.25rem 2rem',
               position: 'relative',
-              padding: '2.5rem 2rem',
-              textAlign: 'center',
-              backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.50), rgba(255, 255, 255, 0.50)), url(${stepCardBg})`,
+              borderRadius: '0px',
+              backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.40), rgba(255, 255, 255, 0.40)), url(${stepCardBg})`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat',
-              backgroundColor: '#ffdbe4',
-              borderRadius: '0px',
-              border: '1px solid rgba(232, 97, 84, 0.32)',
-              boxShadow: '0 10px 28px rgba(232, 97, 84, 0.12)',
-              overflow: 'hidden'
+              border: '1px solid rgba(232, 97, 84, 0.28)',
+              boxShadow: '0 8px 24px rgba(232, 97, 84, 0.08)'
             }}>
               <div style={{
-                width: '54px',
-                height: '54px',
+                width: '42px',
+                height: '42px',
                 borderRadius: '50%',
                 background: 'linear-gradient(135deg, #f88b80 0%, #e26155 100%)',
                 color: '#fff',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '1.4rem',
+                fontSize: '1.1rem',
                 fontWeight: 800,
-                margin: '0 auto 1.5rem auto',
-                boxShadow: '0 6px 16px rgba(232, 97, 84, 0.35)'
+                marginBottom: '1.25rem',
+                boxShadow: '0 4px 10px rgba(232, 97, 84, 0.35)'
               }}>
                 3
               </div>
-              <h3 className="font-heading" style={{ fontSize: '1.2rem', marginBottom: '0.75rem', color: '#19181b' }}>
+              <h3 className="font-heading" style={{ fontSize: '1.2rem', marginBottom: '0.65rem', color: '#19181b' }}>
                 Press On & Slay
               </h3>
-              <p style={{ color: '#4a444a', fontSize: '0.92rem', lineHeight: 1.6, fontWeight: 500 }}>
+              <p style={{ color: '#4a444a', fontSize: '0.92rem', lineHeight: 1.65, margin: 0, fontWeight: 500 }}>
                 Align nail tip at 45° angle from cuticle line, press firmly for 30 seconds. Repeat and enjoy instant glam!
               </p>
             </div>

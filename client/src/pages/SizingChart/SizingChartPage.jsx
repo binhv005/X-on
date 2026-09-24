@@ -22,6 +22,7 @@ import LoadingSpinner from '../../components/common/LoadingSpinner';
 import topShowcaseBanner from '../../assets/images/ChatGPT-Image-18_51_04-20-thg-7-2026.png';
 import nailShapesBannerImg from '../../assets/images/8ba0b55c-fdc6-441d-9c9e-4af35d3fab65.png';
 import customNailBarGuideImg from '../../assets/images/0a9ef85d-1399-40c6-927c-a9a7b5858f6d.png';
+import stepCardBg from '../../assets/images/step-card-bg.jpg';
 
 export default function SizingChartPage() {
   const [content, setContent] = useState(null);
@@ -146,7 +147,8 @@ export default function SizingChartPage() {
       {/* 1. Full-width Hero Header Banner with Image Background & Dark Overlay */}
       <section style={{
         position: 'relative',
-        padding: '6.5rem 1.5rem 5.5rem 1.5rem',
+        minHeight: 'calc(100vh - 72px)',
+        padding: '3.5rem 1.5rem',
         borderBottom: '1px solid rgba(0, 0, 0, 0.15)',
         textAlign: 'center',
         overflow: 'hidden',
@@ -377,159 +379,169 @@ export default function SizingChartPage() {
                 </p>
               </div>
 
-              {/* Dedicated Standalone Quick Sizing Matcher Section */}
+              {/* Dedicated Standalone Quick Sizing Matcher Section — Full Screen Width */}
               <div style={{
+                position: 'relative',
+                left: '50%',
+                right: '50%',
+                marginLeft: '-50vw',
+                marginRight: '-50vw',
+                width: '100vw',
                 background: 'linear-gradient(135deg, #faf6f0 0%, #f5efe6 100%)',
-                border: '1px solid var(--border-gold)',
-                borderRadius: '20px',
-                padding: '2.5rem 2.5rem',
-                marginBottom: '4rem',
-                boxShadow: 'var(--shadow-gold)',
-                maxWidth: '920px',
-                margin: '0 auto 4rem auto'
+                borderTop: '1px solid var(--border-gold, rgba(179, 135, 40, 0.3))',
+                borderBottom: '1px solid var(--border-gold, rgba(179, 135, 40, 0.3))',
+                borderLeft: 'none',
+                borderRight: 'none',
+                borderRadius: '0px',
+                padding: '3.2rem 1.5rem',
+                marginTop: '1rem',
+                marginBottom: '4.5rem',
+                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.03)'
               }}>
-                <div style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.65rem',
-                  marginBottom: '0.5rem'
-                }}>
+                <div style={{ maxWidth: '900px', margin: '0 auto' }}>
                   <div style={{
-                    width: '38px',
-                    height: '38px',
-                    borderRadius: '10px',
-                    background: 'rgba(212, 175, 55, 0.15)',
                     display: 'flex',
                     alignItems: 'center',
-                    justifyContent: 'center'
+                    gap: '0.65rem',
+                    marginBottom: '0.5rem'
                   }}>
-                    <Calculator size={22} color="var(--accent-gold-dark)" />
+                    <div style={{
+                      width: '38px',
+                      height: '38px',
+                      borderRadius: '10px',
+                      background: 'rgba(212, 175, 55, 0.15)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center'
+                    }}>
+                      <Calculator size={22} color="var(--accent-gold-dark)" />
+                    </div>
+                    <div>
+                      <h3 className="font-heading" style={{ fontSize: '1.4rem', color: 'var(--text-primary)', margin: 0 }}>
+                        Quick Size Matcher
+                      </h3>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="font-heading" style={{ fontSize: '1.4rem', color: 'var(--text-primary)', margin: 0 }}>
-                      Quick Size Matcher
-                    </h3>
-                  </div>
-                </div>
 
-                <p style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', marginBottom: '1.5rem', lineHeight: 1.6 }}>
-                  Enter your thumb width in millimeters (mm) to instantly check your closest X-ON standard preset size or determine if custom sizing is recommended:
-                </p>
+                  <p style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', marginBottom: '1.5rem', lineHeight: 1.6 }}>
+                    Enter your thumb width in millimeters (mm) to instantly check your closest X-ON standard preset size or determine if custom sizing is recommended:
+                  </p>
 
-                <form onSubmit={handleQuickMatch} style={{
-                  width: '100%',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '1rem',
-                  marginBottom: '1rem'
-                }}>
-                  {/* Full width input and submit button row */}
-                  <div style={{
+                  <form onSubmit={handleQuickMatch} style={{
+                    width: '100%',
                     display: 'flex',
-                    alignItems: 'stretch',
-                    gap: '0.75rem',
-                    width: '100%'
+                    flexDirection: 'column',
+                    gap: '1rem',
+                    marginBottom: '1rem'
                   }}>
-                    <input
-                      type="number"
-                      step="0.5"
-                      min="6"
-                      max="25"
-                      placeholder="e.g. 15 mm"
-                      value={calcThumb}
-                      onChange={(e) => setCalcThumb(e.target.value)}
-                      className="form-input"
-                      style={{
-                        flex: 1,
-                        width: '100%',
-                        background: '#ffffff',
-                        fontSize: '1.05rem',
-                        padding: '0.8rem 1.25rem',
-                        borderRadius: '10px',
-                        border: '1px solid var(--border-gold)',
-                        boxShadow: '0 2px 6px rgba(0,0,0,0.02)'
-                      }}
-                    />
-                    <button
-                      type="submit"
-                      className="btn btn-primary"
-                      style={{
-                        padding: '0.8rem 2rem',
-                        fontWeight: 700,
-                        whiteSpace: 'nowrap',
-                        flexShrink: 0,
-                        letterSpacing: '0.04em',
-                        textTransform: 'uppercase'
-                      }}
-                    >
-                      Check Match
-                    </button>
-                  </div>
-                  
-                  {/* Quick Select Preset Pills */}
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
-                    <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 500, marginRight: '0.2rem' }}>Quick test:</span>
-                    {['13', '14', '15', '16', '17', '18'].map((val) => (
-                      <button
-                        key={val}
-                        type="button"
-                        onClick={() => {
-                          setCalcThumb(val);
-                          const t = parseFloat(val);
-                          if (t >= 17) setMatchedSize('L (Large) — or Custom Sizing');
-                          else if (t >= 15.5) setMatchedSize('M (Medium) — Most Popular');
-                          else if (t >= 14.5) setMatchedSize('S (Small)');
-                          else if (t > 0) setMatchedSize('XS (Extra Small)');
-                        }}
+                    {/* Full width input and submit button row */}
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'stretch',
+                      gap: '0.75rem',
+                      width: '100%'
+                    }}>
+                      <input
+                        type="number"
+                        step="0.5"
+                        min="6"
+                        max="25"
+                        placeholder="e.g. 15 mm"
+                        value={calcThumb}
+                        onChange={(e) => setCalcThumb(e.target.value)}
+                        className="form-input"
                         style={{
-                          background: calcThumb === val ? 'var(--accent-gold)' : '#ffffff',
-                          color: calcThumb === val ? '#ffffff' : 'var(--text-primary)',
-                          border: '1px solid var(--border-subtle)',
-                          borderRadius: '8px',
-                          padding: '0.35rem 0.75rem',
-                          fontSize: '0.85rem',
-                          cursor: 'pointer',
-                          fontWeight: 600,
-                          transition: 'all 0.2s ease',
-                          boxShadow: '0 1px 3px rgba(0,0,0,0.03)'
+                          flex: 1,
+                          width: '100%',
+                          background: '#ffffff',
+                          fontSize: '1.05rem',
+                          padding: '0.8rem 1.25rem',
+                          borderRadius: '10px',
+                          border: '1px solid var(--border-gold)',
+                          boxShadow: '0 2px 6px rgba(0,0,0,0.02)'
+                        }}
+                      />
+                      <button
+                        type="submit"
+                        className="btn btn-primary"
+                        style={{
+                          padding: '0.8rem 2rem',
+                          fontWeight: 700,
+                          whiteSpace: 'nowrap',
+                          flexShrink: 0,
+                          letterSpacing: '0.04em',
+                          textTransform: 'uppercase'
                         }}
                       >
-                        {val}mm
+                        Check Match
                       </button>
-                    ))}
-                  </div>
-                </form>
-
-                {matchedSize && (
-                  <div style={{
-                    marginTop: '1.25rem',
-                    padding: '1.15rem 1.5rem',
-                    borderRadius: '12px',
-                    background: '#ffffff',
-                    border: '1px solid var(--border-gold)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    flexWrap: 'wrap',
-                    gap: '1rem',
-                    boxShadow: '0 4px 12px rgba(0,0,0,0.04)'
-                  }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                      <span style={{ fontSize: '1.3rem' }}>🎯</span>
-                      <div>
-                        <span style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-muted)', display: 'block' }}>
-                          Recommended Size
-                        </span>
-                        <strong style={{ color: 'var(--accent-gold-dark)', fontSize: '1.15rem' }}>
-                          {matchedSize}
-                        </strong>
-                      </div>
                     </div>
-                    <Link to="/shop" className="btn btn-outline btn-sm" style={{ padding: '0.5rem 1.15rem' }}>
-                      Shop This Size <ArrowRight size={14} style={{ marginLeft: '4px' }} />
-                    </Link>
-                  </div>
-                )}
+                    
+                    {/* Quick Select Preset Pills */}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
+                      <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 500, marginRight: '0.2rem' }}>Quick test:</span>
+                      {['13', '14', '15', '16', '17', '18'].map((val) => (
+                        <button
+                          key={val}
+                          type="button"
+                          onClick={() => {
+                            setCalcThumb(val);
+                            const t = parseFloat(val);
+                            if (t >= 17) setMatchedSize('L (Large) — or Custom Sizing');
+                            else if (t >= 15.5) setMatchedSize('M (Medium) — Most Popular');
+                            else if (t >= 14.5) setMatchedSize('S (Small)');
+                            else if (t > 0) setMatchedSize('XS (Extra Small)');
+                          }}
+                          style={{
+                            background: calcThumb === val ? 'var(--accent-gold)' : '#ffffff',
+                            color: calcThumb === val ? '#ffffff' : 'var(--text-primary)',
+                            border: '1px solid var(--border-subtle)',
+                            borderRadius: '8px',
+                            padding: '0.35rem 0.75rem',
+                            fontSize: '0.85rem',
+                            cursor: 'pointer',
+                            fontWeight: 600,
+                            transition: 'all 0.2s ease',
+                            boxShadow: '0 1px 3px rgba(0,0,0,0.03)'
+                          }}
+                        >
+                          {val}mm
+                        </button>
+                      ))}
+                    </div>
+                  </form>
+
+                  {matchedSize && (
+                    <div style={{
+                      marginTop: '1.25rem',
+                      padding: '1.15rem 1.5rem',
+                      borderRadius: '12px',
+                      background: '#ffffff',
+                      border: '1px solid var(--border-gold)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      flexWrap: 'wrap',
+                      gap: '1rem',
+                      boxShadow: '0 4px 12px rgba(0,0,0,0.04)'
+                    }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                        <span style={{ fontSize: '1.3rem' }}>🎯</span>
+                        <div>
+                          <span style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-muted)', display: 'block' }}>
+                            Recommended Size
+                          </span>
+                          <strong style={{ color: 'var(--accent-gold-dark)', fontSize: '1.15rem' }}>
+                            {matchedSize}
+                          </strong>
+                        </div>
+                      </div>
+                      <Link to="/shop" className="btn btn-outline btn-sm" style={{ padding: '0.5rem 1.15rem' }}>
+                        Shop This Size <ArrowRight size={14} style={{ marginLeft: '4px' }} />
+                      </Link>
+                    </div>
+                  )}
+                </div>
               </div>
 
               {/* 3-Step Tape Measurement Walkthrough */}
@@ -543,12 +555,22 @@ export default function SizingChartPage() {
                 </div>
 
                 <div className="grid-3">
-                  <div className="glass-card" style={{ padding: '2.25rem 2rem', position: 'relative', borderRadius: '16px' }}>
+                  <div className="glass-card" style={{
+                    padding: '2.25rem 2rem',
+                    position: 'relative',
+                    borderRadius: '0px',
+                    backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.40), rgba(255, 255, 255, 0.40)), url(${stepCardBg})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    backgroundRepeat: 'no-repeat',
+                    border: '1px solid rgba(232, 97, 84, 0.28)',
+                    boxShadow: '0 8px 24px rgba(232, 97, 84, 0.08)'
+                  }}>
                     <div style={{
                       width: '42px',
                       height: '42px',
                       borderRadius: '50%',
-                      background: 'var(--accent-gold)',
+                      background: 'linear-gradient(135deg, #f88b80 0%, #e26155 100%)',
                       color: '#ffffff',
                       fontWeight: 800,
                       display: 'flex',
@@ -556,24 +578,34 @@ export default function SizingChartPage() {
                       justifyContent: 'center',
                       fontSize: '1.1rem',
                       marginBottom: '1.25rem',
-                      boxShadow: '0 4px 10px rgba(212, 175, 55, 0.4)'
+                      boxShadow: '0 4px 10px rgba(232, 97, 84, 0.35)'
                     }}>
                       1
                     </div>
-                    <h4 className="font-heading" style={{ color: 'var(--text-primary)', fontSize: '1.2rem', marginBottom: '0.65rem' }}>
+                    <h4 className="font-heading" style={{ color: '#19181b', fontSize: '1.2rem', marginBottom: '0.65rem' }}>
                       Apply Clear Tape
                     </h4>
-                    <p style={{ color: 'var(--text-secondary)', fontSize: '0.92rem', lineHeight: 1.65, margin: 0 }}>
+                    <p style={{ color: '#4a444a', fontSize: '0.92rem', lineHeight: 1.65, margin: 0, fontWeight: 500 }}>
                       Press a piece of clear adhesive tape horizontally across the widest point of your natural bare nail bed, pressing firmly into the sidewalls.
                     </p>
                   </div>
 
-                  <div className="glass-card" style={{ padding: '2.25rem 2rem', position: 'relative', borderRadius: '16px' }}>
+                  <div className="glass-card" style={{
+                    padding: '2.25rem 2rem',
+                    position: 'relative',
+                    borderRadius: '0px',
+                    backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.40), rgba(255, 255, 255, 0.40)), url(${stepCardBg})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    backgroundRepeat: 'no-repeat',
+                    border: '1px solid rgba(232, 97, 84, 0.28)',
+                    boxShadow: '0 8px 24px rgba(232, 97, 84, 0.08)'
+                  }}>
                     <div style={{
                       width: '42px',
                       height: '42px',
                       borderRadius: '50%',
-                      background: 'var(--accent-gold)',
+                      background: 'linear-gradient(135deg, #f88b80 0%, #e26155 100%)',
                       color: '#ffffff',
                       fontWeight: 800,
                       display: 'flex',
@@ -581,24 +613,34 @@ export default function SizingChartPage() {
                       justifyContent: 'center',
                       fontSize: '1.1rem',
                       marginBottom: '1.25rem',
-                      boxShadow: '0 4px 10px rgba(212, 175, 55, 0.4)'
+                      boxShadow: '0 4px 10px rgba(232, 97, 84, 0.35)'
                     }}>
                       2
                     </div>
-                    <h4 className="font-heading" style={{ color: 'var(--text-primary)', fontSize: '1.2rem', marginBottom: '0.65rem' }}>
+                    <h4 className="font-heading" style={{ color: '#19181b', fontSize: '1.2rem', marginBottom: '0.65rem' }}>
                       Mark The Sidewalls
                     </h4>
-                    <p style={{ color: 'var(--text-secondary)', fontSize: '0.92rem', lineHeight: 1.65, margin: 0 }}>
+                    <p style={{ color: '#4a444a', fontSize: '0.92rem', lineHeight: 1.65, margin: 0, fontWeight: 500 }}>
                       Using a fine-tip pen, draw a vertical line on both outer edges where your nail plate meets your natural skin groove.
                     </p>
                   </div>
 
-                  <div className="glass-card" style={{ padding: '2.25rem 2rem', position: 'relative', borderRadius: '16px' }}>
+                  <div className="glass-card" style={{
+                    padding: '2.25rem 2rem',
+                    position: 'relative',
+                    borderRadius: '0px',
+                    backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.40), rgba(255, 255, 255, 0.40)), url(${stepCardBg})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    backgroundRepeat: 'no-repeat',
+                    border: '1px solid rgba(232, 97, 84, 0.28)',
+                    boxShadow: '0 8px 24px rgba(232, 97, 84, 0.08)'
+                  }}>
                     <div style={{
                       width: '42px',
                       height: '42px',
                       borderRadius: '50%',
-                      background: 'var(--accent-gold)',
+                      background: 'linear-gradient(135deg, #f88b80 0%, #e26155 100%)',
                       color: '#ffffff',
                       fontWeight: 800,
                       display: 'flex',
@@ -606,14 +648,14 @@ export default function SizingChartPage() {
                       justifyContent: 'center',
                       fontSize: '1.1rem',
                       marginBottom: '1.25rem',
-                      boxShadow: '0 4px 10px rgba(212, 175, 55, 0.4)'
+                      boxShadow: '0 4px 10px rgba(232, 97, 84, 0.35)'
                     }}>
                       3
                     </div>
-                    <h4 className="font-heading" style={{ color: 'var(--text-primary)', fontSize: '1.2rem', marginBottom: '0.65rem' }}>
+                    <h4 className="font-heading" style={{ color: '#19181b', fontSize: '1.2rem', marginBottom: '0.65rem' }}>
                       Measure In Millimeters
                     </h4>
-                    <p style={{ color: 'var(--text-secondary)', fontSize: '0.92rem', lineHeight: 1.65, margin: 0 }}>
+                    <p style={{ color: '#4a444a', fontSize: '0.92rem', lineHeight: 1.65, margin: 0, fontWeight: 500 }}>
                       Peel off the tape and measure the distance between the two pen lines against a millimeter ruler. Repeat for all 5 fingers.
                     </p>
                   </div>
@@ -834,13 +876,6 @@ export default function SizingChartPage() {
           </div>
         </div>
       </section>
-
-      {/* Khoảng nền màu trắng bên dưới tạo khoảng cách với footer */}
-      <div style={{
-        width: '100%',
-        height: '3.5rem',
-        background: '#ffffff'
-      }} />
     </div>
   );
 }

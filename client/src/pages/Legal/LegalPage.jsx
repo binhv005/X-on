@@ -184,79 +184,146 @@ export default function LegalPage() {
             <div style={{
               fontFamily: 'var(--font-body)',
               color: 'var(--text-secondary)',
-              fontSize: '0.98rem',
-              lineHeight: 1.85,
+              fontSize: '0.95rem',
+              lineHeight: 1.75,
               fontWeight: 400,
               display: 'flex',
               flexDirection: 'column',
-              gap: '1.35rem'
+              gap: '0.5rem'
             }}>
-              {body.split('\n\n').map((block, idx) => {
-                // Section Headings
-                if (block.startsWith('### ')) {
-                  const headingText = block.replace('### ', '');
-                  return (
-                    <div key={idx} style={{ marginTop: '1.25rem', paddingTop: '1.25rem', borderTop: idx > 0 ? '1px solid var(--border-subtle)' : 'none' }}>
-                      <h2 style={{
-                        fontFamily: 'var(--font-body)',
-                        color: 'var(--text-primary)',
-                        fontSize: '1.22rem',
-                        fontWeight: 600,
-                        letterSpacing: '-0.01em',
-                        marginBottom: '0.65rem',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '0.6rem'
+              {(() => {
+                if (!body) return null;
+                const parts = body.split(/(?=### )/g);
+
+                return parts.map((part, pIdx) => {
+                  const trimmed = part.trim();
+                  if (!trimmed) return null;
+
+                  if (trimmed.startsWith('### ')) {
+                    const lines = trimmed.split('\n');
+                    const headingLine = lines[0].replace(/^###\s*/, '').trim();
+                    const contentLines = lines.slice(1);
+
+                    const contentElements = [];
+                    let currentList = [];
+
+                    const flushList = (keySuffix) => {
+                      if (currentList.length > 0) {
+                        contentElements.push(
+                          <ul key={`list-${keySuffix}`} style={{
+                            listStyleType: 'disc',
+                            paddingLeft: '1.35rem',
+                            margin: '0.5rem 0 0.85rem 0',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: '0.45rem'
+                          }}>
+                            {currentList.map((item, iIdx) => {
+                              const colonIdx = item.indexOf(': ');
+                              if (colonIdx !== -1) {
+                                const label = item.substring(0, colonIdx);
+                                const rest = item.substring(colonIdx + 2);
+                                return (
+                                  <li key={iIdx} style={{
+                                    color: 'var(--text-secondary, #4b5563)',
+                                    fontSize: '0.94rem',
+                                    lineHeight: '1.7',
+                                    fontWeight: 400
+                                  }}>
+                                    <strong style={{ color: 'var(--text-primary, #1c1c21)', fontWeight: 600 }}>{label}:</strong>{' '}
+                                    <span>{rest}</span>
+                                  </li>
+                                );
+                              }
+                              return (
+                                <li key={iIdx} style={{
+                                  color: 'var(--text-secondary, #4b5563)',
+                                  fontSize: '0.94rem',
+                                  lineHeight: '1.7',
+                                  fontWeight: 400
+                                }}>
+                                  {item}
+                                </li>
+                              );
+                            })}
+                          </ul>
+                        );
+                        currentList = [];
+                      }
+                    };
+
+                    let pCounter = 0;
+                    for (let i = 0; i < contentLines.length; i++) {
+                      const line = contentLines[i].trim();
+                      if (!line) {
+                        flushList(`p-${pCounter}`);
+                        continue;
+                      }
+
+                      if (line.startsWith('- ')) {
+                        currentList.push(line.substring(2).trim());
+                      } else {
+                        flushList(`p-${pCounter}`);
+                        pCounter++;
+                        contentElements.push(
+                          <p key={`p-${pCounter}-${i}`} style={{
+                            margin: '0 0 0.75rem 0',
+                            fontWeight: 400,
+                            fontSize: '0.95rem',
+                            color: 'var(--text-secondary, #4b5563)',
+                            lineHeight: '1.75'
+                          }}>
+                            {line}
+                          </p>
+                        );
+                      }
+                    }
+                    flushList(`p-${pCounter}-end`);
+
+                    return (
+                      <div key={pIdx} style={{
+                        paddingTop: pIdx > 0 ? '1.75rem' : '0',
+                        marginTop: pIdx > 0 ? '1.5rem' : '0',
+                        borderTop: pIdx > 0 ? '1px solid var(--border-subtle, #f0ede6)' : 'none'
                       }}>
-                        <span style={{ color: 'var(--accent-gold-dark)', fontSize: '1.1rem', fontWeight: 700 }}>•</span>
-                        <span>{headingText}</span>
-                      </h2>
+                        <h2 style={{
+                          fontFamily: 'var(--font-heading, Cinzel, serif)',
+                          color: 'var(--text-primary, #1c1c21)',
+                          fontSize: '1.18rem',
+                          fontWeight: 700,
+                          letterSpacing: '0.01em',
+                          marginBottom: '0.75rem',
+                          lineHeight: 1.4
+                        }}>
+                          {headingLine}
+                        </h2>
+                        <div style={{ display: 'flex', flexDirection: 'column' }}>
+                          {contentElements}
+                        </div>
+                      </div>
+                    );
+                  }
+
+                  // Intro / Preamble before first heading
+                  return (
+                    <div key={pIdx} style={{
+                      paddingBottom: '1.35rem',
+                      borderBottom: '1px solid var(--border-subtle, #f0ede6)',
+                      marginBottom: '0.75rem'
+                    }}>
+                      <p style={{
+                        margin: 0,
+                        fontWeight: 400,
+                        fontSize: '0.98rem',
+                        color: 'var(--text-secondary, #4b5563)',
+                        lineHeight: '1.8'
+                      }}>
+                        {trimmed}
+                      </p>
                     </div>
                   );
-                }
-
-                // Bullet points
-                if (block.includes('\n- ') || block.startsWith('- ')) {
-                  const lines = block.split('\n');
-                  return (
-                    <ul key={idx} style={{ listStyle: 'none', paddingLeft: '0.25rem', margin: '0.25rem 0', display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
-                      {lines.map((line, lIdx) => {
-                        if (line.startsWith('- ')) {
-                          const cleanLine = line.replace('- ', '');
-                          const colonIndex = cleanLine.indexOf(': ');
-                          if (colonIndex !== -1) {
-                            const label = cleanLine.substring(0, colonIndex);
-                            const desc = cleanLine.substring(colonIndex + 2);
-                            return (
-                              <li key={lIdx} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.65rem', lineHeight: 1.75 }}>
-                                <span style={{ color: 'var(--accent-gold-dark)', flexShrink: 0, marginTop: '2px', fontSize: '0.9rem' }}>—</span>
-                                <span>
-                                  <span style={{ color: 'var(--text-primary)', fontWeight: 500 }}>{label}:</span>{' '}
-                                  <span style={{ color: 'var(--text-secondary)', fontWeight: 400 }}>{desc}</span>
-                                </span>
-                              </li>
-                            );
-                          }
-                          return (
-                            <li key={lIdx} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.65rem', lineHeight: 1.75 }}>
-                              <span style={{ color: 'var(--accent-gold-dark)', flexShrink: 0, marginTop: '2px', fontSize: '0.9rem' }}>—</span>
-                              <span style={{ color: 'var(--text-secondary)', fontWeight: 400 }}>{cleanLine}</span>
-                            </li>
-                          );
-                        }
-                        return <p key={lIdx} style={{ margin: 0, fontWeight: 400, color: 'var(--text-secondary)' }}>{line}</p>;
-                      })}
-                    </ul>
-                  );
-                }
-
-                // Regular Paragraph
-                return (
-                  <p key={idx} style={{ margin: 0, fontWeight: 400, color: 'var(--text-secondary)', lineHeight: 1.85 }}>
-                    {block}
-                  </p>
-                );
-              })}
+                })
+              })()}
             </div>
 
             {/* Studio Contact / Escalation Box */}

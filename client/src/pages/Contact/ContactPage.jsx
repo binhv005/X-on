@@ -292,9 +292,7 @@ export default function ContactPage() {
           <div className="xc-contact-grid">
             <div className="xc-contact-info">
               <h2 className="xc-contact-title">
-                CONTACT
-                <br />
-                <span>X-ON</span>
+                CONTACT <span>X-ON</span>
               </h2>
               <div className="xc-contact-rule" aria-hidden="true" />
               <p className="xc-contact-sub">We&rsquo;d love to hear from you!</p>
@@ -302,28 +300,30 @@ export default function ContactPage() {
                 Have a question about our products or an order? Send us a message and we&rsquo;ll get back to you promptly.
               </p>
 
-              <div className="xc-info-row">
-                <span className="xc-info-ico">
-                  <Phone size={19} />
-                </span>
-                <div>
-                  <strong>
-                    <a href={`tel:${PHONE}`} style={{ color: 'inherit', textDecoration: 'none' }}>
-                      {PHONE}
-                    </a>
-                  </strong>
-                  <small>Mon - Sun, 9:00 AM - 6:00 PM (EST)</small>
+              <div className="xc-info-group">
+                <div className="xc-info-row">
+                  <span className="xc-info-ico">
+                    <Phone size={19} />
+                  </span>
+                  <div>
+                    <strong>
+                      <a href={`tel:${PHONE}`} style={{ color: 'inherit', textDecoration: 'none' }}>
+                        {PHONE}
+                      </a>
+                    </strong>
+                    <small>Mon - Sun, 9:00 AM - 6:00 PM (EST)</small>
+                  </div>
                 </div>
-              </div>
 
-              <div className="xc-info-row">
-                <span className="xc-info-ico">
-                  <MapPin size={19} />
-                </span>
-                <div className="xc-info-addr">
-                  {ADDRESS_L1}
-                  <br />
-                  {ADDRESS_L2}
+                <div className="xc-info-row">
+                  <span className="xc-info-ico">
+                    <MapPin size={19} />
+                  </span>
+                  <div className="xc-info-addr">
+                    {ADDRESS_L1}
+                    <br />
+                    {ADDRESS_L2}
+                  </div>
                 </div>
               </div>
 

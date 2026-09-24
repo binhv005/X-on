@@ -89,11 +89,15 @@ export default function BundleAndSavePage() {
       {/* Full-width Hero Banner with Dark Overlay and No Edge Gaps */}
       <section style={{
         position: 'relative',
+        minHeight: 'calc(100vh - 72px)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
         backgroundImage: `radial-gradient(circle at center, rgba(15, 15, 18, 0.42) 0%, rgba(15, 15, 18, 0.72) 100%), url(${bundleBannerBg})`,
         backgroundPosition: 'center',
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
-        padding: '6.5rem 1.5rem 5.5rem 1.5rem',
+        padding: '3.5rem 1.5rem',
         borderBottom: '1px solid rgba(0, 0, 0, 0.15)',
         textAlign: 'center',
         overflow: 'hidden'

@@ -84,9 +84,9 @@ export default function Header() {
 
           {/* Desktop Navigation Links */}
           <nav className="desktop-nav">
-            <Link to="/" className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}>
+            {/* <Link to="/" className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}>
               Home
-            </Link>
+            </Link> */}
 
             <Link to="/shop" className={`nav-link ${location.pathname === '/shop' ? 'active' : ''}`}>
               Shop
@@ -364,7 +364,7 @@ export default function Header() {
           flexDirection: 'column',
           gap: '1.25rem'
         }}>
-          <Link to="/" style={{ fontSize: '1.1rem', fontWeight: 600, color: 'var(--text-primary)' }}>Home</Link>
+          {/* <Link to="/" style={{ fontSize: '1.1rem', fontWeight: 600, color: 'var(--text-primary)' }}>Home</Link> */}
           <Link to="/shop" style={{ fontSize: '1.1rem', fontWeight: 600, color: 'var(--text-primary)' }}>Shop All</Link>
           <div style={{ paddingLeft: '1rem', display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
             <Link to="/shop?product_type=handmade-press-on-nails" style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>Handmade Press-On Nails</Link>
