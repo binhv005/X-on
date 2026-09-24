@@ -2,18 +2,18 @@
 
 /* Scoped — middle content only, never touches header/footer */
 .xcontact {
-  --xc-cream: var(--bg-primary, #fcfbf9);
+  --xc-cream: var(--bg-primary, #fdfaf9);
   --xc-card: var(--bg-surface, #ffffff);
-  --xc-ink: var(--text-primary, #1c1c21);
-  --xc-wine: var(--accent-gold, #b38728);
-  --xc-wine-2: var(--accent-gold-light, #cfa83b);
-  --xc-rose: var(--accent-gold, #b38728);
-  --xc-rose-soft: var(--accent-gold-light, #cfa83b);
-  --xc-line: var(--border-subtle, rgba(0, 0, 0, 0.08));
+  --xc-ink: var(--text-primary, #19181b);
+  --xc-wine: var(--accent-gold, #e86154);
+  --xc-wine-2: var(--accent-gold-light, #f88b80);
+  --xc-rose: var(--accent-gold, #e86154);
+  --xc-rose-soft: var(--accent-gold-light, #f88b80);
+  --xc-line: var(--border-subtle, rgba(232, 97, 84, 0.12));
   --xc-input: var(--bg-surface, #ffffff);
-  --xc-muted: var(--text-muted, #7e7e8c);
-  background: var(--bg-primary, #fcfbf9);
-  color: var(--text-primary, #1c1c21);
+  --xc-muted: var(--text-muted, #827b85);
+  background: var(--bg-primary, #fdfaf9);
+  color: var(--text-primary, #19181b);
   overflow-x: clip;
   font-family: var(--font-body, 'Plus Jakarta Sans', system-ui, sans-serif);
 }
@@ -36,14 +36,14 @@
   content: '';
   position: absolute; top: -140px; right: -120px;
   width: 480px; height: 480px;
-  background: radial-gradient(closest-side, rgba(179,135,40,0.10), rgba(179,135,40,0) 70%);
+  background: radial-gradient(closest-side, rgba(232,97,84,0.12), rgba(232,97,84,0) 70%);
   pointer-events: none;
 }
 .xc-hero::after {
   content: '';
   position: absolute; bottom: -180px; left: 38%;
   width: 560px; height: 360px;
-  background: radial-gradient(closest-side, rgba(179,135,40,0.08), rgba(179,135,40,0) 70%);
+  background: radial-gradient(closest-side, rgba(232,97,84,0.09), rgba(232,97,84,0) 70%);
   pointer-events: none;
 }
 .xc-hero-grid {

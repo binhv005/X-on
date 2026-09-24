@@ -4,24 +4,24 @@
    ========================================================================== */
 
 :root {
-  /* Color Palette - Elegant Luxury Light Theme */
-  --bg-primary: #fcfbf9;
-  --bg-secondary: #f4efe8;
+  /* Color Palette - Elegant Rose Coral & Luxury Onyx Theme (Extracted from Logo) */
+  --bg-primary: #fdfaf9;
+  --bg-secondary: #fbf0ee;
   --bg-surface: #ffffff;
-  --bg-surface-elevated: #faf7f2;
+  --bg-surface-elevated: #fdf5f4;
   --bg-glass: rgba(255, 255, 255, 0.94);
-  --bg-glass-light: rgba(0, 0, 0, 0.03);
+  --bg-glass-light: rgba(232, 97, 84, 0.03);
   
-  --text-primary: #1c1c21;
-  --text-secondary: #525260;
-  --text-muted: #7e7e8c;
+  --text-primary: #19181b;
+  --text-secondary: #58535b;
+  --text-muted: #827b85;
   
-  /* Luxury Gold & Warm Accents */
-  --accent-gold: #b38728;
-  --accent-gold-light: #cfa83b;
-  --accent-gold-dark: #8c6716;
-  --accent-rose: #c86d56;
-  --accent-blush: #e5989b;
+  /* Brand Signature Rose-Coral & Rose-Gold Palette */
+  --accent-gold: #e86154;
+  --accent-gold-light: #f88b80;
+  --accent-gold-dark: #c44237;
+  --accent-rose: #ea6b5f;
+  --accent-blush: #fcaaa2;
   
   /* Status Colors */
   --status-success: #059669;
@@ -30,13 +30,13 @@
   --status-info: #2563eb;
 
   /* Borders & Shadows */
-  --border-subtle: rgba(0, 0, 0, 0.08);
-  --border-medium: rgba(0, 0, 0, 0.14);
-  --border-gold: rgba(179, 135, 40, 0.35);
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
-  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08);
-  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.12);
-  --shadow-gold: 0 0 25px rgba(179, 135, 40, 0.15);
+  --border-subtle: rgba(232, 97, 84, 0.12);
+  --border-medium: rgba(232, 97, 84, 0.22);
+  --border-gold: rgba(232, 97, 84, 0.38);
+  --shadow-sm: 0 2px 8px rgba(232, 97, 84, 0.05);
+  --shadow-md: 0 8px 24px rgba(232, 97, 84, 0.10);
+  --shadow-lg: 0 16px 40px rgba(25, 24, 27, 0.12);
+  --shadow-gold: 0 0 25px rgba(232, 97, 84, 0.22);
 
   /* Typography */
   --font-serif: 'Cinzel', 'Cormorant Garamond', Georgia, serif;
@@ -157,7 +157,7 @@ button, input, select, textarea {
 }
 
 .gradient-text-gold {
-  background: linear-gradient(135deg, #8c6716 0%, #b38728 50%, #cfa83b 100%);
+  background: linear-gradient(135deg, #c44237 0%, #e86154 50%, #f88b80 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -173,14 +173,14 @@ button, input, select, textarea {
 
 /* Section Common Styling */
 .section-py {
-  padding-top: 5rem;
-  padding-bottom: 5rem;
+  padding-top: 2.75rem;
+  padding-bottom: 3.5rem;
 }
 
 .section-header {
   text-align: center;
   max-width: 750px;
-  margin: 0 auto 3.5rem auto;
+  margin: 0 auto 2.25rem auto;
 }
 
 .section-title {
@@ -232,14 +232,14 @@ button, input, select, textarea {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #cfa83b 0%, #b38728 100%);
+  background: linear-gradient(135deg, #f17c72 0%, #e26155 100%);
   color: #ffffff !important;
   font-weight: 700;
-  box-shadow: 0 4px 14px rgba(179, 135, 40, 0.25);
+  box-shadow: 0 4px 14px rgba(226, 97, 85, 0.28);
 }
 
 .btn-primary:hover {
-  background: linear-gradient(135deg, #dfbc55 0%, #cfa83b 100%);
+  background: linear-gradient(135deg, #f88f86 0%, #eb695d 100%);
   box-shadow: var(--shadow-gold);
   transform: translateY(-2px);
   color: #ffffff !important;
@@ -256,7 +256,7 @@ button, input, select, textarea {
 }
 
 .btn-outline:hover {
-  background: rgba(179, 135, 40, 0.08);
+  background: rgba(232, 97, 84, 0.08);
   border-color: var(--accent-gold);
   color: var(--accent-gold-dark) !important;
   transform: translateY(-2px);
@@ -330,7 +330,7 @@ button, input, select, textarea {
 .form-input:focus, .form-select:focus, .form-textarea:focus {
   outline: none;
   border-color: var(--accent-gold);
-  box-shadow: 0 0 0 2px rgba(179, 135, 40, 0.15);
+  box-shadow: 0 0 0 2px rgba(232, 97, 84, 0.18);
   background: var(--bg-surface);
 }
 
@@ -355,11 +355,11 @@ button, input, select, textarea {
 }
 
 .badge-gold {
-  background: linear-gradient(135deg, #d4af37 0%, #aa8c2c 100%) !important;
-  color: #0d0d11 !important;
-  border: 1px solid #fff2d1 !important;
+  background: linear-gradient(135deg, #f88b80 0%, #e26155 100%) !important;
+  color: #ffffff !important;
+  border: 1px solid #ffdcd7 !important;
   font-weight: 800;
-  box-shadow: 0 3px 12px rgba(212, 175, 55, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  box-shadow: 0 3px 12px rgba(226, 97, 85, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.5);
   text-shadow: none;
 }
 
@@ -439,24 +439,24 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--text-primary);
 }
 
-/* High Contrast Dark Section & Footer Styles */
+/* Footer Styles */
 footer h1, footer h2, footer h3, footer h4, footer h5, footer h6 {
-  color: #ffffff;
+  color: var(--text-primary);
 }
 
 footer .footer-heading,
 body footer .footer-heading,
 body footer h4.font-heading {
-  color: #f5d376 !important;
+  color: var(--text-primary) !important;
   font-family: var(--font-heading) !important;
   letter-spacing: 0.1em !important;
   font-weight: 700 !important;
   text-transform: uppercase !important;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5) !important;
+  text-shadow: none !important;
 }
 
 body footer .brand-line {
-  color: #f5d376 !important;
+  color: var(--accent-gold) !important;
   font-weight: 700 !important;
 }
 
@@ -515,8 +515,8 @@ span.xon-toast-text[style] {
     gap: 1.25rem;
   }
   .section-py {
-    padding-top: 3.5rem;
-    padding-bottom: 3.5rem;
+    padding-top: 2rem;
+    padding-bottom: 2.5rem;
   }
   .section-title {
     font-size: 1.6rem;
@@ -526,3 +526,118 @@ span.xon-toast-text[style] {
     padding-right: 1rem;
   }
 }
+
+/* ==========================================================================
+   VINTAGE COUPON TICKET COMPONENT
+   ========================================================================== */
+.vintage-coupon-ticket {
+  position: relative;
+  background-color: #8E1F1D;
+  background-image: 
+    radial-gradient(circle at 0px 76%, transparent 14px, #8E1F1D 15px),
+    radial-gradient(circle at 100% 76%, transparent 14px, #8E1F1D 15px);
+  background-size: 51% 100%;
+  background-position: left, right;
+  background-repeat: no-repeat;
+  color: #ffffff;
+  padding: 2.25rem 1.5rem 1.6rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 16px 36px rgba(142, 31, 29, 0.32), 0 4px 12px rgba(0, 0, 0, 0.12);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+  user-select: none;
+}
+
+.vintage-coupon-ticket:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 22px 48px rgba(142, 31, 29, 0.42);
+}
+
+.vintage-coupon-ticket::before,
+.vintage-coupon-ticket::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background-repeat: repeat-x;
+  background-size: 14px 8px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.vintage-coupon-ticket::before {
+  top: -7px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 8'%3E%3Cpolygon points='0,8 7,0 14,8' fill='%238E1F1D'/%3E%3C/svg%3E");
+}
+
+.vintage-coupon-ticket::after {
+  bottom: -7px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 8'%3E%3Cpolygon points='0,0 7,8 14,0' fill='%238E1F1D'/%3E%3C/svg%3E");
+}
+
+.ticket-header-script {
+  font-family: 'Alex Brush', cursive;
+  font-size: 2.85rem;
+  line-height: 0.95;
+  color: #ffffff;
+  letter-spacing: 0.02em;
+}
+
+.ticket-header-title {
+  font-family: 'Cormorant Garamond', 'Cinzel', serif;
+  font-size: 1.55rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #ffffff;
+  margin-top: -0.2rem;
+}
+
+.ticket-subtext-top {
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  color: rgba(255, 255, 255, 0.95);
+  margin-top: 0.75rem;
+  margin-bottom: 0.25rem;
+}
+
+.ticket-discount-number {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 4.2rem;
+  line-height: 0.85;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  margin: 0.35rem 0 0;
+}
+
+.ticket-discount-label {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 2.6rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: #ffffff;
+  line-height: 1;
+  margin-top: 0.1rem;
+}
+
+.ticket-perforation {
+  width: 100%;
+  border-top: 1.5px dashed rgba(255, 255, 255, 0.45);
+  margin: 1.25rem 0 0.85rem;
+}
+
+.ticket-footer-text {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.92);
+  letter-spacing: 0.02em;
+  line-height: 1.4;
+}
+

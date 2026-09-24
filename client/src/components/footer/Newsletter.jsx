@@ -62,17 +62,16 @@ export default function Newsletter() {
           <h3 className="font-heading" style={{
             fontSize: '1.25rem',
             fontWeight: 800,
-            color: '#f5d376',
+            color: 'var(--text-primary)',
             marginBottom: '0.35rem',
             letterSpacing: '0.04em',
-            textTransform: 'uppercase',
-            textShadow: '0 1px 3px rgba(0, 0, 0, 0.5)'
+            textTransform: 'uppercase'
           }}>
             X-ON Newsletter / Updates
           </h3>
           <p style={{
             fontSize: '0.9rem',
-            color: '#cbd5e1',
+            color: 'var(--text-secondary)',
             lineHeight: 1.5,
             margin: 0
           }}>
@@ -88,10 +87,10 @@ export default function Newsletter() {
               alignItems: 'center',
               gap: '0.6rem',
               padding: '0.85rem 1.5rem',
-              background: 'rgba(5, 150, 105, 0.2)',
-              border: '1px solid rgba(5, 150, 105, 0.5)',
-              borderRadius: '4px',
-              color: '#34d399',
+              background: 'rgba(5, 150, 105, 0.1)',
+              border: '1px solid rgba(5, 150, 105, 0.35)',
+              borderRadius: '0px',
+              color: '#059669',
               fontWeight: 600,
               fontSize: '0.92rem'
             }}>
@@ -120,8 +119,8 @@ export default function Newsletter() {
                     padding: '0.65rem 0',
                     background: 'transparent',
                     border: 'none',
-                    borderBottom: '1.5px solid rgba(255, 255, 255, 0.5)',
-                    color: '#ffffff',
+                    borderBottom: '1.5px solid rgba(232, 97, 84, 0.35)',
+                    color: 'var(--text-primary)',
                     fontSize: '0.95rem',
                     outline: 'none',
                     borderRadius: 0,
@@ -143,8 +142,8 @@ export default function Newsletter() {
                     padding: '0.65rem 0',
                     background: 'transparent',
                     border: 'none',
-                    borderBottom: '1.5px solid rgba(255, 255, 255, 0.5)',
-                    color: '#ffffff',
+                    borderBottom: '1.5px solid rgba(232, 97, 84, 0.35)',
+                    color: 'var(--text-primary)',
                     fontSize: '0.95rem',
                     outline: 'none',
                     borderRadius: 0,
@@ -159,8 +158,8 @@ export default function Newsletter() {
                   type="submit"
                   disabled={status === 'loading'}
                   style={{
-                    background: '#ffffff',
-                    color: '#0f1115',
+                    background: 'linear-gradient(135deg, #f17c72 0%, #e26155 100%)',
+                    color: '#ffffff',
                     border: 'none',
                     padding: '0.75rem 2rem',
                     fontSize: '0.9rem',
@@ -169,12 +168,13 @@ export default function Newsletter() {
                     textTransform: 'uppercase',
                     borderRadius: '0px',
                     cursor: 'pointer',
-                    transition: 'opacity 0.2s ease, background 0.2s ease',
+                    boxShadow: '0 4px 14px rgba(226, 97, 84, 0.28)',
+                    transition: 'all 0.2s ease',
                     whiteSpace: 'nowrap',
                     opacity: status === 'loading' ? 0.7 : 1
                   }}
-                  onMouseOver={e => e.currentTarget.style.background = '#f5d376'}
-                  onMouseOut={e => e.currentTarget.style.background = '#ffffff'}
+                  onMouseOver={e => { e.currentTarget.style.background = 'linear-gradient(135deg, #f88f86 0%, #eb695d 100%)'; e.currentTarget.style.transform = 'translateY(-1px)'; }}
+                  onMouseOut={e => { e.currentTarget.style.background = 'linear-gradient(135deg, #f17c72 0%, #e26155 100%)'; e.currentTarget.style.transform = 'translateY(0)'; }}
                 >
                   {status === 'loading' ? 'JOINING...' : 'JOIN US'}
                 </button>

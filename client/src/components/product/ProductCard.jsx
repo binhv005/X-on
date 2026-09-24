@@ -156,13 +156,13 @@ export default function ProductCard({ product, compact = false, imageAspect = '1
                 <span style={{
                   padding: '3px 8px',
                   borderRadius: '0px',
-                  background: 'linear-gradient(135deg, #d4af37, #b8860b)',
+                  background: 'linear-gradient(135deg, #f88b80, #e26155)',
                   color: '#ffffff',
                   fontSize: '0.68rem',
                   fontWeight: 700,
                   textTransform: 'uppercase',
                   letterSpacing: '0.04em',
-                  boxShadow: '0 2px 6px rgba(0,0,0,0.25)'
+                  boxShadow: '0 2px 6px rgba(232, 97, 84, 0.35)'
                 }}>
                   ★ Best Seller
                 </span>
@@ -177,7 +177,7 @@ export default function ProductCard({ product, compact = false, imageAspect = '1
                   fontWeight: 700,
                   textTransform: 'uppercase',
                   letterSpacing: '0.04em',
-                  border: '1px solid rgba(212, 175, 55, 0.5)'
+                  border: '1px solid rgba(232, 97, 84, 0.55)'
                 }}>
                   Bundle & Save
                 </span>

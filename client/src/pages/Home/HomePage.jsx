@@ -30,6 +30,7 @@ import LoadingSpinner from '../../components/common/LoadingSpinner';
 import findUsBg from '../../assets/images/findus-bg.jpg';
 import motifTop from '../../assets/images/findus-motif-top.png';
 import motifBottom from '../../assets/images/findus-motif-bottom.png';
+import bundlePromoBg from '../../assets/images/bundle-promo-bg.jpg';
 
 // Scroll-triggered Video Component: only plays when scrolled into viewport
 function ScrollPlayVideo({ src, fallback, onEnded, style, className, loop = true, muted = true, playsInline = true, ...rest }) {
@@ -323,7 +324,7 @@ export default function HomePage() {
           <a
             href="tel:689-212-8888"
             style={{
-              background: 'linear-gradient(135deg, #df8924 0%, #c87110 100%)',
+              background: 'linear-gradient(135deg, #e86154 0%, #c44237 100%)',
               color: '#ffffff',
               padding: '0.9rem 2.25rem',
               borderRadius: '0px',
@@ -332,7 +333,7 @@ export default function HomePage() {
               letterSpacing: '0.08em',
               textTransform: 'uppercase',
               textDecoration: 'none',
-              boxShadow: '0 6px 20px rgba(223, 137, 36, 0.5)',
+              boxShadow: '0 6px 20px rgba(232, 97, 84, 0.45)',
               transition: 'all 0.2s ease',
               display: 'inline-block',
               border: '2px solid transparent'
@@ -363,53 +364,6 @@ export default function HomePage() {
             }
           }
         `}</style>
-      </section>
-
-      {/* 2. VALUE PROPOSITIONS BAR */}
-      <section style={{ background: 'var(--bg-secondary)', borderBottom: '1px solid var(--border-subtle)', padding: '2rem 0' }}>
-        <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '2rem', textAlign: 'center' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', justifyContent: 'center' }}>
-              <div style={{ width: '42px', height: '42px', borderRadius: '50%', background: 'rgba(179, 135, 40, 0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--accent-gold)' }}>
-                <Gem size={20} />
-              </div>
-              <div style={{ textAlign: 'left' }}>
-                <h4 style={{ fontSize: '0.92rem', fontWeight: 700, color: 'var(--text-primary)' }}>100% Handcrafted Gel</h4>
-                <p style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>Multi-layer salon builder gel strength</p>
-              </div>
-            </div>
-
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', justifyContent: 'center' }}>
-              <div style={{ width: '42px', height: '42px', borderRadius: '50%', background: 'rgba(179, 135, 40, 0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--accent-gold)' }}>
-                <RotateCcw size={20} />
-              </div>
-              <div style={{ textAlign: 'left' }}>
-                <h4 style={{ fontSize: '0.92rem', fontWeight: 700, color: 'var(--text-primary)' }}>Reusable Up to 5x</h4>
-                <p style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>Damage-free wear & easy soak-off</p>
-              </div>
-            </div>
-
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', justifyContent: 'center' }}>
-              <div style={{ width: '42px', height: '42px', borderRadius: '50%', background: 'rgba(179, 135, 40, 0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--accent-gold)' }}>
-                <Gift size={20} />
-              </div>
-              <div style={{ textAlign: 'left' }}>
-                <h4 style={{ fontSize: '0.92rem', fontWeight: 700, color: 'var(--text-primary)' }}>Free Application Kit</h4>
-                <p style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>Included with every handmade set</p>
-              </div>
-            </div>
-
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', justifyContent: 'center' }}>
-              <div style={{ width: '42px', height: '42px', borderRadius: '50%', background: 'rgba(179, 135, 40, 0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--accent-gold)' }}>
-                <MapPin size={20} />
-              </div>
-              <div style={{ textAlign: 'left' }}>
-                <h4 style={{ fontSize: '0.92rem', fontWeight: 700, color: 'var(--text-primary)' }}>Kissimmee Studio</h4>
-                <p style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>Direct artisan production in FL</p>
-              </div>
-            </div>
-          </div>
-        </div>
       </section>
 
       {/* 3. VISUAL CATEGORIES TILES */}
@@ -787,51 +741,73 @@ export default function HomePage() {
       </section>
 
       {/* 6. BUNDLE & SAVE PROMOTION BANNER */}
-      <section style={{ padding: '2rem 0', background: 'var(--bg-primary)' }}>
-        <div className="container">
+      <section style={{
+        position: 'relative',
+        width: '100%',
+        backgroundImage: `url(${bundlePromoBg})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundColor: '#fbece8',
+        padding: '4.5rem 0',
+        borderTop: '1px solid rgba(232, 97, 84, 0.25)',
+        borderBottom: '1px solid rgba(232, 97, 84, 0.25)',
+        overflow: 'hidden'
+      }}>
+        <div className="container" style={{ position: 'relative', zIndex: 2, maxWidth: '1280px' }}>
           <div style={{
-            background: 'linear-gradient(135deg, #1c1c21 0%, #2a2824 50%, #1c1c21 100%)',
-            borderRadius: '0px',
-            padding: '3.5rem 2.5rem',
-            color: '#fff',
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
             gap: '2.5rem',
-            alignItems: 'center',
-            border: '1px solid rgba(179, 135, 40, 0.4)',
-            boxShadow: '0 16px 40px rgba(0, 0, 0, 0.25)'
+            alignItems: 'center'
           }}>
-            <div>
-              <span style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--accent-gold-light)', fontWeight: 700 }}>
+            <div style={{
+              background: 'rgba(255, 255, 255, 0.88)',
+              backdropFilter: 'blur(10px)',
+              padding: '2.5rem 2.25rem',
+              border: '1px solid rgba(232, 97, 84, 0.3)',
+              boxShadow: '0 12px 32px rgba(232, 97, 84, 0.12)'
+            }}>
+              <span style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--accent-gold)', fontWeight: 800 }}>
                 Special Multi-Pack Value
               </span>
-              <h2 className="font-heading" style={{ fontSize: '2.4rem', color: '#fff', margin: '0.75rem 0 1rem 0', lineHeight: 1.2 }}>
+              <h2 className="font-heading" style={{ fontSize: '2.4rem', color: 'var(--text-primary)', margin: '0.75rem 0 1rem 0', lineHeight: 1.2 }}>
                 Bundle 3 Sets & Save 20%
               </h2>
-              <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: '1.02rem', lineHeight: 1.7, marginBottom: '2rem' }}>
-                Mix & match any handmade press-on styles. Every set includes our signature dual-action application kit with premium nail tabs and salon liquid adhesive.
+              <p style={{ color: 'var(--text-secondary)', fontSize: '1.02rem', lineHeight: 1.6, marginBottom: '1.75rem' }}>
+                Mix & match your favorite handmade styles. Premium application kit included with every set.
               </p>
               <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
                 <Link to="/bundle-and-save" className="btn btn-primary btn-lg">
                   Build Your Bundle <ArrowRight size={16} />
                 </Link>
-                <Link to="/sizing-chart" className="btn btn-outline btn-lg" style={{ color: '#fff', borderColor: 'rgba(255,255,255,0.3)' }}>
+                <Link to="/sizing-chart" className="btn btn-outline btn-lg" style={{ background: '#ffffff', color: 'var(--text-primary)', borderColor: 'rgba(232, 97, 84, 0.4)' }}>
                   Sizing Guide
                 </Link>
               </div>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-              <div style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(179, 135, 40, 0.3)', borderRadius: '0px', padding: '1.5rem', textAlign: 'center' }}>
-                <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--accent-gold-light)', marginBottom: '0.25rem' }}>15% OFF</div>
-                <div style={{ fontSize: '0.88rem', fontWeight: 600, color: '#fff' }}>Buy Any 2 Sets</div>
-                <div style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.6)', marginTop: '0.25rem' }}>Auto-applied at checkout</div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.75rem', alignItems: 'stretch' }}>
+              {/* Ticket 1: 15% OFF */}
+              <div className="vintage-coupon-ticket">
+                <span className="ticket-header-script">Special</span>
+                <span className="ticket-header-title">SALE</span>
+                <span className="ticket-subtext-top">Buy Any 2 Sets</span>
+                <div className="ticket-discount-number">15%</div>
+                <div className="ticket-discount-label">OFF</div>
+                <div className="ticket-perforation" />
+                <div className="ticket-footer-text">Auto-applied at checkout</div>
               </div>
 
-              <div style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(179, 135, 40, 0.3)', borderRadius: '0px', padding: '1.5rem', textAlign: 'center' }}>
-                <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--accent-gold-light)', marginBottom: '0.25rem' }}>20% OFF</div>
-                <div style={{ fontSize: '0.88rem', fontWeight: 600, color: '#fff' }}>Buy 3+ Sets</div>
-                <div style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.6)', marginTop: '0.25rem' }}>Includes Free Shipping</div>
+              {/* Ticket 2: 20% OFF */}
+              <div className="vintage-coupon-ticket">
+                <span className="ticket-header-script">Bundle</span>
+                <span className="ticket-header-title">SALE</span>
+                <span className="ticket-subtext-top">Buy 3+ Sets</span>
+                <div className="ticket-discount-number">20%</div>
+                <div className="ticket-discount-label">OFF</div>
+                <div className="ticket-perforation" />
+                <div className="ticket-footer-text">Includes Free Shipping</div>
               </div>
             </div>
           </div>
@@ -869,12 +845,12 @@ export default function HomePage() {
                       borderRadius: '0px',
                       fontSize: '0.82rem',
                       fontWeight: isActive ? 700 : 500,
-                      background: isActive ? 'linear-gradient(135deg, #b38728 0%, #8c6716 100%)' : 'var(--bg-surface)',
+                      background: isActive ? 'linear-gradient(135deg, #f88b80 0%, #e26155 100%)' : 'var(--bg-surface)',
                       color: isActive ? '#fff' : 'var(--text-secondary)',
                       border: isActive ? '1px solid transparent' : '1px solid var(--border-subtle)',
                       cursor: 'pointer',
                       transition: 'all 0.2s ease',
-                      boxShadow: isActive ? '0 4px 12px rgba(179, 135, 40, 0.25)' : 'none'
+                      boxShadow: isActive ? '0 4px 12px rgba(232, 97, 84, 0.35)' : 'none'
                     }}
                   >
                     {shape === 'all' ? (
@@ -951,7 +927,7 @@ export default function HomePage() {
                 width: '54px',
                 height: '54px',
                 borderRadius: '50%',
-                background: 'linear-gradient(135deg, #b38728 0%, #8c6716 100%)',
+                background: 'linear-gradient(135deg, #f88b80 0%, #e26155 100%)',
                 color: '#fff',
                 display: 'flex',
                 alignItems: 'center',
@@ -959,7 +935,7 @@ export default function HomePage() {
                 fontSize: '1.4rem',
                 fontWeight: 800,
                 margin: '0 auto 1.5rem auto',
-                boxShadow: '0 6px 16px rgba(179, 135, 40, 0.3)'
+                boxShadow: '0 6px 16px rgba(232, 97, 84, 0.35)'
               }}>
                 1
               </div>
@@ -976,7 +952,7 @@ export default function HomePage() {
                 width: '54px',
                 height: '54px',
                 borderRadius: '50%',
-                background: 'linear-gradient(135deg, #b38728 0%, #8c6716 100%)',
+                background: 'linear-gradient(135deg, #f88b80 0%, #e26155 100%)',
                 color: '#fff',
                 display: 'flex',
                 alignItems: 'center',
@@ -984,7 +960,7 @@ export default function HomePage() {
                 fontSize: '1.4rem',
                 fontWeight: 800,
                 margin: '0 auto 1.5rem auto',
-                boxShadow: '0 6px 16px rgba(179, 135, 40, 0.3)'
+                boxShadow: '0 6px 16px rgba(232, 97, 84, 0.35)'
               }}>
                 2
               </div>
@@ -1001,7 +977,7 @@ export default function HomePage() {
                 width: '54px',
                 height: '54px',
                 borderRadius: '50%',
-                background: 'linear-gradient(135deg, #b38728 0%, #8c6716 100%)',
+                background: 'linear-gradient(135deg, #f88b80 0%, #e26155 100%)',
                 color: '#fff',
                 display: 'flex',
                 alignItems: 'center',
@@ -1009,7 +985,7 @@ export default function HomePage() {
                 fontSize: '1.4rem',
                 fontWeight: 800,
                 margin: '0 auto 1.5rem auto',
-                boxShadow: '0 6px 16px rgba(179, 135, 40, 0.3)'
+                boxShadow: '0 6px 16px rgba(232, 97, 84, 0.35)'
               }}>
                 3
               </div>
@@ -1025,7 +1001,7 @@ export default function HomePage() {
       </section>
 
       {/* 10. CUSTOMER REVIEWS & SOCIAL PROOF */}
-      <section className="section-py" style={{ background: '#f5f2ea', borderTop: '1px solid var(--border-subtle)' }}>
+      <section className="section-py" style={{ background: '#fdfaf9', borderTop: '1px solid var(--border-subtle)' }}>
         <div className="container">
           <div className="section-header">
             <span className="brand-line">Customer Love & Social Proof</span>
@@ -1063,8 +1039,8 @@ export default function HomePage() {
                     background: '#ffffff',
                     borderRadius: '0px',
                     padding: '1.35rem 1.35rem 1.15rem 1.35rem',
-                    boxShadow: '0 8px 24px rgba(67, 76, 52, 0.07)',
-                    border: '1px solid rgba(67, 76, 52, 0.08)',
+                    boxShadow: '0 8px 24px rgba(232, 97, 84, 0.08)',
+                    border: '1px solid rgba(232, 97, 84, 0.12)',
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'space-between',
@@ -1072,16 +1048,16 @@ export default function HomePage() {
                   }}
                   onMouseOver={e => {
                     e.currentTarget.style.transform = 'translateY(-3px)';
-                    e.currentTarget.style.boxShadow = '0 14px 30px rgba(67, 76, 52, 0.12)';
+                    e.currentTarget.style.boxShadow = '0 14px 30px rgba(232, 97, 84, 0.16)';
                   }}
                   onMouseOut={e => {
                     e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.boxShadow = '0 8px 24px rgba(67, 76, 52, 0.07)';
+                    e.currentTarget.style.boxShadow = '0 8px 24px rgba(232, 97, 84, 0.08)';
                   }}
                 >
                   {/* Top Quote */}
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.65rem' }}>
-                    <svg width="26" height="20" viewBox="0 0 34 26" fill="#434c34" style={{ opacity: 0.85 }}>
+                    <svg width="26" height="20" viewBox="0 0 34 26" fill="#e86154" style={{ opacity: 0.85 }}>
                       <path d="M0 16.25C0 7.25 5.5 1.5 13.5 0L15 3.5C9.5 5.25 7.5 8.75 7.25 11.75C8.5 11.25 10 11 11.5 11C15.5 11 18.5 14 18.5 18.5C18.5 22.5 15.5 25.5 11.5 25.5C5 25.5 0 21 0 16.25ZM15.5 16.25C15.5 7.25 21 1.5 29 0L30.5 3.5C25 5.25 23 8.75 22.75 11.75C24 11.25 25.5 11 27 11C31 11 34 14 34 18.5C34 22.5 31 25.5 27 25.5C20.5 25.5 15.5 21 15.5 16.25Z" />
                     </svg>
                   </div>

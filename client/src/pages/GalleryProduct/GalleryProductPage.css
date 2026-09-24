@@ -2,15 +2,15 @@
 
 /* Scoped — chỉ ảnh hưởng trang gallery-product */
 .gp {
-  --gp-bg: #faf8f5;
+  --gp-bg: #fdfaf9;
   --gp-card: #ffffff;
   --gp-ink: #1a1917;
   --gp-muted: #6f6a62;
-  --gp-gold: #b38728;
-  --gp-gold-deep: #8c6721;
-  --gp-gold-soft: #c9a96e;
-  --gp-line: #e7e0d8;
-  --gp-line-soft: #d9d1c7;
+  --gp-gold: #e86154;
+  --gp-gold-deep: #c44237;
+  --gp-gold-soft: #f88b80;
+  --gp-line: #f2e3df;
+  --gp-line-soft: #ebd6d1;
   background: var(--gp-bg);
   color: var(--gp-ink);
   min-height: 100vh;
